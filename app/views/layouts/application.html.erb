@@ -1,14 +1,89 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Website</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+	<head>
+		<title><%= full_title(yield(:title)) %></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Dylan Jones">
+		<meta name="description" content="<%= yield(:description) %>">
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		<%= csrf_meta_tags %>
+		
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@dylan8902">
+		<meta name="twitter:title" content="<%= yield(:title) %>">
+		<meta name="twitter:description" content="<%= yield(:description) %>">
+		<meta name="twitter:creator" content="@dylan8902">
+		<meta name="twitter:image:src" content="<%= yield(:image) %>">
+		
+		<meta property="og:title" content="<%= yield(:title) %>">
+		<meta property="og:image" content="<%= yield(:image) %>">
+		
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
-<%= yield %>
+	<% if yield(:map) == "map" then %>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css">
+		<!--[if lte IE 8]>
+		    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css">
+		<![endif]-->
+		<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+		<script src="/scripts/leaflet.markercluster.js"></script>
+	<% end %>
 
-</body>
+	</head>
+	<body>
+		<header class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<%= link_to "dyl.anjon.es", root_path, class: "navbar-brand" %>
+				</div>
+				<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+					<ul class="nav navbar-nav navbar-right">
+						<li<%= " class=\"active\"".html_safe if request.path.starts_with? who_path %>>
+							<%= link_to icon("user") + " About Me", who_path %>
+						</li>
+						<li<%= " class=\"active\"".html_safe if request.path.starts_with? '/stuff' %>>
+							<%= link_to icon("folder-open") + " Stuff I've Made", '/stuff' %>
+						</li>
+						<li<%= " class=\"active\"".html_safe if request.path.starts_with? blog_posts_path %>>
+							<%= link_to icon("edit") + " Blog", blog_posts_path %>
+						</li>
+						<li<%= " class=\"active\"".html_safe if request.path.starts_with? contact_path %>>
+							<%= link_to icon("comments") + " Get In Touch", contact_path %>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+		<section class="container">
+			<% if notice then %>
+			<article class="alert alert-info">
+	           	 <button type="button" class="close" data-dismiss="alert">×</button>
+	           	 <%= notice %>
+	      	</article>
+			<% end %>
+			<% if alert then %>
+			<article class="alert alert-danger">
+	           	 <button type="button" class="close" data-dismiss="alert">×</button>
+	           	 <%= alert %>
+	      	</article>
+			<% end %>
+			<%= yield %>
+		</section>
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-29559837-1']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true; ga.src = 'https://www.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		</script>
+	</body>
 </html>
