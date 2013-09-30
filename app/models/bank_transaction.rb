@@ -1,6 +1,4 @@
 class BankTransaction < ActiveRecord::Base
-  attr_accessible :description, :amount
-  
   validates :description, :presence => true
   validates :amount, :presence => true
 

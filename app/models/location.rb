@@ -1,5 +1,4 @@
 class Location < ActiveRecord::Base
-  attr_accessible :latE7, :lngE7, :accuracy, :text, :created_at, :updated_at
   default_scope order('created_at DESC')
   
   def google_image size = 90

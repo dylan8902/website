@@ -1,5 +1,4 @@
 class Photo < ActiveRecord::Base
-  attr_accessible :title, :description, :original, :thumbnail, :lat, :lng, :created_at, :updated_at
   default_scope order('created_at DESC')
 
   def self.update page = 1

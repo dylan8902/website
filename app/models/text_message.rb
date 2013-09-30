@@ -1,7 +1,5 @@
 require 'open-uri'
-class TextMessage < ActiveRecord::Base
-  attr_accessible :contact, :text, :sent, :created_at, :updated_at
-    
+class TextMessage < ActiveRecord::Base    
   default_scope order('created_at DESC')
   
   def self.update_url

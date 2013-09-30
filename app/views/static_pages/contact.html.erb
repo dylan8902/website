@@ -1,0 +1,17 @@
+<% provide(:title, "Contact Me") %>
+<% provide(:description, "Get in touch with Dylan Jones via the internet. Drop me a message about anything you want.") %>
+
+<h1>Get In Touch</h1>
+<section class="row">
+	<article class="col-md-6">
+		<p>If you would like to get in contact with me, then you can in the following ways:-</p>
+		<nav class="list-group lead">
+		<% @contact.each do |contact| %>
+  			<%= link_to icon(contact[:icon]) + " " + contact[:text], contact[:link], class: "list-group-item" %>
+		<% end %>
+		</nav>
+  	</article>
+	<article class="col-md-4">
+  	
+	</article>
+</section>

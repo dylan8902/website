@@ -1,6 +1,4 @@
-class Project < ActiveRecord::Base
-  attr_accessible :description, :hits, :online, :title, :url
-  
+class Project < ActiveRecord::Base  
   validates :title, :presence => true
   validates :description, :presence => true
   validates :url, :presence => true

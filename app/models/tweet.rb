@@ -1,5 +1,4 @@
 class Tweet < ActiveRecord::Base
-  attr_accessible :lat, :lng, :location, :text, :created_at, :updated_at, :id
   default_scope order('created_at DESC')
 
   def self.update

@@ -1,1 +1,94 @@
-<h1>Hello, World!</h1>
+<% provide(:title, "Hello") %>
+<% provide(:description, "Hi,I'm Dylan Jones, software engineer/web developer at BT from Llandrindod Wells") %>
+
+<h1>Hello!</h1>
+
+<section id="introduction" class="row">
+	<article class="col-md-8 vcard">
+		<p>Hi! I am <a href="https://dyl.anjon.es" class="url fn">Dylan Jones</a>, a <%= get_age %> year old <span class="title">Software Engineer</span> working at <span class="org">BT</span> in Cardiff, with a passion for technology and the web.</p>
+		<p>I like things such as:- <a href="/music" title="Music Pages">Chart &amp; Cheese</a>, <a href="http://en.wikipedia.org/wiki/Pringles" title="Wikipedia Page">Salt &amp; Vinegar Pringles</a> and running.</p>
+		<p class="adr">
+			I am from <a href="http://maps.google.co.uk/maps?q=llandrindod+Wells" title="Map" class="locality">Llandrindod Wells</a>.
+			I studied <a href="http://www.engineering.leeds.ac.uk/electronic/undergraduate/degree-electronic-communications-engineering/index.shtml" title="Course Page">Electronic and Communications Engineering</a> at the University of Leeds.
+			<%= link_to "&#187;".html_safe, who_path, title: "More" %>
+		</p>
+	</article>
+	<article class="col-md-3 col-sm-12 col-xs-12 pull-right panel text-center">
+		<h5>Available for web development work</h5>
+		<p><a href="/contact" class="btn btn-primary btn-large">Get In Touch</a></p>
+	</article>
+</section>
+
+<h2><%= link_to "Stuff", stuff_index_path %></h2>
+<% @stuff.each_with_index do |project, i| %>
+	<%= "<section class=\"row\">".html_safe if i == 0 or i == 4 %>
+	<article class="col-md-3 col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><%= link_to raw(project.title), project.url %></h3>
+			</div>
+			<div class="panel-body">
+				<a class="thumbnail" href="<%= project.url %>"><img src="/assets/project<%= project.id %>.png" alt="<%= project.title %>"></a>
+			</div>
+		</div>
+	</article>
+	<%= "</section>".html_safe if i == 3 or i == 7 %>
+<% end %>
+
+<%= link_to "...More Stuff", stuff_index_path, :class => "btn btn-primary" %>
+
+<section class="row">
+	<article class="col-md-3">
+		<h3><%= link_to "Recent Posts", blog_posts_url %></h3>
+		<ul>
+			<% @blog_posts.each do |blog_post| %>
+			<li>
+				<%= link_to blog_post.title, blog_post %>
+			</li>
+			<% end %>
+		</uL>
+	</article>
+	<article class="col-md-3">
+		<h3><%= link_to "Recent Tweets", tweets_url %></h3>
+		<ul>
+			<% @tweets.each do |tweet| %>
+			<li>
+				<%= link_to tweet.text, tweet %>
+			</li>
+			<% end %>
+		</uL>
+	</article>
+	<article class="col-md-3">
+		<h3><%= link_to "Recent Tracks", music_listens_url %></h3>
+		<ul>
+			<% @listens.each do |listen| %>
+			<li>
+				<%= link_to listen.artist + " - " + listen.track, music_listen_path(listen) %>
+			</li>
+			<% end %>
+		</uL>
+	</article>
+	<article class="col-md-3">
+		<h3><%= link_to "Recent TV", episodes_url %></h3>
+		<ul>
+			<% @episodes.each do |episode| %>
+			<li>
+				<%= link_to episode.title, episode %>
+			</li>
+			<% end %>
+		</uL>
+	</article>
+</section>
+
+<section class="row">
+	<article class="col-md-9">
+		<h3><%= link_to "Photos", photos_url %></h3>
+		<% @photos.each do |photo| %>
+			<%= link_to image_tag(photo.thumbnail, alt: photo.title, class: "img-thumbnail", width:75, height:75), photo, title: photo.title %>
+		<% end %>
+	</article>
+	<article class="col-md-3">
+		<h3><%= link_to "Location", locations_url %></h3>
+		<%= link_to raw("<img src=\"#{@location.google_image}\" alt=\"#{@location.text}\" class=\"img-circle\">"),locations_url unless @location.nil? %>
+	</article>
+</section>

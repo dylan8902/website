@@ -1,5 +1,4 @@
 class BlogTag < ActiveRecord::Base
-  attr_accessible :tag
   validates :tag, :presence => true
   belongs_to :blog_post
   

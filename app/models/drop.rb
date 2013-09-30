@@ -1,6 +1,4 @@
 class Drop < ActiveRecord::Base
-  attr_accessible :base64, :content_type, :hits, :uri
-  #validate uri is uniq
     
   def self.generate_uri
     loop do

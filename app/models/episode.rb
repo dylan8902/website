@@ -1,7 +1,5 @@
 class Episode < ActiveRecord::Base
-  attr_accessible :pid, :title, :description
   default_scope order('created_at DESC')
-  self.per_page = 15
   
   def to_param
     self.pid
