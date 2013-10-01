@@ -1,0 +1,52 @@
+<% provide(:title, 'Trains:: Locations') %>
+<% provide(:description, 'Browse UK train locations, see what stations and junctions there are with all their identifiers like CRS, TIPLOC, STANOX etc.') %>
+
+<h1>Train Locations</h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Trains", trains_root_path %></li>
+  <li><%= link_to "Schedules", trains_schedules_path %></li>
+  <li class="active">Locations</li>
+  <li><%= link_to "Companies", trains_operating_companies_path %></li>
+</ol>
+
+<%= form_tag(trains_locations_path, :method => "get") do %>
+	<div class="input-append well">
+		<%= text_field_tag(:q, @from, class: "typeahead form-control", placeholder: "Search for a location", autocomplete: "off", "data-type" => "locations", "data-link" => "locations", value: @q) %>
+		<a class="btn geo" data-field="q" style="display:none"><%= icon("map-marker") %></a>
+	</div>
+<% end %>
+
+<% unless @locations.nil? %>
+
+	<p>
+		<%= pluralize @locations.total_entries, 'location' %> found
+	</p>
+
+	<% if @locations.size > 0 %>
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>CRS</th>
+				<th>Tiploc</th>
+				<th>Stanox</th>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @locations.each do |location| %>
+			<tr>
+				<td><%= location.crs %></td>
+				<td><%= location.tiploc %></td>
+				<td><%= location.stanox %></td>
+				<td><%= link_to location.name, location %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+
+	<%= paginate @locations %>
+
+	<% end %>
+
+<% end %>

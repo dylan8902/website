@@ -1,0 +1,19 @@
+<% provide(:title, "Photos") %>
+<% provide(:description, "Photos uploaded to my Flickr.") %>
+
+<h1>Photos</h1>
+<ol class="breadcrumb">
+	<li class="active">Photos</li>
+	<li><%= link_to 'Statistics', photos_stats_path %></li>
+	<li><%= link_to 'Map', photos_map_path %></li>
+</ol>
+
+<section class="row">
+<% @photos.each do |photo| %>
+	<article class="col-lg-1 col-md-2 col-sm-2 col-xs-3">
+		<%= link_to image_tag(photo.thumbnail, alt: photo.title), photo, class: "thumbnail" %>
+	</article>
+<% end %>
+</section>
+
+<%= paginate @photos %>

@@ -1,0 +1,53 @@
+<% provide(:title, "Video") %>
+<% provide(:description, "A demonstration of the getUserMedia API.") %>
+
+<h1>Video</h1>
+<article class="well">
+	A demonstartion of the getUserMedia API
+</article>
+<section class="row">
+	<article class="col-md-5">
+		<video id="video" style="display:none;" autoplay></video>
+		<canvas id="canvas" width="375" height="300"></canvas>
+	</article>
+	<article class="col-md-7">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="#default" data-toggle="tab">Default</a></li>
+			<li><a href="#funny" data-toggle="tab">Funny</a></li>
+		</ul>
+		<section class="tab-content">
+			<article class="tab-pane active" id="default">
+				<%= @h %>
+			</article>
+			<article class="tab-pane" id="funny">
+				<pre>Coming Soon</pre>
+			</article>
+		</section>
+	</article>
+</section>
+
+<script type="text/javascript">
+var video = document.getElementById('video');
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+
+if (navigator.webkitGetUserMedia) {
+	navigator.webkitGetUserMedia(
+		{"audio": true, "video": true},
+		function (stream) {
+			video.src = webkitURL.createObjectURL(stream);
+			video.onerror = function () {
+				stream.stop();
+				alert('Error!');
+			};
+			var loadImage = window.setInterval(function() {
+			ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+		}, 50);
+	}, function () {
+		alert('No camera');
+	});
+}
+else {
+	alert('Not supported!');
+}
+</script>

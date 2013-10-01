@@ -11,6 +11,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'jqplot-rails'
 gem 'devise'
+gem 'mysql2'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 
 group :doc do
   gem 'sdoc', require: false

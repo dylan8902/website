@@ -1,0 +1,15 @@
+<% provide(:title, "Facebook Posts:: Statistics") %>
+<% provide(:description, "Statistics on when I post on Facebook") %>
+
+<h1>Facebook Posts</h1>
+<ol class="breadcrumb">
+  <li><%= link_to 'Facebook Posts', facebook_posts_path %></li>
+  <li class="active">Statistics</li>
+  <li><%= link_to 'Map', facebook_posts_map_path %></li>
+</ol>
+
+<h2>Statistics</h2>
+
+<%= render 'common/time_stats' %>
+
+<%= link_to 'Back', facebook_posts_path %>

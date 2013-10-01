@@ -1,0 +1,54 @@
+<% provide(:title, "Music") %>
+<% provide(:description, "Music homepage with my latest tracks listened to, DJ events and other music apps") %>
+
+<h1>Music</h1>
+
+<article class="well">
+	<form class="form-inline" role="form">
+		<div class="form-group">
+			<label class="sr-only" for="q">Find an Artist</label>
+			<input class="form-control" id="q" placeholder="Find an Artist">
+		</div>
+		<button type="submit" class="btn btn-default">Search</button>
+	</form>
+</article>
+
+<section class= "row">
+	
+	<article class="col-md-9">
+		<h3><%= link_to "Recently Listened", music_listens_path %></h3>
+		<% @listens.each_with_index do |listen, i| %>
+			<%= "<section class=\"row\">".html_safe if i == 0 or i % 3 == 0 %>
+			<article class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h5 class="panel-title"><%= link_to listen.artist.html_safe, music_artist_path(listen) %> - <%= raw listen.track %></h5>
+					</div>
+					<div class="panel-body">
+						<%= link_to image_tag("https://www.bbc.co.uk/music/images/artists/542x305/#{listen.artist_mbid}.jpg", alt: listen.artist, class: "img-thumbnail"), music_artist_path(listen) %>
+					</div>
+					<div class="panel-footer">
+						<small><%= timestamp listen.created_at %></small>
+					</div>
+				</div>
+			</article>
+			<%= "</section>".html_safe if i == 2 or (i-2) % 3 == 0 or listen == @listens.last %>
+		<% end %>
+	</article>
+	
+	<article class="col-md-3">
+		
+		<h3><%= link_to "DJ Events", music_dj_events_path %></h3>
+		<ul>
+			<% @dj_events. each do |dj_event| %>
+				<li><%= link_to dj_event.title, music_dj_event_path(dj_event) %></li>
+			<% end %>
+		</ul>
+		
+		<div class="well">
+			<h5>Test your knowledge of your friends music tastes</h5>
+		</div>
+		
+	</article>
+	
+</section>

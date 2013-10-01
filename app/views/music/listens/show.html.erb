@@ -1,0 +1,11 @@
+<% provide(:title, "Music:: Listens:: #{@listen.artist} - #{@listen.track}") %>
+
+<h1><%= @listen.artist %> - <%= @listen.track %></h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Music", music_root_path %></li>
+  <li><%= link_to "Listens", music_listens_path %></li>
+  <li class="active"><%= @listen.artist %> - <%= @listen.track %></li>
+</ol>
+
+<%= link_to 'Back', music_listens_path %>

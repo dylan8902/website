@@ -1,0 +1,6 @@
+<% provide(:title, "Text Message:: #{@text_message.text}") %>
+<h1>Text Message</h1>
+
+<%= render 'text_message', :text_message => @text_message %>
+
+<%= link_to 'Back', text_messages_path %>

@@ -2,12 +2,14 @@ class Tweet < ActiveRecord::Base
   default_scope order('created_at DESC')
 
   def self.update
+    
     Twitter.configure do |config|
-      config.consumer_key       = "lqYBBSVf2wVYXtiXLJWD6w"
-      config.consumer_secret    = "8UKtggxFx3OzhBAXHqanc2beo1tA0ZWmN24TRHPWiE"
-      config.oauth_token        = "29808366-2jB4oHxgorLE9R6ySRF5CZoXpcuoEGYdh6X1Ol34C"
-      config.oauth_token_secret = "aEZwjhk0KQ21yXTZZKI7UM0jVAI3FrTyC1CrGaWxc"
+      config.consumer_key       = ENV['TWITTER_CONSUMER_KEY']
+      config.consumer_secret    = ENV['TWITTER_CONSUMER_SECRET']
+      config.oauth_token        = ENV['TWITTER_OAUTH_TOKEN']
+      config.oauth_token_secret = ENV['TWITTER_OAUTH_TOKEN_SECRET']
     end
+    
     tweets = Twitter.user_timeline("dylan8902")
     tweets.each do |tweet|
       unless tweet.geo.nil?
@@ -26,6 +28,7 @@ class Tweet < ActiveRecord::Base
         updated_at: tweet.created_at
       )
     end
+    
   end
 
   def map_marker_text

@@ -1,0 +1,12 @@
+<% provide(:title, "Account:: New") %>
+<% provide(:description, "Create a new account.") %>
+
+<h1>New Account</h1>
+
+<section class="row">
+	<article class="col-md-5">
+		<%= render 'form' %>
+	</article>
+</section>
+
+<%= link_to 'Back', accounts_path %>

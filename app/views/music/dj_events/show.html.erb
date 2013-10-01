@@ -1,0 +1,29 @@
+<% provide(:title, "Music:: DJ:: Event:: #{@dj_event.title}") %>
+<% provide(:description, "I DJ'd: #{@dj_event.description}") %>
+
+<h1><%= @dj_event.title %></h1>
+
+<p><%= @dj_event.location %></p>
+<p><%= @dj_event.created_at %></p>
+<p><%= @dj_event.description %></p>
+
+<% @dj_event.dj_tracks.each_with_index do |dj_track, i| %>
+	<%= "<section class=\"row\">".html_safe if i == 0 or i % 3 == 0 %>
+	<article class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><%= link_to dj_track.artist, music_artist_path(dj_track) %></h3>
+				<h5><%= raw dj_track.title %></h5>
+			</div>
+			<div class="panel-body">
+				<%= link_to image_tag("https://www.bbc.co.uk/music/images/artists/542x305/#{dj_track.artist_mbid}.jpg", alt: dj_track.artist, class: "img-thumbnail"), music_artist_path(dj_track) %>
+			</div>
+			<div class="panel-footer">
+				<%= dj_track.created_at %>
+			</div>
+		</div>
+	</article>
+	<%= "</section>".html_safe if i == 2 or (i-2) % 3 == 0 or dj_track == @dj_event.dj_tracks.last %>
+<% end %>
+
+<%= link_to 'Back', music_dj_events_path %>

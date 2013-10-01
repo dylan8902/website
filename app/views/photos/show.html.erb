@@ -1,0 +1,14 @@
+<% provide(:title, "Photo:: #{@photo.title}") %>
+<% provide(:description, "I uploaded a photo: #{@photo.title}") %>
+
+<h1>Photos</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Photos', photos_path %></li>
+	<li class="active"><%= @photo.title %></li>
+	<li><%= link_to 'Statistics', photos_stats_path %></li>
+	<li><%= link_to 'Map', photos_map_path %></li>
+</ol>
+
+<h2><%= @photo.title %></h2>
+<a href="<%= @photo.original %>" class="thumbnail"><img src="<%= @photo.original %>" alt="<%= @photo.title %>"></a>
+<%= link_to 'Back', photos_path %>

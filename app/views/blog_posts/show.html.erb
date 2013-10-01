@@ -1,0 +1,20 @@
+<% provide(:title, "Blog: #{@blog_post.title}") %>
+<% provide(:description, "A wrote a plog post entitiled #{@blog_post.title}") %>
+
+<section class="row">
+	
+	<article class="col-md-8">
+		<h1><%= @blog_post.title.html_safe %></h1>
+		<h6><%= icon("time") + " " + timestamp(@blog_post.created_at) %></h6>
+
+		<%= @blog_post.text.html_safe %>
+
+	</article>
+	
+	<article class="col-md-4">
+		<nav class="list-group">
+			<%= link_to "&#171; Back to posts".html_safe, blog_posts_path, class: "list-group-item" %>
+		</nav>
+	</article>
+
+</section>

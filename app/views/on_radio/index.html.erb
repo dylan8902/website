@@ -1,0 +1,275 @@
+<% provide(:title, "On Radio: #{@radio_station.title}") %>
+<% provide(:description, "Now playing on #{@radio_station.title} - track listing and artist information in real-time.") %>
+<% provide(:image, "https://www.bbc.co.uk/iplayer/images/episode/#{@radio_station.show['programme']['pid']}_640_360.jpg") %>
+
+<h1>On Radio: <%= @radio_station.title %></h1>
+
+<nav>
+	<a href="/onradio/1"><img src="/assets/radio1.png" alt="BBC Radio 1"></a>
+	<a href="/onradio/1xtra"><img src="/assets/1xtra.png" alt="BBC Radio 1Xtra"></a>
+	<a href="/onradio/2"><img src="/assets/radio2.png" alt="BBC Radio 2"></a>
+	<a href="/onradio/3"><img src="/assets/radio3.png" alt="BBC Radio 3"></a>
+	<a href="/onradio/6music"><img src="/assets/6music.png" alt="BBC Radio 6Music"></a>
+</nav>
+
+<section class="row">
+	<section class="col-md-6">
+		
+		<img id="show-image" class="listen thumbnail" src="https://www.bbc.co.uk/iplayer/images/episode/<%= @radio_station.show['programme']['pid'] %>_640_360.jpg" alt="Show Image" style="margin-top:15px">
+		<h2><a id="show-title" href="http://www.bbc.co.uk/programmes/<%= @radio_station.show['pid'] %>"><%= @radio_station.show['programme']['display_titles']['title'] %></a></h2>
+		<p id="show-info"><%= @radio_station.show['programme']['display_titles']['subtitle'] %>: <%= @radio_station.show['programme']['short_synopsis'] %></p>
+
+		<div style="width:100%;height:5px;background:#DBDBDB;margin-bottom:10px;">
+			<div id="done" style="height:100%;background:<%= @radio_station.colour %>;width:1%;"></div>
+		</div>
+	
+		<h3>Recently Played</h3>
+		<table id="tracks">
+			<% @radio_station.recent_tracks.each_with_index do |track, i| %>
+			<tr id="track-<%= @radio_station.recent_tracks.count - i %>">
+				<td><%= track.image %></td>
+				<td>
+					<%= link_to track.artist, music_artist_path(track.artist_mbzid), class: "artist", id: track.artist_mbzid %> - <%= track.title %>
+					<p><%= timestamp track.timestamp %></p>
+				</td>
+			</tr>
+			<% end %>
+		</table>
+	
+	</section>
+	<section id="information" class="col-md-6">
+		
+	</section>
+</section>
+
+<script type="text/javascript">
+	// <![CDATA[
+	var id = 15;
+	var last = "<%= @radio_station.recent_tracks.first.title if @radio_station.recent_tracks.count > 0 %>";
+	var progress = 1;
+	var session;
+	var b = <%= Time.parse(@radio_station.show['end']).to_i - Time.now.to_i %>;
+	var a = <%= Time.parse(@radio_station.show['end']).to_i - Time.parse(@radio_station.show['start']).to_i %>;
+
+	function addTrackToTable(title, artist, mbid, start, stop) {
+		var str = '<tr id="track-'+id+'" style="display:none;">';
+		if(mbid != '') {
+			str = str+'<td><img src="https://www.bbc.co.uk/music/images/artists/112x63/'+mbid+'.jpg"></td>';
+			str = str+'<td><a href="/music/artists/'+mbid+'" id="'+mbid+'" target="_blank" title="Artist Information" class="artist">'+artist+'</a> - '+title+'<p>'+timestamp(start)+'</p></td></tr>';
+		}
+		else {
+			str = str+'<td><img src="/assets/no_mbzid_112x63.png"></td>';
+			str = str+'<td><a href="/music/artists/'+artist+'" target="_blank" title="Artist Information">'+artist+'</a> - '+title+'<p>'+timestamp(start)+'</p></td></tr>';
+		}
+		$('#tracks').prepend(str);
+		$('#track-'+id).fadeIn(1000);
+		if (mbid)
+		 	$('#'+mbid).click();
+	}
+
+	function scrobble(title, artist, start, end) {
+		var data = 'api_key=ea5099237517b2b08252aed02e06a3ea'
+		+ '&artist='+encodeURIComponent(artist)
+		+ '&chosenByUser=0' + '&format=json' + '&method=track.scrobble'
+		+ '&sk='+session.key + '&timestamp='+start
+		+ '&track='+encodeURIComponent(title);
+		var md5 = 'api_keyea5099237517b2b08252aed02e06a3ea'
+		+ 'artist'+encodeURIComponent(artist)
+		+ 'chosenByUser0' + 'methodtrack.scrobble'
+		+ 'sk'+session.key + 'timestamp'+start
+		+ 'track'+encodeURIComponent(title)
+		+ '6d597d4c6c0b1b1a8a4579964abb6758';
+		$.ajax({
+			type     : 'GET',
+			dataType : 'json',
+			url      : '/md5.json',
+			data     : 'q='+md5,
+			success  : 
+				function(reply) {
+					$.ajax({
+						type     : 'POST',
+						dataType : 'json',
+						url      : 'https://ws.audioscrobbler.com/2.0/',
+						data     : data+'&api_sig='+reply,
+						success  : 
+							function(reply) {
+								console.log(reply);
+							}
+					});
+				}
+		});
+	}
+
+	function postToFacebook(title, artist, mbid, start, end) {
+		$.ajax({
+			type     : 'POST',
+			dataType : 'json',
+			url      : 'https://graph.facebook.com/me/bbc_radio:listen_to',
+			data     : 'radio_station='+encodeURIComponent('http://www.bbc.co.uk/<%= @radio_station.id %>')+'&song='+encodeURIComponent('http://dyl.anjon.es/music/artists/'+mbid+'/'+title.replace('.',''))+'&start_time='+start+'&end_time='+end+'&'+session,
+			success  : 
+				function(reply) {
+					console.log(reply);
+				}
+		});
+	}
+
+	function realtimeCallback(reply) {
+		if(reply.realtime) {
+			var track = reply.realtime;
+			last = last.toString();
+			var test = track.title.toString();
+			if (test == last) {
+				return;
+			}
+			var mbid = '';
+			if(track.musicbrainz_artist) {
+				mbid = track.musicbrainz_artist.id;
+			}
+			addTrackToTable(track.title, track.artist, mbid, track.start, track.end);
+			last = test;
+			id++;
+
+		}
+	}
+
+	function updateTracks() {
+		$.ajax({
+			type     : 'GET',
+			dataType : 'jsonp',
+			url      : 'https://ws.audioscrobbler.com/2.0/',
+			data     : 'method=user.getrecenttracks&user=bbc<%= @radio_station.id %>&api_key=ea5099237517b2b08252aed02e06a3ea&format=json&limit=5',
+			success  : 
+				function(reply) {
+					if(typeof(reply.recenttracks) != 'undefined') {
+						var track = reply.recenttracks.track[0];
+						last = last.toString();
+						var test = track.name.toString();
+						if(test!=last) {
+							addTrackToTable(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], 0)
+							last = test;
+							id++;
+						}
+					}
+				}
+		});
+	}
+
+	function updateShow() {
+		$.ajax({
+			type     : 'GET',
+			dataType : 'jsonp',
+			url      : '<%= request.uri %>.json',
+			success  : 
+				function(reply) {
+					$('#show-info').html(''+reply.show.programme.title+': '+reply.show.programme.short_synopsis);
+					$('#show-image').attr('src','https://www.bbc.co.uk/iplayer/images/episode/'+reply.show.programme.pid+'_640_360.jpg');
+					$('#show-title').html(reply.programme.display_title.title);
+					$('#show-title').attr('href','http://www.bbc.co.uk/programmes/'+reply.show.programme.pid);
+					a = reply.show.programme.duration;
+					b = reply.show.programme.duration;
+					progress = 1;
+					var refreshShow = setTimeout(function() {
+						updateShow();
+					}, reply.show.programme.duration*1000);
+				}
+		});
+	}
+
+	$(document).ready(function() {
+		var textlastid = 0;
+		var refreshTracks = setInterval(function() {
+			updateTracks();
+		}, 20000);
+		
+		var refreshShow = setTimeout(function() {
+			updateShow();
+		}, <%= Time.parse(@radio_station.show['end']).to_i - Time.now.to_i + 5 %>000);
+		function updateProgress() {
+			progress++;
+			var width = ((a-b+progress)/a)*100;
+			$('#done').css('width',width+'%');
+			$('#done').attr('title',width+'%');
+		}
+		var refreshProgress = setInterval(function() {
+			updateProgress();
+		}, 1000);
+		$(document).on('click', '.artist', function(e) {
+			e.preventDefault();
+			var target_offset = $('#information').offset();
+        	var target_top = target_offset.top;
+        	$('html, body').animate({scrollTop:target_top}, 500);
+			var name = $(this).html();
+			var mbzid = $(this).attr('id');
+			$('#information').html('');
+			$('#information').append('<img src="https://www.bbc.co.uk/music/images/artists/542x305/'+mbzid+'.jpg" title="'+name+'" style="margin-top:15px" alt="Artist Image" class="thumbnail"></article><section><h3>'+name+'</h3></section>');
+			$('#information').append('<section id="loading">Loading Artist Data...</section>');
+			$.ajax({
+				type     : 'GET',
+				dataType : 'json',
+				url      : '/music/artists/'+mbzid+'.json',
+				success  : 
+					function(reply) { 
+						$('#loading').fadeOut(200);
+						if(typeof(reply.wikipedia_article) != 'undefined')
+							$('#information').append('<section><h5>Biography</h5><p id="biography">'+reply.wikipedia_article.content+'</p></section>');
+						if(typeof(reply['7digital']) != 'undefined') {
+							if(typeof(reply['7digital'].releases.release) != 'undefined') {
+								$('#information').append('<section><h5>Releases</h5><table id="releases"></table><img src="/images/7digital.png" alt="7 Digital" style="height:14px;"></section>');
+								for(var a in reply['7digital'].releases.release) {
+									var release = reply['7digital'].releases.release[a];
+									$('#releases').append('<tr><td><img src="'+release.image+'" alt="Artwork"></td><td><a href="'+release.url+'" target="_blank">'+release.title+'</a></td><td><iframe frameborder="0" height="40" scrolling="no" src="https://instant.7digital.com/iframe.htm?releaseid='+release.id+'&amp;partnerid=3143&amp;buttontext=BUY" width="60"></iframe></td></tr>');
+								}
+							}
+						}
+						if(typeof(reply.reviews[0]) != 'undefined') {
+							$('#information').append('<section><h5>Reviews</h5><table id="reviews"></table></section>');
+							for(var a in reply.reviews) {
+								var review = reply.reviews[a];
+								$('#reviews').append('<tr><td><img src="'+review.release.artwork.small+'" alt="Artwork"></td><td><a href="http://www.bbc.co.uk/music/reviews/'+review.url_key+'" target="_blank">'+review.release.title+'</a></td><td>'+review.short_synopsis+'<br>By '+review.reviewer+'</td></tr>');
+							}
+						}
+						if(typeof(reply.news[0]) != 'undefined') {
+							$('#information').append('<section><h5>News</h5><table id="news"></table></section>');
+							for(var a in reply[0].news) {
+								var news = reply[0].news[a];
+								$('#news').append('<tr><td><a href="'+news.url+'" target="_blank">'+news.title+'</a></td><td>'+news.description+'</td></tr>');
+							}
+						}
+						if(typeof(reply.songkick.resultsPage.results.event) != 'undefined') {
+							$('#information').append('<section><h5>Events</h5><ul id="events"></ul></section>');
+							for(var a in reply[0].songkick.resultsPage.results.event) {
+								var event = reply[0].songkick.resultsPage.results.event[a];
+								$('#events').append('<li><a href="'+event.uri+'" target="_blank">'+event.displayName+'</a></li>');
+							}
+						}
+						if(typeof(reply.links[0]) != 'undefined') {
+							$('#information').append('<section><h5>Links</h5><ul id="links"></ul></section>');
+							for(var a in reply[0].links) {
+								var link = reply[0].links[a];
+								$('#links').append('<li><a href="'+link.url+'" target="_blank">'+link.name+'</a></li>');
+							}
+						}
+					},
+				error   :
+					function() {
+						$.ajax({
+							type     : 'GET',
+							dataType : 'json',
+							url      : 'https://ws.audioscrobbler.com/2.0/',
+							data     : 'method=artist.getinfo&mbid='+mbzid+'&api_key=ea5099237517b2b08252aed02e06a3ea&format=json',
+							success  : 
+								function(reply) { 
+									$('#loading').fadeOut(200);
+									if(typeof(reply.artist.bio)!='undefined')
+										$('#information').append('<section><h5>Biography</h5><p id="biography">'+reply.artist.bio.content+'</p></section>');
+								}
+						});
+					}
+			});
+			return false;
+		});
+		$('#scrobble').click(function() { window.location = '/onradio/2/scrobble'; });
+		$('#facebook').click(function() { window.location = '/onradio/2/facebook'; });
+	});
+	//]]!>
+</script>

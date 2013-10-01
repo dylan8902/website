@@ -1,0 +1,21 @@
+<% provide(:title, "Train Journeys") %>
+<% provide(:description, "A record of your train journeys.") %>
+
+<h1>Your Train Journeys</h1>
+
+<section class="row">
+	<article class="col-md-8">
+		<table class="table table-striped">
+			<% @journeys.each do |journey| %>
+			<tr>
+				<td><%= journey.from %></td>
+				<td><%= journey.to %></td>
+				<td><%= journey.created_at %></td>
+			</tr>
+			<% end %>
+		</table>
+		<%= paginate @journeys %>
+	</article>
+</section>
+
+

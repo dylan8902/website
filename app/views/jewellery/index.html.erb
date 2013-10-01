@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en-gb">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+	<title>GMJ Handmade Jewellery</title>
+	<meta name="description" content="Shop for handmade earrings, perfect for gifts personalised for your tastes">
+	<meta name="author" content="Dylan Jones">	
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="index" title="Dylan Jones - The Home of Dylan Jones" href="https://dyl.anjon.es">
+	<style type="text/css">
+	html,body{margin:0px;padding:0px;text-align:right;font-family:Sans-Serif;font-size:14pt;}
+	body{min-width:960px;background-image:url('https://farm8.staticflickr.com/7029/6719813151_91c29d2114_o.png');background-repeat:repeat;}
+	h1,h2,h3,h4,p{margin:10px;padding:10px;background:white;color:black;display:inline-block;cursor:default;}
+	h1{font-size:48pt;}
+	h2{font-size:18pt;font-style:italic;}
+	p{font-size:14pt;text-align:left;}
+	img{vertical-align:middle;margin:5px;padding:5px;background:white;cursor:pointer;}
+	div{margin:5px;padding:0px;}
+	form{background:white;color:black;margin:5px;padding:10px;}
+	label,input,textarea{width:200px;display:block;}
+	#submit{background:white;color:black;border:2px solid gray;cursor:pointer;width:auto;}
+	#submit:hover{background:black;color:white;}
+	.left{float:left;width:300px;text-align:left;}
+	.right{float:right;width:580px;}
+	.image{height:auto;width:80px;}
+	#basket{color:white;font-weight:bold;text-align:center;position:fixed;top:5px;left:5px;width:36px;height:32px;cursor:pointer;z-layer:98;}
+	#basket-list{text-align:left;font-size:10pt;background:black;color:white;position:fixed;top:50px;left:5px;padding:5px;z-layer:97;display:none;}
+	#preview{z-layer:99;position:fixed;top:20px;left:20px;display:none;max-height:80%;}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript">
+		var item;
+		var basket = [];
+		
+		function startDrag(target) {
+			item = $(target).attr('id');
+			$('#basket').stop().animate({ width:'70', height:'62' },500);
+		}
+		function endDrag() {
+			$('#basket').stop().animate({ width:'36', height:'32' },500);
+		}
+		function drop() {
+			basket.push(item);
+			$('#basket-list').append('<tr><td>'+item+'</td></tr>');
+			$('#basket').html('Basket: '+basket.length);
+		}
+
+		$(document).ready(function() {
+			$('.image').hover(function() {
+				$(this).stop().animate({ width:'130' },500);
+			}, function() {
+				$(this).stop().animate({ width:'80' },500);
+			});			
+			$('.image').click(function() {
+				var src = $(this).attr('src');
+				$('#preview').remove();
+				$('html').append('<img id="preview" src="'+src+'" />');
+				$('#preview').fadeIn(500);
+				$('#preview').click(function() {
+					$('#preview').remove();
+				});			
+			});
+			$('#basket').toggle(function() {
+				$('#basket-list').slideDown(500);
+			}, function() {
+				$('#basket-list').slideUp(500);
+			});
+		});
+	</script>
+</head> 
+<body>
+	<h1>GMJ Jewellery</h1>
+	<h2>Beautifully crafted handmade jewellery personally made by Gemma Miles-Jones</h2>
+	<div class="left">
+		<p>See something you like? Drag it into the basket. Thinking of something a bit different? Get in touch.</p>	
+		<form id="request" method="post">
+			<label for="name">Name</label>
+			<input id="name" name="name" type="text" />
+			<label for="email">E-Mail</label>
+			<input id="email" name="email" type="email" />			
+			<label for="message">Message</label>
+			<textarea id="message" name="message"></textarea>
+			<input id="human" name="human" type="text" style="display:none;" />
+			<input id="submit" name="submit" type="submit" value="Send Message" />
+		</form>
+	</div>
+	<div class="right">
+		<div>
+			<img id="item:1" class="image" src="https://farm8.staticflickr.com/7165/6719812713_a775081038_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:5" class="image" src="https://farm8.staticflickr.com/7155/6719812631_c4b17f4a49_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:6" class="image" src="https://farm8.staticflickr.com/7012/6719812537_e5b42d0245_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:7" class="image" src="https://farm8.staticflickr.com/7012/6719812437_52a88c2537_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:8" class="image" src="https://farm8.staticflickr.com/7028/6719812341_0f30de5ce2_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+		</div>
+		<div>
+			<img id="item:11" class="image" src="https://farm8.staticflickr.com/7033/6719812253_ee08360b83_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:12" class="image" src="https://farm8.staticflickr.com/7172/6719812163_0dcd8cc4cf_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:13" class="image" src="https://farm8.staticflickr.com/7164/6719812063_8c41f711b3_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:14" class="image" src="https://farm8.staticflickr.com/7018/6719811843_431594aff4_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:15" class="image" src="https://farm8.staticflickr.com/7017/6719811765_971a883994_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+		</div>
+		<div>
+			<img id="item:16" class="image" src="https://farm8.staticflickr.com/7007/6719811677_b40ec2ed9d_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:17" class="image" src="https://farm8.staticflickr.com/7013/6719811591_bebf04fae6_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:18" class="image" src="https://farm8.staticflickr.com/7169/6719811509_3894dc6696_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:19" class="image" src="https://farm8.staticflickr.com/7010/6719811383_a00bc87145_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:21" class="image" src="https://farm8.staticflickr.com/7005/6719811297_4eb64243ba_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+		</div>
+		<div>
+			<img id="item:2" class="image" src="https://farm8.staticflickr.com/7164/6719810521_1fbecbc38d_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:3" class="image" src="https://farm8.staticflickr.com/7143/6719810669_fcd8da74da_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:4" class="image" src="https://farm8.staticflickr.com/7146/6719810887_516d8e48eb_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:9" class="image" src="https://farm8.staticflickr.com/7017/6719810975_f4984bb8cf_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+			<img id="item:10" class="image" src="https://farm8.staticflickr.com/7159/6719811201_6f2cc80f1a_s.jpg" draggable="true" ondragstart="startDrag(this);" ondragend="endDrag();">
+		</div>
+	</div>
+	<br style="clear:both;">
+	<div id="basket" ondrop="drop()" ondragenter="return false" ondragover="return false">Basket: 0</div>
+	<table id="basket-list"></table>
+</body>
+</html>

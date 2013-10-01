@@ -1,0 +1,15 @@
+<% provide(:title, "Tweets") %>
+<% provide(:description, "A record of all my tweets.") %>
+
+<h1>Tweets</h1>
+<ol class="breadcrumb">
+	<li class="active">Tweets</li>
+	<li><%= link_to 'Statistics', tweets_stats_path %></li>
+	<li><%= link_to 'Map', tweets_map_path %></li>
+</ol>
+
+<% @tweets.each do |tweet| %>
+  <%= render 'tweet', tweet: tweet %>
+<% end %>
+
+<%= paginate @tweets %>

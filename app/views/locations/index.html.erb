@@ -1,0 +1,20 @@
+<% provide(:title, "Location") %>
+<% provide(:description, "Track my location via my phone. If you like stalking me, this will make it very easy for you.") %>
+<% provide(:map, "map") %>
+
+<h1>Location</h1>
+<section class="row">
+	<article class="col-md-4">
+	<% @locations.each do |location| %>
+		<ul class="unstyled">
+			<li><%= link_to location.text, location %></li>
+		</ul>
+	<% end %>
+	<%= paginate @locations %>
+	</article>
+	<article class="col-md-8">
+		<div id="map" style="width:100%;height:600px"></div>
+	</article>
+</section>
+
+<%= render 'common/map_polygon' %>

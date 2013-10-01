@@ -1,0 +1,11 @@
+<% provide(:title, "iPhone Location Data:: #{@location.lat}, #{@location.lng}") %>
+<% provide(:description, "This is one of the location data points collected on my old iPhone.") %>
+<% provide(:map, "map") %>
+
+<h1><%= "#{@location.lat}, #{@location.lng}"%></h1>
+
+<div id="map" style="width:100%;height:300px"></div>
+
+<%= render 'common/map_point' %>
+
+<%= link_to 'Back', iphone_locations_path %>

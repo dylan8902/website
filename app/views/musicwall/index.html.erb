@@ -1,0 +1,66 @@
+<% provide(:title, "Music Wall") %>
+<% provide(:description, "Discover and hear what music your friends like through their Facebook profiles.") %>
+
+<h1>Music Wall</h1>
+<article class="well">
+		<h4>Discover and hear what music your facebook friends like.</h4>
+		<button id="go" class="btn btn-danger">Get Facebook Data</button>	
+</article>
+
+<div id="player"></div>
+<div id="result"></div>
+
+<script>
+	$(document).ready(function() {
+		$(document).on('click', '.artist', function(e) {
+			var artistid = $(this).attr('data-artist-id');
+			var artist = $(this).attr('data-artist-name');
+			var friendid = $(this).attr('data-friend-id');
+			var friend = $(this).attr('data-friend-name');
+			$.ajax({
+					type     : 'GET',
+					dataType : 'jsonp',
+					url      : 'https://gdata.youtube.com/feeds/api/videos',
+					data     : 'alt=json&format=5&q='+artist,
+					success  : 
+						function(reply) {
+							var result = reply.feed.entry[0].id.$t;
+							var vidid = result.replace('http://gdata.youtube.com/feeds/api/videos/','');
+							$('#player').html('<object width="480" height="385"><param name="movie" value="https://www.youtube.com/v/'+vidid+'&hl=en_GB&fs=1&"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="https://www.youtube.com/v/'+vidid+'&hl=en_GB&fs=1&" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object>');
+							$('#player').append('<section><h2>'+artist+' suggested by <img src="https://graph.facebook.com/'+friendid+'/picture"> <a href="http://www.facebook.com/profile.php?id='+friendid+'">'+friend+'</a></h2></section>');
+						}
+				});	
+		});
+		if(window.location.hash.length==0) {
+			$('#go').click(function(e) {
+				e.preventDefault();
+				window.location = 'https://www.facebook.com/dialog/oauth?client_id=117803191572717&redirect_uri='+window.location+'&response_type=token&scope=friends_interests,user_likes,friends_likes';
+			});
+		}
+		else {
+			$('#go').html('Fetching your Facebook Data, just a sec...').attr('disabled','disabled');
+			$.ajax({
+				type     : 'GET',
+				dataType : 'jsonp',
+				url      : 'https://graph.facebook.com/me/friends',
+				data     : 'fields=music,name&limit=60&'+window.location.hash.substring(1),
+				success  : 
+					function(reply){
+						if(reply.data.length > 1) {
+							$('#result').html('');
+							for(var i in reply.data) {
+								var friend = reply.data[i];
+								if(typeof friend.music != "undefined") {
+									for(var a in friend.music.data) {
+										var artist = friend.music.data[a];
+										$('#result').append('<img src="http://graph.facebook.com/'+artist.id+'/picture" title="'+friend.name+' - '+artist.name+'" class="artist" data-artist-name="'+artist.name+'" data-artist-id="'+artist.id+'" data-friend-name="'+friend.name+'" data-friend-id="'+friend.id+'">');
+									}
+								}
+							}
+							$('#go').remove();
+						}
+					}
+			});
+		}
+	});
+</script>

@@ -1,0 +1,54 @@
+<% provide(:title, "Friend Map") %>
+<% provide(:description, "All your Facebook friends' hometowns plotted on a map.") %>
+<% provide(:map, "map") %>
+
+<h1>Friends Map</h1>
+<article class="well">
+		<h4>Discover where all your friends are from.</h4>
+		<button id="go" class="btn btn-danger">Get Facebook Data</button>	
+</article>
+
+<div id="map" style="width:100%;height:600px"></div>
+
+<script>
+	$(document).ready(function() {
+		var map = new L.Map('map');
+		var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/778f546f046c4a63849269eb53d92a84/997/256/{z}/{x}/{y}.png', {
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+			maxZoom: 18
+		});
+		var center = new L.LatLng(20, 10);
+		map.setView(center, 2).addLayer(cloudmade);
+
+		if(window.location.hash.length==0) {
+			$('#go').click(function(e) {
+				e.preventDefault();
+				window.location = 'https://www.facebook.com/dialog/oauth?client_id=117803191572717&redirect_uri='+window.location+'&response_type=token&scope=friends_hometown';
+			});
+		}
+		else {
+			$('#go').html('Fetching your Facebook Data, just a sec...').attr('disabled','disabled');
+			$.ajax({
+				type     : 'GET',
+				dataType : 'jsonp',
+				url      : 'https://graph.facebook.com/fql',
+				data     : 'q=SELECT%20uid%2C%20name%2C%20hometown_location%20FROM%20user%20%0AWHERE%20(uid%20%3D%20me()%0AOR%20uid%20IN%20(SELECT%20uid2%20FROM%20friend%20WHERE%20uid1%20%3D%20me()))%20%0AAND%20hometown_location%20!%3D%20%22%22&'+window.location.hash.substring(1),
+				success  : 
+					function(reply){
+						if(reply.data.length > 1) {
+							$('#result').html('');
+							var markers = L.markerClusterGroup();
+							for(var i in reply.data) {
+								var friend = reply.data[i];
+								var marker = L.marker([friend.hometown_location.latitude, friend.hometown_location.longitude]);
+								marker.bindPopup('<b>' + friend.name + '</b>: ' + friend.hometown_location.name);
+								markers.addLayer(marker);
+							}
+							map.addLayer(markers);
+							$('#go').remove();
+						}
+					}
+			});
+		}
+	});
+</script>

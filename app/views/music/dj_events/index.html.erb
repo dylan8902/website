@@ -1,0 +1,10 @@
+<% provide(:title, "Music:: DJ:: Events") %>
+<h1>DJ Events</h1>
+
+<% @dj_events.each do |dj_event| %>
+<article>
+  <h4><%= link_to dj_event.title, [:music, dj_event] %></h4>
+</article>
+<% end %>
+
+<%= paginate @dj_events %>

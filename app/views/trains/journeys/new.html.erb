@@ -1,0 +1,12 @@
+<% provide(:title, "Train Journey:: New") %>
+<% provide(:description, "Store a new train journey you are on.") %>
+
+<h1>New Journey</h1>
+
+<section class="row">
+	<article class="col-md-5">
+		<%= render 'form' %>
+	</article>
+</section>
+
+<%= link_to 'Back', train_journeys_path %>

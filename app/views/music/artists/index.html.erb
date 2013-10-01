@@ -1,0 +1,13 @@
+<% provide(:title, "Music:: Artist") %>
+<h1>Artist</h1>
+
+<form class="input-append">
+  <input class="span2" name="q" type="text" placeholder="Find an artist" value="<%= params[:q] unless params[:q].nil? %>">
+  <input class="btn" type="submit">Search</button>
+</form>
+
+<% @artists.each do |artist| %>
+<article>
+  <h4><%= link_to artist['name'], "/music/artists/#{artist['id']}" %></h4>
+</article>
+<% end %>

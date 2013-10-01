@@ -3,7 +3,7 @@ class Photo < ActiveRecord::Base
 
   def self.update page = 1
     url = "http://api.flickr.com/services/rest?method=flickr.people.getPublicPhotos" +
-          "&api_key=385182ecc79ccb2eda2bfa4585e40e11&user_id=43191158@N06" +
+          "&api_key=" + ENV['FLICKR_API_KEY'] + "&user_id=43191158@N06" +
           "&extras=description,url_sq,url_o,machine_tags,date_upload,geo" +
           "&per_page=100&format=json&page=#{page}"
     response = RestClient.get url

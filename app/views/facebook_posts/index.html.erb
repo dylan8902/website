@@ -1,0 +1,15 @@
+<% provide(:title, "Facebook Posts") %>
+<% provide(:description, "A record of my posts on Facebook.") %>
+
+<h1>Facebook Posts</h1>
+<ol class="breadcrumb">
+  <li class="active">Facebook Posts</li>
+  <li><%= link_to 'Statistics', facebook_posts_stats_path %></li>
+  <li><%= link_to 'Map', facebook_posts_map_path %></li>
+</ol>
+
+<% @facebook_posts.each do |facebook_post| %>
+  <%= render 'facebook_post', :facebook_post => facebook_post %>
+<% end %>
+
+<%= paginate @facebook_posts %>

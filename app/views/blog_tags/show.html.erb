@@ -1,0 +1,12 @@
+<% provide(:title, "Blog") %>
+<h1><%= @tag.tag %></h1>
+
+<section class="row">
+	<article class="span8">
+		<% @tag.blog_posts.each do |blog_post| %>
+			<%= render "blog_posts/blog_post", blog_post: blog_post %>
+		<% end %>
+	</article>
+</section>
+
+<%= link_to "Back", blog_posts_path %>

@@ -1,0 +1,57 @@
+<%
+  six_td = "<td class=\"comment\">&nbsp;</td><td class=\"comment\">&nbsp;</td><td class=\"comment\">&nbsp;</td><td class=\"comment\">&nbsp;</td><td class=\"comment\">&nbsp;</td><td class=\"comment\">&nbsp;</td>"
+  six_td_no_border = "<td class=\"comment no-border\">&nbsp;</td><td class=\"comment no-border\">&nbsp;</td><td class=\"comment no-border\">&nbsp;</td><td class=\"comment no-border\">&nbsp;</td><td class=\"comment no-border\">&nbsp;</td><td class=\"comment no-border\">&nbsp;</td>"
+%>
+<html>
+  <head>
+    <style type="text/css" media="all">
+      body{font-family:'Arial';}
+      h1{text-align:center;font-size:18pt;padding:2px;margin:2px;text-decoration:underline;}
+      table{width:100%;}
+      td{border:1px solid black;padding:3px;font-size:8pt;zoom:1}
+      .point{width:220px;}
+      .comment{width:120px;border:1px solid black;}
+      #names{text-align:right;border:0;}
+      .title{background-color:#ebebeb;}
+      .no-border{border:0;}
+      p{font-size:12pt;}
+    </style>
+  </head>
+  <body>
+    <h1>Guided Reading Record Sheet</h1>
+    <table>
+	  <tr>
+	    <td class="no-border"><p>Group:</p></td>
+	    <td class="no-border"><p>Working towards level:</p></td>
+	    <td class="no-border"></td>
+	  </tr>
+	  <tr>
+	  	<td class="no-border"><p>Term/Week:</p></td>
+	  	<td class="no-border"><p>Date:</p></td>
+	  	<td class="no-border"><p>Teacher / TA</p></td>
+	  </tr>
+	  <tr>
+	  	<td class="no-border"><p>Book Title:</p></td>
+	  	<td class="no-border"></td>
+	  	<td class="no-border"></td>
+	  </tr>
+	  <tr>
+	  	<td id="names"><b>NAMES</b></td>
+	  	<%= raw six_td %>
+	  </tr>
+      <% @table.each do |t| %>
+	  <tr class="title">
+        <td class="no-border"><b style="margin-right:5px;">AF<%= t['af'] %> - L<%= t['level'] %></b> <%= t['row']['title'] %></td>
+        <%= raw six_td_no_border %>
+	  </tr>
+	  <% t['row']['points'].each do |point| %>
+	  <tr>
+	  	<td class="point"><%= point %></td>
+		<%= raw six_td %>
+	  </tr>
+      <% end %>
+      <% end %>
+    </table>
+    <script>window.print();</script>
+  </body>
+</html>

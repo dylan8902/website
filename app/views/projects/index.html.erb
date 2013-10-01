@@ -1,0 +1,36 @@
+<% provide(:title, "Stuff") %>
+<% provide(:description, "Things that I have created.") %>
+
+<h1>Stuff</h1>
+
+<nav class="btn-group">
+	<% css = "btn" %>
+	<% css += " btn-primary" if @order == "created_at DESC" %>
+	<%= link_to "Most Recent", projects_path + "?order_by=created_at", :class => css %>
+	<% css = "btn" %>
+	<% css += " btn-primary" if @order == "hits DESC" %>
+	<%= link_to "Most Popular", projects_path + "?order_by=hits", :class => css %>
+	<% css = "btn" %>
+	<% css += " btn-primary" if @order == "title ASC" %>
+	<%= link_to "A-Z", projects_path + "?order_by=title", :class => css %>
+</nav>
+
+<% @projects.each_with_index do |project, i| %>
+	<%= "<section class=\"row\">".html_safe if i == 0 or i % 3 == 0 %>
+	<article class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><%= link_to raw(project.title), project.url %></h3>
+			</div>
+			<div class="panel-body">
+				<a class="thumbnail" href="<%= project.url %>"><img src="/assets/project<%= project.id %>.png" alt="<%= project.title %>"></a>
+				<p>
+					<%= raw project.description %>
+				</p>
+			</div>
+		</div>
+	</article>
+	<%= "</section>".html_safe if i == 2 or (i-2) % 3 == 0 or project == @projects.last  %>
+<% end %>
+
+<%= paginate @projects %>

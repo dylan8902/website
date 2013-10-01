@@ -1,0 +1,15 @@
+<% provide(:title, "Episode:: #{@episode.title}") %>
+<% provide(:description, "I watched #{@episode.title}. #{@episode.description}") %>
+<% provide(:image, @episode.image) %>
+
+<h1>Episodes</h1>
+<ol class="breadcrumb">
+  <li><%= link_to 'Episodes', episodes_path %></li>
+  <li class="active"><%= @episode.title %></li>
+  <li><%= link_to 'Statistics', episodes_stats_path %></li>
+</ol>
+
+<h2><%= @episode.title %></h2>
+<img src="<%= @episode.image %>" alt="<%= @episode.title %>">
+<h6><%= @episode.description %></h6>
+<%= link_to 'Back', episodes_path %>

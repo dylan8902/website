@@ -1,0 +1,39 @@
+<% provide(:title, "Drop") %>
+<% provide(:description, "Drag and drop files onto this page to get a quick sharing link.") %>
+
+<h1>Drop</h1>
+<article class="well">
+	<h4>Drag files to upload and share.</h4>
+	<p>Drag any file into the drop zone, you will then be given a link to share.</p>
+</article>
+
+<section id="drop">Drag and Drop Files Here</section>
+
+<script>
+	// <![CDATA[
+	$(document).ready(function() {
+		var holder = document.getElementById('drop');
+		holder.ondragover = function () { this.className = 'hover'; return false; };
+		holder.ondragend = function () { this.className = ''; return false; };
+		holder.ondragleave = function () { this.className = ''; return false; };
+		holder.ondrop = function(e) {
+			e.preventDefault();
+			this.className = '';
+			var file = e.dataTransfer.files[0];
+			var reader = new FileReader();
+			$('#drop').html('Reading File...');
+			reader.onload = function (event) {
+				$('#drop').html('Uploading...');
+				$.post('<%= drops_path %>.json', { file: file.name+';'+event.target.result }, function(data) {
+					if(data.drop!='failed')
+						$('#drop').html('<h2>Success!</h2><p>You can access your file online: <a href="<%= drops_path %>/'+data.drop+'" target="_blank"><%= drops_path %>/'+data.drop+'</a></p>');
+					else
+						$('#drop').html('<h2>Failed!</h2><p>Sorry, that file type may not be supported</p>');
+				});
+			};
+			reader.readAsDataURL(file);
+			return false;
+		};
+	});
+	//]]!>
+</script>

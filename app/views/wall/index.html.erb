@@ -1,0 +1,248 @@
+<% provide(:title, "Bring on the Wall") %>
+<h1>Bring on the Wall</h1>
+
+<section class="container">
+	<p>a game to test your knowledge of your friends' music tastes</p>
+	<h2 id="artist"></h2>
+	<div id="wall"></div>
+	<h3 id="status"></h3>
+	<p id="bottom"><span id="score">Score: 0</span> | <span id="level">Level: 1</span></p>
+	<p id="player"></p>
+	<footer>
+		<p>Made in 24-hours at <a href="http://london.musichackday.org/2011/">Music Hackday London 2011</a> by <a href="https://dyl.anjon.es">Dylan</a></p>
+	</footer>
+</section>
+
+<script type="text/javascript"> 
+	var access_token;
+	var name;
+	var facebook_id;
+	var audio = new Audio();
+	var friends = [];
+	var hotttnesss = [];
+	var familiarity = [];
+	var level = 1;
+	var score = 0;
+	function getData(data) {
+		for(var i in data.data) {
+			if(typeof data.data[i].music!='undefined') {
+				data.data[i].music.data = $.shuffle(data.data[i].music.data);
+				friends.push(data.data[i]);
+			}
+		}
+		$('#status').html('OK, Are you ready?');
+		$('#status').after('<button id="go" class="btn large primary">Yes I Am!</button>');
+	}
+	function createLevel() {
+		$('#wall').html('');
+		var max = level*4;
+		var correct = Math.floor(Math.random()*max);
+		friends = $.shuffle(friends);
+		for(var i in friends) {
+			if(i<max) {
+				if(i==correct) {
+					var classname = 'correct';
+					$('#artist').html('Who likes '+friends[i].music.data[0].name+'?');
+					getAudio(friends[i].music.data[0].name);
+				}
+				else
+					var classname = 'wrong';
+				$('#wall').append('<img src="https://graph.facebook.com/'+friends[i].id+'/picture?type=square" class="'+classname+'" title="'+friends[i].name+'" />');
+			}
+		}
+		$('#wall').append('<p><button id="skip" class="skip btn small" title="Skip">Skip this one</button></p>');
+	}
+	function getAudio(artist) {
+		$('#player').html('Searching for songs by '+artist);
+		$.ajax({
+			type     : 'GET',
+			dataType : 'jsonp',
+			url      : 'https://developer.echonest.com/api/v4/artist/audio',
+			data     : 'api_key=XACSR313AVJ9RJHE1&name='+artist+'&format=jsonp&results=1&start=0',
+			success  : 
+				function(reply){ 
+				   if(typeof reply.response.audio != 'undefined') {
+					if(typeof reply.response.audio[0] != 'undefined') {
+					 if(typeof reply.response.audio[0].url != 'undefined') {
+					  if(reply.response.audio[0].url.length>2) {
+						audio.pause();
+						audio.src = reply.response.audio[0].url;
+						audio.play();
+						audio.volume = 0.6;
+						$('#player').html('Loading: '+reply.response.audio[0].artist+" - "+reply.response.audio[0].title);
+						$('#player').html('<img src="/images/notes.png" /> Now Playing: '+reply.response.audio[0].artist+" - "+reply.response.audio[0].title);
+					  }
+					 }
+					}
+				   }
+				   else
+						$('#player').html('No tracks available');
+				},
+			error :
+				function(xml,status) {
+					alert('audio get fail');
+				}
+		});
+		$.ajax({
+			type     : 'GET',
+			dataType : 'jsonp',
+			url      : 'https://developer.echonest.com/api/v4/artist/hotttnesss',
+			data     : 'api_key=XACSR313AVJ9RJHE1&name='+artist+'&format=jsonp',
+			success  : 
+				function(reply) {
+					if(typeof reply.response.artist != 'undefined')
+						hotttnesss.push(reply.response.artist.hotttnesss);
+				},
+			error :
+				function(xml,status) {
+					//alert('hotttnesss get fail');
+				}
+		});
+		$.ajax({
+			type     : 'GET',
+			dataType : 'jsonp',
+			url      : 'https://developer.echonest.com/api/v4/artist/familiarity',
+			data     : 'api_key=XACSR313AVJ9RJHE1&name='+artist+'&format=jsonp',
+			success  : 
+				function(reply) {
+					if(typeof reply.response.artist != 'undefined')
+						familiarity.push(reply.response.artist.familiarity);
+				},
+			error :
+				function(xml,status) {
+					//alert('familiarity get fail');
+				}
+		});
+		return;
+	}
+	function highscores() {
+		$('#status').remove();
+		$('#wall').remove();
+		$('#bottom').remove();
+		$('#player').remove();
+		$.ajax({
+			type     : 'POST',
+			dataType : 'jsonp',
+			url      : '/wall',
+			data     : 'name='+name+'&facebook_id='+facebook_id+'&score='+score+'auth=',
+			success  : 
+				function(reply){
+					$('#artist').html('Congratulations '+name+', you got '+score);
+					$('#artist').after('<h2 class="title">HIGHSCORES</h2><table id="highscores"></table><p><button class="btn primary large" id="replay">Play Again</button>');
+					for(var i in reply)
+						$('#highscores').append('<tr><td>'+(Number(i)+1)+'</td><td><img src="https://graph.facebook.com/'+reply[i].facebook_id+'/picture?type=square" /></td><td><a href="https://www.facebook.com/profile.php?id='+reply[i].facebook_id+'" target="_blank" title="Facebook Profile">'+reply[i].name+'</a></td><td style="text-align:right;">'+reply[i].score+'</td></tr>');
+					var sum = 0;
+					for(var i = 0; i<hotttnesss.length; i++)
+						sum += hotttnesss[i];
+					avg_hotttnesss = Math.round(sum/hotttnesss.length*100);
+					sum = 0;
+					for(var i = 0; i<familiarity.length; i++)
+						sum += familiarity[i];
+					avg_familiarity = Math.round(sum/familiarity.length*100);
+					var string = '<h2 class="title">STATS</h2><p>From that sample, we can tell you a few things about you&#39;re friends&#39; taste in music</p>';
+					string = string + '<figure><img src="https://chart.googleapis.com/chart?cht=p&chd=t:'+avg_hotttnesss+','+(100-avg_hotttnesss)+'&chs=200x200" /><figcaption><p>Hotttnesss: '+avg_hotttnesss+'% HOT RIGHT NOW!</p></figcaption></figure>';
+					string = string + '<figure><img src="https://chart.googleapis.com/chart?cht=p&chd=t:'+avg_familiarity+','+(100-avg_familiarity)+'&chs=200x200&chco=0000FF" /><figcaption><p>Familiarity:  '+avg_familiarity+'% CURRENTLY WELL KNOWN!</p></figcaption></figure>'
+					
+					$('#highscores').after(string);
+				},
+			error :
+				function(xml,status) {
+					alert('post highscore fail');
+				}
+		});
+	}
+	average = function(a){
+		var r = {mean: 0, variance: 0, deviation: 0}, t = a.length;
+		for(var m, s = 0, l = t; l--; s += a[l]);
+		for(m = r.mean = s / t, l = t, s = 0; l--; s += Math.pow(a[l] - m, 2));
+		return r.deviation = Math.sqrt(r.variance = s / t), r;
+	}
+	$(document).ready(function() {
+		(function($){
+			$.fn.shuffle = function() {
+				return this.each(function(){
+					var items = $(this).children().clone(true);
+					return (items.length) ? $(this).html($.shuffle(items)) : this;
+				});
+			}
+			$.shuffle = function(arr) {
+				for(var j, x, i = arr.length; i; j = parseInt(Math.random() * i), x = arr[--i], arr[i] = arr[j], arr[j] = x);
+				return arr;
+			}
+		})(jQuery);
+		var appID = "310866282271332";
+		if (window.location.hash.length == 0) {
+			var path = 'https://www.facebook.com/dialog/oauth?';
+			var queryParams = ['client_id=' + appID,'redirect_uri=' + window.location,'response_type=token','scope=friends_interests,user_likes,friends_likes'];
+			var query = queryParams.join('&');
+			window.location = path + query;
+		}
+		else if (window.location.hash.substring(1)=='highscores')
+			highscores(false);
+		else {
+			var path = "https://graph.facebook.com/me/friends?";
+			access_token = window.location.hash.substring(1);
+			var queryParams = [access_token,'fields=music,name', 'callback=getData', 'limit=250'];
+			var query = queryParams.join('&');
+			var script = document.createElement('script');
+			$('#status').html('Fetching your Facebook Data, just a sec...');
+			var url = path + query;
+			//url = '/friends.js';
+			script.src = url;
+			document.body.appendChild(script);        
+			$.ajax({
+				type     : 'GET',
+				dataType : 'jsonp',
+				url      : 'https://graph.facebook.com/me',
+				data     : access_token,
+				success  : 
+					function(reply){ 
+						name =  reply.name;
+						facebook_id = reply.id;
+					},
+				error :
+					function(xml,status) {
+						alert('get fail');
+					}
+			});
+		}
+
+		$('#go').live('click', function() {
+			$(this).remove();
+			$('#status').html('');
+			createLevel();
+		});
+		$('.skip').live('click', function() {
+			score -= 50*level;
+			$('#score').html('Score: '+score)
+			level++;
+			if(level==8)
+				highscores();
+			$('#level').html('Level: '+level)
+			createLevel();
+			var buzz = new Audio('/uploads/buzz.mp3');
+			buzz.play();
+		});
+		$('.correct').live('click', function() {
+			score += 20*level;
+			$('#score').html('Score: '+score)
+			level++;
+			if(level==8)
+				highscores();
+			$('#level').html('Level: '+level)
+			createLevel();
+			var ding = new Audio('/uploads/ding.mp3');
+			ding.play();
+		});
+		$('.wrong').live('click', function() {
+			$(this).remove();
+			score = score-20;
+			$('#score').html('Score: '+score);
+			var buzz = new Audio('/uploads/buzz.mp3');
+			buzz.play();
+		});
+		$('#replay').live('click', function() {
+			window.location = '/wall';
+		});
+	});
+   </script>

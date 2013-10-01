@@ -1,0 +1,12 @@
+<% provide(:title, "Account:: Edit") %>
+<% provide(:description, "Edit the #{@account.name} credential.") %>
+
+<h1>Editing Account</h1>
+
+<section class="row">
+	<article class="col-md-5">
+		<%= render 'form' %>
+	</article>
+</section>
+
+<%= link_to 'Back', accounts_path %>

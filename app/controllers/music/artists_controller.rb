@@ -1,0 +1,90 @@
+require 'rest_client'
+class Music::ArtistsController < ApplicationController
+
+  # GET /music/artist
+  # GET /music/artist.json
+  def index
+    Project.find(14).hit
+  
+    @artists = Array.new
+    
+    unless params[:q].nil? or params[:q].empty?
+      response = RestClient.get "http://musicbrainz.org/ws/2/artist/?fmt=json&limit=7&query=#{URI::escape(params[:q])}"
+      if response.code == 200
+        json = JSON.parse response.body
+        if json['artist']
+          @artists = json['artist']
+        end
+      end
+    end
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @artists, :callback => params[:callback] }
+      format.xml { render xml: @artists }
+    end
+  end
+
+  # GET /music/artist/1234-567ab-cdef-0012
+  # GET /music/artist/1234-567ab-cdef-0012.json
+  # GET /music/artist/1234-567ab-cdef-0012.xml
+  def show
+    Project.find(14).hit
+
+    @artist = Hash.new
+    
+    filename = Rails.root.join("json", "#{params[:id]}.json")
+    if File.exists?(filename) and File.mtime(filename) > Time.now - 1.week      
+      @artist = JSON.load filename
+    else
+      
+      response = RestClient.get "http://www.bbc.co.uk/music/artists/#{URI::escape(params[:id])}.json"
+      if response.code == 200
+        json = JSON.parse response.body
+        if json['artist']
+          @artist = json['artist']
+        end
+      end
+      
+      response = RestClient.get "http://developer.echonest.com/api/v4/artist/profile?api_key=XACSR313AVJ9RJHE1&id=musicbrainz:artist:#{URI::escape(params[:id])}&format=json&bucket=id:7digital-UK&bucket=images&bucket=songs"
+      if response.code == 200
+        json = JSON.parse response.body
+        @artist['echonest'] = json
+      end
+      
+      begin
+        seven = @artist['echonest']['response']['artist']['foreign_ids'][0]['foreign_id'].gsub('7digital-UK:artist:','')
+      rescue
+        seven = nil
+      end
+      
+      unless seven.nil?
+        response = RestClient.get "http://api.7digital.com/1.2/artist/releases?artistid=#{seven}&oauth_consumer_key=7dtahps5452k&country=GB", accept: "application/json"
+        if response.code == 200
+          json = JSON.parse response.body
+          @artist['7digital'] = json
+        end
+      end
+      
+      response = RestClient.get "http://api.songkick.com/api/3.0/artists/mbid:#{URI::escape(params[:id])}/calendar.json?apikey=qF6dIhCO7OeobhpC"
+      if response.code == 200
+        json = JSON.parse response.body
+        if json['artist']
+          @artist = json['songkick']
+        end
+      end
+      
+      File.open(filename, "w") do |f|
+        f.write(@artist.to_json)
+      end
+
+    end
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @artist, callback: params[:callback] }
+      format.xml { render xml: @artist }
+    end
+  end
+
+end

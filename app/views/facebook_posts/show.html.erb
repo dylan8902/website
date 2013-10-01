@@ -1,0 +1,14 @@
+<% provide(:title, "Facebook Post:: #{@facebook_post.text}") %>
+<% provide(:description, "I posted something on Facebook: #{@facebook_post.text}") %>
+
+<h1>Facebook Post</h1>
+<ol class="breadcrumb">
+  <li><%= link_to 'Facebook Posts', facebook_posts_path %></li>
+  <li class="active">Facebook Post</li>
+  <li><%= link_to 'Statistics', facebook_posts_stats_path %></li>
+  <li><%= link_to 'Map', facebook_posts_map_path %></li>
+</ol>
+
+<%= render 'facebook_post', :facebook_post => @facebook_post %>
+
+<%= link_to 'Back', facebook_posts_path %>

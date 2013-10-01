@@ -1,0 +1,12 @@
+<% provide(:title, "Train Journey:: Edit") %>
+<% provide(:description, "Edit the #{@journey.to_s}.") %>
+
+<h1><%= @journey.to_s %></h1>
+
+<section class="row">
+	<article class="col-md-5">
+		<%= render 'form' %>
+	</article>
+</section>
+
+<%= link_to 'Back', trains_journeys_path %>

@@ -1,0 +1,53 @@
+<% provide(:title, "BBC ❤s Twitter".html_safe) %>
+<% provide(:description, "The BBC loves using Twitter as it's source of quotes, saves contacting people") %>
+
+<h1>BBC &#10084;s Twitter</h1>
+
+<p class="well">
+	The BBC loves twitter, their journalists find Twitter a great source of 'information'. Here are recent headlines that mention 'Twitter' or 'Tweet' in their body.
+	The BBC isn't supposed to advertise, but to me, they are <strong title="Pun intended.">mention</strong>ing the Twitter brand a little too frequently.
+</p>
+
+<section class="row">
+	
+	<article class="col-md-6">
+		
+		<h4>Todays Headlines</h4>
+		<ul class="list-group">
+		<% @latest.each do |story| %>
+			<li class="list-group-item">
+				<%= icon "twitter" %>
+				<strong><%= story.count %></strong>
+				<%= link_to story.title, story.link %>
+			</li>
+		<% end %>
+		</ul>
+		
+		<h4>Highest Mention Count</h4>
+		<ul class="list-group">
+		<% @most.each do |story| %>
+			<li class="list-group-item">
+				<%= icon "twitter" %>
+				<strong><%= story.count %></strong>
+				<%= link_to story.title, story.link %>
+			</li>
+		<% end %>
+		</ul>
+
+	</article>
+	
+	<article class="col-md-6">
+
+		<aside class="jumbotron">
+			<h2>Total of <%= @count %> twitter mentions</h2>
+			<p>Since <%= BbcTwitter.first.created_at unless BbcTwitter.first.nil? %></p>
+		</aside>
+		
+		<h4>How many mentions in the headlines per day</h4>
+		<%= jqplot 150, 400, [@graph], Statistics.bar_chart_options %>
+
+	</article>
+
+</section>
+
+

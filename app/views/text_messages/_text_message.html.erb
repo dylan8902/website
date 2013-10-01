@@ -1,0 +1,9 @@
+<blockquote class="text_message<%= " sent" if text_message.sent? %>">
+	<p>
+		<%= raw linkify text_message.text %>
+	</p>
+	<small class="geo">
+		<%= link_to text_message.contact, text_message_contact_path(text_message.contact) %>
+		<%= link_to timestamp(text_message.created_at), text_message %>
+	</small>
+</blockquote>

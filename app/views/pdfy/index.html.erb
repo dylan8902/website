@@ -1,0 +1,45 @@
+<% provide(:title, "PDFy") %>
+<% provide(:description, "A drag and drop tool to generate PDF documents from images.") %>
+
+<h1>PDFy</h1>
+<article class="well">
+	<h4>Generate a PDF document from images.</h4>
+	<p>Drag images into the drop zone, each will then be printed on a separate page within the document. I suggest you make each image A4 potrait size to get the best results.</p>
+	<form method="post">
+		<input type="submit" value="Generate PDF" class="btn btn-success">
+		<input type="hidden" name="image[]">
+	</form>
+</article>
+
+<section id="drop">Drag and Drop Image Here</section>
+
+<script>
+	// <![CDATA[
+	$(document).ready(function() {
+		var holder = document.getElementById('drop');
+		holder.ondragover = function() { this.className = 'hover'; return false; };
+		holder.ondragend = function() { this.className = ''; return false; };
+		holder.ondrop = function(e) {
+			e.preventDefault();
+			this.className = '';
+			var file = e.dataTransfer.files[0];
+			var reader = new FileReader();
+			$('#drop').html('Reading File...');
+			reader.onload = function(event) {
+				$('#drop').html('Uploading...');
+				$.post('<%= drops_path %>.json', { file: file.name+';'+event.target.result }, function(data) {
+					if(data.drop=='failed')
+						$('#drop').html('<h3>Sorry!</h3><h5>That image failed to upload.</h5>');
+					else {
+						$('form').append('<input type="hidden" name="image[]" value="'+data.drop+'">');
+						$('#drop').before('<img src="<%= drops_path %>/'+data.drop+'" class="page">');
+						$('#drop').html('Add Page');
+					}
+				});
+			};
+			reader.readAsDataURL(file);
+			return false;
+		};
+	});
+	//]]!>
+</script>

@@ -1,0 +1,44 @@
+<% provide(:title, "Browser Wars") %>
+<% provide(:description, "Who is winning the real browser war - who has the most followers on Twitter?") %>
+
+<h1>Browser Wars</h1>
+
+<p class="well">
+	Who is winning the real browser war - who has the most followers on Twitter?
+</p>
+
+<section class="row">
+	<article class="col-md-1"></article>
+	<article class="col-md-2 text-center">
+		<h3><a href="http://twitter.com/opera">Opera</a></h3>
+		<p><%= @browsers[0]['followers_count'] %></p>
+	</article>
+	<article class="col-md-2 text-center">
+		<h3><a href="http://twitter.com/firefox">Firefox</a></h3>
+		<p><%= @browsers[1]['followers_count'] %></p>
+	</article>
+	<article class="col-md-2 text-center">
+		<h3><a href="http://twitter.com/ie">IE</a></h3>
+		<p><%= @browsers[2]['followers_count'] %></p>
+	</article>
+	<article id="chrome-count" class="col-md-2 text-center">
+		<h3><a href="http://twitter.com/googlechrome">Chrome</a></h3>
+		<p><%= @browsers[3]['followers_count'] %></p>
+	</article>
+	<article id="safari-count" class="col-md-2 text-center">
+		<h3><a href="http://twitter.com/applesafari">Safari</a></h3>
+		<p><%= @browsers[4]['followers_count'] %></p>
+	</article>
+	<article class="col-md-1"></article>
+</section>
+
+<section class="row">
+	<article class="col-md-1"></article>
+	<article class="col-md-2" style="background:#C00;height:<%= @browsers[0]['followers_count']/5000 %>px"></article>
+	<article class="col-md-2" style="background:#F04E28;height:<%= @browsers[1]['followers_count']/5000 %>px"></article>
+	<article class="col-md-2" style="background:#00D6FF;height:<%= @browsers[2]['followers_count']/5000 %>px"></article>
+	<article class="col-md-2" style="background:#4D9CE6;height:<%= @browsers[3]['followers_count']/5000 %>px"></article>
+	<article class="col-md-2" style="background:#1F59B7;height:<%= @browsers[4]['followers_count']/5000 %>px"></article>
+	<article class="col-md-1"></article>
+</section>
+

@@ -1,0 +1,55 @@
+<% provide(:title, "Times Tables") %>
+<h1>Times Table Generator</h1>
+
+<section class="row">
+  <form method="post" target="_blank">
+    <article class="col-md-4">
+      <label for="group">Group Name</label><br>
+      <label><input type="radio" name="group" checked value="Badgers"> Badgers</input></label><br>
+      <label><input type="radio" name="group" value="Foxes"> Foxes</input></label><br>
+      <label><input type="radio" name="group" value="Hedgehogs"> Hedgehogs</input></label><br>
+      <label><input type="radio" name="group" value="Squirrels"> Squirrels</input></label><br>
+      <label><input type="radio" name="group" value="other"> Other (enter below)
+      <input type="text" name="group-other" placeholder="Other Group Name"></input></label><br>
+      <label class="table">Times Table <input type="number" name="table[]"></label><br>
+      <button id="add" class="btn btn-small">+ Add another times table</button>
+    </article>
+    <article class="col-md-4">
+      <label>Starts at<br><input type="number" name="min" value="1"></label><br>
+      <label>Ends at<br><input type="number" name="max" value="12"></label><br>
+      <label>Number of Questions<br><input type="number" name="questions" value="12"></label><br>
+      <label>Number of Copies<br><input type="number" name="copies" value="5"></label><br>
+      <label><input type="checkbox" name="random" value="1" checked> Random Order</label><br>
+      <label><input type="checkbox" name="mismatch" value="1" checked> Mismatch Questions</label><br>
+      <label><input type="checkbox" name="answers" value="1" checked> Add Answer Set</label><br>
+      <input type="submit" value="Generate Times Tables" class="btn btn-large btn-success">
+    </article>
+    <article class="col-md-4">
+      <h3>Recent Tables</h3>
+	  <table class="table table-striped">
+      <% @timestables.each do |timestable| %>
+        <tr>
+       	  <td>><%= timestable.group %></td>
+       	  <td>><%= timestable.table %></td>
+       	  <td>><%= timestamp timestable.created_at %></td>  		
+        </tr>
+      <% end %>
+      </table>
+    </article>
+  </form>
+</section>
+
+<script>
+  $(document).ready(function() {
+    $('#add').click(function(e) {
+      e.preventDefault();
+      $('#add').before('<label class="table">Times Table <input type="number" name="table[]"><a class="btn btn-xs remove">Remove</a></label>');
+	  $('.remove').on('click',function(e) {
+	    e.preventDefault();
+        $(this).parent().remove();
+	    return false;
+	  });
+	  return false;
+    });
+  });
+</script>

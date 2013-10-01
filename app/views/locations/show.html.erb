@@ -1,0 +1,12 @@
+<% provide(:title, "Location:: #{@location.text}") %>
+<% provide(:description, "I was at a particular location at a particular time and my phone told everyone about it.") %>
+<% provide(:map, "map") %>
+
+<h1><%= @location.text %></h1>
+<h5><%= @location.lat %>, <%= @location.lng %></h5>
+
+<div id="map" style="width:100%;height:300px"></div>
+
+<%= render 'common/map_point' %>
+
+<%= link_to 'Back', locations_path %>

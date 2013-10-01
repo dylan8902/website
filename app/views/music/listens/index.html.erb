@@ -1,0 +1,16 @@
+<% provide(:title, "Music:: Listens") %>
+
+<h1>Recently Listened</h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Music", music_root_path %></li>
+  <li class="active">Listens</li>
+</ol>
+
+<% @listens.each do |listen| %>
+<article>
+  <h4><%= link_to listen.artist.html_safe, "/music/artists/#{listen.artist_mbid}" %> - <%= listen.track.html_safe %></h4>
+</article>
+<% end %>
+
+<%= paginate @dj_events %>

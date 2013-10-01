@@ -1,0 +1,663 @@
+<% provide(:title, "Where Should All the Convicts Go?") %>
+<% provide(:description, "My hack for the National Hack the Government Day 2011. Choose which and where prisoners should go.") %>
+<% provide(:image, root_path + "assets/project28.png") %>
+
+<h1>Where Should All the Convicts Go?</h1>
+
+<p>Prisons are over-crowded and a nuisance to our society. This tool will help the British government solve that problem. Choose which prisoners you would like to deport and then pick a country.</p>
+
+<label><input type="checkbox" id="engwalesMaleBox" checked> English/Welsh Men</label>
+<label><input type="checkbox" id="engwalesFemaleBox" checked> English/Welsh Women</label>
+<label><input type="checkbox" id="scotMaleBox" checked> Scottish Men</label>
+<label><input type="checkbox" id="scotFemaleBox" checked> Scottish Women</label>
+
+<p id="examples">Example places: 
+	<a href="#map" onclick="javascript:example(-9.166667,-171.833333,242);">Tokelau</a>
+	<a href="#map" onclick="javascript:example(32.3,-64.783333,27);">Bermuda</a>
+	<a href="#map" onclick="javascript:example(-0.527288,166.936724,164);">Nauru</a>
+	<a href="#map" onclick="javascript:example(36.143,-5.353,91);">Gibraltar</a>
+	<a href="#map" onclick="javascript:example(-15.75,-47.95,32);">Brazil</a>
+</p>
+
+<section class="row">
+
+	<article class="col-md-8">
+		<div id="map" class="width:100%;height:400px"></div>
+	</article>
+
+	<article class="col-md-4">
+		<p id="images"></p>
+		<p>Convicts to deport: <span id="total"></span></p>
+		<p id="status"></p>
+		<p id="result"></p>
+		<p id="pop"></p>
+	</article>
+</section>
+
+<p>Made by <a href="/">Dylan Jones</a> for <a href="http://rewiredstate.org/events/national-hack-the-government-day-2011">National Hack the Government Day 2011</a> in 5 hours 40 minutes</p>
+<p><strong>Disclaimer</strong> Although factually correct, this site does not endorse deporting convicts to other countries. I have a dry sense of humour.</p>
+
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+<script type="text/javascript">
+	// <![CDATA[
+	var countryNames = [];
+	var countryPop = [];
+	var numberConvicts = 0;
+	var imagePrisoner = '<img src="/assets/prisoner.jpg" style="height:25px" title="Each represents 1500 prisoners">';
+	var map;
+	//2010
+	var engwalesMale = 80916;
+	var engwalesFemale = 4257;
+	var scotMale = 7422;
+	var scotFemale = 413;
+	var totalConvicts = engwalesMale + engwalesFemale + scotMale + scotFemale;
+
+	function moveConvicts(index) {
+		var percentage = parseInt((numberConvicts/countryPop[index])*100);
+		$('#status').html('You have decided to move '+((numberConvicts/totalConvicts)*100)+'% of the prison population to <span class=\"bold\" title=\"'+index+'\">'+countryNames[index]+'</span>!');
+		if((percentage<110)&&(percentage>90))
+			$('#result').html('That is about the same ('+percentage+'%) as their current population. Not sure if there is enough land mass.');
+		else if(percentage>100)
+			$('#result').html('That&#39;s '+(percentage-100)+'% over their current population! do it, it will be funny.');
+		else if(percentage<10)
+			$('#result').html('That&#39;s only '+percentage+'% of their current population. Loads of space, send them all!');
+		else
+			$('#result').html('That is about '+percentage+'% of their population. Hmmm... They should be OK');
+	}
+
+	function example(lat,lng,index) {
+		var pan = new google.maps.LatLng(lat,lng);
+		map.panTo(pan);
+		map.zoom = 7;
+		moveConvicts(index);
+	}
+
+	function checkboxes() {
+		numberConvicts = 0;
+		$('#images').html('');
+		if ($('#engwalesMaleBox').attr('checked'))
+			numberConvicts += engwalesMale;
+		if ($('#engwalesFemaleBox').attr('checked'))
+			numberConvicts += engwalesFemale;
+		if ($('#scotMaleBox').attr('checked'))
+			numberConvicts += scotMale;
+		if ($('#scotFemaleBox').attr('checked'))
+			numberConvicts += scotFemale;
+		$('#total').html(numberConvicts);
+		for( var a=0;a < parseInt(numberConvicts/1500); a++ )
+			$('#images').append(imagePrisoner);
+	}
+
+	$(document).ready(function() {
+		countryNames.push('Afghanistan');
+		countryPop.push('29117490');
+		countryNames.push('Africa');
+		countryPop.push('1033042510');
+		countryNames.push('Albania');
+		countryPop.push('3169090');
+		countryNames.push('Algeria');
+		countryPop.push('35422590');
+		countryNames.push('American Samoa');
+		countryPop.push('68510');
+		countryNames.push('Andorra');
+		countryPop.push('86690');
+		countryNames.push('Andorra');
+		countryPop.push('87570');
+		countryNames.push('Andorra');
+		countryPop.push('85800');
+		countryNames.push('Angola');
+		countryPop.push('18992710');
+		countryNames.push('Anguilla');
+		countryPop.push('15470');
+		countryNames.push('Antigua and Barbuda');
+		countryPop.push('88550');
+		countryNames.push('Argentina');
+		countryPop.push('40665730');
+		countryNames.push('Armenia');
+		countryPop.push('3090380');
+		countryNames.push('Aruba');
+		countryPop.push('107380');
+		countryNames.push('Asia');
+		countryPop.push('4166741310');
+		countryNames.push('Australia');
+		countryPop.push('21511890');
+		countryNames.push('Australia/New Zealand');
+		countryPop.push('25815350');
+		countryNames.push('Austria');
+		countryPop.push('8387490');
+		countryNames.push('Azerbaijan');
+		countryPop.push('8933930');
+		countryNames.push('Bahamas');
+		countryPop.push('345740');
+		countryNames.push('Bahrain');
+		countryPop.push('807130');
+		countryNames.push('Bangladesh');
+		countryPop.push('164425490');
+		countryNames.push('Barbados');
+		countryPop.push('256550');
+		countryNames.push('Belarus');
+		countryPop.push('9587940');
+		countryNames.push('Belgium');
+		countryPop.push('10697590');
+		countryNames.push('Belize');
+		countryPop.push('312930');
+		countryNames.push('Benin');
+		countryPop.push('9211740');
+		countryNames.push('Bermuda');
+		countryPop.push('65000');
+		countryNames.push('Bhutan');
+		countryPop.push('708480');
+		countryNames.push('Bolivia');
+		countryPop.push('10030830');
+		countryNames.push('Bosnia and Herzegovina');
+		countryPop.push('3759630');
+		countryNames.push('Botswana');
+		countryPop.push('1977570');
+		countryNames.push('Brazil');
+		countryPop.push('195423250');
+		countryNames.push('British Virgin Islands');
+		countryPop.push('23280');
+		countryNames.push('Brunei Darussalam');
+		countryPop.push('407050');
+		countryNames.push('Bulgaria');
+		countryPop.push('7497280');
+		countryNames.push('Burkina Faso');
+		countryPop.push('16286710');
+		countryNames.push('Burundi');
+		countryPop.push('8518860');
+		countryNames.push('Cambodia');
+		countryPop.push('15053110');
+		countryNames.push('Cameroon');
+		countryPop.push('19958350');
+		countryNames.push('Canada');
+		countryPop.push('33889750');
+		countryNames.push('Cape Verde');
+		countryPop.push('512580');
+		countryNames.push('Caribbean');
+		countryPop.push('42311880');
+		countryNames.push('Cayman Is.');
+		countryPop.push('56630');
+		countryNames.push('Central African Republic');
+		countryPop.push('4505950');
+		countryNames.push('Central America');
+		countryPop.push('153115240');
+		countryNames.push('Chad');
+		countryPop.push('11506130');
+		countryNames.push('Channel Islands');
+		countryPop.push('150090');
+		countryNames.push('Chile');
+		countryPop.push('17134710');
+		countryNames.push('China');
+		countryPop.push('1354146440');
+		countryNames.push('Colombia');
+		countryPop.push('46300200');
+		countryNames.push('Comoros');
+		countryPop.push('691350');
+		countryNames.push('Congo');
+		countryPop.push('3758680');
+		countryNames.push('Cook Islands');
+		countryPop.push('19930');
+		countryNames.push('Costa Rica');
+		countryPop.push('4639830');
+		countryNames.push('C&Atilde;&acute;te d&#039;Ivoire');
+		countryPop.push('21570750');
+		countryNames.push('Croatia');
+		countryPop.push('4409660');
+		countryNames.push('Cuba');
+		countryPop.push('11204350');
+		countryNames.push('Cyprus');
+		countryPop.push('879720');
+		countryNames.push('Czech Republic');
+		countryPop.push('10410790');
+		countryNames.push('Dem. People&#039;s Rep. of Korea');
+		countryPop.push('23990700');
+		countryNames.push('Dem. Rep. of the Congo');
+		countryPop.push('67827500');
+		countryNames.push('Denmark');
+		countryPop.push('5481280');
+		countryNames.push('Djibouti');
+		countryPop.push('879050');
+		countryNames.push('Dominica');
+		countryPop.push('66520');
+		countryNames.push('Dominican Republic');
+		countryPop.push('10225480');
+		countryNames.push('Eastern Africa');
+		countryPop.push('327186150');
+		countryNames.push('Eastern Asia');
+		countryPop.push('1563951360');
+		countryNames.push('Eastern Europe');
+		countryPop.push('291484590');
+		countryNames.push('Ecuador');
+		countryPop.push('13774910');
+		countryNames.push('Egypt');
+		countryPop.push('84474430');
+		countryNames.push('El Salvador');
+		countryPop.push('6194130');
+		countryNames.push('Equatorial Guinea');
+		countryPop.push('693390');
+		countryNames.push('Eritrea');
+		countryPop.push('5223990');
+		countryNames.push('Estonia');
+		countryPop.push('1339460');
+		countryNames.push('Ethiopia');
+		countryPop.push('84975610');
+		countryNames.push('Europe');
+		countryPop.push('732758550');
+		countryNames.push('Europe');
+		countryPop.push('732759430');
+		countryNames.push('Europe');
+		countryPop.push('732757420');
+		countryNames.push('Faeroe Islands');
+		countryPop.push('50150');
+		countryNames.push('Falkland Islands (Malvinas)');
+		countryPop.push('3040');
+		countryNames.push('Fiji');
+		countryPop.push('854100');
+		countryNames.push('Finland');
+		countryPop.push('5345830');
+		countryNames.push('France');
+		countryPop.push('62636580');
+		countryNames.push('French Guiana');
+		countryPop.push('231310');
+		countryNames.push('French Polynesia');
+		countryPop.push('272390');
+		countryNames.push('Gabon');
+		countryPop.push('1501270');
+		countryNames.push('Gambia');
+		countryPop.push('1750730');
+		countryNames.push('Georgia');
+		countryPop.push('4219190');
+		countryNames.push('Germany');
+		countryPop.push('82056780');
+		countryNames.push('Ghana');
+		countryPop.push('24332760');
+		countryNames.push('Gibraltar');
+		countryPop.push('31070');
+		countryNames.push('Greece');
+		countryPop.push('11183390');
+		countryNames.push('Greenland');
+		countryPop.push('57290');
+		countryNames.push('Grenada');
+		countryPop.push('104340');
+		countryNames.push('Guadeloupe');
+		countryPop.push('467180');
+		countryNames.push('Guam');
+		countryPop.push('179890');
+		countryNames.push('Guatemala');
+		countryPop.push('14376880');
+		countryNames.push('Guinea');
+		countryPop.push('10323760');
+		countryNames.push('Guinea-Bissau');
+		countryPop.push('1647380');
+		countryNames.push('Guyana');
+		countryPop.push('761440');
+		countryNames.push('Haiti');
+		countryPop.push('10188180');
+		countryNames.push('Holy See');
+		countryPop.push('790');
+		countryNames.push('Honduras');
+		countryPop.push('7615580');
+		countryNames.push('Hungary');
+		countryPop.push('9973140');
+		countryNames.push('Iceland');
+		countryPop.push('329280');
+		countryNames.push('India');
+		countryPop.push('1214464310');
+		countryNames.push('Indonesia');
+		countryPop.push('232516770');
+		countryNames.push('Iran (Islamic Republic of)');
+		countryPop.push('75077550');
+		countryNames.push('Iraq');
+		countryPop.push('31466700');
+		countryNames.push('Ireland');
+		countryPop.push('4589000');
+		countryNames.push('Ireland');
+		countryPop.push('4588750');
+		countryNames.push('Isle of Man');
+		countryPop.push('80450');
+		countryNames.push('Israel');
+		countryPop.push('7285030');
+		countryNames.push('Italy');
+		countryPop.push('60097560');
+		countryNames.push('Jamaica');
+		countryPop.push('2729910');
+		countryNames.push('Japan');
+		countryPop.push('126995410');
+		countryNames.push('Jordan');
+		countryPop.push('6472390');
+		countryNames.push('Kazakhstan');
+		countryPop.push('15753460');
+		countryNames.push('Kenya');
+		countryPop.push('40862900');
+		countryNames.push('Kiribati');
+		countryPop.push('99550');
+		countryNames.push('Kuwait');
+		countryPop.push('3050740');
+		countryNames.push('Kyrgyzstan');
+		countryPop.push('5550240');
+		countryNames.push('Lao People&#039;s Dem. Republic');
+		countryPop.push('6436090');
+		countryNames.push('Latin America and the Caribbean');
+		countryPop.push('588648510');
+		countryNames.push('Latvia');
+		countryPop.push('2240270');
+		countryNames.push('Least developed countries');
+		countryPop.push('854696470');
+		countryNames.push('Lebanon');
+		countryPop.push('4254580');
+		countryNames.push('Lesotho');
+		countryPop.push('2084180');
+		countryNames.push('Less dev. reg. - China');
+		countryPop.push('4309696500');
+		countryNames.push('Less dev. reg.-least dev. c.');
+		countryPop.push('4816763450');
+		countryNames.push('Less developed regions');
+		countryPop.push('5671459910');
+		countryNames.push('Liberia');
+		countryPop.push('4101770');
+		countryNames.push('Libyan Arab Jamahiriya');
+		countryPop.push('6545620');
+		countryNames.push('Liechtenstein');
+		countryPop.push('36190');
+		countryNames.push('Lithuania');
+		countryPop.push('3255320');
+		countryNames.push('Luxembourg');
+		countryPop.push('491770');
+		countryNames.push('Madagascar');
+		countryPop.push('20146440');
+		countryNames.push('Malawi');
+		countryPop.push('15691780');
+		countryNames.push('Malaysia');
+		countryPop.push('27913990');
+		countryNames.push('Maldives');
+		countryPop.push('313920');
+		countryNames.push('Mali');
+		countryPop.push('13323100');
+		countryNames.push('Malta');
+		countryPop.push('410000');
+		countryNames.push('Marshall Islands');
+		countryPop.push('63400');
+		countryNames.push('Martinique');
+		countryPop.push('406000');
+		countryNames.push('Mauritania');
+		countryPop.push('3365680');
+		countryNames.push('Mauritius');
+		countryPop.push('1296570');
+		countryNames.push('Mayotte');
+		countryPop.push('199070');
+		countryNames.push('Melanesia');
+		countryPop.push('8777710');
+		countryNames.push('Mexico');
+		countryPop.push('110645150');
+		countryNames.push('Micronesia');
+		countryPop.push('573130');
+		countryNames.push('Micronesia (Fed. States of)');
+		countryPop.push('111100');
+		countryNames.push('Middle Africa');
+		countryPop.push('128909350');
+		countryNames.push('Monaco');
+		countryPop.push('32900');
+		countryNames.push('Mongolia');
+		countryPop.push('2701120');
+		countryNames.push('Montenegro');
+		countryPop.push('625520');
+		countryNames.push('Montserrat');
+		countryPop.push('5960');
+		countryNames.push('More developed regions');
+		countryPop.push('1237228470');
+		countryNames.push('More developed regions');
+		countryPop.push('1237229350');
+		countryNames.push('More developed regions');
+		countryPop.push('1237227340');
+		countryNames.push('Morocco');
+		countryPop.push('32381280');
+		countryNames.push('Mozambique');
+		countryPop.push('23405670');
+		countryNames.push('Myanmar');
+		countryPop.push('50495670');
+		countryNames.push('Namibia');
+		countryPop.push('2212040');
+		countryNames.push('Nauru');
+		countryPop.push('10250');
+		countryNames.push('Nepal');
+		countryPop.push('29852680');
+		countryNames.push('Netherlands');
+		countryPop.push('16653350');
+		countryNames.push('Netherlands Antilles');
+		countryPop.push('200730');
+		countryNames.push('New Caledonia');
+		countryPop.push('253740');
+		countryNames.push('New Zealand');
+		countryPop.push('4303460');
+		countryNames.push('Nicaragua');
+		countryPop.push('5822270');
+		countryNames.push('Niger');
+		countryPop.push('15891480');
+		countryNames.push('Nigeria');
+		countryPop.push('158258920');
+		countryNames.push('Niue');
+		countryPop.push('1440');
+		countryNames.push('Northern Africa');
+		countryPop.push('212920750');
+		countryNames.push('Northern America');
+		countryPop.push('351659160');
+		countryNames.push('Northern Europe');
+		countryPop.push('98908750');
+		countryNames.push('Northern Europe');
+		countryPop.push('98908500');
+		countryNames.push('Northern Mariana Islands');
+		countryPop.push('88410');
+		countryNames.push('Norway');
+		countryPop.push('4855320');
+		countryNames.push('Occupied Palestinian Terr.');
+		countryPop.push('4409390');
+		countryNames.push('Oceania');
+		countryPop.push('35838340');
+		countryNames.push('Oman');
+		countryPop.push('2905110');
+		countryNames.push('Pakistan');
+		countryPop.push('184753300');
+		countryNames.push('Palau');
+		countryPop.push('20530');
+		countryNames.push('Panama');
+		countryPop.push('3508480');
+		countryNames.push('Papua New Guinea');
+		countryPop.push('6888390');
+		countryNames.push('Paraguay');
+		countryPop.push('6459730');
+		countryNames.push('Peru');
+		countryPop.push('29496120');
+		countryNames.push('Philippines');
+		countryPop.push('93616850');
+		countryNames.push('Pitcairn');
+		countryPop.push('50');
+		countryNames.push('Poland');
+		countryPop.push('38038090');
+		countryNames.push('Polynesia');
+		countryPop.push('672150');
+		countryNames.push('Portugal');
+		countryPop.push('10732360');
+		countryNames.push('Puerto Rico');
+		countryPop.push('3998010');
+		countryNames.push('Qatar');
+		countryPop.push('1508320');
+		countryNames.push('Republic of Korea');
+		countryPop.push('48500720');
+		countryNames.push('Republic of Moldova');
+		countryPop.push('3575570');
+		countryNames.push('R&Atilde;&copy;union');
+		countryPop.push('837090');
+		countryNames.push('Romania');
+		countryPop.push('21190150');
+		countryNames.push('Russia');
+		countryPop.push('140366560');
+		countryNames.push('Rwanda');
+		countryPop.push('10277210');
+		countryNames.push('Saint Helena');
+		countryPop.push('4410');
+		countryNames.push('Saint Kitts and Nevis');
+		countryPop.push('52370');
+		countryNames.push('Saint Lucia');
+		countryPop.push('173940');
+		countryNames.push('Saint Pierre and Miquelon');
+		countryPop.push('6040');
+		countryNames.push('Saint Vincent and the Grenadines');
+		countryPop.push('109280');
+		countryNames.push('Samoa');
+		countryPop.push('178940');
+		countryNames.push('San Marino');
+		countryPop.push('31540');
+		countryNames.push('Sao Tome and Principe');
+		countryPop.push('165400');
+		countryNames.push('Saudi Arabia');
+		countryPop.push('26245970');
+		countryNames.push('Senegal');
+		countryPop.push('12860720');
+		countryNames.push('Serbia');
+		countryPop.push('9855860');
+		countryNames.push('Seychelles');
+		countryPop.push('84600');
+		countryNames.push('Sierra Leone');
+		countryPop.push('5835660');
+		countryNames.push('Singapore');
+		countryPop.push('4836690');
+		countryNames.push('Slovakia');
+		countryPop.push('5411640');
+		countryNames.push('Slovenia');
+		countryPop.push('2024910');
+		countryNames.push('Solomon Islands');
+		countryPop.push('535700');
+		countryNames.push('Somalia');
+		countryPop.push('9358600');
+		countryNames.push('South Africa');
+		countryPop.push('50492410');
+		countryNames.push('South America');
+		countryPop.push('393221390');
+		countryNames.push('South-Central Asia');
+		countryPop.push('1780472510');
+		countryNames.push('South-Eastern Asia');
+		countryPop.push('589615370');
+		countryNames.push('Southern Africa');
+		countryPop.push('57968100');
+		countryNames.push('Southern Europe');
+		countryPop.push('153778000');
+		countryNames.push('Southern Europe');
+		countryPop.push('153778890');
+		countryNames.push('Southern Europe');
+		countryPop.push('153777120');
+		countryNames.push('Spain');
+		countryPop.push('45316590');
+		countryNames.push('Sri Lanka');
+		countryPop.push('20409950');
+		countryNames.push('Sub-Saharan Africa');
+		countryPop.push('863314200');
+		countryNames.push('Sudan');
+		countryPop.push('43192440');
+		countryNames.push('Suriname');
+		countryPop.push('524350');
+		countryNames.push('Swaziland');
+		countryPop.push('1201900');
+		countryNames.push('Sweden');
+		countryPop.push('9293030');
+		countryNames.push('Switzerland');
+		countryPop.push('7594560');
+		countryNames.push('Syrian Arab Republic');
+		countryPop.push('22505090');
+		countryNames.push('Tajikistan');
+		countryPop.push('7074850');
+		countryNames.push('TFYR Macedonia');
+		countryPop.push('2043360');
+		countryNames.push('Thailand');
+		countryPop.push('68139240');
+		countryNames.push('Timor-Leste');
+		countryPop.push('1171160');
+		countryNames.push('Togo');
+		countryPop.push('6780030');
+		countryNames.push('Tokelau');
+		countryPop.push('1210');
+		countryNames.push('Tonga');
+		countryPop.push('104260');
+		countryNames.push('Trinidad and Tobago');
+		countryPop.push('1343730');
+		countryNames.push('Tunisia');
+		countryPop.push('10373960');
+		countryNames.push('Turkey');
+		countryPop.push('75705150');
+		countryNames.push('Turkmenistan');
+		countryPop.push('5176500');
+		countryNames.push('Turks and Caicos Islands');
+		countryPop.push('32990');
+		countryNames.push('Tuvalu');
+		countryPop.push('9970');
+		countryNames.push('Uganda');
+		countryPop.push('33796460');
+		countryNames.push('Ukraine');
+		countryPop.push('45433420');
+		countryNames.push('United Arab Emirates');
+		countryPop.push('4707310');
+		countryNames.push('United Kingdom');
+		countryPop.push('61899270');
+		countryNames.push('United Republic of Tanzania');
+		countryPop.push('45039570');
+		countryNames.push('United States of America');
+		countryPop.push('317641090');
+		countryNames.push('United States Virgin Islands');
+		countryPop.push('109330');
+		countryNames.push('Uruguay');
+		countryPop.push('3372220');
+		countryNames.push('Uzbekistan');
+		countryPop.push('27794300');
+		countryNames.push('Vanuatu');
+		countryPop.push('245790');
+		countryNames.push('Venezuela (Bolivarian Republic of)');
+		countryPop.push('29043560');
+		countryNames.push('Viet Nam');
+		countryPop.push('89028740');
+		countryNames.push('Wallis and Futuna Islands');
+		countryPop.push('15450');
+		countryNames.push('Western Africa');
+		countryPop.push('306058160');
+		countryNames.push('Western Asia');
+		countryPop.push('232702070');
+		countryNames.push('Western Europe');
+		countryPop.push('188587210');
+		countryNames.push('Western Sahara');
+		countryPop.push('530440');
+		countryNames.push('World');
+		countryPop.push('6908688380');
+		countryNames.push('World');
+		countryPop.push('6908689260');
+		countryNames.push('World');
+		countryPop.push('6908687250');
+		countryNames.push('Yemen');
+		countryPop.push('24255930');
+		countryNames.push('Zambia');
+		countryPop.push('13257270');
+		countryNames.push('Zimbabwe');
+		countryPop.push('12644040');
+
+		var myLatlng = new google.maps.LatLng(41.875696,-87.624207);
+		var myOptions = {
+			zoom: 2,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById('map'), myOptions);
+		var kml = new google.maps.KmlLayer('http://www.gelib.com/maps/world-borders.kmz',{suppressInfoWindows:true});
+		kml.setMap(map);
+		google.maps.event.addListener(kml, 'click', function(kmlEvent) {
+			var name = kmlEvent.featureData.name;
+			var index = jQuery.inArray(name,countryNames);
+			if(index!=-1)
+				moveConvicts(index);
+			else
+				alert(name+': No population data for some reason');
+		});
+
+		$('input').change(function() {
+			checkboxes();
+		});
+		checkboxes();
+	});
+	//]]!>
+</script>

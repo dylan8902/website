@@ -1,0 +1,105 @@
+<% provide(:title, "API") %>
+
+<h1>API</h1>
+
+<p>I have opened up lots of data that I store and want to share such as tweets, photos, music and location.</p>
+<p>The API is REST based. Everything here is accessible by a simple HTTP GET request. Data is available in a number of different formats.</p>
+<code class="blockcode" style="font-size:150%;">GET https://dyl.anjon.es/method/ID.format?parameters=here&amp;here=too</code>
+
+<section class="row">
+	<article class="col-md-6">
+		<h2>Methods</h2>
+		<dl>
+			<% @methods.each do |method| %>
+			<dt>
+				<code>
+					<%= method[:url] %></code>
+			</dt>
+			<dd>
+				<%= method[:description] %>
+			</dd>
+			<% end %>
+		</dl>
+	</article>
+	<article class="col-md-6">
+		<dl>
+			<h2>ID <small>(optional)</small></h2>
+			<dt>
+				<code>
+					interger</code>
+			</dt>
+			<dd>
+				Returns resource with that particular ID only.
+			</dd>
+		</dl>
+		<dl>
+			<h2>Parameters <small>(optional)</small></h2>
+			<dt>
+				<code>
+					limit</code>
+			</dt>
+			<dd>
+				Limits the number of responses returned (default:100)
+			</dd>
+			<dt>
+				<code>
+					offset</code>
+			</dt>
+			<dd>
+				Offsets the results by specified number
+			</dd>
+			<dt>
+				<code>
+					orderby</code>
+			</dt>
+			<dd>
+				Order the results by an attribute
+			</dd>
+			<dt>
+				<code>
+					callback</code>
+			</dt>
+			<dd>
+				If you wish to have the response wrapped in a function (JSONP)
+			</dd>
+		</dl>
+		<dl>
+			<h2>Format</h2>
+			<dt>
+				<code>
+					json</code>
+			</dt>
+			<dd>
+				Returns JSON (object orientated language). A callback parameter is optional.
+			</dd>
+			<dt>
+				<code>
+					rss</code>
+			</dt>
+			<dd>
+				Returns an RSS feed (in ATOM format)
+			</dd>
+			<dt>
+				<code>
+					xml</code>
+			</dt>
+			<dd>
+				Returns XML feed
+			</dd>
+			<dt>
+				<code>
+					csv</code>
+			</dt>
+			<dd>
+				Returns comma-separated values
+			</dd>
+			<dt>
+				<code>
+					txt</code>
+			</dt>
+			<dd>
+				Returns plain text
+			</dd>
+		</dl>
+	</article>
+</section>

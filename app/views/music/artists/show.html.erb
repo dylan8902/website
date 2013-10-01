@@ -1,0 +1,20 @@
+<% provide(:title, "Music:: Artist:: #{@artist['name']}") %>
+<h1><%= @artist['name'] %></h1>
+<p><%= @artist['artist_type'] %></p>
+<p><%= @artist['disambiguation'] %></p>
+<p><%= @artist['begin_date'] %> <%= " - " + @artist['end_date'] if @artist['end_date'] %></p>
+<img src="https://www.bbc.co.uk/music/images/artists/542x305/<%= @artist['gid'] %>.jpg" title="<%= @artist['name'] %>" alt="<%= @artist['name'] %>" class="thumbnail">
+
+<% if @artist['wikipedia_article'] %>
+<h2>Biography</h2>
+<blockquote>
+  <p><%= @artist['wikipedia_article']['content'] %></p>
+  <small><cite>
+  	<a title="<%= @artist['wikipedia_article']['title'] %>" href="<%= @artist['wikipedia_article']['url'] %>">
+  	  <%= @artist['wikipedia_article']['url'] %>
+  	</a>
+ </cite></small>
+</blockquote>
+<% end %>
+
+<%= link_to 'Back', music_artists_path %>

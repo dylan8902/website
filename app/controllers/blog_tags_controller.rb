@@ -1,0 +1,27 @@
+class BlogTagsController < ApplicationController
+  
+  # GET /blog/tags
+  # GET /blog/tags.json
+  def index
+    @tags = BlogTag.select(:tag).uniq.paginate(@page)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @tags, callback: params[:callback] }
+      format.xml { render xml: @tags }
+    end
+  end
+
+  # GET /blog/tag/tag
+  # GET /blog/tag/tag.json
+  def show
+    @tag = BlogTag.find_by_tag(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @tag, methods: [:blog_posts], callback: params[:callback] }
+      format.xml { render xml: @tag, methods: [:blog_posts] }
+    end
+  end
+
+end

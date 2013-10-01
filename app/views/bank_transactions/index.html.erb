@@ -1,0 +1,15 @@
+<% provide(:title, "Bank Transactions") %>
+<h1>Bank Transactions</h1>
+
+<table class="table table-striped">
+	<% @bank_transactions.each do |transaction| %>
+	<tr>
+		<td><%= transaction.description %></td>
+		<td><%= transaction.amount %></td>
+		<td><%= raw timestamp transaction.created_at %></td>
+		<td><%= transaction.balance %></td>
+	</tr>
+	<% end %>
+</table>
+
+<%= paginate @bank_transactions %>

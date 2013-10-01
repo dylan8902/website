@@ -1,0 +1,25 @@
+<% provide(:title, 'Trains:: Location:: #{@location.name}') %>
+<% provide(:description, 'Browse UK train locations, see what stations and junctions there are with all their identifiers like CRS, TIPLOC, STANOX etc.') %>
+
+<h1><%= @location.name %></h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Trains", trains_root_path %></li>
+  <li><%= link_to "Locations", trains_locations_path %></li>
+  <li class="active"><%= @location.name %></li>
+</ol>
+
+<p>
+<% if !@location.station? %>
+	<span class="label label-danger">Not a Station</span>
+<% end %>
+	<span class="label label-info" title="CRS Code"><%= @location.crs %></span>
+	<span class="label label-warning" title="Tiploc"><%= @location.tiploc %></span>	
+</p>
+
+<section class="row">
+	<article class="col-md-4">
+		<%= @location.map_image %>	
+	</article>
+	
+</section>
