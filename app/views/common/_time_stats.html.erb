@@ -1,0 +1,14 @@
+<section class="row">
+	<article class="col-md-4">
+		<h4>Time of Day</h4>
+		<%= jqplot 200, 320, [@stats[:hours]], Statistics.bar_chart_options %>
+	</article>
+	<article class="col-md-4">
+		<h4>Days of Week</h4>
+		<%= jqplot 200, 320, [@stats[:days_of_week]], Statistics.bar_chart_options %>
+	</article>
+	<article class="col-md-4">
+		<h4>Month in Year</h4>
+		<%= jqplot 200, 320, [@stats[:month_in_year]], Statistics.bar_chart_options %>
+	</article>
+</section>

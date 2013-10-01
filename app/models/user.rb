@@ -5,4 +5,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :local_tags
+  
+  private
+    def user_params
+      params.require(:user).permit(:name, :email)
+    end
 end

@@ -1,0 +1,191 @@
+<!doctype html>
+<html id="html" lang="en-gb">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"> 
+	<title>Dylan Jones :: Clock</title>
+	<meta name="description" content="God invented time but man decided to measure it. This is a clock with some useful functions.">
+	<meta name="author" content="Dylan Jones">
+	<meta name="viewport" content="width=device-width">
+	<style type="text/css">
+	html{margin:0px;padding:0px;background:rgb(255, 255, 255);font-family:sans-serif;height:100%;width:100%;font-size:12pt;}
+	body{margin:auto;padding:0px;width:100%;width:100%;text-align:center;}
+	h1{margin:40px;padding:0px;font-size:600%;}
+	h2{margin:20px;padding:0px;font-size:400%;}
+	p{margin:10px;padding:0px;font-size:100%;}
+	.clock{margin:0px;padding:0px;text-align:center;}
+	#options{position:fixed;bottom:0;color:white;background:black;padding:10px;border:2px solid white;font-size:12pt;}
+	#options span{margin-left:5px;margin-right:5px;cursor:pointer;}
+	#options span:hover{text-decoration:underline}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript">
+	var stopwatch = new Date();
+	var repeatStopwatch;
+
+	function getDate() {
+		var days = new Array(13);
+		days[0] = "Sunday";
+		days[1] = "Monday";
+		days[2] = "Tuesday";
+		days[3] = "Wednesday";
+		days[4] = "Thursday";
+		days[5] = "Friday";
+		days[6] = "Saturday";
+		var months = new Array(13);
+		months[0] = "January";
+		months[1] = "February";
+		months[2] = "March";
+		months[3] = "April";
+		months[4] = "May";
+		months[5] = "June";
+		months[6] = "July";
+		months[7] = "August";
+		months[8] = "September";
+		months[9] = "October";
+		months[10] = "November";
+		months[11] = "December";		
+		var now = new Date();
+		var monthname = months[now.getMonth()];
+		var day = days[now.getDay()];
+		var monthday = now.getDate();
+		var year = now.getYear();
+		if(year < 2000) { year = year + 1900; }
+		return day+' - '+monthday+' - '+monthname+' - '+year;
+	}
+
+	function getTime() {
+		var now = new Date();
+		var seconds = now.getSeconds();
+		var minutes = now.getMinutes();
+		var hours = now.getHours();
+		if((hours==0)&&(minutes==0)&&(seconds==0))
+			$('#date').html(getDate());
+		if(minutes < 10) { minutes = '0'+minutes; }
+		if(seconds < 10) { seconds = '0'+seconds; }
+		if(hours < 10) { hours = '0'+hours; }
+		return hours+':'+minutes+':'+seconds;
+	}
+
+	function startStopwatch() {
+		stopwatch.setTime(0);
+		$('#stopwatch-display').html('00:00:00');
+		$('#stopwatch-button').html('STOP');
+		doStopwatch();
+	}
+
+	function doStopwatch() {
+		repeatStopwatch = setInterval(function() {
+			stopwatch.setTime(stopwatch.getTime()+1000);
+			var seconds = stopwatch.getSeconds();
+			var minutes = stopwatch.getMinutes();
+			var hours = stopwatch.getHours();
+			if(minutes < 10) { minutes = '0'+minutes; }
+			if(seconds < 10) { seconds = '0'+seconds; }
+			if(hours < 10) { hours = '0'+hours; }
+			$('#stopwatch-display').html(hours+':'+minutes+':'+seconds);
+		}, 1000);
+	}
+
+	function stopStopwatch() {
+		stopwatch.setTime(0);
+		$('#stopwatch-button').html('GO');
+		clearInterval(repeatStopwatch);
+	}
+			
+	$(document).ready(function() {	
+		$('#time').html(getTime());
+		$('#date').html(getDate());
+		
+		var repeatClock = setInterval(function() {
+			$('#time').html(getTime());
+			$('#date').html(getDate());
+		}, 1000);
+		
+		$('.option').click(function() {
+			var option = $(this).attr('id');			
+			if(option=='home')
+				window.location = '/';
+			else if(option=='clock') {
+				$('#placeholder').fadeOut(500);
+				$('#stopwatch-button').fadeOut(500);
+				$('#stopwatch-display').fadeOut(500, function(){
+					$('#time').fadeIn(500);
+					$('#date').fadeIn(500);
+				});
+			}
+			else if(option=='stopwatch') {
+				$('#placeholder').fadeOut(500);
+				$('#date').fadeOut(500);
+				$('#time').fadeOut(500, function(){
+					$('#stopwatch-display').fadeIn(500);
+					$('#stopwatch-button').fadeIn(500);
+				});
+			}
+			else if(option=='alarms') {
+				$('#time').fadeOut(500);
+				$('#date').fadeOut(500);
+				$('#stopwatch-button').fadeOut(500);
+				$('#stopwatch-display').fadeOut(500, function(){
+					$('#placeholder').fadeIn(700);
+				});
+			}
+			else if(option=='timer') {
+				$('#time').fadeOut(500);
+				$('#date').fadeOut(500);
+				$('#stopwatch-button').fadeOut(500);
+				$('#stopwatch-display').fadeOut(500, function(){
+					$('#placeholder').fadeIn(700);
+				});
+			}
+			else if(option=='colours') {
+				var background = $('#html').css('background-color');
+				if(background=='rgb(255, 255, 255)') {
+					$('#html').css('background-color','rgb(0, 0, 0)');
+					$('#html').css('color','rgb(255, 255, 255)');
+				}
+				else {
+					$('#html').css('background-color','rgb(255, 255, 255)');
+					$('#html').css('color','rgb(0, 0, 0)');
+				}
+			}
+			else if(option=='fontup') {
+				var size = $('#html').css('font-size');
+				size = parseInt(size.replace('px', '')) +1;
+				$('#html').css('font-size',size+'px').animate(500);
+			}
+			else if(option=='fontdown') {
+				var size = $('#html').css('font-size');
+				size = parseInt(size.replace('px', '')) -1;
+				$('#html').css('font-size',size+'px').animate(500);
+			}
+		});
+		
+		$('#stopwatch-button').click(function() {
+			if($(this).html()=='GO')
+				startStopwatch();
+			else
+				stopStopwatch();
+		});
+	});
+	</script>
+</head> 
+<body>
+	<div class="clock">
+		<h1 id="time"></h1>
+		<h2 id="date"></h2>
+		<h1 id="stopwatch-display" style="display:none;">00:00:00</h1>
+		<h2 id="stopwatch-button" style="display:none;cursor:pointer;">GO</h2>
+		<h1 id="placeholder" style="display:none;">Coming Soon</h1>
+	</div>
+	<div id="options">
+		<span id="home" class="option">Home</span>
+		<span id="clock" class="option">Clock</span>
+		<span id="alarms" class="option">Alarms</span>
+		<span id="timer" class="option">Timer</span>
+		<span id="stopwatch" class="option">Stopwatch</span>
+		<span id="colours" class="option">Colours</span>
+		<span id="fontup" class="option">Bigger</span>
+		<span id="fontdown" class="option">Smaller</span>
+	</div>
+</body>
+</html>
