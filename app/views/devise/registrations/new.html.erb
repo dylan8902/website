@@ -1,0 +1,50 @@
+<h2>Register</h1>
+
+<section class="row">
+	
+	<article class="col-md-5">
+		<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+		
+		  <div class="form-group<%= " has-error" if errors_for resource, :name %>">
+		    <%= f.label :name, class: "control-label" %>
+		    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+		    <span class="help-block"><%= errors_for resource, :name %></span>
+		  </div>
+		
+		  <div class="form-group<%= " has-error" if errors_for resource, :email %>">
+		    <%= f.label :email, class: "control-label" %>
+		    <%= f.email_field :email, class: "form-control" %>
+		    <span class="help-block"><%= errors_for resource, :email %></span>
+		  </div>
+		  
+		  <div class="form-group<%= " has-error" if errors_for resource, :password %>">
+			<%= f.label :password, class: "control-label" %>
+		  	<%= f.password_field :password, class: "form-control" %>
+		    <span class="help-block"><%= errors_for resource, :password %></span>
+		  </div>
+		
+		  <div class="form-group<%= " has-error" if errors_for resource, :password_confirmation %>">
+		    <%= f.label :password_confirmation, class: "control-label" %>
+		    <%= f.password_field :password_confirmation, class: "form-control" %>
+		    <span class="help-block"><%= errors_for resource, :password_confirmation %></span>
+		  </div>
+		
+		  <div><%= f.submit "Register", class: "btn btn-primary" %></div>
+
+		<% end %>
+		
+		<%= render "devise/shared/links" %>
+	</article>
+
+	<article class="col-md-7">
+		<div class="well">
+			<h2>Why have a user account?</h2>
+			<ul>
+				<li>Track your train journeys</li>
+				<li>Scrobble tracks to Last FM while listening to the radio</li>
+			</ul>
+		</div>
+	</article>
+	
+</section>
+
