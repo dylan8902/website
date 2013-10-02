@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<%= render 'common/head' %>
+		<script type="text/javascript">
+			$(document).ready(function(){
+			   $window = $(window);
+			   $('section[data-type="background"]').each(function(){
+			     var $scroll = $(this);
+			      $(window).scroll(function() {                 
+			        var yPos = -($window.scrollTop() / $scroll.data('speed'));
+			        var coords = '50% '+ yPos + 'px';
+			        $scroll.css({ backgroundPosition: coords });   
+			      });
+			   });
+			});
+			document.createElement("section");
+		</script>
+		<style type="text/css">
+		html {
+			text-align: center;
+		}
+		#intro { 
+			background: #0079C1;
+			height: auto;
+			margin: 0 auto;
+		    width: 100%;
+		    position: relative;
+		    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+		    padding: 50px 0;
+		}
+		#home {
+			background: url(/assets/home.jpg) 50% 0 fixed;
+			height: auto;
+			margin: 0 auto;
+		    width: 100%;
+		    position: relative;
+		    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+		    padding: 50px 0;
+		}
+		#about { 
+			background: url(/assets/about.png) 50% 0 fixed;
+			height: auto;
+			margin: 0 auto;
+		    width: 100%;
+		    position: relative;
+		    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+		    padding: 100px 0;
+		    color: #fff;
+		}
+		
+		#paypal-well, #twitter-well {
+			min-height: 175px;
+		}
+		h3 a {
+			margin-top: 10px;
+		}
+		/* Non-essential demo stuff */
+		.hero-unit {
+			background-color: #fff;
+		    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+		}
+		.media-object { width: 64px; height: 64px; }
+		#who img {
+			border-radius: 30px;
+		}
+	</style>
+	</head>
+	<body>
+		<%= yield %>
+		<%= render 'common/google_analytics' %>
+	</body>
+</html>

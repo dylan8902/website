@@ -1,0 +1,187 @@
+<% provide(:title, "Pay A Pal") %>
+<% provide(:title, "Use Twitter to pay people really easily. Connect your `twitter and Paypal accounts and tweet people money by just adding the hashtag #payapal") %>
+<% provide(:css, @css) %>
+
+<!-- Section #1 -->
+<section id="intro" data-speed="6" data-type="background">
+	<div class="container">
+		<div class="hero-unit">
+			<h1><img src="/assets/payapal.png" alt="Pay A Pal"></h1>
+			<small style="text-align:right">powered by paypal</small>
+		</div>
+	</div>
+</section>
+
+<!-- Section #2 -->
+<section id="home" data-speed="4" data-type="background">
+	<div class="container">
+		<div class="row">
+			<div id="twitter-well" class="col-md-6 well">
+				<h2>Register your Twitter</h2>
+				<h3>
+				<% if current_user.nil? or current_user.twitter.nil? %>
+					<a href="/payapal/twitter" class="btn btn-large btn-primary">Twitter</a>
+				<% else %>
+					<img src="/assets/check.png"> <%= @user.twitter.screen_name %>
+				<% end %>
+				</h3>
+			</div>
+			<div id="paypal-well" class="col-md-6 well">
+				<h2>Register your PayPal</h2><h3>
+				<% if current_user.nil? or current_user.paypal.nil? %>
+					<a href="https://www.sandbox.paypal.com/webapps/auth/protocol/openidconnect/v1/authorize?response_type=code&scope=openid+profile+email+address+email+phone+https%3A%2F%2Furi.paypal.com%2Fservices%2Fexpresscheckout&client_id=ATT0HxAFzMYwAoRii7jF1okec0YkFoXgVTbKFVeNi43pTea5aBsdytj60FVR&redirect_uri=http%3A%2F%2Fpayapal.dyl.anjon.es%2Fpaypal%2Fcallback.php" class="btn btn-large btn-primary">Twitter</a>
+				<% else %>
+					<img src="/assets/check.png"> <%= @user.paypal.email %>
+				<% end %>
+				</h3>
+			</div>
+		</div>
+
+	<% if params.include? 'tweeted' %>
+		<div class="row">
+			<div id="sent-well" class="col-md-12 well">
+				<h2>TWEET SENT</h2>
+				<a href="/payapal">send another</a>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('html, body').animate({
+					scrollTop : $("#sent-well").offset().top
+				}, 3000);
+			});
+		</script>
+
+		<div class="row">
+			<div id="map-well" class="col-md-12 well">
+				<h2>Map</h2>
+				<img src="https://maps.googleapis.com/maps/api/staticmap?center=51.99651,%20-0.74276&amp;zoom=10&amp;size=900x300&amp;sensor=true">
+			</div>
+		</div>
+
+		<% if current_user and current_user.twilio_pin %>
+		<div class="row">
+			<div id="pin-well" class="col-md-12 well">
+				<h2>Verification PIN #</h2>
+				<p style="margin-bottom:30px">
+					We are calling your phone: +447747466782, please enter the following code:
+				</p>
+				<code style="font-size:32pt"><%= current_user.twilio_pin %></code>
+			</div>
+		</div>
+		<% end %>
+
+	<% elsif current_user and current_user.paypal and current_user.twitter %>
+		<div class="row">
+			<div id="tweet-well" class="col-md-12 well">
+				<h2>Send a tweet</h2>
+				<div class="input-append">
+					<form action="/twitter/tweet.php" method="post">
+						<input type="text" name="tweet" value="@ali_bros here's the &pound;1 I owe you! #payapal" class="input-xxlarge">
+						<button id="tweet" class="btn btn-warning">
+							Tweet
+						</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+	</div>
+</section>
+
+<!-- Section #3 -->
+<section id="about" data-speed="2" data-type="background">
+	<div class="container">
+		<div class="page-header">
+			<h1>What is this?</h1>
+		</div>
+		<div class="row">
+			<div class="col-md-8 text-left">
+				<h2>Over The Air 2013</h2>
+				<h3>27th - 28th September, 2013</h3>
+			</div>
+			<div class="col-md-4 text-right">
+				<a href="https://github.com/alibros/payapal" class="btn btn-large btn-default">It's on Github!</a>
+			</div>
+		</div>
+		<div class="row">
+
+			<div class="col-md-4">
+				<h2>What?</h2>
+				<div class="media">
+					<a class="pull-left" href="#"> <img class="media-object" src="images/padlock.png"> </a>
+					<div class="media-body text-left">
+						<h4 class="media-heading">Quadruple Authentication</h4>
+						Your account is safe with Twitter auth, PayPal auth, Verified Phone Number Confirmed and Audio Message. The new authentication standard.
+					</div>
+				</div>
+				<div class="media">
+					<a class="pull-left" href="#"> <img class="media-object" src="images/social.png"> </a>
+					<div class="media-body text-left">
+						<h4 class="media-heading">Social</h4>
+						The perfect tool for publicly thanking your pals for lending you money. Let the world know how generous they are.
+					</div>
+				</div>
+				<div class="media">
+					<a class="pull-left" href="#"> <img class="media-object" src="images/check.png"> </a>
+					<div class="media-body text-left">
+						<h4 class="media-heading">Simple</h4>
+						You can send people money in a casual tweet with the addition of a hashtag. Wowza!
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<h2>How?</h2>
+				<div class="media">
+					<a class="pull-left" href="http://twitter.com/"> <img class="media-object" src="/assets/twitter-blue.png"> </a>
+					<div class="media-body text-left">
+						<h4 class="media-heading">Twitter</h4>
+						Used for sign in and sending and receiving payment notifications.
+					</div>
+				</div>
+				<div class="media">
+					<a class="pull-left" href="http://paypal.com/"> <img class="media-object" src="/assets/paypal.png"> </a>
+					<div class="media-body text-left">
+						<h4 class="media-heading">Paypal</h4>
+						Sign in and the payment bit.
+					</div>
+				</div>
+				<div class="media">
+					<a class="pull-left" href="http://twilio.com/"> <img class="media-object" src="/assets/twilio.png"> </a>
+					<div class="media-body text-left">
+						<h4 class="media-heading">Twilio</h4>
+						For the extra authentication fun.
+					</div>
+				</div>
+			</div>
+
+			<div id="who" class="col-md-4">
+				<h2>Who?</h2>
+				<div class="media">
+					<a class="pull-left" href="http://twitter.com/dylan8902"> <img class="media-object" src="/assets/dylan.jpg"> </a>
+					<div class="media-body text-left">
+						<h4 class="media-heading">Dylan Jones</h4>
+						A software engineer at BT in Cardiff.
+						<p>
+							<a href="http://twitter.com/dylan8902">@dylan8902</a>
+						</p>
+					</div>
+				</div>
+				<div class="media">
+					<a class="pull-left" href="http://twitter.com/ali_bros"> <img class="media-object" src="/assets/ali.jpg"> </a>
+					<div class="media-body text-left">
+						<h4 class="media-heading">Ali Bros</h4>
+						Mobile application maker for some company.
+						<p>
+							<a href="http://twitter.com/ali_bros">@ali_bros</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</section>

@@ -21,6 +21,7 @@ gem 'rufus-scheduler'
 gem 'coderay'
 gem 'rest-client'
 gem 'nokogiri'
+gem 'stomp'
 
 group :doc do
   gem 'sdoc', require: false

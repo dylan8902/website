@@ -1,0 +1,30 @@
+<title><%= full_title(yield(:title)) %></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Dylan Jones">
+<meta name="description" content="<%= yield(:description) %>">
+<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+<%= csrf_meta_tags %>
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@dylan8902">
+<meta name="twitter:title" content="<%= yield(:title) %>">
+<meta name="twitter:description" content="<%= yield(:description) %>">
+<meta name="twitter:creator" content="@dylan8902">
+<meta name="twitter:image:src" content="<%= yield(:image) %>">
+
+<meta property="og:title" content="<%= yield(:title) %>">
+<meta property="og:image" content="<%= yield(:image) %>">
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+<% if yield(:map) == "map" then %>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css">
+<!--[if lte IE 8]>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css">
+<![endif]-->
+<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+<script src="/scripts/leaflet.markercluster.js"></script>
+<% end %>
+
+<%= extra_css(yield(:css)) %>

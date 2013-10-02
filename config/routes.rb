@@ -109,5 +109,6 @@ Website::Application.routes.draw do
   get  "onradio/3"      => "on_radio#three"
   get  "onradio/6music" => "on_radio#six_music"
   get  "video"          => "video#index"
+  get  "payapal"        => "pay_a_pal#index"
   match '*foo' => 'application#error_404', via: [:get, :post, :patch, :delete]
 end
