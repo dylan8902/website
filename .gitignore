@@ -17,3 +17,6 @@
 
 #ignore gem dependencies
 /Gemfile.lock
+
+#ignore .rvmrc file that contains secret keys
+/.rvmrc
