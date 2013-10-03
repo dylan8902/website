@@ -8,8 +8,8 @@
 		<table class="table table-striped">
 			<% @journeys.each do |journey| %>
 			<tr>
-				<td><%= journey.from %></td>
-				<td><%= journey.to %></td>
+				<td><%= journey.origin %></td>
+				<td><%= journey.destination %></td>
 				<td><%= journey.created_at %></td>
 			</tr>
 			<% end %>

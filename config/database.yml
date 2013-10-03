@@ -6,7 +6,7 @@
 development:
   adapter: mysql2
   encoding: utf8
-  database: dylan8902_development
+  database: dylan8902_website
   pool: 5
   username: dylan8902
   password: encarta2

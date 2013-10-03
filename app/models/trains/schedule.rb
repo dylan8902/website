@@ -6,11 +6,7 @@ class Trains::Schedule < ActiveRecord::Base
   
   
   def to_param
-    self.uid
-  end
-
-  def uid
-    self.CIF_train_uid
+    self.train_uid
   end
 
 
@@ -20,12 +16,7 @@ class Trains::Schedule < ActiveRecord::Base
 
 
   def service_code
-    self.CIF_train_service_code
-  end
-
-
-  def speed
-    self.CIF_speed
+    self.train_service_code
   end
 
 
@@ -35,16 +26,16 @@ class Trains::Schedule < ActiveRecord::Base
 
 
   def timing_load
-    timing_load = Trains::TimingLoad.find_by_code(self.CIF_timing_load)
+    timing_load = Trains::TimingLoad.find_by_code(self.timing_load)
     return timing_load unless timing_load.nil?
-    return Trains::TimingLoad.new(name: self.CIF_timing_load)
+    return Trains::TimingLoad.new(name: self.timing_load)
   end
 
 
   def catering
     catering = Array.new
-    return catering if self.CIF_catering_code.nil?
-    self.CIF_catering_code.scan(/./).each do |code|
+    return catering if self.catering_code.nil?
+    self.catering_code.scan(/./).each do |code|
       catering << Trains::Catering.find_by_code(code)
     end
     return catering
@@ -52,23 +43,18 @@ class Trains::Schedule < ActiveRecord::Base
 
 
   def train_class
-    self.CIF_train_class = "" if self.CIF_train_class.nil?
-    Trains::TrainClass.find_by_code(self.CIF_train_class)
-  end
-
-
-  def runs_on_bank_holidays?
-    self.CIF_bank_holiday_running
+    self.train_class = "" if self.train_class.nil?
+    Trains::TrainClass.find_by_code(self.train_class)
   end
 
 
   def power_type
-    Trains::PowerType.find_by_code(self.CIF_power_type)
+    Trains::PowerType.find_by_code(self.power_type)
   end
 
 
   def category
-    Trains::Category.find_by_code(self.CIF_train_category)
+    Trains::Category.find_by_code(self.train_category)
   end
 
 
@@ -78,12 +64,12 @@ class Trains::Schedule < ActiveRecord::Base
 
 
   def origin
-    return Trains::ScheduleLocation.where(:schedule_id => self.id, :record_identity => 'LO').first
+    return Trains::ScheduleLocation.where(schedule_id: self.id, record_identity: 'LO').first
   end
 
 
   def destination
-    return Trains::ScheduleLocation.where(:schedule_id => self.id, :record_identity => 'LT').first
+    return Trains::ScheduleLocation.where(schedule_id: self.id, record_identity: 'LT').first
   end
 
 
@@ -138,7 +124,7 @@ class Trains::Schedule < ActiveRecord::Base
     end
     
     conditions = "tiploc_code = ? 
-      AND (CIF_stp_indicator = 'P' OR CIF_stp_indicator = 'N')
+      AND (stp_indicator = 'P' OR CIF_stp_indicator = 'N')
       AND #{record_identity}
       AND #{public_string} IS NOT NULL
       AND schedule_start_date <= ?
@@ -154,12 +140,12 @@ class Trains::Schedule < ActiveRecord::Base
     
     #check for cancellations
     schedules.each do |schedule|
-      conditions = "CIF_train_uid = ?
-        AND CIF_stp_indicator = 'C'
+      conditions = "train_uid = ?
+        AND stp_indicator = 'C'
         AND schedule_start_date <= ?
         AND schedule_end_date >= ?
         AND SUBSTRING(schedule_days_runs,?,1) = '1'"
-      cancellation = Trains::Schedule.where(conditions, schedule.CIF_train_uid, time, time, (time.wday + 1))
+      cancellation = Trains::Schedule.where(conditions, schedule.train_uid, time, time, (time.wday + 1))
       #no cancellation then add it to the departures
       results.push schedule if cancellation.empty?
     end
@@ -188,7 +174,7 @@ class Trains::Schedule < ActiveRecord::Base
   
   
   def self.parse_file
-    file = "/Users/dylan/Downloads/file.json"
+    file = "test/schedule.json"
     
     unless File.exist? file
       logger.error "No file to parse found (#{file})"
@@ -205,52 +191,52 @@ class Trains::Schedule < ActiveRecord::Base
 
   def self.add schedule
     new_schedule = Trains::Schedule.create(
-      :CIF_bank_holiday_running => schedule['CIF_bank_holiday_running'],
-      :CIF_stp_indicator => schedule['CIF_stp_indicator'],
-      :CIF_train_uid => schedule['CIF_train_uid'],
-      :applicable_timetable => schedule['applicable_timetable'],
-      :atoc_code => schedule['atoc_code'],
-      :schedule_days_runs => schedule['schedule_days_runs'],
-      :schedule_end_date => schedule['schedule_end_date'],
-      :signalling_id => schedule['schedule_segment']['signalling_id'],
-      :CIF_train_category => schedule['schedule_segment']['CIF_train_category'],
-      :CIF_headcode => schedule['schedule_segment']['CIF_headcode'],
-      :CIF_course_indicator => schedule['schedule_segment']['CIF_course_indicator'],
-      :CIF_train_service_code => schedule['schedule_segment']['CIF_train_service_code'],
-      :CIF_business_sector => schedule['schedule_segment']['CIF_business_sector'],
-      :CIF_power_type => schedule['schedule_segment']['CIF_power_type'],
-      :CIF_timing_load => schedule['schedule_segment']['CIF_timing_load'],
-      :CIF_speed => schedule['schedule_segment']['CIF_speed'],
-      :CIF_operating_characteristics => schedule['schedule_segment']['CIF_operating_characteristics'],
-      :CIF_train_class => schedule['schedule_segment']['CIF_train_class'],
-      :CIF_sleepers => schedule['schedule_segment']['CIF_sleepers'],
-      :CIF_reservations => schedule['schedule_segment']['CIF_reservations'],
-      :CIF_connection_indicator => schedule['schedule_segment']['CIF_connection_indicator'],
-      :CIF_catering_code => schedule['schedule_segment']['CIF_catering_code'],
-      :CIF_service_branding => schedule['schedule_segment']['CIF_service_branding'],
-      :schedule_start_date => schedule['schedule_start_date'],
-      :train_status => schedule['train_status'],
-      :transaction_type => schedule['transaction_type']
+      bank_holiday_running: schedule['CIF_bank_holiday_running'],
+      stp_indicator: schedule['CIF_stp_indicator'],
+      train_uid: schedule['CIF_train_uid'],
+      applicable_timetable: schedule['applicable_timetable'],
+      atoc_code: schedule['atoc_code'],
+      schedule_days_runs: schedule['schedule_days_runs'],
+      schedule_end_date: schedule['schedule_end_date'],
+      signalling_id: schedule['schedule_segment']['signalling_id'],
+      train_category: schedule['schedule_segment']['CIF_train_category'],
+      headcode: schedule['schedule_segment']['CIF_headcode'],
+      course_indicator: schedule['schedule_segment']['CIF_course_indicator'],
+      train_service_code: schedule['schedule_segment']['CIF_train_service_code'],
+      business_sector: schedule['schedule_segment']['CIF_business_sector'],
+      power_type: schedule['schedule_segment']['CIF_power_type'],
+      timing_load: schedule['schedule_segment']['CIF_timing_load'],
+      speed: schedule['schedule_segment']['CIF_speed'],
+      operating_characteristics: schedule['schedule_segment']['CIF_operating_characteristics'],
+      train_class: schedule['schedule_segment']['CIF_train_class'],
+      sleepers: schedule['schedule_segment']['CIF_sleepers'],
+      reservations: schedule['schedule_segment']['CIF_reservations'],
+      connection_indicator: schedule['schedule_segment']['CIF_connection_indicator'],
+      catering_code: schedule['schedule_segment']['CIF_catering_code'],
+      service_branding: schedule['schedule_segment']['CIF_service_branding'],
+      schedule_start_date: schedule['schedule_start_date'],
+      train_status: schedule['train_status'],
+      transaction_type: schedule['transaction_type']
     )
     
     unless schedule['schedule_segment']['schedule_location'].nil? then
       schedule['schedule_segment']['schedule_location'].each do |location|
         Trains::ScheduleLocation.create(
-          :schedule_id => new_schedule.id,
-          :location_type => location['location_type'],
-          :record_identity => location['record_identity'],
-          :tiploc_code => location['tiploc_code'],
-          :tiploc_instance => location['tiploc_instance'],
-          :departure => location['departure'],
-          :public_departure => location['public_departure'],
-          :arrival => location['arrival'],
-          :public_arrival => location['public_arrival'],
-          :pass => location['pass'],
-          :platform => location['platform'],
-          :line => location['line'],
-          :engineering_allowance => location['engineering_allowance'],
-          :pathing_allowance => location['pathing_allowance'],
-          :performance_allowance => location['performance_allowance']
+          schedule_id: new_schedule.id,
+          location_type: location['location_type'],
+          record_identity: location['record_identity'],
+          tiploc_code: location['tiploc_code'],
+          tiploc_instance: location['tiploc_instance'],
+          departure: location['departure'],
+          public_departure: location['public_departure'],
+          arrival: location['arrival'],
+          public_arrival: location['public_arrival'],
+          pass: location['pass'],
+          platform: location['platform'],
+          line: location['line'],
+          engineering_allowance: location['engineering_allowance'],
+          pathing_allowance: location['pathing_allowance'],
+          performance_allowance: location['performance_allowance']
         )
       end
     end
@@ -269,9 +255,9 @@ class Trains::Schedule < ActiveRecord::Base
   
   def title
     if self.origin and self.destination
-      "#{self.uid}: #{self.origin.location.name} to #{self.destination.location.name}"
+      "#{self.train_uid}: #{self.origin.location.name} to #{self.destination.location.name}"
     else
-      self.uid
+      self.train_uid
     end
   end
 
