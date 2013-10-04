@@ -2,7 +2,7 @@ class SamaritansController < ApplicationController
   
   # GET /samaritans
   def index 
-    Project.find(49).hit
+    Project.hit 49
   end
  
 end

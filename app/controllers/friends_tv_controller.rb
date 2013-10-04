@@ -2,7 +2,7 @@ class FriendsTvController < ApplicationController
   
   # GET /friendstv
   def index 
-    Project.find(31).hit
+    Project.hit 31
   end
  
 end

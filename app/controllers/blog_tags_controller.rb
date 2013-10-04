@@ -1,7 +1,9 @@
 class BlogTagsController < ApplicationController
+
   
   # GET /blog/tags
   # GET /blog/tags.json
+  # GET /blog/tags.xml
   def index
     @tags = BlogTag.select(:tag).uniq.paginate(@page)
 
@@ -12,8 +14,10 @@ class BlogTagsController < ApplicationController
     end
   end
 
+
   # GET /blog/tag/tag
   # GET /blog/tag/tag.json
+  # GET /blog/tag/tag.xml
   def show
     @tag = BlogTag.find_by_tag(params[:id])
 

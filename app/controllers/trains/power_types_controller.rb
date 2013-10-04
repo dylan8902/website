@@ -1,5 +1,8 @@
 class Trains::PowerTypesController < ApplicationController
 
+  # GET /trains/power-types
+  # GET /trains/power-types.json
+  # GET /trains/power-types.xml
   def index
     @q = params['q']    
     @power_types =  PowerType.where("code = ? OR name LIKE ?", @q, "#{@q}%").paginate(@page)
@@ -13,6 +16,9 @@ class Trains::PowerTypesController < ApplicationController
   end
 
 
+  # GET /trains/power-types/1
+  # GET /trains/power-types/1.json
+  # GET /trains/power-types/1.xml
   def show
     @power_type = PowerType.find(params[:id])
 

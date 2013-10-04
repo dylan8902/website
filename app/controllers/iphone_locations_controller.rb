@@ -4,7 +4,7 @@ class IphoneLocationsController < ApplicationController
   # GET /iphone.json
   # GET /iphone.xml
   def index
-    Project.find(31).hit
+    Project.hit 31
     @locations = IphoneLocation.paginate(@page)
 
     respond_to do |format|
@@ -19,7 +19,7 @@ class IphoneLocationsController < ApplicationController
   # GET /iphone/1.json
   # GET /iphone/1.xml
   def show
-    Project.find(31).hit
+    Project.hit 31
     @location = IphoneLocation.find(params[:id])
 
     respond_to do |format|

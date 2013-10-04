@@ -2,7 +2,7 @@ class ConvictsController < ApplicationController
   
   # GET /nght11
   def index
-    Project.find(28).hit
+    Project.hit 28
     
     respond_to do |format|
       format.html # index.html.erb

@@ -2,7 +2,7 @@ class JimmyWalesController < ApplicationController
   
   # GET /jimmywales
   def index
-    Project.find(20).hit
+    Project.hit 20
   end
  
 end

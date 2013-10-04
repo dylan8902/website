@@ -4,7 +4,7 @@ class Music::ArtistsController < ApplicationController
   # GET /music/artist
   # GET /music/artist.json
   def index
-    Project.find(14).hit
+    Project.hit 14
   
     @artists = Array.new
     
@@ -29,7 +29,7 @@ class Music::ArtistsController < ApplicationController
   # GET /music/artist/1234-567ab-cdef-0012.json
   # GET /music/artist/1234-567ab-cdef-0012.xml
   def show
-    Project.find(14).hit
+    Project.hit 14
 
     @artist = Hash.new
     

@@ -4,7 +4,7 @@ class Music::MusicController < ApplicationController
   # GET /music
   # GET /music.json
   def index
-    Project.find(33).hit
+    Project.hit 33
     @listens = Listen.limit(12)
     @dj_events = DjEvent.limit(5)
     

@@ -2,7 +2,7 @@ class WallController < ApplicationController
   
   # GET /wall
   def index 
-    Project.find(38).hit
+    Project.hit 38
   end
 
   # POST /wall

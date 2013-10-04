@@ -2,7 +2,7 @@ class FriendmapController < ApplicationController
   
   # GET /friendmap
   def index 
-    Project.find(5).hit
+    Project.hit 5
   end
  
 end

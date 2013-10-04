@@ -2,7 +2,7 @@ class AnalysisController < ApplicationController
   
   # GET /analysis
   def index 
-    Project.find(30).hit
+    Project.hit 30
   end
  
 end

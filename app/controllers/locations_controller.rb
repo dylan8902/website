@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
   # GET /locations.json
   # GET /locations.xml
   def index
-    Project.find(4).hit
+    Project.hit 4
     @locations = Location.paginate(@page)
 
     respond_to do |format|
@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
   # GET /locations/1.json
   # GET /locations/1.xml
   def show
-    Project.find(4).hit
+    Project.hit 4
     @location = Location.find(params[:id])
 
     respond_to do |format|

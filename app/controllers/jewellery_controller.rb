@@ -2,7 +2,7 @@ class JewelleryController < ApplicationController
   
   # GET /jewellery
   def index
-    Project.find(17).hit
+    Project.hit 17
     render layout: false
   end
   

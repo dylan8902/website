@@ -53,7 +53,7 @@ class TextMessagesController < ApplicationController
   # GET /sms/stats.json
   # GET /sms/stats.xml
   def stats
-    Project.find(15).hit
+    Project.hit 15
     @stats = time_data TextMessage.all
     
     respond_to do |format|

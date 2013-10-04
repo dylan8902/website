@@ -2,7 +2,8 @@ class AccountsController < ApplicationController
   include ErrorHelper
   before_filter :authenticate_user!
   before_filter :authenticate_admin!
-    
+
+
   # GET /accounts
   # GET /accounts.json
   # GET /accounts.xml
@@ -24,6 +25,7 @@ class AccountsController < ApplicationController
     end
   end
 
+
   # GET /accounts/new
   # GET /accounts/new.json
   # GET /accounts/new.xml
@@ -37,10 +39,12 @@ class AccountsController < ApplicationController
     end
   end
 
+
   # GET /accounts/1/edit
   def edit
     @account = Account.find(params[:id])
   end
+
 
   # POST /accounts
   # POST /accounts.json
@@ -58,6 +62,7 @@ class AccountsController < ApplicationController
     end
   end
 
+
   # PUT /accounts/1
   # PUT /accounts/1.json
   def update
@@ -73,6 +78,7 @@ class AccountsController < ApplicationController
       end
     end
   end
+
 
   # DELETE /accounts/1
   # DELETE /accounts/1.json

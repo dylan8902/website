@@ -6,9 +6,11 @@ class Project < ActiveRecord::Base
   default_scope order('created_at DESC')
 
 
-  def hit
-    self.hits += 1
-    self.save
+  def self.hit id
+    project = Project.where(id: id)
+    return if project.empty?
+    project.hits += 1
+    project.save
   end
   
 end

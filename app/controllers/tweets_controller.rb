@@ -44,7 +44,7 @@ class TweetsController < ApplicationController
   # GET /tweets/map.json
   # GET /tweets/map.xml
   def map
-    Project.find(9).hit
+    Project.hit 9
     @locations = Tweet.where("lat IS NOT NULL AND lng IS NOT NULL")
     
     respond_to do |format|

@@ -3,8 +3,9 @@ class EpisodesController < ApplicationController
   
   # GET /episodes
   # GET /episodes.json
+  # GET /episodes.xml
   def index
-    Project.find(13).hit
+    Project.hit 13
     @episodes = Episode.paginate(@page)
 
     respond_to do |format|
@@ -19,7 +20,7 @@ class EpisodesController < ApplicationController
   # GET /episodes/1.json
   # GET /episodes/1.xml
   def show
-    Project.find(13).hit
+    Project.hit 13
     @episode = Episode.find_by_pid(params[:id]) or not_found
 
     respond_to do |format|
@@ -34,7 +35,7 @@ class EpisodesController < ApplicationController
   # GET /episodes/stats.json
   # GET /episodes/stats.xml
   def stats
-    Project.find(42).hit
+    Project.hit 42
     @stats = time_data Episode.all
 
     respond_to do |format|

@@ -8,7 +8,7 @@ class Music::DjEventsController < ApplicationController
   # GET /music/dj.json
   # GET /music/dj.xml
   def index
-    Project.find(19).hit
+    Project.hit 19
     @dj_events = DjEvent.paginate(@page)
 
     respond_to do |format|
@@ -23,7 +23,7 @@ class Music::DjEventsController < ApplicationController
   # GET /music/dj/1.json
   # GET /music/dj/1.xml
   def show
-    Project.find(19).hit
+    Project.hit 19
     @dj_event = DjEvent.find(params[:id])
 
     respond_to do |format|

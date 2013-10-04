@@ -1,6 +1,9 @@
 class Trains::SchedulesController < ApplicationController
   include ErrorHelper
 
+  # GET /trains/schedules
+  # GET /trains/schedules.json
+  # GET /trains/schedules.xml
   def index
 
   	if params['origin'] and params['origin'].length > 0 then
@@ -49,6 +52,9 @@ class Trains::SchedulesController < ApplicationController
   end
 
 
+  # GET /trains/schedules/P123
+  # GET /trains/schedules/P123.json
+  # GET /trains/schedules/P123.xml
   def show_by_uid
     
     if params[:year].nil? or params[:month].nil? or params[:day].nil?
@@ -72,6 +78,9 @@ class Trains::SchedulesController < ApplicationController
   end
   
   
+  # GET /trains/schedules/id/1
+  # GET /trains/schedules/id/1.json
+  # GET /trains/schedules/id/1.xml
   def show_by_id
     
     @schedule = Trains::Schedule.find(params[:id])
@@ -84,10 +93,13 @@ class Trains::SchedulesController < ApplicationController
   end
   
   
+  # GET /trains/schedules/update
+  # GET /trains/schedules/update.json
+  # GET /trains/schedules/update.xml
   def update
     
     logger.info("Starting schedule update")
-    Trains::Schedule.delay.parse_file
+    Trains::Schedule.parse_file
       
     respond_to do |format|
       format.html { redirect_to trains_schedules_url, notice: "Schedules are being updated" }

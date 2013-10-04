@@ -1,5 +1,8 @@
 class Trains::LocationsController < ApplicationController
 
+  # GET /trains/locations
+  # GET /trains/locations.json
+  # GET /trains/locations.xml
   def index
     @q = params['q']
 
@@ -25,6 +28,9 @@ class Trains::LocationsController < ApplicationController
   end
 
 
+  # GET /trains/locations/1
+  # GET /trains/locations/1.json
+  # GET /trains/locations/1.xml
   def show
     @location =Trains::Location.find(params[:id])
 

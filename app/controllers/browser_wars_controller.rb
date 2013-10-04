@@ -1,10 +1,11 @@
 class BrowserWarsController < ApplicationController
-  
+
+
   # GET /browserwars
   # GET /browserwars.json
   # GET /browserwars.xml
   def index
-    Project.find(27).hit
+    Project.hit 27
     
     filename = Rails.root.join("json", "browser_wars.json")
     if File.exists?(filename) and File.mtime(filename) > Time.now - 1.day      

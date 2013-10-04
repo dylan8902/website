@@ -4,7 +4,7 @@ class ApiController < ApplicationController
   # GET /api.json
   # GET /api.xml
   def index
-    Project.find(12).hit
+    Project.hit 12
 
     @methods = [
       { url: "/api", description: "Returns API methods" },

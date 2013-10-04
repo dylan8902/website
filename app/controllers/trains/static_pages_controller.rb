@@ -1,7 +1,10 @@
 class Trains::StaticPagesController < ApplicationController
 
+  # GET /trains
+  # GET /trains.json
+  # GET /trains.xml
   def index
-    Project.find(34).hit
+    Project.hit 34
 
     respond_to do |format|
       format.html

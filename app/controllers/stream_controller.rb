@@ -2,7 +2,7 @@ class StreamController < ApplicationController
   
   # GET /stream
   def index
-    Project.find(16).hit
+    Project.hit 16
     @projects = Project.all
 
     respond_to do |format|

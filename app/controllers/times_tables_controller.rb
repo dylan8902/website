@@ -3,12 +3,12 @@ class TimesTablesController < ApplicationController
   # GET /timestables
   # GET /timestables.json
   def index
-    Project.find(50).hit
+    Project.hit 50
     @timestables = TimesTable.limit(10)
  
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @timestables, :callback => params[:callback] }
+      format.json { render json: @timestables, callback: params[:callback] }
       format.xml { render xml: @timestables }
     end
       
@@ -68,8 +68,8 @@ class TimesTablesController < ApplicationController
     end
  
     respond_to do |format|
-      format.html { render "print", :layout => false } 
-      format.json { render json: @timestable, :callback => params[:callback] }
+      format.html { render "print", layout: false } 
+      format.json { render json: @timestable, callback: params[:callback] }
       format.xml { render xml: @timestable }
     end
       
