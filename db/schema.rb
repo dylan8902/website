@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131004181013) do
+ActiveRecord::Schema.define(version: 20131006073841) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -96,6 +96,18 @@ ActiveRecord::Schema.define(version: 20131004181013) do
     t.float    "lat"
     t.float    "lng"
     t.integer  "accuracy"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "listens", force: true do |t|
+    t.string   "artist"
+    t.string   "artist_mbid"
+    t.string   "track"
+    t.string   "track_mbid"
+    t.string   "album"
+    t.string   "album_mbid"
+    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
