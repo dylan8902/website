@@ -8,6 +8,6 @@ scheduler.cron '2 * * * *' do
     Listen.update
 end
 
-scheduler.cron '5 16 * * *' do
+scheduler.cron '2 * * * *' do
   BbcTwitter.update
 end
