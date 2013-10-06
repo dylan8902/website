@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131003182250) do
+ActiveRecord::Schema.define(version: 20131004181013) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -327,6 +327,17 @@ ActiveRecord::Schema.define(version: 20131003182250) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "user_twitter_accounts", force: true do |t|
+    t.integer "user_id"
+    t.string  "screen_name"
+    t.string  "oauth_token"
+    t.string  "oauth_token_secret"
+    t.string  "access_token"
+  end
+
+  add_index "user_twitter_accounts", ["screen_name"], name: "index_user_twitter_accounts_on_screen_name", using: :btree
+  add_index "user_twitter_accounts", ["user_id"], name: "index_user_twitter_accounts_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

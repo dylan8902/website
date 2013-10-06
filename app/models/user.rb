@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :local_tags
   has_many :train_journeys
+  has_many :user_twitter_accounts
   
   private
     def user_params
