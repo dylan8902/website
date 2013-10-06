@@ -87,7 +87,8 @@ class AccountsController < ApplicationController
       format.xml { head :no_content }
     end
   end
-  
+
+
   private
     def account_params
       params.require(:account).permit(:name, :credential, :number)

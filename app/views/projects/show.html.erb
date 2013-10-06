@@ -1,31 +1,6 @@
 <% provide(:title, "Project:: #{@project.title}") %>
-<p id="notice"><%= notice %></p>
+<% provide(:description, @project.description) %>
 
-<p>
-  <b>Title:</b>
-  <%= @project.title %>
-</p>
+<h1><%= @project.title %></h1>
 
-<p>
-  <b>Description:</b>
-  <%= @project.description %>
-</p>
-
-<p>
-  <b>Url:</b>
-  <%= @project.url %>
-</p>
-
-<p>
-  <b>Hits:</b>
-  <%= @project.hits %>
-</p>
-
-<p>
-  <b>Online:</b>
-  <%= @project.online %>
-</p>
-
-
-<%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>

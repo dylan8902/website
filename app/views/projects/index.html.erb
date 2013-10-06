@@ -5,14 +5,14 @@
 
 <nav class="btn-group">
 	<% css = "btn" %>
-	<% css += " btn-primary" if @order == "created_at DESC" %>
-	<%= link_to "Most Recent", projects_path + "?order_by=created_at", :class => css %>
+	<% css += " btn-primary" if params[:order].nil? %>
+	<%= link_to "Most Recent", request.path, class: css %>
 	<% css = "btn" %>
-	<% css += " btn-primary" if @order == "hits DESC" %>
-	<%= link_to "Most Popular", projects_path + "?order_by=hits", :class => css %>
+	<% css += " btn-primary" if params[:order] == "hits DESC" %>
+	<%= link_to "Most Popular", request.path + "?order=hits%20DESC", class: css %>
 	<% css = "btn" %>
-	<% css += " btn-primary" if @order == "title ASC" %>
-	<%= link_to "A-Z", projects_path + "?order_by=title", :class => css %>
+	<% css += " btn-primary" if params[:order] == "title" %>
+	<%= link_to "A-Z", request.path + "?order=title", class: css %>
 </nav>
 
 <% @projects.each_with_index do |project, i| %>
@@ -23,7 +23,7 @@
 				<h3 class="panel-title"><%= link_to raw(project.title), project.url %></h3>
 			</div>
 			<div class="panel-body">
-				<a class="thumbnail" href="<%= project.url %>"><img src="/assets/project<%= project.id %>.png" alt="<%= project.title %>"></a>
+				<a class="thumbnail" href="<%= project.url %>"><img src="/images/project<%= project.id %>.png" alt="<%= project.title %>"></a>
 				<p>
 					<%= raw project.description %>
 				</p>

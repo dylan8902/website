@@ -2,20 +2,14 @@ class ProjectsController < ApplicationController
   include ErrorHelper
   before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :authenticate_admin!, :except => [:index, :show]
-  
+
+
   # GET /stuff
   # GET /stuff.json
+  # GET /stuff.xml
   def index
-    
-    if params[:order_by].nil? or params[:order_by] == "created_at" 
-      @order = "created_at DESC"
-    elsif params[:order_by] == "hits" 
-      @order = "hits DESC"
-    elsif params[:order_by] == "title"
-      @order = "title ASC"
-    end
-    
-    @projects = Project.unscoped.order(@order).paginate(@page)
+        
+    @projects = Project.paginate(@page)
     
     respond_to do |format|
       format.html # index.html.erb
@@ -24,8 +18,10 @@ class ProjectsController < ApplicationController
     end
   end
 
+
   # GET /stuff/1
   # GET /stuff/1.json
+  # GET /stuff/1.xml
   def show
     @project = Project.find(params[:id])
 
@@ -36,8 +32,10 @@ class ProjectsController < ApplicationController
     end
   end
 
+
   # GET /stuff/new
   # GET /stuff/new.json
+  # GET /stuff/new.xml
   def new
     @project = Project.new
 
@@ -48,26 +46,31 @@ class ProjectsController < ApplicationController
     end
   end
 
+
   # GET /stuff/1/edit
   def edit
     @project = Project.find(params[:id])
   end
 
+
   # POST /stuff
   # POST /stuff.json
+  # POST /stuff.xml
   def create
-    @project = Project.new(params[:project])
+    @project = Project.new(project_params)
 
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
+        format.xml { render xml: @project, status: :created, location: @project }
       else
         format.html { render action: "new" }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.xml { render xml: @project.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
   # PUT /stuff/1
   # PUT /stuff/1.json
@@ -75,15 +78,18 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
 
     respond_to do |format|
-      if @project.update_attributes(params[:project])
+      if @project.update_attributes(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { head :no_content }
+        format.xml { head :no_content }
       else
         format.html { render action: "edit" }
         format.json { render json: @project.errors, status: :unprocessable_entity }
+        format.xml { render xml: @project.errors, status: :unprocessable_entity }
       end
     end
   end
+
 
   # DELETE /stuff/1
   # DELETE /stuff/1.json
@@ -94,6 +100,13 @@ class ProjectsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to projects_url }
       format.json { head :no_content }
+      format.xml { head :no_content }
     end
   end
+
+
+  private
+    def project_params
+      params.require(:project).permit(:name, :description, :url, :online)
+    end
 end

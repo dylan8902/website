@@ -29,6 +29,7 @@ Website::Application.routes.draw do
     get "login" => "devise/sessions#new", as: "new_session"
     get "logout" => "devise/sessions#destroy", as: "logout"
   end
+  get  "stuff/all"  => "projects#index", as: "all_stuff", defaults: { limit: 100000 }
   resources :projects, path: "stuff", as: "stuff"
   get  "blog/map"       => "blog_posts#map",    as: "blog_posts_map"
   resources :blog_posts, path: "blog"
