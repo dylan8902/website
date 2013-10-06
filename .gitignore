@@ -20,3 +20,6 @@
 
 #ignore .rvmrc file that contains secret keys
 /.rvmrc
+
+#ignore all files put into temp json folder
+/json/*
