@@ -9,14 +9,8 @@ class AccountsController < ApplicationController
   # GET /accounts.xml
   def index
     
-    if params[:order_by].nil? or params[:order_by] == "name"
-      @order = "name ASC"
-    elsif params[:order_by] == "created_at"
-      @order = "created_at DESC"
-    end
-    
     @account = Account.new
-    @accounts = Account.order(@order).paginate(@page)
+    @accounts = Account.paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb

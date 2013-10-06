@@ -40,6 +40,7 @@ Website::Application.routes.draw do
   get  "facebook/map"   => "facebook_posts#map",    as: "facebook_posts_map"
   get  "facebook/stats" => "facebook_posts#stats",  as: "facebook_posts_stats"
   resources :facebook_posts, path: "facebook",    only: [:index, :show]
+  get  "accounts/all"  => "accounts#index", as: "all_accounts", defaults: { limit: 100000 }
   resources :accounts, except: :show
   get  "episodes/stats" => "episodes#stats", as: "episodes_stats"
   resources :episodes,                           only: [:index, :show]
