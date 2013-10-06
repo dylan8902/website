@@ -21,8 +21,11 @@ test:
   pool: 5
   timeout: 5000
 
-production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+development:
+  adapter: mysql2
+  encoding: utf8
+  database: dylan8902_production
   pool: 5
-  timeout: 5000
+  username: dylan8902
+  password: encarta2
+  host: localhost
