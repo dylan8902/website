@@ -43,11 +43,11 @@ class AccountsController < ApplicationController
   # POST /accounts
   # POST /accounts.json
   def create
-    @account = Account.new(params[:account])
+    @account = Account.new(account_params)
 
     respond_to do |format|
       if @account.save
-        format.html { redirect_to @account, notice: 'account was successfully created.' }
+        format.html { redirect_to accounts_path, notice: 'account was successfully created.' }
         format.json { render json: @account, status: :created, location: @account }
       else
         format.html { render action: "new" }
@@ -63,8 +63,8 @@ class AccountsController < ApplicationController
     @account = Account.find(params[:id])
 
     respond_to do |format|
-      if @account.update_attributes(params[:account])
-        format.html { redirect_to @account, notice: 'Account was successfully updated.' }
+      if @account.update_attributes(account_params)
+        format.html { redirect_to accounts_path, notice: 'Account was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -87,4 +87,9 @@ class AccountsController < ApplicationController
       format.xml { head :no_content }
     end
   end
+  
+  private
+    def account_params
+      params.require(:account).permit(:name, :credential, :number)
+    end
 end
