@@ -23,6 +23,7 @@ gem 'rest-client'
 gem 'nokogiri'
 gem 'stomp'
 
-group :doc do
-  gem 'sdoc', require: false
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'simplecov'
 end
