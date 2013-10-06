@@ -58,7 +58,7 @@ Website::Application.routes.draw do
   get  "episodes/stats" => "episodes#stats", as: "episodes_stats"
   resources :episodes,                           only: [:index, :show]
 
-  resources :bank_transactions, path: "bank",    only: [:index]
+  resources :bank_transactions, path: "bank",    only: [:index, :create]
 
   resources :locations, path: "location",        only: [:index, :show]
 

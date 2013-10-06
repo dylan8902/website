@@ -1,15 +1,44 @@
 <% provide(:title, "Bank Transactions") %>
 <h1>Bank Transactions</h1>
 
-<table class="table table-striped">
+<table class="table table-striped">	
 	<% @bank_transactions.each do |transaction| %>
 	<tr>
+		<td><%= transaction.created_at.strftime("%F") %></td>
 		<td><%= transaction.description %></td>
 		<td><%= transaction.amount %></td>
-		<td><%= raw timestamp transaction.created_at %></td>
 		<td><%= transaction.balance %></td>
 	</tr>
 	<% end %>
 </table>
 
 <%= paginate @bank_transactions %>
+
+<section id="drop">Upload statement.csv</section>
+
+<script>
+	// <![CDATA[
+	$(document).ready(function() {
+		var holder = document.getElementById('drop');
+		holder.ondragover = function () { this.className = 'hover'; return false; };
+		holder.ondragend = function () { this.className = ''; return false; };
+		holder.ondragleave = function () { this.className = ''; return false; };
+		holder.ondrop = function(e) {
+			e.preventDefault();
+			this.className = '';
+			var file = e.dataTransfer.files[0];
+			var reader = new FileReader();
+			$('#drop').html('Reading File...');
+			reader.onload = function (event) {
+				$('#drop').html('Uploading...');
+				$.post('<%= bank_transactions_path %>.json', { file: event.target.result }, function(data) {
+					$('#drop').html('<h2>Success!</h2>');
+					console.log(data);
+				});
+			};
+			reader.readAsDataURL(file);
+			return false;
+		};
+	});
+	//]]!>
+</script>
