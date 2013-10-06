@@ -9,9 +9,9 @@ class AccountsController < ApplicationController
   # GET /accounts.xml
   def index
     
-    if params[:order_by].nil? or params[:order_by] == "name" 
+    if params[:order_by].nil? or params[:order_by] == "name"
       @order = "name ASC"
-    elsif params[:order_by] == "created_at" 
+    elsif params[:order_by] == "created_at"
       @order = "created_at DESC"
     end
     

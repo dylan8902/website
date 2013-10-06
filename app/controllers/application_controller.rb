@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   
   def set_page_and_limit
     limit = params[:limit] || 30
+    limit = 1000000 unless params[:all].nil?
     @page = { page: params[:page], per_page: limit }
   end
   
