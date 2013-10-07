@@ -8,11 +8,26 @@ class ProjectsController < ApplicationController
   # GET /stuff.json
   # GET /stuff.xml
   def index
-        
+
     @projects = Project.paginate(@page)
-    
+
     respond_to do |format|
       format.html # index.html.erb
+      format.json { render json: @projects, callback: params[:callback] }
+      format.xml { render xml: @projects }
+    end
+  end
+
+
+  # GET /stuff/all
+  # GET /stuff/all.json
+  # GET /stuff/all.xml
+  def all
+    @page[:per_page] = Project.count
+    @projects = Project.paginate(@page)
+
+    respond_to do |format|
+      format.html { render 'index.html.erb' }
       format.json { render json: @projects, callback: params[:callback] }
       format.xml { render xml: @projects }
     end

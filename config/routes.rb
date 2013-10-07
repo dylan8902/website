@@ -21,62 +21,62 @@ Website::Application.routes.draw do
   get "music/artist/:mbzid", to: redirect("/music/artists/%{mbzid}")
 
   root to: "static_pages#index"
-  get "who"             => "static_pages#who", as: "who"
-  get  "contact"        => "static_pages#contact",  as: "contact"
-  get "todo" => "static_pages#todo", as: "todo"
+  get "who"             => "static_pages#who",      as: "who"
+  get "contact"         => "static_pages#contact",  as: "contact"
+  get "todo"            => "static_pages#todo",     as: "todo"
 
   devise_for :users, path: "users", path_names: { sign_in: "login", sign_out: "logout", sign_up: "register" }
   as :user do
-    get "login" => "devise/sessions#new", as: "new_session"
-    get "logout" => "devise/sessions#destroy", as: "logout"
+    get "login"  => "devise/sessions#new",          as: "new_session"
+    get "logout" => "devise/sessions#destroy",      as: "logout"
   end
 
-  get  "stuff/all"  => "projects#index", as: "all_stuff", defaults: { limit: 100000 }
-  resources :projects, path: "stuff", as: "stuff"
+  get  "stuff/all"  => "projects#all",              as: "all_stuff"
+  resources :projects, path: "stuff",               as: "stuff"
 
-  get  "blog/all"  => "blog#index", as: "all_blog_posts", defaults: { limit: 100000 }
-  get  "blog/map"  => "blog_posts#map",    as: "blog_posts_map"
+  get  "blog/all"  => "blog#all",                   as: "all_blog_posts"
+  get  "blog/map"  => "blog_posts#map",             as: "blog_posts_map"
   resources :blog_posts, path: "blog"
   resources :blog_tags, path: "blog/tags", only: [:index, :show]
 
   get  "sitemap"        => "static_pages#sitemap",  as: "sitemap"
 
-  get  "tweets/all"  => "tweets#index", as: "all_tweets", defaults: { limit: 100000 }
-  get  "tweets/map"    => "tweets#map",            as: "tweets_map"
-  get  "tweets/stats"  => "tweets#stats",          as: "tweets_stats"
+  get  "tweets/all"     => "tweets#all",            as: "all_tweets"
+  get  "tweets/map"     => "tweets#map",            as: "tweets_map"
+  get  "tweets/stats"   => "tweets#stats",          as: "tweets_stats"
   resources :tweets, only: [:index, :show]
 
-  get  "facebook/all"  => "facebook_posts#index", as: "all_facebook_posts", defaults: { limit: 100000 }
+  get  "facebook/all"   => "facebook_posts#all",    as: "all_facebook_posts"
   get  "facebook/map"   => "facebook_posts#map",    as: "facebook_posts_map"
   get  "facebook/stats" => "facebook_posts#stats",  as: "facebook_posts_stats"
-  resources :facebook_posts, path: "facebook",    only: [:index, :show]
+  resources :facebook_posts, path: "facebook", only: [:index, :show]
 
-  get  "accounts/all"  => "accounts#index", as: "all_accounts", defaults: { limit: 100000 }
+  get  "accounts/all"   => "accounts#all",          as: "all_accounts"
   resources :accounts, except: :show
 
-  get  "episodes/all"  => "episodes#index", as: "all_episodes", defaults: { limit: 100000 }
+  get  "episodes/all"  => "episodes#all", defaults: { limit: 100000 }
   get  "episodes/stats" => "episodes#stats", as: "episodes_stats"
-  resources :episodes,                           only: [:index, :show]
+  resources :episodes,                         only: [:index, :show]
 
-  resources :bank_transactions, path: "bank",    only: [:index, :create]
+  resources :bank_transactions, path: "bank",  only: [:index, :create]
 
-  resources :locations, path: "location",        only: [:index, :show]
+  resources :locations, path: "location",      only: [:index, :show]
 
-  resources :iphone_locations, path: "iphone",   only: [:index, :show]
+  resources :iphone_locations, path: "iphone", only: [:index, :show]
 
-  get  "sms/all"  => "text_messages#index", as: "all_text_messages", defaults: { limit: 100000 }
-  get  "sms/cloud"     => "text_messages#cloud", as: "text_message_cloud"
-  get  "sms/stats"     => "text_messages#stats", as: "text_message_stats"
+  get  "sms/all"       => "text_messages#all",      as: "all_text_messages"
+  get  "sms/cloud"     => "text_messages#cloud",    as: "text_message_cloud"
+  get  "sms/stats"     => "text_messages#stats",    as: "text_message_stats"
   get  "sms/contact/:contact" => "text_messages#contact", as: "text_message_contact"
-  resources :text_messages, path: "sms",    only: [:index, :show]
+  resources :text_messages, path: "sms",       only: [:index, :show]
 
-  get  "photos/all"  => "photos#index", as: "all_photos", defaults: { limit: 100000 }
-  get  "photos/map"    => "photos#map",            as: "photos_map"
-  get  "photos/stats"  => "photos#stats",          as: "photos_stats"
-  resources :photos,                        only: [:index, :show]
+  get  "photos/all"    => "photos#all",             as: "all_photos"
+  get  "photos/map"    => "photos#map",             as: "photos_map"
+  get  "photos/stats"  => "photos#stats",           as: "photos_stats"
+  resources :photos,                           only: [:index, :show]
 
   get  "drop/:uri" => "drops#show", as: "drop"
-  resources :drops,         path: "drop",   only: [:index, :create]
+  resources :drops,         path: "drop",      only: [:index, :create]
 
   resources :local_tags,    path: "localtags", except: [:new]
 

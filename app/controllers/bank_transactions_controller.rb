@@ -8,7 +8,7 @@ class BankTransactionsController < ApplicationController
   # GET /bank.json
   # GET /bank.xml
   def index
-    @bank_transactions = BankTransaction.paginate(@page)
+    @bank_transactions = BankTransaction.all
 
     respond_to do |format|
       format.html # index.html.erb

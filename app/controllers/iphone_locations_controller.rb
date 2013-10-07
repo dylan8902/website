@@ -1,5 +1,6 @@
 class IphoneLocationsController < ApplicationController
-  
+
+
   # GET /iphone
   # GET /iphone.json
   # GET /iphone.xml
@@ -13,7 +14,7 @@ class IphoneLocationsController < ApplicationController
       format.xml { render xml: @locations }
     end
   end
-  
+
 
   # GET /iphone/1
   # GET /iphone/1.json

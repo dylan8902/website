@@ -20,6 +20,23 @@ class AccountsController < ApplicationController
   end
 
 
+  # GET /accounts/all
+  # GET /accounts/all.json
+  # GET /accounts/all.xml
+  def all
+
+    @account = Account.new
+    @page[:per_page] = Account.count
+    @accounts = Account.paginate(@page)
+
+    respond_to do |format|
+      format.html { render 'index.html.erb' }
+      format.json { render json: @accounts, callback: params[:callback] }
+      format.xml { render xml: @accounts }
+    end
+  end
+
+
   # GET /accounts/new
   # GET /accounts/new.json
   # GET /accounts/new.xml

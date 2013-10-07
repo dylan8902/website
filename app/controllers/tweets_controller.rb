@@ -1,6 +1,7 @@
 class TweetsController < ApplicationController
   include Statistics
-  
+
+
   # GET /tweets
   # GET /tweets.json
   # GET /tweets.xml
@@ -14,6 +15,22 @@ class TweetsController < ApplicationController
     end
   end
 
+
+  # GET /tweets/all
+  # GET /tweets/all.json
+  # GET /tweets/all.xml
+  def all
+    @page[:per_page] = Tweet.count
+    @tweets = Tweet.paginate(@page)
+
+    respond_to do |format|
+      format.html { render 'index.html.erb' }
+      format.json { render json: @tweets, callback: params[:callback] }
+      format.xml { render xml: @tweets }
+    end
+  end
+
+
   # GET /tweets/1
   # GET /tweets/1.json
   # GET /tweets/1.xml
@@ -26,7 +43,8 @@ class TweetsController < ApplicationController
       format.xml { render xml: @tweet }
     end
   end
-  
+
+
   # GET /tweets/stats
   # GET /tweets/stats.json
   # GET /tweets/stats.xml
@@ -39,7 +57,8 @@ class TweetsController < ApplicationController
       format.xml { render xml: time_data(Tweet.all, :hash) }
     end
   end
-  
+
+
   # GET /tweets/map
   # GET /tweets/map.json
   # GET /tweets/map.xml

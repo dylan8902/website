@@ -1,14 +1,56 @@
 <section class="row">
-	<article class="col-md-4">
+	<article class="col-md-4 col-sm-6">
 		<h4>Time of Day</h4>
-		<%= jqplot 200, 320, [@stats[:hours]], Statistics.bar_chart_options %>
+		<%= jqplot 200, 320, [@stats[:hours]], 
+		seriesDefaults:{
+            renderer:"$.jqplot.BarRenderer"
+        },
+        axes: {
+            xaxis: {
+                renderer: "$.jqplot.CategoryAxisRenderer",
+                ticks: ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23']
+            },
+            yaxis:{
+              tickOptions:{ formatString:'%d'},
+              min: 0
+           }
+        }
+        %>
 	</article>
-	<article class="col-md-4">
+	<article class="col-md-4 col-sm-6">
 		<h4>Days of Week</h4>
-		<%= jqplot 200, 320, [@stats[:days_of_week]], Statistics.bar_chart_options %>
+		<%= jqplot 200, 320, [@stats[:days_of_week]], 
+		seriesDefaults:{
+            renderer:"$.jqplot.BarRenderer"
+        },
+        axes: {
+            xaxis: {
+                renderer: "$.jqplot.CategoryAxisRenderer",
+                ticks: ['Su','M','Tu','W','Th','F','Sa']
+            },
+            yaxis:{
+              tickOptions:{ formatString:'%d'},
+              min: 0
+           }
+        }
+        %>
 	</article>
-	<article class="col-md-4">
+	<article class="col-md-4 col-sm-6">
 		<h4>Month in Year</h4>
-		<%= jqplot 200, 320, [@stats[:month_in_year]], Statistics.bar_chart_options %>
+		<%= jqplot 200, 320, [@stats[:month_in_year]], 
+		seriesDefaults:{
+            renderer:"$.jqplot.BarRenderer"
+        },
+        axes: {
+            xaxis: {
+                renderer: "$.jqplot.CategoryAxisRenderer",
+                ticks: ['J','F','M','A','M','J','J','A','S','O','N','D']
+            },
+            yaxis:{
+              tickOptions:{ formatString:'%d'},
+              min: 0
+           }
+        }
+        %>
 	</article>
 </section>

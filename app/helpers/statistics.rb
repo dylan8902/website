@@ -27,15 +27,4 @@ module Statistics
     end
   end
   
-  def self.bar_chart_options
-    opt = {
-      axis: {
-        x: {
-          min: 1
-        }
-      }
-    }
-    return opt
-  end
-
 end

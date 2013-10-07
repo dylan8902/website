@@ -16,6 +16,22 @@ class EpisodesController < ApplicationController
   end
 
 
+  # GET /episodes/all
+  # GET /episodes/all.json
+  # GET /episodes/all.xml
+  def all
+    Project.hit 13
+    @page[:per_page] = Episode.count
+    @episodes = Episode.paginate(@page)
+
+    respond_to do |format|
+      format.html { render 'index.html.erb' }
+      format.json { render json: @episodes, callback: params[:callback] }
+      format.xml { render xml: @episodes }
+    end
+  end
+
+
   # GET /episodes/1
   # GET /episodes/1.json
   # GET /episodes/1.xml

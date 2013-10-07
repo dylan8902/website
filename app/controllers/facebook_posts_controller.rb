@@ -16,6 +16,21 @@ class FacebookPostsController < ApplicationController
   end
 
 
+  # GET /facebook/all
+  # GET /facebook/all.json
+  # GET /facebook/all.xml
+  def all
+    @page[:per_page] = FacebookPost.count
+    @facebook_posts = FacebookPost.paginate(@page)
+
+    respond_to do |format|
+      format.html { render 'index.html.erb' }
+      format.json { render json: @facebook_posts, callback: params[:callback] }
+      format.xml { render xml: @facebook_posts }
+    end
+  end
+
+
   # GET /facebook/1
   # GET /facebook/1.json
   # GET /facebook/1.xml

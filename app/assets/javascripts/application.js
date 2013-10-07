@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require jqplot
+//= require jqplot/plugins/barRenderer
+//= require jqplot/plugins/categoryAxisRenderer
