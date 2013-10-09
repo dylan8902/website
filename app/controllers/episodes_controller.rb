@@ -1,6 +1,9 @@
 class EpisodesController < ApplicationController
   include Statistics
-  
+  include ErrorHelper
+  before_filter :authenticate_user!, only: [:add]
+  before_filter :authenticate_admin!, only: [:add]
+    
   # GET /episodes
   # GET /episodes.json
   # GET /episodes.xml
