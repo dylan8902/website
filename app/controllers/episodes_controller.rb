@@ -61,4 +61,20 @@ class EpisodesController < ApplicationController
     end
   end
 
+
+  # GET /episodes/add
+  # GET /episodes/add.json
+  # GET /episodes/add.xml
+  def add
+    unless params[:url].nil?
+      @episode = Episode.add params[:url]
+    end
+    
+    respond_to do |format|
+      format.html { render 'show.html.erb' }
+      format.json { render json: @episode, callback: params[:callback] }
+      format.xml { render xml: @episode }
+    end
+  end
+
 end

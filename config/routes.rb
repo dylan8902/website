@@ -32,12 +32,12 @@ Website::Application.routes.draw do
   end
 
   get  "stuff/all"  => "projects#all",              as: "all_stuff"
-  resources :projects, path: "stuff",               as: "stuff"
+  resources :projects,        path: "stuff",        as: "stuff"
 
   get  "blog/all"  => "blog#all",                   as: "all_blog_posts"
   get  "blog/map"  => "blog_posts#map",             as: "blog_posts_map"
-  resources :blog_posts, path: "blog"
-  resources :blog_tags, path: "blog/tags", only: [:index, :show]
+  resources :blog_posts,      path: "blog"
+  resources :blog_tags,       path: "blog/tags",    only: [:index, :show]
 
   get  "sitemap"        => "static_pages#sitemap",  as: "sitemap"
 
@@ -49,36 +49,37 @@ Website::Application.routes.draw do
   get  "facebook/all"   => "facebook_posts#all",    as: "all_facebook_posts"
   get  "facebook/map"   => "facebook_posts#map",    as: "facebook_posts_map"
   get  "facebook/stats" => "facebook_posts#stats",  as: "facebook_posts_stats"
-  resources :facebook_posts, path: "facebook", only: [:index, :show]
+  resources :facebook_posts, path: "facebook",      only: [:index, :show]
 
   get  "accounts/all"   => "accounts#all",          as: "all_accounts"
   resources :accounts, except: :show
 
-  get  "episodes/all"  => "episodes#all", defaults: { limit: 100000 }
-  get  "episodes/stats" => "episodes#stats", as: "episodes_stats"
-  resources :episodes,                         only: [:index, :show]
+  get  "episodes/add"   => "episodes#add"
+  get  "episodes/all"   => "episodes#all"
+  get  "episodes/stats" => "episodes#stats",        as: "episodes_stats"
+  resources :episodes,                              only: [:index, :show]
 
-  resources :bank_transactions, path: "bank",  only: [:index, :create]
+  resources :bank_transactions, path: "bank",       only: [:index, :create]
 
-  resources :locations, path: "location",      only: [:index, :show]
+  resources :locations,         path: "location",   only: [:index, :show]
 
-  resources :iphone_locations, path: "iphone", only: [:index, :show]
+  resources :iphone_locations,  path: "iphone",     only: [:index, :show]
 
   get  "sms/all"       => "text_messages#all",      as: "all_text_messages"
   get  "sms/cloud"     => "text_messages#cloud",    as: "text_message_cloud"
   get  "sms/stats"     => "text_messages#stats",    as: "text_message_stats"
   get  "sms/contact/:contact" => "text_messages#contact", as: "text_message_contact"
-  resources :text_messages, path: "sms",       only: [:index, :show]
-
+  resources :text_messages,     path: "sms",        only: [:index, :show]
+ 
   get  "photos/all"    => "photos#all",             as: "all_photos"
   get  "photos/map"    => "photos#map",             as: "photos_map"
   get  "photos/stats"  => "photos#stats",           as: "photos_stats"
-  resources :photos,                           only: [:index, :show]
+  resources :photos,                                only: [:index, :show]
 
   get  "drop/:uri" => "drops#show", as: "drop"
-  resources :drops,         path: "drop",      only: [:index, :create]
+  resources :drops,              path: "drop",      only: [:index, :create]
 
-  resources :local_tags,    path: "localtags", except: [:new]
+  resources :local_tags,         path: "localtags", except: [:new]
 
   namespace :music do
     root to: "music#index"
