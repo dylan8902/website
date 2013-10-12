@@ -31,7 +31,7 @@ module ApplicationHelper
         "<a href=\"#{url}\" target=\"_blank\">#{url}</a>"
       end
     end
-    return linked
+    return linked.html_safe
   end
   
   #returns my age today

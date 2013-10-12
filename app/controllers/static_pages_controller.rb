@@ -59,15 +59,14 @@ class StaticPagesController < ApplicationController
   # POST /contact.json
   # POST /contact.xml
   def message
-    @message = params[:message]
-    
+    sent = FeedbackMailer.email(params).deliver
     respond_to do |format|
-      if @message.save
+      if sent
         format.html { redirect_to "/contact", notice: 'Thank you for your message.' }
-        format.json { render json: @message, status: :created, location: contact_path }
+        format.json { render json: nil, status: :created, location: contact_path }
       else
         format.html { render action: "contact" }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+        format.json { render json: "Not quite right?", status: :unprocessable_entity }
       end
     end
   end

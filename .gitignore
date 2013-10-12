@@ -23,3 +23,6 @@
 
 #ignore all files put into temp json folder
 /json/*
+
+#ignore the coverage report
+/coverage

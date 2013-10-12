@@ -9,6 +9,7 @@ class JewelleryController < ApplicationController
   
   # POST /jewellery
   def message
+    sent = FeedbackMailer.email(params).deliver
     render layout: false, template: 'jewellery/index'
   end
  

@@ -11,7 +11,22 @@
 		<% end %>
 		</nav>
   	</article>
-	<article class="col-md-4">
-  	
+	<article class="col-md-6">
+  		<p>If you have a problem or suggestion for the website, raise an issue on <a href="https://github.com/dylan8902/website/issues">GitHub</a>.</p>
+		<%= form_tag(contact_path) do |f| %>
+		   <div class="form-group">
+				<%= label_tag :name %>
+				<%= text_field_tag :name, nil, class: "form-control", placeholder: "Your Name", required: "true" %>
+			</div>
+			<div class="form-group">
+				<%= label_tag :email %>
+				<%= email_field_tag :email, nil, class: "form-control", placeholder: "Email Address", required: "true" %>
+			</div>
+			<div class="form-group">
+			 	<%= label_tag :message %>
+				<%= text_area_tag :message, nil, class: "form-control", placeholder: "Leave a message", required: "true" %>
+			</div>
+			<%= submit_tag "Send Message", class: "btn btn-primary" %>
+		<% end %>
 	</article>
 </section>

@@ -21,9 +21,10 @@ Website::Application.routes.draw do
   get "music/artist/:mbzid", to: redirect("/music/artists/%{mbzid}")
 
   root to: "static_pages#index"
-  get "who"             => "static_pages#who",      as: "who"
-  get "contact"         => "static_pages#contact",  as: "contact"
-  get "todo"            => "static_pages#todo",     as: "todo"
+  get  "who"            => "static_pages#who",      as: "who"
+  get  "contact"        => "static_pages#contact",  as: "contact"
+  post "contact"        => "static_pages#message"
+  get  "todo"           => "static_pages#todo",     as: "todo"
 
   devise_for :users, path: "users", path_names: { sign_in: "login", sign_out: "logout", sign_up: "register" }
   as :user do
