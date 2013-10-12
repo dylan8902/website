@@ -4,21 +4,27 @@
 <h1>Guided Reading Record Sheet</h1>
 
 <p class="well">
-  Use this tool to generate guided reading record sheets for the various assessment focus groups and levels.
+	Use this tool to generate guided reading record sheets for the various assessment focus groups and levels.
 </p>
 
 <section class="row">
-  <form target="_blank">
-  	<article class="col-md-8">
-  	<% @focus.each do |key, focus| %>
-	  <labeL><input type="checkbox" name="af[]" value="<%= key %>"> AF<%= key %> - <%= focus['title'] %></input></label><br>
-	<% end %>
-	</article>
-	<article class="col-md-3">
-  	<% @levels.each do |level| %>
-	  <labeL><input type="checkbox" name="level[]" value="<%= level %>">Level <%= level %></input></label><br>
-	<% end %>
-	  <input type="submit" value="Generate Reading Sheet" class="btn btn-success" style="margin-top:10px;">
-    </article>
-  </form>
+	<form target="_blank">
+		<article class="col-md-8">
+			<% @focus.each do |key, focus| %>
+			<labeL>
+				<input type="checkbox" name="af[]" value="<%= key %>">
+				AF<%= key %> - <%= focus['title'] %></input></label>
+			<br>
+			<% end %>
+		</article>
+		<article class="col-md-3">
+			<% @levels.each do |level| %>
+			<labeL>
+				<input type="checkbox" name="level[]" value="<%= level %>">
+				Level <%= level %></input></label>
+			<br>
+			<% end %>
+			<input type="submit" value="Generate Reading Sheet" class="btn btn-success" style="margin-top:10px;">
+		</article>
+	</form>
 </section>

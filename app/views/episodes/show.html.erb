@@ -6,7 +6,7 @@
 <ol class="breadcrumb">
   <li><%= link_to 'Episodes', episodes_path %></li>
   <li class="active"><%= @episode.title %></li>
-  <li><%= link_to 'Statistics', episodes_stats_path %></li>
+  <li><%= link_to 'Statistics', episodes_stats_path, "data-no-turbolink" => true %></li>
 </ol>
 
 <h2><%= @episode.title %></h2>

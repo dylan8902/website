@@ -13,12 +13,10 @@
 	</article>
 </section>
 
-<script>
-	// <![CDATA[
+<script type="text/javascript">
 	$(document).ready(function() {
 		$('input').keyup(function() {
 			$('#qr').attr('src', 'https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=' + encodeURIComponent($('input').val()));
 		});
 	});
-	//]]!>
 </script>

@@ -5,8 +5,8 @@
 <ol class="breadcrumb">
 	<li><%= link_to 'Photos', photos_path %></li>
 	<li class="active"><%= @photo.title %></li>
-	<li><%= link_to 'Statistics', photos_stats_path %></li>
-	<li><%= link_to 'Map', photos_map_path %></li>
+	<li><%= link_to 'Statistics', photos_stats_path, "data-no-turbolink" => true %></li>
+	<li><%= link_to 'Map', photos_map_path, "data-no-turbolink" => true %></li>
 </ol>
 
 <h2><%= @photo.title %></h2>

@@ -1,11 +1,11 @@
 <blockquote class="tweet">
 	<p>
-		<%= raw linkify tweet.text %>
+		<%= linkify tweet.text %>
 	</p>
 	<small class="geo">
 		<span class="latitude"><span class="value-title" title="<%= tweet.lat %>"></span></span>
 		<span class="longitude"><span class="value-title" title="<%= tweet.lng %>"></span></span>
-		<%= raw tweet.location %>
+		<%= tweet.location.html_safe if tweet.location %>
 		<%= link_to timestamp(tweet.created_at), tweet %>
 	</small>
 </blockquote>

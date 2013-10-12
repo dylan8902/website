@@ -12,11 +12,12 @@ body {
 }
 
 blockquote.tweet{
-	background-image: url('/assets/twitter.png');
+	background-image: url('/images/twitter-blue.png');
 	background-size: 40px 40px;
 	background-repeat: no-repeat;
 	background-position: left center;
-	padding-left: 40px;
+	padding-left: 50px;
+	border: 0;
 }
 
 blockquote.text_message.sent{
@@ -25,6 +26,7 @@ blockquote.text_message.sent{
 	background-repeat: no-repeat;
 	background-position: left center;
 	padding-left: 45px;
+	border: 0;
 }
 
 .thumbnail {
