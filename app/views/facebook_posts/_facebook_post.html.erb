@@ -1,11 +1,11 @@
 <blockquote class="facebook_post">
 	<p>
-		<%= raw linkify facebook_post.text %>
+		<%= linkify facebook_post.text %>
 	</p>
 	<small class="geo">
 		<span class="latitude"><span class="value-title" title="<%= facebook_post.lat %>"></span></span>
 		<span class="longitude"><span class="value-title" title="<%= facebook_post.lng %>"></span></span>
-		<%= raw facebook_post.location %>
+		<%= facebook_post.location %>
 		<%= link_to timestamp(facebook_post.created_at), facebook_post %>
 	</small>
 </blockquote>

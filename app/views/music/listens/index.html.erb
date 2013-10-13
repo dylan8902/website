@@ -9,7 +9,7 @@
 
 <% @listens.each do |listen| %>
 <article>
-  <h4><%= link_to listen.artist.html_safe, "/music/artists/#{listen.artist_mbid}" %> - <%= listen.track.html_safe %></h4>
+  <h4><%= link_to listen.artist, "/music/artists/#{listen.artist_mbid}" %> - <%= listen.track %></h4>
 </article>
 <% end %>
 

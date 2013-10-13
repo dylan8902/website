@@ -13,7 +13,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title"><%= link_to dj_track.artist, music_artist_path(dj_track) %></h3>
-				<h5><%= raw dj_track.title %></h5>
+				<h5><%= dj_track.title %></h5>
 			</div>
 			<div class="panel-body">
 				<%= link_to image_tag("https://www.bbc.co.uk/music/images/artists/542x305/#{dj_track.artist_mbid}.jpg", alt: dj_track.artist, class: "img-thumbnail"), music_artist_path(dj_track) %>

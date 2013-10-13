@@ -32,7 +32,7 @@ class Tweet < ActiveRecord::Base
   end
 
   def map_marker_text
-    self.text.html_safe
+    self.text
   end
 
 end

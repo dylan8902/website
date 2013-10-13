@@ -2,7 +2,7 @@ class FacebookPost < ActiveRecord::Base
   default_scope order('created_at DESC')
 
   def map_marker_text
-    self.text.html_safe
+    self.text
   end
 
 end

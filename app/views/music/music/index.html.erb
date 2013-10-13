@@ -22,7 +22,7 @@
 			<article class="col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h5 class="panel-title"><%= link_to listen.artist.html_safe, music_artist_path(listen) %> - <%= raw listen.track %></h5>
+						<h5 class="panel-title"><%= link_to listen.artist, music_artist_path(listen) %> - <%= listen.track %></h5>
 					</div>
 					<div class="panel-body">
 						<%= link_to image_tag("https://www.bbc.co.uk/music/images/artists/542x305/#{listen.artist_mbid}.jpg", alt: listen.artist, class: "img-thumbnail"), music_artist_path(listen) %>
