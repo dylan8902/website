@@ -1,9 +1,14 @@
 <% provide(:title, "Music:: DJ:: Events") %>
-<h1>DJ Events</h1>
+<% provide(:description, "Track listings from my days as a DJ at university") %>
 
+<h1>DJ Events</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Music', music_root_path %></li>
+	<li class="active">DJ Events</li>
+</ol>
 <% @dj_events.each do |dj_event| %>
 <article>
-  <h4><%= link_to dj_event.title, [:music, dj_event] %></h4>
+	<h4><%= link_to dj_event.title, [:music, dj_event] %></h4>
 </article>
 <% end %>
 

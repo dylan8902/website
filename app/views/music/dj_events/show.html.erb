@@ -2,6 +2,11 @@
 <% provide(:description, "I DJ'd: #{@dj_event.description}") %>
 
 <h1><%= @dj_event.title %></h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Music', music_root_path %></li>
+	<li><%= link_to 'DJ Events', music_dj_events_path %></li>
+	<li class="active"><%= @dj_event.title %></li>
+</ol>
 
 <p><%= @dj_event.location %></p>
 <p><%= @dj_event.created_at %></p>
