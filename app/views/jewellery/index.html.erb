@@ -73,7 +73,7 @@
 	<h2>Beautifully crafted handmade jewellery personally made by Gemma Miles-Jones</h2>
 	<div class="left">
 		<p>See something you like? Drag it into the basket. Thinking of something a bit different? Get in touch.</p>	
-		<form id="request" method="post">
+		<%= form_tag method: "post", id: "request" do %>
 			<label for="name">Name</label>
 			<input id="name" name="name" type="text">
 			<label for="email">E-Mail</label>
@@ -81,7 +81,7 @@
 			<label for="message">Message</label>
 			<textarea id="message" name="message"></textarea>
 			<input id="submit" name="submit" type="submit" value="Send Message">
-		</form>
+		<% end %>
 	</div>
 	<div class="right">
 		<div>
