@@ -83,10 +83,11 @@ module ApplicationHelper
   
   #the html required to delegate openid to myopenid
   def open_id_delegate
-    "\t\t<link rel=\"openid.server\" href=\"http://www.myopenid.com/server\">
-    <link rel=\"openid.delegate\" href=\"http://dylanjamesvernonjones.myopenid.com/\">
-    <link rel=\"openid2.local_id\" href=\"http://dylanjamesvernonjones.myopenid.com\">
-    <link rel=\"openid2.provider\" href=\"http://www.myopenid.com/server\">"
+    html = "<link rel=\"openid.server\" href=\"http://www.myopenid.com/server\">\n" +
+      "<link rel=\"openid.delegate\" href=\"http://dylanjamesvernonjones.myopenid.com/\">\n" +
+      "<link rel=\"openid2.local_id\" href=\"http://dylanjamesvernonjones.myopenid.com\">\n" +
+      "<link rel=\"openid2.provider\" href=\"http://www.myopenid.com/server\">"
+    return html.html_safe
   end
 
 end
