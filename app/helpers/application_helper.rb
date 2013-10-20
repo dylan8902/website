@@ -86,7 +86,7 @@ module ApplicationHelper
     "\t\t<link rel=\"openid.server\" href=\"http://www.myopenid.com/server\">
     <link rel=\"openid.delegate\" href=\"http://dylanjamesvernonjones.myopenid.com/\">
     <link rel=\"openid2.local_id\" href=\"http://dylanjamesvernonjones.myopenid.com\">
-    <link rel=\"openid2.provider\" href="http://www.myopenid.com/server\">"
+    <link rel=\"openid2.provider\" href=\"http://www.myopenid.com/server\">"
   end
 
 end
