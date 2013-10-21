@@ -5,11 +5,11 @@
 <h1>On Radio: <%= @radio_station.title %></h1>
 
 <nav>
-	<a href="/onradio/1"><img src="/assets/radio1.png" alt="BBC Radio 1"></a>
-	<a href="/onradio/1xtra"><img src="/assets/1xtra.png" alt="BBC Radio 1Xtra"></a>
-	<a href="/onradio/2"><img src="/assets/radio2.png" alt="BBC Radio 2"></a>
-	<a href="/onradio/3"><img src="/assets/radio3.png" alt="BBC Radio 3"></a>
-	<a href="/onradio/6music"><img src="/assets/6music.png" alt="BBC Radio 6Music"></a>
+	<a href="/onradio/1"><img src="/images/radio1.png" alt="BBC Radio 1"></a>
+	<a href="/onradio/1xtra"><img src="/images/1xtra.png" alt="BBC Radio 1Xtra"></a>
+	<a href="/onradio/2"><img src="/images/radio2.png" alt="BBC Radio 2"></a>
+	<a href="/onradio/3"><img src="/images/radio3.png" alt="BBC Radio 3"></a>
+	<a href="/onradio/6music"><img src="/images/6music.png" alt="BBC Radio 6Music"></a>
 </nav>
 
 <section class="row">
@@ -58,7 +58,7 @@
 			str = str+'<td><a href="/music/artists/'+mbid+'" id="'+mbid+'" target="_blank" title="Artist Information" class="artist">'+artist+'</a> - '+title+'<p>'+timestamp(start)+'</p></td></tr>';
 		}
 		else {
-			str = str+'<td><img src="/assets/no_mbzid_112x63.png"></td>';
+			str = str+'<td><img src="/images/no_mbzid_112x63.png"></td>';
 			str = str+'<td><a href="/music/artists/'+artist+'" target="_blank" title="Artist Information">'+artist+'</a> - '+title+'<p>'+timestamp(start)+'</p></td></tr>';
 		}
 		$('#tracks').prepend(str);
@@ -158,7 +158,7 @@
 		$.ajax({
 			type     : 'GET',
 			dataType : 'jsonp',
-			url      : '<%= request.uri %>.json',
+			url      : '<%= request.original_fullpath %>.json',
 			success  : 
 				function(reply) {
 					$('#show-info').html(''+reply.show.programme.title+': '+reply.show.programme.short_synopsis);
