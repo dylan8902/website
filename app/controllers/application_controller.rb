@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :set_page_and_limit
   before_filter :configure_devise_params, if: :devise_controller?
+  after_filter :analytics
 
 
   def set_page_and_limit
@@ -27,6 +28,11 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) do |u|
       u.permit(:name, :email, :password, :password_confirmation, :current_password)
     end
+  end
+
+
+  def analytics
+    Analytic.hit request
   end
 
 end
