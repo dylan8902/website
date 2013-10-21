@@ -1,0 +1,12 @@
+<% provide(:title, "Analytics:: Stats") %>
+<% provide(:description, "Statistics on when people visit the web app.") %>
+
+<h1>Analytics</h1>
+<ol class="breadcrumb">
+  <li><%= link_to 'Analytics', analytics_path %></li>
+  <li class="active">Statistics</li>
+</ol>
+
+<h2>Statistics</h2>
+<%= render 'common/time_stats' %>
+<%= link_to 'Back', analytics_path %>

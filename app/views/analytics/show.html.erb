@@ -1,0 +1,14 @@
+<% provide(:title, "Analytics:: #{@analytic.id}") %>
+<% provide(:description, "Someone from #{@analytic.ip} visited #{@analytic.uri}") %>
+
+<h1>Analytics</h1>
+<ol class="breadcrumb">
+  <li><%= link_to 'Analytics', analytics_path %></li>
+  <li class="active"><%= @analytic.id %></li>
+  <li><%= link_to 'Statistics', analytics_stats_path, "data-no-turbolink" => true %></li>
+</ol>
+
+<h2><%= link_to @analytic.uri, @analytic.uri %></h2>
+<h3><%= @analytic.ip %> using <%= @analytic.user_agent %></h3>
+<p><%= timestamp @analytic.created_at %></p>
+<%= link_to 'Back', analytics_path %>

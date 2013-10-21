@@ -1,0 +1,43 @@
+<% provide(:title, "Analytics") %>
+<% provide(:description, "Basic analytics of users visiting the web app.") %>
+
+<h1>Analytics</h1>
+<ol class="breadcrumb">
+  <li class="active">Analytics</li>
+  <li><%= link_to 'Statistics', analytics_stats_path, "data-no-turbolink" => true %></li>
+</ol>
+
+<section class="row">
+
+	<article class="col-md-4">
+		<h2>Recent IPs</h2>
+		<ul>
+		<% @analytics[:ips].each do |ip| %>
+			<li><%= link_to ip, analytics_path + "?ip=#{URI::escape(ip)}" %></li>
+		<% end %>
+		</ul>
+		<%= paginate @analytics[:ips] %>
+	</article>
+
+	<article class="col-md-4">
+		<h2>Recent Pages</h2>
+		<ul>
+		<% @analytics[:uris].each do |uri| %>
+			<li><%= link_to uri, uri %></li>
+		<% end %>
+		</ul>
+		<%= paginate @analytics[:uris] %>
+	</article>
+
+	<article class="col-md-4">
+		<h2>Recent Browsers</h2>
+		<ul>
+		<% @analytics[:user_agents].each do |user_agent| %>
+			<li><%= link_to user_agent, analytics_path + "?user_agent=#{URI::escape(user_agent)}" %></li>
+		<% end %>
+		</ul>
+		<%= paginate @analytics[:uris] %>
+	</article>
+
+</section>
+

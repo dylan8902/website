@@ -80,6 +80,11 @@ Website::Application.routes.draw do
   get  "drop/:uri" => "drops#show", as: "drop"
   resources :drops,              path: "drop",      only: [:index, :create]
 
+  get  "analytics/ip/:ip" => "analytics#ip"
+  get  "analytics/user-agent/:user_agent" => "analytics#user_agent"
+  get  "analytics/stats"  => "analytics#stats",     as: "analytics_stats"
+  resources :analytics,                             only: [:index, :show]
+
   resources :local_tags,         path: "localtags", except: [:new]
 
   namespace :music do
