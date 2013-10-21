@@ -128,6 +128,7 @@ Website::Application.routes.draw do
   get  "speak"          => "speak#index"
   get  "browserwars"    => "browser_wars#index"
   get  "foebook"        => "static_pages#gone"
+  get  "cleversounds"   => "cleversounds#index"
   get  "friendmap"      => "friendmap#index"
   get  "onradio/1"      => "on_radio#one"
   get  "onradio/1xtra"  => "on_radio#one_xtra"
