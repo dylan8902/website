@@ -1,6 +1,6 @@
 require 'open-uri'
 class TextMessage < ActiveRecord::Base    
-  default_scope order('created_at DESC')
+  default_scope { order('created_at DESC') }
   
   def self.update_url
     "https://dl.dropboxusercontent.com/sh/ubukii3foribrrz/G5hiE5qYld/sms.xml?token_hash=AAGxzw22f-4svibsz3kDKQYLD3f1nyErWK5XTvbyKeBuzg"

@@ -1,5 +1,5 @@
 class Photo < ActiveRecord::Base
-  default_scope order('created_at DESC')
+  default_scope { order('created_at DESC') }
 
   def self.update page = 1
     url = "http://api.flickr.com/services/rest?method=flickr.people.getPublicPhotos" +

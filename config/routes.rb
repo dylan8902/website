@@ -1,7 +1,23 @@
+class DomainConstraint
+  def initialize(domain)
+    @domains = [domain].flatten
+  end
+
+  def matches?(request)
+    @domains.include? request.domain
+  end
+end
+
 Website::Application.routes.draw do
 
-   #301s
-  get "",              to: redirect("/api"),         constraints: { subdomain: 'api' }
+  #ismytraindelayed
+  constraints DomainConstraint.new('ismytraindelayed.com') do
+   get ""         => "is_my_train_delayed#index"
+   get "arrivals" => "is_my_train_delayed#arrivals"
+  end
+  
+  #301s
+  get "",              to: redirect("/api"), constraints: { subdomain: 'api' }
   get "lifestream",    to: redirect("/stream")
   get "onradio",       to: redirect("/onradio/1")
   get "onradio1",      to: redirect("/onradio/1")
@@ -20,7 +36,7 @@ Website::Application.routes.draw do
   get "music/artist",  to: redirect("/music/artists")
   get "music/artist/:mbzid", to: redirect("/music/artists/%{mbzid}")
 
-  root to: "static_pages#index"
+  get ""                => "static_pages#index",    as: "root"
   get  "who"            => "static_pages#who",      as: "who"
   get  "contact"        => "static_pages#contact",  as: "contact"
   post "contact"        => "static_pages#message"

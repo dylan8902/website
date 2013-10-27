@@ -1,5 +1,5 @@
 class Location < ActiveRecord::Base
-  default_scope order('created_at DESC')
+  default_scope { order('created_at DESC') }
   
   def google_image size = 90
     "https://maps.googleapis.com/maps/api/staticmap?center=#{lat},#{lng}&zoom=11&size=#{size}x#{size}&sensor=true"

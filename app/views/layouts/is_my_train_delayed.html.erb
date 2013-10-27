@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en-gb">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Is My Train Delayed?</title>
+	<meta name="description" content="Is my train running late? Real-time UK train times in one place.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:title" content="Is My Train Delayed?">
+	<meta property="og:type" content="product">
+	<meta property="og:url" content="http://ismytraindelayed.com">
+	<meta property="og:image" content="http://ismytraindelayed.com/logo_200.png">
+	<meta property="og:site_name" content="Is My Train Delayed">
+	<meta property="fb:admins" content="512982904">
+	<style type="text/css">
+	html {
+		margin:0px;
+		padding:0px;
+		background:#99CCFF;
+		font-family:sans-serif;
+		font-size:16pt;
+		min-height:80%;
+		color:#0F2E4C;
+	}
+	body {
+		margin:20px;
+		padding:20px;
+		background:white;
+		height:100%;
+		text-align:center;
+	}
+	article {
+		display:block;
+		margin:5px;
+		padding:5px;
+		background:red;
+		color: white;
+		font-size:200%;
+	}
+	h1 {
+		margin:5px;
+		padding:10px;
+		font-size:240%;
+	}
+	h2 {
+		margin:5px;
+		padding:10px;
+		font-size:140%;
+	}
+	form {
+		margin-top:10px;
+		margin-left:10px;
+		margin-right:10px;
+		margin-bottom:20px;
+		padding:10px;
+		font-size:120%;
+		background:#99CCFF;
+	}
+	label {
+		font-size:120%;
+	}
+	input {
+		margin:10px;
+		padding:10px;
+		font-size:100%;
+	}
+	input[type=text] {
+		width:200px;	
+	}
+	input[type=submit] {
+		margin-left:auto;
+		margin-right:auto;
+		display:inline-block;
+		background:#9CF;
+		cursor:pointer;
+	}
+	input[type=submit]:active {
+		background:#CBE5FF;
+	}
+	table {
+		margin-top:10px;
+		margin-left:auto;
+		margin-right:auto;
+		margin-bottom:10px;
+	}
+	th {
+		font-size:120%;
+	}
+	tr {
+		margin:0px;
+		padding:0px;
+	}
+	td,th {
+		margin:5px;
+		padding:10px;
+	}
+	img, img a {
+		border:none;
+	}
+	a,a:hover,a:active,a:visited {
+		color:inherit;
+	}
+	.geo {
+		height:25px;
+		cursor:pointer;
+		margin-right:10px;
+	}
+	#type {
+		margin:5px;
+		padding:5px;
+		text-align:left;
+		font-size:110%;
+	}
+	#type a {
+		margin-right:10px;
+	}
+	#results {
+		width: 222px;
+		display: inline-block;
+		position: relative;
+		top: 40px;
+		left: -233px;
+		text-align: left;
+		background: white;
+		margin: 0;
+		padding: 0;
+	}
+	#results span {
+		display:block;
+		padding:4px;
+		cursor:pointer;
+	}
+	#results span:hover {
+		background:#aaddff;
+	}
+	@media only screen and (max-width:850px) {
+		html {
+			font-size:9pt;
+		}
+		body {
+			margin:5px;
+			padding:5px;
+		}
+		label {
+			display:block;
+		}
+		input[type=text] {
+			width:190px;	
+		}
+		input[type=submit] {
+			width:220px;
+			display:block;
+		}
+		td,th {
+			margin:5px;
+			padding:5px;
+		}
+		.geo {
+			height:15px;
+			margin-right:0px;
+		}		
+	}
+	</style>
+	<!--if lt IE 9>
+	<script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js\"></script>
+	<!endif-->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function nearestStation(type) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				$.ajax({
+					type     : 'GET',
+					dataType : 'jsonp',
+					url      : '/stations.json',
+					data     : 'lat='+position.coords.latitude+'&lng='+position.coords.longitude,
+					success  : 
+						function(data){
+							$('#'+type).val(data.name);
+						} 
+				});
+			});
+		}
+
+		var ajax = new XMLHttpRequest();
+		$(document).ready(function() {
+			if(navigator.geolocation!=null) {
+				$('#from').after('<img class="geo" src="/images/geo.png" title="Find Nearest Station" onclick="nearestStation('+"'"+'from'+"'"+');">');
+				$('#to').after('<img class="geo" src="/images/geo.png" title="Find Nearest Station" onclick="nearestStation('+"'"+'to'+"'"+');">');
+			}
+			/*
+			$('.autocomplete').bind('keyup',function(){
+				if($(this).val().length < 3)
+					return;
+				ajax.abort();
+				var id = $(this).attr('id');
+				ajax = $.ajax({
+					type     : 'GET',
+					dataType : 'jsonp',
+					url      : 'stations.php',
+					data     : 'q='+$(this).val(),
+					success  : 
+						function(data) {
+							$('#results').remove();
+							$('#'+id).after('<div id="results"></div>');
+							for(var i in data)
+								$('#results').append('<span>'+data[i].name+'</span>');
+						},
+					error    :
+						function (e) {
+							console.log(e);
+						}
+
+				});
+			});	
+			*/		
+		});
+	</script>
+	</head>
+<body>
+	<h1>IS MY TRAIN DELAYED?</h1>
+	<%= yield %>
+	<p style="text-align:left;"><iframe src="https://www.facebook.com/plugins/like.php?href=http%3A%2F%2Fismytraindelayed.com&amp;app_id=225904187462433&amp;send=false&amp;layout=button_count&amp;width=250&amp;show_faces=true&amp;action=like" scrolling="no" frameborder="0" style="height:25px;width:270px;margin:20px;" allowTransparency="true"></iframe></p>
+	<%= render 'common/google_analytics' %>
+</body>
+</html>
