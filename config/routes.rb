@@ -1,21 +1,21 @@
 class DomainConstraint
   def initialize(domain)
-    @domains = [domain].flatten
+    @domain = domain
   end
-
   def matches?(request)
-    @domains.include? request.domain
+    request.domain.include? @domain
   end
 end
 
 Website::Application.routes.draw do
 
   #ismytraindelayed
-  constraints DomainConstraint.new('ismytraindelayed.com') do
-   get ""         => "is_my_train_delayed#index"
-   get "arrivals" => "is_my_train_delayed#arrivals"
+  constraints DomainConstraint.new("ismytraindelayed.com") do
+    get ""         => "is_my_train_delayed#departures"
+    get "arrivals" => "is_my_train_delayed#arrivals"
+    get "service"  => "is_my_train_delayed#service"
   end
-  
+
   #301s
   get "",              to: redirect("/api"), constraints: { subdomain: 'api' }
   get "lifestream",    to: redirect("/stream")
@@ -87,7 +87,7 @@ Website::Application.routes.draw do
   get  "sms/stats"     => "text_messages#stats",    as: "text_message_stats"
   get  "sms/contact/:contact" => "text_messages#contact", as: "text_message_contact"
   resources :text_messages,     path: "sms",        only: [:index, :show]
- 
+
   get  "photos/all"    => "photos#all",             as: "all_photos"
   get  "photos/map"    => "photos#map",             as: "photos_map"
   get  "photos/stats"  => "photos#stats",           as: "photos_stats"

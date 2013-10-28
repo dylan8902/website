@@ -1,0 +1,27 @@
+<p id="type"><a href="/" style="font-weight:bold">Departures</a> <a href="/arrivals">Arrivals</a></p>
+  <form method="get" action="/">		
+	<label for="from">FROM:</label> <input id="from" type="text" name="from" value="<%= @from %>" required class="autocomplete">
+	<label for="to">TO:</label> <input id="to" type="text" name="to" value="<%= @to %>" class="autocomplete" placeholder="(optional)">
+	<input type="submit" value="Is My Train Delayed?">
+</form>
+
+<% if @trains.count == 0 %>
+	<p>Sorry, no further information for that train</p>
+<% else %>
+	<h2><%= "#{@trains.first[1]} #{@trains.first[2]} to #{@trains.last[2]}" %></h2>
+	<table>
+		<tr><th>Departs</th><th>Station</th><th>Status</th><th>Platform</th></tr>
+	<% @trains.each do |train| %>
+	  <% 
+	    if (train[3] == 'Departed') or (train[3] == 'Arrived') or (train[3] =='No report')
+			alert = ' style="color:#ABB1B8"'
+		elsif train[3] == 'On time'
+			alert = ''
+		else
+			alert = ' style="color:#990000;font-weight:bold"'
+		end
+	  %>
+	  <%= "<tr#{alert}><td>#{train[1]}</td><td>#{train[2]}</td><td>#{train[3]}<br>#{train[4].gsub('&lt;br/&gt;','<br>')}</td><td>#{train[5]}</td></tr>".html_safe %>
+    <% end %>
+	</table>
+<% end %>

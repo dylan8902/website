@@ -1,0 +1,18 @@
+<% if @trains == [] %>
+	<p>Sorry, no train information for that journey</p>
+	<p>Please note, this service works with direct journeys and trains scheduled in the next few hours</p>
+<% end %>
+
+<% if @trains and @trains != [] %>
+	<table>
+  <% if @departing %>
+		<tr><th>Time</th><th>Destination</th><th>Status</th><th>Platform</th></tr>
+  <% else %>
+		<tr><th>Time</th><th>Origin</th><th>Status</th><th>Platform</th></tr>
+  <% end %>
+  <% @trains.each do |train| %>
+    <% alert = ' style="color:#990000;font-weight:bold;"' if ((train[3] != 'On time') and (train[3] != 'Starts here')) %>
+    <%= "<tr#{alert}><td>#{train[1]}</td><td>#{train[2]}</td><td><a href=\"/service?service=#{train[5].gsub('/service/ldbdetails/','')}\">#{train[3].gsub('&lt;br/&gt;',' - ')}</a></td><td>#{train[4]}</td></tr>".html_safe %>
+  <% end %>
+	</table>
+<% end %>

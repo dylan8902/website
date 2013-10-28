@@ -5,14 +5,16 @@ class IsMyTrainDelayedController < ApplicationController
   # GET /
   # GET /.json
   # GET /.xml
-  def index
+  def departures
     Project.hit 35
     @departing = true
     @from = params[:from]
     @to = params[:to]
+    
+    @trains = get_trains
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @trains, callback: params[:callback] }
       format.xml { render xml: @trains }
     end
@@ -28,6 +30,8 @@ class IsMyTrainDelayedController < ApplicationController
     @from = params[:from]
     @to = params[:to]
 
+    @trains = get_trains
+
     respond_to do |format|
       format.html 
       format.json { render json: @trains, callback: params[:callback] }
@@ -35,20 +39,63 @@ class IsMyTrainDelayedController < ApplicationController
     end
   end
 
+
+  # GET /service
+  # GET /service.json
+  # GET /service.xml
+  def service
+    Project.hit 35
+    @service = params[:service]
+
+    @trains = get_service
+
+    respond_to do |format|
+      format.html 
+      format.json { render json: @trains, callback: params[:callback] }
+      format.xml { render xml: @trains }
+    end
+  end
+
+
   private
     def get_trains
-      
+
       if @from
         url = "http://ojp.nationalrail.co.uk/service/ldb/liveTrainsJson?departing="
         if @departing
           url << "true"
         end
         url << "&liveTrainsFrom=#{URI::escape(@from)}&liveTrainsTo=#{URI::escape(@to)}&from=#{URI::escape(@from)}&to=#{URI::escape(@to)}"
+      else
+        return []
       end
-      
-      response = RestClient.get url
-      return nil if response.code != 200
-      return JSON.parse string
+
+      begin
+        response = RestClient.get url
+      rescue Exception => e
+        logger.error "#{Time.now} Could not get trains: #{e.message}"
+        return []
+      end
+
+      return [] if response.code != 200
+      return JSON.parse(response.body)['trains']
+    end
+
+
+    def get_service
+
+      return unless @service
+      url = "http://ojp.nationalrail.co.uk/service/ldbdetailsJson?serviceId=#{URI::escape(@service)}"
+
+      begin
+        response = RestClient.get url
+      rescue Exception => e
+        logger.error "#{Time.now} Could not get service details: #{e.message}"
+        return []
+      end
+
+      return [] if response.code != 200
+      return JSON.parse(response.body)['trains']
     end
 
 end
