@@ -2,15 +2,15 @@
 <h1>Times Table Generator</h1>
 
 <section class="row">
-  <form method="post" target="_blank">
+  <%= form_tag do %>
     <article class="col-md-4">
       <label for="group">Group Name</label><br>
       <label><input type="radio" name="group" checked value="Badgers"> Badgers</input></label><br>
       <label><input type="radio" name="group" value="Foxes"> Foxes</input></label><br>
       <label><input type="radio" name="group" value="Hedgehogs"> Hedgehogs</input></label><br>
       <label><input type="radio" name="group" value="Squirrels"> Squirrels</input></label><br>
-      <label><input type="radio" name="group" value="other"> Other (enter below)
-      <input type="text" name="group-other" placeholder="Other Group Name"></input></label><br>
+      <label><input type="radio" name="group" value="other"> Other</label>
+      <input type="text" name="group-other" placeholder="Other Group Name"></input><br><br>
       <label class="table">Times Table <input type="number" name="table[]"></label><br>
       <button id="add" class="btn btn-small">+ Add another times table</button>
     </article>
@@ -20,6 +20,7 @@
       <label>Number of Questions<br><input type="number" name="questions" value="12"></label><br>
       <label>Number of Copies<br><input type="number" name="copies" value="5"></label><br>
       <label><input type="checkbox" name="random" value="1" checked> Random Order</label><br>
+      <label><input type="checkbox" name="really_random" value="1" checked> Really Random Order</label><br>
       <label><input type="checkbox" name="mismatch" value="1" checked> Mismatch Questions</label><br>
       <label><input type="checkbox" name="answers" value="1" checked> Add Answer Set</label><br>
       <input type="submit" value="Generate Times Tables" class="btn btn-large btn-success">
@@ -36,7 +37,7 @@
       <% end %>
       </table>
     </article>
-  </form>
+  <% end %>
 </section>
 
 <script>

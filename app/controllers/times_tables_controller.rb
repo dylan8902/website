@@ -25,7 +25,10 @@ class TimesTablesController < ApplicationController
     params[:table].each do |t|
       t = t.to_i
       (params[:min].to_i..params[:max].to_i).each do |a|
-        if params[:mismatch] then
+        if params[:really_random] then
+            table << { question: "<tr><td>#{a}</td><td>x</td><td>#{t}</td><td>=</td><td>  </td></tr>", answer: "<tr><td>#{a}</td><td>x</td><td>#{t}</td><td>=</td><td>#{(a*t)}</td></tr>" }
+            table << { question: "<tr><td>#{t}</td><td>x</td><td>#{a}</td><td>=</td><td>  </td></tr>", answer: "<tr><td>#{t}</td><td>x</td><td>#{a}</td><td>=</td><td>#{(a*t)}</td></tr>" }
+        elsif params[:mismatch] then
           if rand(0..1) == 1
             table << { question: "<tr><td>#{a}</td><td>x</td><td>#{t}</td><td>=</td><td>  </td></tr>", answer: "<tr><td>#{a}</td><td>x</td><td>#{t}</td><td>=</td><td>#{(a*t)}</td></tr>" }
           else
@@ -37,7 +40,7 @@ class TimesTablesController < ApplicationController
       end
     end
     
-    if params[:random]
+    if params[:random] or params[:really_random]
       table = table.shuffle
     end
     
