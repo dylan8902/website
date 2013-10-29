@@ -3,6 +3,7 @@ require 'will_paginate/array'
 class Trains::JourneysController < ApplicationController
   before_filter :authenticate_user!
 
+
   # GET /trains/journeys
   # GET /trains/journeys.json
   # GET /trains/journeys.xml
@@ -17,6 +18,21 @@ class Trains::JourneysController < ApplicationController
     end
   end
 
+
+  # GET /trains/journey/1
+  # GET /trains/journey/1.json
+  # GET /trains/journey/1.xml
+  def show
+    @journey = Trains::Journey.find(params[:id])
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @journey, methods: [:origin, :destination, :legs], callback: params[:callback] }
+      format.xml { render xml: @journey, methods: [:origin, :destination, :legs] }
+    end
+  end
+
+
   # GET /trains/journeys/new
   # GET /trains/journeys/new.json
   # GET /trains/journeys/new.xml
@@ -30,21 +46,23 @@ class Trains::JourneysController < ApplicationController
     end
   end
 
-  # GET /accounts/1/edit
+
+  # GET /trains/journey/1/edit
   def edit
     @journey = Trains::Journey.where(user_id: current_user.id, id: params[:id])
   end
 
-  # POST /accounts
-  # POST /accounts.json
+
+  # POST /trains/journey
+  # POST /trains/journey.json
   def create
-    @journey = Trains::Journey.new(params[:journey].merge!(user_id: current_user.id))
+    @journey = Trains::Journey.new(user_id: current_user.id)
 
     respond_to do |format|
       if @journey.save
-        format.html { redirect_to @journey, notice: 'Journey was successfully created.' }
-        format.json { render json: @journey, status: :created, location: @journey }
-        format.xml { render xml: @journey, status: :created, location: @journey }
+        format.html { redirect_to new_trains_journey_journey_leg_path(@journey), notice: 'Journey was successfully created.' }
+        format.json { render json: @journey, status: :created, location: new_trains_journey_journey_leg_path(@journey) }
+        format.xml { render xml: @journey, status: :created, location: new_trains_journey_journey_leg_path(@journey) }
       else
         format.html { render action: "new" }
         format.json { render json: @journey.errors, status: :unprocessable_entity }
@@ -53,27 +71,10 @@ class Trains::JourneysController < ApplicationController
     end
   end
 
-  # PUT /accounts/1
-  # PUT /accounts/1.json
-  def update
-    @account = Account.find(params[:id])
 
-    respond_to do |format|
-      if @account.update_attributes(params[:account])
-        format.html { redirect_to @account, notice: 'Account was successfully updated.' }
-        format.json { head :no_content }
-        format.xml { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
-        format.xml { render xml: @account.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /accounts/1
-  # DELETE /accounts/1.json
-  # DELETE /accounts/1.xml
+  # DELETE /trains/journey/1
+  # DELETE /trains.journey/1.json
+  # DELETE /trains/journey/1.xml
   def destroy
     @journey = Trains::Journey.where(user_id: current_user.id, id: params[:id])
     @journey.destroy

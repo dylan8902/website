@@ -5,8 +5,10 @@
 
 <section class="row">
 	<article class="col-md-5">
-		<%= render 'form' %>
+		<%= form_for(@journey) do |f| %>
+			<div class="actions"><%= f.submit "New Journey", class: "btn btn-primary" %></div>
+		<% end %>
 	</article>
 </section>
 
-<%= link_to 'Back', train_journeys_path %>
+<%= link_to 'Back', trains_journeys_path %>

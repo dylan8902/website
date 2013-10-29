@@ -1,0 +1,12 @@
+<% provide(:title, "Train Journey Leg:: #{@journey_leg.to_s}") %>
+<% provide(:description, "#{@journey.user.name}'s journey") %>
+
+<h1><%= @journey_leg.to_s %></h1>
+
+<section class="row">
+	<article class="col-md-5">
+		
+	</article>
+</section>
+
+<%= link_to 'Back', @journey_leg.journey %>

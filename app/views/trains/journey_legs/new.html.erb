@@ -1,0 +1,24 @@
+<% provide(:title, "Train Journey:: Add Leg") %>
+<% provide(:description, "Add a leg to a journey.") %>
+
+<h1>Add Journey Leg</h1>
+
+<section class="row">
+	<article class="col-md-5">
+		<%= form_for(@journey_leg, url: "/trains/journeys/#{@journey.id}/legs") do |f| %>
+			<div class="form-group<%= " has-error" if errors_for @journey_leg, :departure_crs %>">
+				<%= f.label :departure_crs, class: "control-label" %>
+				<%= f.text_field :departure_crs, class: "form-control" %>
+				<span class="help-block"><%= errors_for @journey_leg, :departure_crs %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @journey_leg, :arrival_crs %>">
+				<%= f.label :arrival_crs, class: "control-label" %>
+				<%= f.text_field :arrival_crs, class: "form-control" %>
+				<span class="help-block"><%= errors_for @journey_leg, :arrival_crs %></span>
+			</div>
+			<div class="actions"><%= f.submit "Add", class: "btn btn-primary" %></div>
+		<% end %>
+	</article>
+</section>
+
+<%= link_to 'Back', @journey %>

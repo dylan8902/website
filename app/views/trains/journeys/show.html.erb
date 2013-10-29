@@ -1,0 +1,23 @@
+<% provide(:title, "Train Journey:: #{@journey.to_s}") %>
+<% provide(:description, "#{@journey.user.name}'s journey") %>
+
+<h1><%= @journey.to_s %></h1>
+
+<section class="row">
+	<article class="col-md-5">
+		<h2>Journey Legs</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr><th>Origin</th><th>Destination</th></tr>
+			</thead>
+			<tbody>
+			<% @journey.legs.each do |journey_leg| %>
+				<tr><td><%= journey_leg.origin %></td><td><%= journey_leg.destination %></td></tr>
+			<% end %>
+			</tbody>
+		</table>
+		<%= link_to 'Add Leg', new_trains_journey_journey_leg_path(@journey), class: "btn btn-small btn-default" %>
+	</article>
+</section>
+
+<%= link_to 'Back', trains_journeys_path %>

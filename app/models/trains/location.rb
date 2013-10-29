@@ -46,5 +46,10 @@ class Trains::Location < ActiveRecord::Base
     
     return (link + modal).html_safe
   end
-  
+
+
+  def to_s
+    self.name
+  end
+
 end
