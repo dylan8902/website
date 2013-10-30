@@ -117,7 +117,7 @@ Website::Application.routes.draw do
     get  'schedules/:uid',                       to: 'schedules#show_by_uid', as: 'schedule_uid'
     get  'schedules/:uid/:year/:month/:day',     to: 'schedules#show_by_uid', as: 'schedule_uid_and_date'
     resources :journeys,            path: 'journeys' do
-      resources :journey_legs,      path: 'legs'
+      resources :journey_legs,      path: 'legs', except: [:index]
     end
     resources :sessions,                                         only: [:create]
     resources :schedules,                                        only: [:index]

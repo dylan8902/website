@@ -1,0 +1,58 @@
+<%= form_for(@journey_leg, url: @url, method: @method) do |f| %>
+
+	<h3>From</h3>
+	<section class="row">
+		<article class="col-md-2">
+			<div class="form-group<%= " has-error" if errors_for @journey_leg, :departure_crs %>">
+				<%= f.label :departure_crs, "Station", class: "control-label" %>
+				<%= f.text_field :departure_crs, class: "form-control" %>
+				<span class="help-block"><%= errors_for @journey_leg, :departure_crs %></span>
+			</div>
+		</article>
+		<article class="col-md-1">
+			<div class="form-group<%= " has-error" if errors_for @journey_leg, :departure_platform %>">
+				<%= f.label :departure_platform, "Platform", class: "control-label" %>
+				<%= f.text_field :departure_platform, class: "form-control" %>
+				<span class="help-block"><%= errors_for @journey_leg, :departure_platform %></span>
+			</div>
+		</article>
+		<article class="col-md-2">
+			<div class="form-group<%= " has-error" if errors_for @journey_leg, :departure_time %>">
+				<%= f.label :departure_time, "Time", class: "control-label" %>
+				<%= f.time_field :departure_time, class: "form-control" %>
+				<span class="help-block"><%= errors_for @journey_leg, :departure_time %></span>
+			</div>
+		</article>
+	</section>
+
+	<h3>To</h3>
+	<section class="row">
+		<article class="col-md-2">
+			<div class="form-group<%= " has-error" if errors_for @journey_leg, :arrival_crs %>">
+				<%= f.label :arrival_crs, "Station", class: "control-label" %>
+				<%= f.text_field :arrival_crs, class: "form-control" %>
+				<span class="help-block"><%= errors_for @journey_leg, :arrival_crs %></span>
+			</div>
+		</article>
+		<article class="col-md-1">
+			<div class="form-group<%= " has-error" if errors_for @journey_leg, :arrival_platform %>">
+				<%= f.label :arrival_platform, "Platform", class: "control-label" %>
+				<%= f.text_field :arrival_platform, class: "form-control" %>
+				<span class="help-block"><%= errors_for @journey_leg, :arrival_platform %></span>
+			</div>
+		</article>
+		<article class="col-md-2">
+			<div class="form-group<%= " has-error" if errors_for @journey_leg, :arrival_time %>">
+				<%= f.label :arrival_time, "Time", class: "control-label" %>
+				<%= f.time_field :arrival_time, class: "form-control" %>
+				<span class="help-block"><%= errors_for @journey_leg, :arrival_time %></span>
+			</div>
+		</article>
+	</section>
+
+	<div class="actions">
+		<%= f.submit "Save Leg", class: "btn btn-primary" %>
+		<%= link_to 'Cancel', @journey, class: "btn btn-default" %>
+	</div>
+
+<% end %>

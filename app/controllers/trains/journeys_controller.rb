@@ -49,7 +49,8 @@ class Trains::JourneysController < ApplicationController
 
   # GET /trains/journey/1/edit
   def edit
-    @journey = Trains::Journey.where(user_id: current_user.id, id: params[:id])
+    @journey = Trains::Journey.find(params[:id])
+    render_403 and return if @journey.user_id != current_user.id
   end
 
 
@@ -76,7 +77,9 @@ class Trains::JourneysController < ApplicationController
   # DELETE /trains.journey/1.json
   # DELETE /trains/journey/1.xml
   def destroy
-    @journey = Trains::Journey.where(user_id: current_user.id, id: params[:id])
+    @journey = Trains::Journey.find(params[:id])
+    render_404 and return if @journey.nil?
+    render_403 and return if @journey.user_id != current_user.id
     @journey.destroy
 
     respond_to do |format|

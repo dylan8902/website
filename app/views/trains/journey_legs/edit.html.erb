@@ -1,11 +1,11 @@
 <% provide(:title, "Train Journey:: Edit") %>
 <% provide(:description, "Edit the #{@journey.to_s}.") %>
 
-<h1><%= @journey.to_s %></h1>
+<h1>Edit Journey Leg <small><%= @journey_leg.to_s %></small></h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Trains', trains_root_path, title: "Trains Home" %></li>
+	<li><%= link_to 'Journeys', trains_journeys_path, title: "Your Train Journeys" %></li>
+	<li><%= link_to @journey, @journey, title: "Journey" %></li>
+</ol>
 
-<section class="row">
-	<article class="col-md-5">
-	</article>
-</section>
-
-<%= link_to 'Back', trains_journeys_path %>
+<%= render 'form' %>

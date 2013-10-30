@@ -5,7 +5,7 @@ class Trains::Journey < ActiveRecord::Base
 
 
   def legs
-    Trains::JourneyLeg.where(journey_id: self.id)
+    Trains::JourneyLeg.where(journey_id: self.id).order(:id)
   end
 
 
@@ -17,7 +17,7 @@ class Trains::Journey < ActiveRecord::Base
 
   def destination
     return nil if self.legs.last.nil?
-    return self.legs.first.destination
+    return self.legs.last.destination
   end
 
 
