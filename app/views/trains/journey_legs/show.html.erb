@@ -6,7 +6,7 @@
 	<li><%= link_to 'Trains', trains_root_path, title: "Trains Home" %></li>
 	<li><%= link_to 'Journeys', trains_journeys_path, title: "Your Train Journeys" %></li>
 	<li><%= link_to @journey, @journey, title: "Journey" %></li>
-	<li class="active"><%= @journey_leg.to_s %></li>
+	<li class="active"><%= @journey_leg %></li>
 </ol>
 
-<%= link_to 'Back', @journey_leg.journey %>
+<%= link_to 'Back', @journey_leg.journey, class: "btn btn-default" %>

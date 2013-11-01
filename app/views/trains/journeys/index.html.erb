@@ -2,15 +2,17 @@
 <% provide(:description, "A record of your train journeys.") %>
 
 <h1>Your Train Journeys</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Trains', trains_root_path, title: "Trains Home" %></li>
+	<li class="active">Journeys</li>
+</ol>
 
 <section class="row">
-	<article class="col-md-8">
+	<article class="col-md-5">
 		<table class="table table-striped">
 			<% @journeys.each do |journey| %>
 			<tr>
-				<td><%= journey.origin %></td>
-				<td><%= journey.destination %></td>
-				<td><%= journey.created_at %></td>
+				<td><%= journey.departure_time %></td><td><%= link_to journey, journey %></td>
 			</tr>
 			<% end %>
 		</table>
@@ -18,4 +20,6 @@
 	</article>
 </section>
 
-
+<%= form_for(@journey) do |f| %>
+	<%= f.submit "New Journey", class: "btn btn-primary" %>
+<% end %>

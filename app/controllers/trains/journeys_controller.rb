@@ -8,8 +8,8 @@ class Trains::JourneysController < ApplicationController
   # GET /trains/journeys.json
   # GET /trains/journeys.xml
   def index
-    
     @journeys = Trains::Journey.where(user_id: current_user.id).paginate(@page)
+    @journey = Trains::Journey.new
 
     respond_to do |format|
       format.html # index.html.erb
@@ -29,20 +29,6 @@ class Trains::JourneysController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @journey, methods: [:origin, :destination, :legs], callback: params[:callback] }
       format.xml { render xml: @journey, methods: [:origin, :destination, :legs] }
-    end
-  end
-
-
-  # GET /trains/journeys/new
-  # GET /trains/journeys/new.json
-  # GET /trains/journeys/new.xml
-  def new
-    @journey = Trains::Journey.new
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @journey, callback: params[:callback] }
-      format.xml { render xml: @journey }
     end
   end
 

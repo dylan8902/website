@@ -28,6 +28,11 @@ class Trains::JourneyLeg < ActiveRecord::Base
   end
 
 
+  def link
+    "/trains/journeys/#{self.journey_id}/legs/#{self.id}"
+  end
+
+
   private
     def ensure_crs_uppercase
       self.departure_crs = self.departure_crs.upcase

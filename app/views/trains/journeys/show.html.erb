@@ -1,23 +1,27 @@
 <% provide(:title, "Train Journey:: #{@journey.to_s}") %>
 <% provide(:description, "#{@journey.user.name}'s journey") %>
 
-<h1><%= @journey.to_s %></h1>
+<h1>Journey <small><%= @journey %></small></h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Trains', trains_root_path, title: "Trains Home" %></li>
+	<li><%= link_to 'Journeys', trains_journeys_path, title: "Your Train Journeys" %></li>
+	<li class="active"><%= @journey %></li>
+</ol>
 
 <section class="row">
-	<article class="col-md-5">
+	<article class="col-md-8">
 		<h2>Journey Legs</h2>
 		<table class="table table-striped">
 			<thead>
-				<tr><th>Origin</th><th>Destination</th></tr>
+				<tr><th>Depature</th><th></th><th>Arrival</th></tr>
 			</thead>
 			<tbody>
 			<% @journey.legs.each do |journey_leg| %>
-				<tr><td><%= journey_leg.origin %></td><td><%= journey_leg.destination %></td></tr>
+				<tr><td><%= journey_leg.departure_time %></td><td><%= link_to "#{journey_leg.origin} - #{journey_leg.destination}", journey_leg.link %></td><td><%= journey_leg.arrival_time %></td></tr>
 			<% end %>
 			</tbody>
 		</table>
-		<%= link_to 'Add Leg', new_trains_journey_journey_leg_path(@journey), class: "btn btn-small btn-default" %>
+		<%= link_to 'Add Leg', new_trains_journey_journey_leg_path(@journey), class: "btn btn-primary" if @journey.user == current_user %>
+		<%= link_to 'Back to Journeys', trains_journeys_path, class: "btn btn-default" %>
 	</article>
 </section>
-
-<%= link_to 'Back', trains_journeys_path %>

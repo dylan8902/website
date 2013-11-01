@@ -16,17 +16,19 @@
 		<header class="jumbotron">
 			<h1>Track your train journeys</h1>
 			<p>Pun intended.</p>
-			<%= link_to "Login or Register", trains_journeys_path, class: "btn btn-default" %>
+			<%= link_to "Login or Register", trains_journeys_path, class: "btn btn-default" if current_user.nil? %>
 		</header>
 	</article>
 
 	<article class="col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">My Recent Journeys</h3>
+				<h3 class="panel-title"><%= link_to "My Recent Journeys","/users/1" %></h3>
 			</div>
 			<div class="panel-body">
-				<strong>07:16 Bristol Temple Meads to Cardiff Central</strong>
+			<% @journeys.each do |journey| %>
+				<p><%= link_to journey, journey %></p>
+			<% end %>
 			</div>
 		</div>
 	</article>

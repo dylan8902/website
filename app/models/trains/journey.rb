@@ -20,6 +20,18 @@ class Trains::Journey < ActiveRecord::Base
     return self.legs.last.destination
   end
 
+ 
+  def departure_time
+    return nil if self.legs.first.nil?
+    return self.legs.first.departure_time
+  end
+
+
+  def arrival_time
+    return nil if self.legs.first.nil?
+    return self.legs.last.arrival_time
+  end
+
 
   def to_s
     origin = self.origin || "Unknown"

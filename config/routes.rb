@@ -47,6 +47,7 @@ Website::Application.routes.draw do
     get "login"  => "devise/sessions#new",          as: "new_session"
     get "logout" => "devise/sessions#destroy",      as: "logout"
   end
+  resources :users, only: "show"
 
   get  "stuff/all"  => "projects#all",              as: "all_stuff"
   resources :projects,        path: "stuff",        as: "stuff"
@@ -116,8 +117,8 @@ Website::Application.routes.draw do
     get  'schedules/id/:id',                     to: 'schedules#show_by_id',  as: 'schedule_id'
     get  'schedules/:uid',                       to: 'schedules#show_by_uid', as: 'schedule_uid'
     get  'schedules/:uid/:year/:month/:day',     to: 'schedules#show_by_uid', as: 'schedule_uid_and_date'
-    resources :journeys,            path: 'journeys' do
-      resources :journey_legs,      path: 'legs', except: [:index]
+    resources :journeys,            path: 'journeys', except: [:new] do
+      resources :journey_legs,      path: 'legs',     except: [:index]
     end
     resources :sessions,                                         only: [:create]
     resources :schedules,                                        only: [:index]
