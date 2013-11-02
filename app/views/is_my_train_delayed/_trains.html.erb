@@ -12,7 +12,7 @@
   <% end %>
   <% @trains.each do |train| %>
     <% alert = ' style="color:#990000;font-weight:bold;"' if ((train[3] != 'On time') and (train[3] != 'Starts here')) %>
-    <%= "<tr#{alert}><td>#{train[1]}</td><td>#{train[2]}</td><td><a href=\"/service?service=#{train[5].gsub('/service/ldbdetails/','')}\">#{train[3].gsub('&lt;br/&gt;',' - ')}</a></td><td>#{train[4]}</td></tr>".html_safe %>
+    <%= "<tr#{alert}><td>#{train[1]}</td><td>#{train[2]}</td><td><a href=\"/service?service=#{train[5].gsub('/service/ldbdetails/','').partition('?').first}\">#{train[3].gsub('&lt;br/&gt;',' - ')}</a></td><td>#{train[4]}</td></tr>".html_safe %>
   <% end %>
 	</table>
 <% end %>

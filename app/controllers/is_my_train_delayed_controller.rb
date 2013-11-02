@@ -11,7 +11,7 @@ class IsMyTrainDelayedController < ApplicationController
     @from = params[:from]
     @to = params[:to]
     
-    @trains = get_trains
+    @trains = get_trains(@from, @to, @departing) unless @from.nil? and @to.nil?
 
     respond_to do |format|
       format.html
@@ -30,7 +30,7 @@ class IsMyTrainDelayedController < ApplicationController
     @from = params[:from]
     @to = params[:to]
 
-    @trains = get_trains
+    @trains = get_trains(@from, @to, @departing) unless @from.nil? and @to.nil?
 
     respond_to do |format|
       format.html 
@@ -45,9 +45,8 @@ class IsMyTrainDelayedController < ApplicationController
   # GET /service.xml
   def service
     Project.hit 35
-    @service = params[:service]
 
-    @trains = get_service
+    @trains = get_service params[:service]
 
     respond_to do |format|
       format.html 
@@ -57,35 +56,46 @@ class IsMyTrainDelayedController < ApplicationController
   end
 
 
-  private
-    def get_trains
+  # GET /station
+  # GET /station.json
+  # GET /station.xml
+  def stations
+    if params['lat'] and params['lng']
+      @page[:order] = params[:order] || "distance ASC"
+      distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{params['lat']})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{params['lat']}*pi()/180)*POWER(SIN((lng-#{params['lng']})*pi()/180/2),2)))"
+      @stations =  Trains::Location.select("train_locations.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").paginate(@page)
+    end
 
-      if @from
+    respond_to do |format|
+      format.html 
+      format.json { render json: @stations, callback: params[:callback] }
+      format.xml { render xml: @stations }
+    end
+  end
+
+
+  private
+    def get_trains(from, to, departing)
+      if from
         url = "http://ojp.nationalrail.co.uk/service/ldb/liveTrainsJson?departing="
-        if @departing
+        if departing
           url << "true"
         end
-        url << "&liveTrainsFrom=#{URI::escape(@from)}&liveTrainsTo=#{URI::escape(@to)}&from=#{URI::escape(@from)}&to=#{URI::escape(@to)}"
+        url << "&liveTrainsFrom=#{URI::escape(from)}&liveTrainsTo=#{URI::escape(to)}&from=#{URI::escape(from)}&to=#{URI::escape(to)}"
       else
         return []
       end
-
-      begin
-        response = RestClient.get url
-      rescue Exception => e
-        logger.error "#{Time.now} Could not get trains: #{e.message}"
-        return []
-      end
-
-      return [] if response.code != 200
-      return JSON.parse(response.body)['trains']
+      api_call url
     end
 
 
-    def get_service
+    def get_service service
+      return unless service
+      api_call "http://ojp.nationalrail.co.uk/service/ldbdetailsJson?serviceId=#{Rack::Utils.escape(service)}"
+    end
 
-      return unless @service
-      url = "http://ojp.nationalrail.co.uk/service/ldbdetailsJson?serviceId=#{URI::escape(@service)}"
+
+    def api_call url
 
       begin
         response = RestClient.get url
@@ -95,7 +105,15 @@ class IsMyTrainDelayedController < ApplicationController
       end
 
       return [] if response.code != 200
-      return JSON.parse(response.body)['trains']
+
+      begin
+        json = JSON.parse(response.body)
+        return json['trains']
+      rescue Exception => e
+        logger.error "#{Time.now} Could not get trains: #{e.message}"
+        return []
+      end
+
     end
 
 end

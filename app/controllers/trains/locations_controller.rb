@@ -16,8 +16,8 @@ class Trains::LocationsController < ApplicationController
 
     if params['lat'] and params['lng']
       @page[:order] = params[:order] || "distance ASC"
-      distance = "(#{params['lat']})*cos(radians(lat))*cos(radians(lng)-radians(#{params['lng']}))+sin(radians(#{params['lat']}))*sin(radians(lat)) AS distance"
-      @locations =  Trains::Location.select("locations.*, #{distance}").paginate(@page)
+      distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{params['lat']})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{params['lat']}*pi()/180)*POWER(SIN((lng-#{params['lng']})*pi()/180/2),2)))"
+      @locations =  Trains::Location.select("train_locations.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").paginate(@page)
     else
       @page[:order] = params[:order] || "name ASC"
       crs = Trains::Location.where("crs = ? AND (#{stations})", @q)

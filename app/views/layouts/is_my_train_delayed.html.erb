@@ -170,11 +170,11 @@
 				$.ajax({
 					type     : 'GET',
 					dataType : 'jsonp',
-					url      : '/stations.json',
+					url      : 'stations.json',
 					data     : 'lat='+position.coords.latitude+'&lng='+position.coords.longitude,
 					success  : 
 						function(data){
-							$('#'+type).val(data.name);
+							$('#'+type).val(data[0].name);
 						} 
 				});
 			});
