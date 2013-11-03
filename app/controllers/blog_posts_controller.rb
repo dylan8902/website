@@ -8,7 +8,8 @@ class BlogPostsController < ApplicationController
   # GET /blog.json
   # GET /blog.xml
   def index
-    @blog_posts = BlogPost.paginate(@page)
+   @page[:limit] = params[:limit] || 5
+   @blog_posts = BlogPost.paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
