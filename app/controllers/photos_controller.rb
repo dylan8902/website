@@ -5,6 +5,7 @@ class PhotosController < ApplicationController
   # GET /photos.json
   # GET /photos.xml
   def index
+    @page[:limit] = params[:limit] || 48
     @photos = Photo.paginate(@page)
     
     respond_to do |format|

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131021121230) do
+ActiveRecord::Schema.define(version: 20131103091330) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -135,8 +135,8 @@ ActiveRecord::Schema.define(version: 20131021121230) do
   end
 
   create_table "locations", force: true do |t|
-    t.float    "lat",        null: false
-    t.float    "lng",        null: false
+    t.integer  "latE7",      null: false
+    t.integer  "lngE7",      null: false
     t.integer  "accuracy",   null: false
     t.string   "text",       null: false
     t.datetime "created_at"
@@ -145,13 +145,13 @@ ActiveRecord::Schema.define(version: 20131021121230) do
 
   create_table "photos", force: true do |t|
     t.string   "title"
-    t.string   "thumbnail"
+    t.text     "description"
     t.string   "original"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "thumbnail"
     t.float    "lat"
     t.float    "lng"
-    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "projects", force: true do |t|
