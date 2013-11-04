@@ -1,7 +1,7 @@
-<% provide(:title, "User:: @user.name") %>
+<% provide(:title, "User:: #{@user.name}") %>
 <% provide(:description, "#{@user.name} is using dyl.anjon.es applications.") %>
 
-<h1><%= @user.name %></h1>
+<h1><%= gravatar @user.email, 80 %> <%= @user.name %></h1>
 <section class="row">
 	<article class="col-md-5">
 		
