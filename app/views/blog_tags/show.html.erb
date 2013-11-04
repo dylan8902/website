@@ -3,7 +3,7 @@
 
 <h1>Tag: <%= @tag.tag.titleize %></h1>
 <section class="row">
-	<article class="col-md-8">
+	<article class="col-md-8 col-lg-9">
 		<% @blog_posts.each do |blog_post| %>
 			<%= render "blog_posts/blog_post", blog_post: blog_post %>
 		<% end %>

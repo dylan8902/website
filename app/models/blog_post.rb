@@ -8,7 +8,7 @@ class BlogPost < ActiveRecord::Base
   def tag_links
     string = ""
     self.blog_tags.each do |tag|
-      string << "<a href=\"/blog/tags/#{tag}\" class=\"tag\">#{tag}</a>\n"
+      string << "<a href=\"/blog/tags/#{URI::escape(tag.tag)}\" class=\"tag\">#{tag}</a>\n"
     end
     return string.html_safe
   end
