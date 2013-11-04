@@ -1,12 +1,16 @@
-<% provide(:title, "Blog") %>
-<h1><%= @tag.tag %></h1>
+<% provide(:title, "Blog:: Tag:: #{@tag}") %>
+<% provide(:description, "Blog posts that are tagged with: #{@tag}") %>
 
+<h1>Tag: <%= @tag.tag.titleize %></h1>
 <section class="row">
-	<article class="span8">
-		<% @tag.blog_posts.each do |blog_post| %>
+	<article class="col-md-8">
+		<% @blog_posts.each do |blog_post| %>
 			<%= render "blog_posts/blog_post", blog_post: blog_post %>
 		<% end %>
 	</article>
+
+	<%= render "blog_posts/navigation" %>
+
 </section>
 
-<%= link_to "Back", blog_posts_path %>
+<%= paginate @blog_posts %>

@@ -62,10 +62,10 @@ Website::Application.routes.draw do
     get  "stuff/all"  => "projects#all",              as: "all_stuff"
     resources :projects,        path: "stuff",        as: "stuff"
   
-    get  "blog/all"  => "blog#all",                   as: "all_blog_posts"
+    get  "blog/all"  => "blog_posts#all",             as: "all_blog_posts"
     get  "blog/map"  => "blog_posts#map",             as: "blog_posts_map"
-    resources :blog_posts,      path: "blog"
     resources :blog_tags,       path: "blog/tags",    only: [:index, :show]
+    resources :blog_posts,      path: "blog"
   
     get  "sitemap"        => "static_pages#sitemap",  as: "sitemap"
   

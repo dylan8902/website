@@ -106,3 +106,7 @@ pre {
 	background-color: transparent;
 	color: #000;
 }
+.tag {
+	margin-left:2px;
+	margin-right: 4px;
+}

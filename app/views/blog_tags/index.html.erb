@@ -1,9 +1,11 @@
 <% provide(:title, "Blog:: Tags") %>
+<% provide(:description, "All the tags blog posts have been tagged with.") %>
 
 <h1>Blog Tags</h1>
 <ul class="list-group">
 <% @tags.each do |tag| %>
-  <%= link_to tag.tag, tag, class: "list-group-item" %>
+  <%= link_to tag, tag, class: "list-group-item" %>
 <% end %>
+</ul>
 
 <%= paginate @tags %>

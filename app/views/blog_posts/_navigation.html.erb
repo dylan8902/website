@@ -1,0 +1,6 @@
+<article class="col-md-4">
+	<nav class="list-group">
+		<%= link_to "Recent Posts".html_safe, blog_posts_path, class: "list-group-item" unless request.path == blog_posts_path %>
+		<%= link_to "All Posts", all_blog_posts_path, class: "list-group-item" unless request.path == all_blog_posts_path %>
+	</nav>
+</article>

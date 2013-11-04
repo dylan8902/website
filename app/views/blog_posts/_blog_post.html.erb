@@ -2,10 +2,12 @@
 	<h2><%= link_to blog_post.title, blog_post %></h2>
 	
 	<article>
-		<%= raw blog_post.text %>
+		<%= blog_post.text.html_safe %>
 	</article>
 
-	<p><%= link_to timestamp(blog_post.created_at), blog_post %></td>
-	
+	<p><%= icon("time")%> <%= link_to timestamp(blog_post.created_at), blog_post %></p>
+	<p><%= icon("tags")%> <%= blog_post.tag_links %></p>
+
 </article>
 
+<hr>

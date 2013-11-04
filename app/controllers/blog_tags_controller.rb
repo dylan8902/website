@@ -5,6 +5,7 @@ class BlogTagsController < ApplicationController
   # GET /blog/tags.json
   # GET /blog/tags.xml
   def index
+    @page[:order] = :tag
     @tags = BlogTag.select(:tag).uniq.paginate(@page)
 
     respond_to do |format|
@@ -20,6 +21,8 @@ class BlogTagsController < ApplicationController
   # GET /blog/tag/tag.xml
   def show
     @tag = BlogTag.find_by_tag(params[:id])
+    @blog_posts = @tag.blog_posts.paginate(@page)
+    render_404 and return if @tag.nil?
 
     respond_to do |format|
       format.html # show.html.erb
