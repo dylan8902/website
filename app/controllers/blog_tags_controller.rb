@@ -6,7 +6,7 @@ class BlogTagsController < ApplicationController
   # GET /blog/tags.xml
   def index
     @page[:order] = :tag
-    @tags = BlogTag.select(:tag).uniq.paginate(@page)
+    @tags = BlogTag.uniq.pluck(:tag).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb

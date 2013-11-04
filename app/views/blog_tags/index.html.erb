@@ -2,10 +2,17 @@
 <% provide(:description, "All the tags blog posts have been tagged with.") %>
 
 <h1>Blog Tags</h1>
-<ul class="list-group">
-<% @tags.each do |tag| %>
-  <%= link_to tag, tag, class: "list-group-item" %>
-<% end %>
-</ul>
+<section class="row">
+	<article class="col-md-8 col-lg-9">
+		<ul class="list-group">
+		<% @tags.each do |tag| %>
+		  <%= link_to tag, blog_tag_path(tag), class: "list-group-item" %>
+		<% end %>
+		</ul>
+	</article>
+	
+	<%= render "blog_posts/navigation" %>
+
+</section>
 
 <%= paginate @tags %>
