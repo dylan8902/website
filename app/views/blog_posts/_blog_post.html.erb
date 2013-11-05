@@ -7,6 +7,12 @@
 
 	<p><%= icon("time")%> <%= link_to timestamp(blog_post.created_at), blog_post %></p>
 	<p><%= icon("tags")%> <%= blog_post.tag_links %></p>
+	
+<% if current_user and current_user.admin %>
+	<p>
+		<%= link_to "Edit", edit_blog_post_path(blog_post), class: "btn btn-primary" %>
+	</p>
+<% end %>
 
 </article>
 

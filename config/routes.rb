@@ -28,6 +28,7 @@ Website::Application.routes.draw do
 
     #301s
     get "",              to: redirect("/api"), constraints: { subdomain: 'api' }
+    get "blog/id/:id",   to: redirect("/blog/%{id}")
     get "lifestream",    to: redirect("/stream")
     get "onradio",       to: redirect("/onradio/1")
     get "onradio1",      to: redirect("/onradio/1")

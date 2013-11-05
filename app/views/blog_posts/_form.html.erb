@@ -7,8 +7,11 @@
 
 	<div class="form-group<%= " has-error" if errors_for @blog_post, :name %>">
 		<%= f.label :text, class: "control-label" %>
-    	<%= f.text_area :text, class: "form-control" %>
+    	<%= f.text_area :text, class: "form-control", style: "height:300px" %>
     	<span class="help-block"><%= errors_for @blog_post, :text %></span>
 	</div>
-	<div><%= f.submit "Save", class: "btn btn-primary" %></div>
+	<div>
+		<%= f.submit "Save", class: "btn btn-primary" %>
+		<%= link_to "Back", @blog_post, class: "btn btn-default" if @blog_post.id %>
+	</div>
 <% end %>

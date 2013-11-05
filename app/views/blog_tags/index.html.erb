@@ -2,6 +2,11 @@
 <% provide(:description, "All the tags blog posts have been tagged with.") %>
 
 <h1>Blog Tags</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Blog', blog_posts_path %></li>
+	<li class="active">Tags</li>
+</ol>
+
 <section class="row">
 	<article class="col-md-8 col-lg-9">
 		<ul class="list-group">

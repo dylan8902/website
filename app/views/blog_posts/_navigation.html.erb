@@ -2,6 +2,6 @@
 	<nav class="list-group">
 		<%= link_to icon("calendar") + " Recent Posts".html_safe, blog_posts_path, class: "list-group-item" unless request.path == blog_posts_path %>
 		<%= link_to icon("plus-sign") + " All Posts", all_blog_posts_path, class: "list-group-item" unless request.path == all_blog_posts_path %>
-		<%= link_to icon("tags") + " View Tags", blog_tags_path, class: "list-group-item" unless request.path == blog_tags_path %>
+		<%= link_to icon("tags") + " View All Tags", blog_tags_path, class: "list-group-item" unless request.path == blog_tags_path %>
 	</nav>
 </article>

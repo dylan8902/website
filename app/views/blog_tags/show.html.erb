@@ -1,7 +1,13 @@
 <% provide(:title, "Blog:: Tag:: #{@tag}") %>
 <% provide(:description, "Blog posts that are tagged with: #{@tag}") %>
 
-<h1>Tag: <%= @tag.tag.titleize %></h1>
+<h1><%= icon('tag') %> <%= @tag %></h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Blog', blog_posts_path %></li>
+	<li><%= link_to 'Tags', blog_tags_path %></li>
+	<li class="active"><%= @tag %></li>
+</ol>
+
 <section class="row">
 	<article class="col-md-8 col-lg-9">
 		<% @blog_posts.each do |blog_post| %>

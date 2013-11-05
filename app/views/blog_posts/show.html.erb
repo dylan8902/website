@@ -2,6 +2,12 @@
 <% provide(:description, "I wrote a plog post entitiled: #{@blog_post.title}") %>
 
 <h1>Blog</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Blog', blog_posts_path %></li>
+	<li><%= link_to 'Tags', blog_tags_path %></li>
+	<li class="active"><%= @blog_post.title %></li>
+</ol>
+
 <section class="row">
 	<article class="col-md-8 col-lg-9">
 		<%= render "blog_post", blog_post: @blog_post %>

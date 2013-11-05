@@ -1,6 +1,11 @@
 <% provide(:title, "Blog:: New") %>
+<% provide(:description, "Create a new blog post.") %>
+
 <h1>New Blog Post</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Blog', blog_posts_path %></li>
+	<li><%= link_to 'Tags', blog_tags_path %></li>
+	<li class="active">New</li>
+</ol>
 
 <%= render 'form' %>
-
-<%= link_to 'Back', blog_posts_path %>

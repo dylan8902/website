@@ -2,7 +2,10 @@
 <% provide(:description, "Edit the blog post.") %>
 
 <h1>Editing Blog Post</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Blog', blog_posts_path %></li>
+	<li><%= link_to 'Tags', blog_tags_path %></li>
+	<li class="active"><%= @blog_post.title %></li>
+</ol>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @blog_post %> | <%= link_to 'Back', blog_posts_path %>
