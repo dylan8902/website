@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131103091330) do
+ActiveRecord::Schema.define(version: 20131105083641) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 20131103091330) do
     t.string   "title"
     t.string   "link"
     t.integer  "count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blog_comments", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "blog_post_id"
+    t.string   "name"
+    t.string   "email"
+    t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

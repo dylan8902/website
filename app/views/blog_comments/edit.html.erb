@@ -1,0 +1,11 @@
+<% provide(:title, "Blog:: Comment:: Edit") %>
+<% provide(:description, "Update the comment.") %>
+
+<h1>Editing Comment</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Blog', blog_posts_path %></li>
+	<li><%= link_to 'Tags', blog_tags_path %></li>
+	<li class="active"><%= @blog_post.title %></li>
+</ol>
+
+<%= render 'form' %>

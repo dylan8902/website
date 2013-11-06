@@ -1,5 +1,4 @@
 require 'will_paginate/array'
-
 class Trains::JourneysController < ApplicationController
   before_filter :authenticate_user!
 

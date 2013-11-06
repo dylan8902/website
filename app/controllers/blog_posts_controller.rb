@@ -41,6 +41,10 @@ class BlogPostsController < ApplicationController
   def show
     @blog_post = BlogPost.find(params[:id])
 
+    @comments = @blog_post.blog_comments.paginate(@page)
+    @comment = BlogComment.new
+    @url = blog_post_blog_comments_path(@blog_post)
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @blog_post, callback: params[:callback] }

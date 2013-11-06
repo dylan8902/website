@@ -11,6 +11,22 @@
 <section class="row">
 	<article class="col-md-8 col-lg-9">
 		<%= render "blog_post", blog_post: @blog_post %>
+
+		<h3>Comments</h3>
+	<% if @comments.total_entries == 0 %>
+		<div class="well well-sm">Be the first to comment!</div>
+	<% else %>
+		<ul id= "comments" class="media-list">
+		<% @comments.each do |comment| %>
+			<%= render "blog_comments/blog_comment", blog_comment: comment %>
+		<% end %>
+		</ul>
+		<%= paginate @comments %>
+	<% end %>
+
+		<h4>Add a comment</h4>
+		<%= render "blog_comments/form" %>
+
 	</article>
 
 	<%= render "navigation" %>

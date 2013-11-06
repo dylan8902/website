@@ -1,6 +1,7 @@
 class Trains::SchedulesController < ApplicationController
   include ErrorHelper
 
+
   # GET /trains/schedules
   # GET /trains/schedules.json
   # GET /trains/schedules.xml

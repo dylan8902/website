@@ -66,7 +66,9 @@ Website::Application.routes.draw do
     get  "blog/all"  => "blog_posts#all",             as: "all_blog_posts"
     get  "blog/map"  => "blog_posts#map",             as: "blog_posts_map"
     resources :blog_tags,       path: "blog/tags",    only: [:index, :show]
-    resources :blog_posts,      path: "blog"
+    resources :blog_posts,      path: "blog" do
+      resources :blog_comments, path: "comments",     except: [:index, :show, :new]
+    end
   
     get  "sitemap"        => "static_pages#sitemap",  as: "sitemap"
   

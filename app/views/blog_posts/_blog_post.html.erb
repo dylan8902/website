@@ -1,18 +1,14 @@
 <article id="post-<%= blog_post.id %>" class="post">
 	<h2><%= link_to blog_post.title, blog_post %></h2>
+
+	<%= icon("time") %> <%= link_to timestamp(blog_post.created_at), blog_post %>
+	<%= icon("tags") if blog_post.blog_tags %> <%= blog_post.tag_links %>
+	<%= icon("comments") %> <%= link_to pluralize(blog_post.blog_comments.count, 'comment'), blog_post_path(blog_post) + "#comments" %>
+	<%= link_to "Edit", edit_blog_post_path(blog_post), class: "btn btn-primary btn-xs" if current_user and current_user.admin %>
 	
 	<article>
 		<%= blog_post.text.html_safe %>
 	</article>
-
-	<p><%= icon("time")%> <%= link_to timestamp(blog_post.created_at), blog_post %></p>
-	<p><%= icon("tags")%> <%= blog_post.tag_links %></p>
-	
-<% if current_user and current_user.admin %>
-	<p>
-		<%= link_to "Edit", edit_blog_post_path(blog_post), class: "btn btn-primary" %>
-	</p>
-<% end %>
 
 </article>
 
