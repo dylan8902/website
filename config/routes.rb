@@ -65,6 +65,8 @@ Website::Application.routes.draw do
   
     get  "blog/all"  => "blog_posts#all",             as: "all_blog_posts"
     get  "blog/map"  => "blog_posts#map",             as: "blog_posts_map"
+    delete "blog/tags/:id"  => "blog_tags#delete",    as: "delete_blog_tag"
+    post "/blog/:blog_post_id/tags" => "blog_tags#create"
     resources :blog_tags,       path: "blog/tags",    only: [:index, :show]
     resources :blog_posts,      path: "blog" do
       resources :blog_comments, path: "comments",     except: [:index, :show, :new]

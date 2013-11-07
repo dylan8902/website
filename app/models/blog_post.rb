@@ -14,4 +14,10 @@ class BlogPost < ActiveRecord::Base
     return string.html_safe
   end
 
+
+  def updated?
+    self.created_at != self.updated_at
+  end
+
+
 end

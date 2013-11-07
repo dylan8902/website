@@ -1,7 +1,7 @@
 class BlogPostsController < ApplicationController
   include ErrorHelper
-  before_filter :authenticate_user!, :except => [:index, :show]
-  before_filter :authenticate_admin!, :except => [:index, :show]
+  before_filter :authenticate_user!, except: [:index, :show]
+  before_filter :authenticate_admin!, except: [:index, :show]
 
 
   # GET /blog
@@ -23,7 +23,6 @@ class BlogPostsController < ApplicationController
   # GET /blog/all.json
   # GET /blog/all.xml
   def all
-
     @page[:per_page] = BlogPost.count
     @blog_posts = BlogPost.paginate(@page)
 
@@ -70,6 +69,7 @@ class BlogPostsController < ApplicationController
   # GET /blog/1/edit
   def edit
     @blog_post = BlogPost.find(params[:id])
+    @tag = BlogTag.new
   end
 
 

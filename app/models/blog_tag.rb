@@ -9,7 +9,7 @@ class BlogTag < ActiveRecord::Base
 
 
   def to_param
-    URI::escape(tag.name)
+    URI::escape(tag.tag)
   end
 
 

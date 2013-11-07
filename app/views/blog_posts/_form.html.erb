@@ -1,17 +1,40 @@
-<%= form_for(@blog_post) do |f| %>
-	<div class="form-group<%= " has-error" if errors_for @blog_post, :name %>">
-		<%= f.label :title, class: "control-label" %>
-    	<%= f.text_field :title, autofocus: true, class: "form-control" %>
-    	<span class="help-block"><%= errors_for @blog_post, :title %></span>
-	</div>
-
-	<div class="form-group<%= " has-error" if errors_for @blog_post, :name %>">
-		<%= f.label :text, class: "control-label" %>
-    	<%= f.text_area :text, class: "form-control", style: "height:300px" %>
-    	<span class="help-block"><%= errors_for @blog_post, :text %></span>
-	</div>
-	<div>
-		<%= f.submit "Save", class: "btn btn-primary" %>
-		<%= link_to "Back", @blog_post, class: "btn btn-default" if @blog_post.id %>
-	</div>
+<section class="row">
+	<article class="col-md-8">
+		<%= form_for(@blog_post) do |f| %>
+			<div class="form-group<%= " has-error" if errors_for @blog_post, :name %>">
+				<%= f.label :title, class: "control-label" %>
+		    	<%= f.text_field :title, class: "form-control" %>
+		    	<span class="help-block"><%= errors_for @blog_post, :title %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @blog_post, :name %>">
+				<%= f.label :text, class: "control-label" %>
+		    	<%= f.text_area :text, class: "form-control", style: "height:300px" %>
+		    	<span class="help-block"><%= errors_for @blog_post, :text %></span>
+			</div>
+			<div>
+				<%= f.submit "Save", class: "btn btn-primary" %>
+				<%= link_to "Back", @blog_post, class: "btn btn-default" if @blog_post.id %>
+			</div>
+		<% end %>
+	</article>
+<% if @blog_post.id %>
+	<article class="col-md-4">
+		<h3>Tags</h3>
+		<ul>
+		<% @blog_post.blog_tags.each do |tag| %>
+			<li><%= tag %> <%= link_to "Remove", "/blog/tags/#{tag.id}", confirm: "Are you sure?", method: :delete %></li>
+		<% end %>
+		</ul>
+		<%= form_for(@tag, url: blog_post_path(@blog_post) + "/tags") do |f| %>
+			<div class="form-group<%= " has-error" if errors_for @tag, :tag %>">
+				<%= f.label :tag, class: "control-label" %>
+		    	<%= f.text_field :tag, class: "form-control" %>
+		    	<span class="help-block"><%= errors_for @tag, :tag %></span>
+			</div>
+			<div>
+				<%= f.submit "Add", class: "btn btn-primary" %>
+			</div>
+		<% end %>
+	</article>
 <% end %>
+</section>

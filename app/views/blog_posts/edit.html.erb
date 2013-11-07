@@ -5,7 +5,8 @@
 <ol class="breadcrumb">
 	<li><%= link_to 'Blog', blog_posts_path %></li>
 	<li><%= link_to 'Tags', blog_tags_path %></li>
-	<li class="active"><%= @blog_post.title %></li>
+	<li><%= link_to @blog_post.title, @blog_post %></li>
+	<li class="active">Edit</li>
 </ol>
 
 <%= render 'form' %>
