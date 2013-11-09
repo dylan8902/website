@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131105083641) do
+ActiveRecord::Schema.define(version: 20131109103111) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -30,8 +30,8 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.datetime "updated_at"
   end
 
-  add_index "analytics", ["ip"], name: "index_analytics_on_ip", using: :btree
-  add_index "analytics", ["user_agent"], name: "index_analytics_on_user_agent", using: :btree
+  add_index "analytics", ["ip"], name: "index_analytics_on_ip"
+  add_index "analytics", ["user_agent"], name: "index_analytics_on_user_agent"
 
   create_table "bank_transactions", force: true do |t|
     t.string   "description", null: false
@@ -69,6 +69,35 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.string  "tag",          null: false
     t.integer "blog_post_id", null: false
   end
+
+  create_table "bus_stops", force: true do |t|
+    t.string   "atco_code"
+    t.string   "naptan_code"
+    t.string   "common_name"
+    t.string   "short_common_name"
+    t.string   "landmark"
+    t.string   "street"
+    t.string   "crossing"
+    t.string   "indicator"
+    t.string   "bearing"
+    t.string   "nptg_locality_code"
+    t.string   "locality_name"
+    t.string   "parent_locality_name"
+    t.string   "grand_parent_locality_name"
+    t.string   "town"
+    t.string   "suburb"
+    t.string   "lat"
+    t.string   "lng"
+    t.string   "stop_type"
+    t.string   "bus_stop_type"
+    t.string   "timing_status"
+    t.string   "default_wait_time"
+    t.string   "administrative_area_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "bus_stops", ["naptan_code"], name: "index_bus_stops_on_naptan_code"
 
   create_table "dj_events", force: true do |t|
     t.string   "title"
@@ -155,13 +184,13 @@ ActiveRecord::Schema.define(version: 20131105083641) do
 
   create_table "photos", force: true do |t|
     t.string   "title"
-    t.text     "description"
-    t.string   "original"
     t.string   "thumbnail"
-    t.float    "lat"
-    t.float    "lng"
+    t.string   "original"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "lat"
+    t.float    "lng"
+    t.text     "description"
   end
 
   create_table "projects", force: true do |t|
@@ -195,21 +224,21 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.string "description"
   end
 
-  add_index "train_categories", ["code"], name: "index_train_categories_on_code", unique: true, using: :btree
+  add_index "train_categories", ["code"], name: "index_train_categories_on_code", unique: true
 
   create_table "train_catering", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_catering", ["code"], name: "index_train_catering_on_code", unique: true, using: :btree
+  add_index "train_catering", ["code"], name: "index_train_catering_on_code", unique: true
 
   create_table "train_classes", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_classes", ["code"], name: "index_train_classes_on_code", unique: true, using: :btree
+  add_index "train_classes", ["code"], name: "index_train_classes_on_code", unique: true
 
   create_table "train_journey_legs", force: true do |t|
     t.integer  "journey_id"
@@ -226,8 +255,8 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.datetime "updated_at"
   end
 
-  add_index "train_journey_legs", ["journey_id"], name: "index_train_journey_legs_on_journey_id", using: :btree
-  add_index "train_journey_legs", ["schedule_id"], name: "index_train_journey_legs_on_schedule_id", using: :btree
+  add_index "train_journey_legs", ["journey_id"], name: "index_train_journey_legs_on_journey_id"
+  add_index "train_journey_legs", ["schedule_id"], name: "index_train_journey_legs_on_schedule_id"
 
   create_table "train_journeys", force: true do |t|
     t.integer  "user_id"
@@ -235,7 +264,7 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.datetime "updated_at"
   end
 
-  add_index "train_journeys", ["user_id"], name: "index_train_journeys_on_user_id", using: :btree
+  add_index "train_journeys", ["user_id"], name: "index_train_journeys_on_user_id"
 
   create_table "train_locations", force: true do |t|
     t.string  "name"
@@ -248,16 +277,16 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.boolean "station"
   end
 
-  add_index "train_locations", ["crs"], name: "index_train_locations_on_crs", using: :btree
-  add_index "train_locations", ["stanox"], name: "index_train_locations_on_stanox", using: :btree
-  add_index "train_locations", ["tiploc"], name: "index_train_locations_on_tiploc", using: :btree
+  add_index "train_locations", ["crs"], name: "index_train_locations_on_crs"
+  add_index "train_locations", ["stanox"], name: "index_train_locations_on_stanox"
+  add_index "train_locations", ["tiploc"], name: "index_train_locations_on_tiploc"
 
   create_table "train_operating_characteristics", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_operating_characteristics", ["code"], name: "index_train_operating_characteristics_on_code", using: :btree
+  add_index "train_operating_characteristics", ["code"], name: "index_train_operating_characteristics_on_code"
 
   create_table "train_operating_companies", force: true do |t|
     t.string  "name"
@@ -266,14 +295,14 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.string  "atoc"
   end
 
-  add_index "train_operating_companies", ["atoc"], name: "index_train_operating_companies_on_atoc", using: :btree
+  add_index "train_operating_companies", ["atoc"], name: "index_train_operating_companies_on_atoc"
 
   create_table "train_power_types", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_power_types", ["code"], name: "index_train_power_types_on_code", using: :btree
+  add_index "train_power_types", ["code"], name: "index_train_power_types_on_code"
 
   create_table "train_reservations", force: true do |t|
     t.string "code"
@@ -281,7 +310,7 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.string "symbol"
   end
 
-  add_index "train_reservations", ["code"], name: "index_train_reservations_on_code", using: :btree
+  add_index "train_reservations", ["code"], name: "index_train_reservations_on_code"
 
   create_table "train_schedule_locations", force: true do |t|
     t.integer "schedule_id"
@@ -301,9 +330,9 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.string  "performance_allowance"
   end
 
-  add_index "train_schedule_locations", ["record_identity"], name: "index_train_schedule_locations_on_record_identity", using: :btree
-  add_index "train_schedule_locations", ["schedule_id"], name: "index_train_schedule_locations_on_schedule_id", using: :btree
-  add_index "train_schedule_locations", ["tiploc_code"], name: "index_train_schedule_locations_on_tiploc_code", using: :btree
+  add_index "train_schedule_locations", ["record_identity"], name: "index_train_schedule_locations_on_record_identity"
+  add_index "train_schedule_locations", ["schedule_id"], name: "index_train_schedule_locations_on_schedule_id"
+  add_index "train_schedule_locations", ["tiploc_code"], name: "index_train_schedule_locations_on_tiploc_code"
 
   create_table "train_schedules", force: true do |t|
     t.date    "schedule_start_date"
@@ -334,32 +363,32 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.string  "ransaction_type"
   end
 
-  add_index "train_schedules", ["headcode"], name: "index_train_schedules_on_headcode", using: :btree
-  add_index "train_schedules", ["schedule_end_date"], name: "index_train_schedules_on_schedule_end_date", using: :btree
-  add_index "train_schedules", ["schedule_start_date"], name: "index_train_schedules_on_schedule_start_date", using: :btree
-  add_index "train_schedules", ["train_uid"], name: "index_train_schedules_on_train_uid", using: :btree
+  add_index "train_schedules", ["headcode"], name: "index_train_schedules_on_headcode"
+  add_index "train_schedules", ["schedule_end_date"], name: "index_train_schedules_on_schedule_end_date"
+  add_index "train_schedules", ["schedule_start_date"], name: "index_train_schedules_on_schedule_start_date"
+  add_index "train_schedules", ["train_uid"], name: "index_train_schedules_on_train_uid"
 
   create_table "train_statuses", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_statuses", ["code"], name: "index_train_statuses_on_code", using: :btree
+  add_index "train_statuses", ["code"], name: "index_train_statuses_on_code"
 
   create_table "train_timing_loads", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_timing_loads", ["code"], name: "index_train_timing_loads_on_code", using: :btree
+  add_index "train_timing_loads", ["code"], name: "index_train_timing_loads_on_code"
 
   create_table "tweets", force: true do |t|
     t.string   "text"
     t.string   "location"
     t.float    "lat"
     t.float    "lng"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_twitter_accounts", force: true do |t|
@@ -370,8 +399,8 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.string  "access_token"
   end
 
-  add_index "user_twitter_accounts", ["screen_name"], name: "index_user_twitter_accounts_on_screen_name", using: :btree
-  add_index "user_twitter_accounts", ["user_id"], name: "index_user_twitter_accounts_on_user_id", using: :btree
+  add_index "user_twitter_accounts", ["screen_name"], name: "index_user_twitter_accounts_on_screen_name"
+  add_index "user_twitter_accounts", ["user_id"], name: "index_user_twitter_accounts_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -390,7 +419,7 @@ ActiveRecord::Schema.define(version: 20131105083641) do
     t.boolean  "admin"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

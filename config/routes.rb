@@ -14,8 +14,15 @@ Website::Application.routes.draw do
     get ""         => "is_my_train_delayed#departures"
     get "arrivals" => "is_my_train_delayed#arrivals"
     get "service"  => "is_my_train_delayed#service"
-    get "stations"  => "is_my_train_delayed#stations"
-    match '*foo' => 'application#error_404', via: [:get, :post, :patch, :delete]
+    get "stations" => "is_my_train_delayed#stations"
+    match '*foo'   => 'application#error_404', via: [:get, :post, :patch, :delete]
+  end
+
+  #ismybusdelayed
+  constraints Hostname.new("ismybusdelayed.com") do
+    get ""         => "is_my_bus_delayed#index"
+    get "stops"    => "is_my_bus_delayed#stops"
+    match '*foo'   => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
   #dylanjones.info

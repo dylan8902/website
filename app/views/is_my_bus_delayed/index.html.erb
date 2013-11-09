@@ -1,0 +1,23 @@
+<form method="get" action="/">		
+	<label for="bus">BUS STOP:</label> <input id="bus" type="text" name="bus" value="<%= @bus_stop.naptan_code unless @bus_stop.nil? %>" required>
+	<input type="submit" value="Is My Bus Delayed?">
+	<div id="stop-info"></div>
+</form>
+
+<% if @bus_stop %>
+	<h2><%= @bus_stop %></h2>
+<% end %>
+
+<% if @buses and @buses == [] %>
+	<p>Sorry, no bus information for that stop</p>
+<% end %>
+
+<% if @buses and @buses != [] %>
+	<table>
+		<tr><th>Time</th><th>Bus</th><th>Direction</th><th>Expected</th></tr>
+	<% @buses.each do |bus| %>
+    	<% alert = ' style="color:#990000;font-weight:bold;"' if bus[:expected] != "" and (bus[:scheduled] != bus[:expected]) %>
+		<%= "<tr#{alert}><td>#{bus[:scheduled]}</td><td>#{bus[:bus_number]}</td><td>#{bus[:direction]}</td><td>#{bus[:expected]}</td></tr>".html_safe %>
+	<% end %>
+	</table>
+<% end %>
