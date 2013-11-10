@@ -1,3 +1,4 @@
+require 'digest/md5'
 module ApplicationHelper
 
   # Creates a full title to be used in HTML head
@@ -88,6 +89,11 @@ module ApplicationHelper
       "<link rel=\"openid2.local_id\" href=\"http://dylanjamesvernonjones.myopenid.com\">\n" +
       "<link rel=\"openid2.provider\" href=\"http://www.myopenid.com/server\">"
     return html.html_safe
+  end
+
+  #MD5 stuff
+  def md5 string
+    Digest::MD5.hexdigest string
   end
 
 end

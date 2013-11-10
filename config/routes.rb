@@ -129,7 +129,10 @@ Website::Application.routes.draw do
     namespace :music do
       root to: "music#index"
       resources :dj_events, path: "dj"
-      resources :artists, only: [:index, :show]
+      get  "artists/:id/:title" => "artists#show"
+      resources :artists, only: [:index, :show] do
+        get  ":id/:title" => "artists#show"
+      end
       get "listens/stats" => "listens#stats", as: "listen_stats"
       resources :listens, only: [:index, :show]
     end
@@ -159,6 +162,7 @@ Website::Application.routes.draw do
     post "pdfy"           => "pdfy#pdf"
     get  "IbeforeE"       => "i_before_e#index"
     get  "wall"           => "wall#index"
+    get  "md5"            => "md5#index"
     get  "analysis"       => "analysis#index"
     get  "musicwall"      => "musicwall#index"
     get  "friendstv"      => "friends_tv#index"

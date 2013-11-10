@@ -13,8 +13,14 @@
 <meta name="twitter:creator" content="@dylan8902">
 <meta name="twitter:image:src" content="<%= yield(:image) %>">
 
+<% if @og then %>
+	<% @og.each do |k, v| %>
+<meta property="<%= k %>" content="<%= v %>">
+	<% end %>
+<% else %>
 <meta property="og:title" content="<%= yield(:title) %>">
 <meta property="og:image" content="<%= yield(:image) %>">
+<% end %>
 
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 

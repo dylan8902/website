@@ -59,15 +59,21 @@ class RadioStation
   class Track
     attr_reader :title, :artist, :artist_mbzid, :timestamp
     attr_writer :title, :artist, :artist_mbzid, :timestamp
+
+
     def initialize track
       @title = track[:title]
       @artist = track[:artist]
       @artist_mbzid = track[:artist_mbzid]
       @timestamp = track[:timestamp]
     end
+
+
     def to_s
       "#{artist} - #{title}"
     end
+
+
     def image
       if self.artist_mbzid.empty?
         src = "/images/no_mbzid_112x63.png"
@@ -76,6 +82,8 @@ class RadioStation
       end
       return "<img src=\"#{src}\" alt=\"#{self.artist}\">".html_safe 
     end
+
   end
+
 
 end

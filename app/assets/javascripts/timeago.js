@@ -38,12 +38,12 @@ function timestamp(d) {
 		if(Math.floor(d/week)>1)
 			string += 's';
 	}
-	else if(d<year){			
+	else if(d<year){
 		string = Math.floor(d/month)+' month';
 		if(Math.floor(d/month)>1)
 			string += 's';
 	}
-	else {			
+	else {
 		string = Math.floor(d/year)+' year';
 		if(Math.floor(d/year)>1)
 			string += 's';

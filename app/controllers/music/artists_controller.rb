@@ -1,5 +1,6 @@
 require 'rest_client'
 class Music::ArtistsController < ApplicationController
+  include ErrorHelper
 
   # GET /music/artist
   # GET /music/artist.json
@@ -69,8 +70,8 @@ class Music::ArtistsController < ApplicationController
       response = RestClient.get "http://api.songkick.com/api/3.0/artists/mbid:#{URI::escape(params[:id])}/calendar.json?apikey=qF6dIhCO7OeobhpC"
       if response.code == 200
         json = JSON.parse response.body
-        if json['artist']
-          @artist = json['songkick']
+        if json['resultsPage']
+          @artist['songkick'] = json['songkick']
         end
       end
       
@@ -78,6 +79,19 @@ class Music::ArtistsController < ApplicationController
         f.write(@artist.to_json)
       end
 
+    end
+
+    if params[:title]
+      @og = {
+        "og:title" => "#{params[:title]} by #{@artist['name']}",
+        "og:type" => "bbc_radio:song",
+        "og:url" => request.original_url,
+        "og:image" => "https://www.bbc.co.uk/music/images/artists/542x305/#{params[:id]}.jpg",
+        "og:site_name" => "dyl.anjon.es",
+        "fb:app_id" => "149865365127990",
+        "bbc_radio:artist" => @artist['name'],
+        "bbc_radio:track" => params[:title]
+      }
     end
 
     respond_to do |format|

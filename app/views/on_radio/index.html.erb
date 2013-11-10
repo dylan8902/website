@@ -22,14 +22,18 @@
 		<div style="width:100%;height:5px;background:#DBDBDB;margin-bottom:10px;">
 			<div id="done" style="height:100%;background:<%= @radio_station.colour %>;width:1%;"></div>
 		</div>
-	
+		
+		<button id="listen" class="btn btn-primary">Listen</button>
+		<button id="scrobble" class="btn btn-danger">Scrobble</button>
+		<button id="facebook" class="btn btn-secondary">Connect to Facebook</button>
+
 		<h3>Recently Played</h3>
 		<table id="tracks">
 			<% @radio_station.recent_tracks.each_with_index do |track, i| %>
 			<tr id="track-<%= @radio_station.recent_tracks.count - i %>">
 				<td><%= track.image %></td>
 				<td>
-					<%= link_to track.artist, music_artist_path(track.artist_mbzid), class: "artist", id: track.artist_mbzid %> - <%= track.title %>
+					<%= link_to track.artist, music_artist_path + "/" + track.artist_mbzid, class: "artist", id: track.artist_mbzid %> - <%= track.title %>
 					<p><%= timestamp track.timestamp %></p>
 				</td>
 			</tr>
@@ -145,6 +149,12 @@
 						last = last.toString();
 						var test = track.name.toString();
 						if(test!=last) {
+							if(typeof session.key != 'undefined') {
+								scrobble(track.name, track.artist['#text'], track.date['uts'], 0);
+							}
+							else if(typeof session != 'undefined') {
+								postToFacebook(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], parseInt(track.date['uts'])+180);
+							}
 							addTrackToTable(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], 0)
 							last = test;
 							id++;
@@ -176,6 +186,7 @@
 	}
 
 	$(document).ready(function() {
+
 		var textlastid = 0;
 		var refreshTracks = setInterval(function() {
 			updateTracks();
@@ -193,6 +204,7 @@
 		var refreshProgress = setInterval(function() {
 			updateProgress();
 		}, 1000);
+
 		$(document).on('click', '.artist', function(e) {
 			e.preventDefault();
 			var target_offset = $('#information').offset();
@@ -268,8 +280,59 @@
 			});
 			return false;
 		});
-		$('#scrobble').click(function() { window.location = '/onradio/2/scrobble'; });
-		$('#facebook').click(function() { window.location = '/onradio/2/facebook'; });
+
+		$('#scrobble').click(function() {
+			window.location = 'http://www.last.fm/api/auth/?api_key=ea5099237517b2b08252aed02e06a3ea&cb=<%= request.original_url %>';
+		});
+
+		$('#listen').click(function() {
+			window.open('http://www.bbc.co.uk/radio/player/<%= @radio_station.key %>');
+		});
+
+		$('#facebook').click(function() {
+			var appID = '149865365127990';
+			var path = 'https://www.facebook.com/dialog/oauth?';
+			var queryParams = ['client_id=' + appID,'redirect_uri=' + window.location,'response_type=token','scope=publish_actions'];
+			var query = queryParams.join('&');
+			window.location = path + query;
+		});
+
+		if ("<%= params[:token] %>" != "") {
+			$.ajax({
+				type     : 'GET',
+				dataType : 'json',
+				url      : 'https://ws.audioscrobbler.com/2.0/',
+				data     : 'method=auth.getSession&api_key=ea5099237517b2b08252aed02e06a3ea&format=json&token=<%= params[:token] %>&api_sig=<%= md5 "api_keyea5099237517b2b08252aed02e06a3eamethodauth.getSessiontoken#{params[:token]}6d597d4c6c0b1b1a8a4579964abb6758" %>',
+				success  :
+					function(reply) {
+						session = reply.session;
+						if(typeof session.key != 'undefined') {
+							$('#scrobble').html('Scrobbling for '+session.name);
+							$('#scrobble').attr('disabled','disabled');
+							$('#facebook').remove();
+						}
+						else
+							$('#scrobble').html('No Scrobbling at the moment, sorry');
+					},
+				error   :
+					function(reply) {
+						$('#scrobble').html('No Scrobbling at the moment, sorry');
+					}
+			});
+		}
+		else if (window.location.hash) {
+			var hash = window.location.hash.substring(1).split('&');
+			session = hash[0];
+			var refreshFacebookToken = setTimeout(function() {
+				var path = 'https://www.facebook.com/dialog/oauth?';
+				var queryParams = ['client_id=' + appID,'redirect_uri=' + window.location,'response_type=token','scope=publish_actions'];
+				var query = queryParams.join('&');
+				window.location = path + query;
+			}, parseInt(hash[1].substring(11))*1000);
+			$('#facebook').html('Connected to Facebook');
+			$('#facebook').attr('disabled','disabled');
+			$('#scrobble').remove();
+		}
 	});
 	//]]!>
 </script>

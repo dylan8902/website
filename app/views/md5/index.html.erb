@@ -1,0 +1,19 @@
+<% provide(:title, "MD5") %>
+<% provide(:description, "A little tool that hashes a string using MD5") %>
+
+<h1>MD5</h1>
+
+<section class="section">
+	<div class="well">
+		A tool to hash strings using the MD5 algorithm.
+		<form>
+			<input class="form-control" name="q" placeholder="Enter a string" value="<%= params[:q] %>">
+		</form>
+	</div>
+
+<% if @md5 %>
+	<h2>Result</h2>
+	<h3><code><%= @md5 %></code></h3>
+<% end %>
+
+</section>
