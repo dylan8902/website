@@ -52,13 +52,12 @@ Website::Application.routes.draw do
     get "tv/:pid",       to: redirect("/episodes/%{pid}")
     get "tvstats",       to: redirect("/episodes/stats")
     get "music/artist",  to: redirect("/music/artists")
-    get "music/artist/:mbzid", to: redirect("/music/artists/%{mbzid}")
+    get "music/artist/:id", to: redirect("/music/artists/%{id}")
   
     get ""                => "static_pages#index",    as: "root"
     get  "who"            => "static_pages#who",      as: "who"
     get  "contact"        => "static_pages#contact",  as: "contact"
     post "contact"        => "static_pages#message"
-    get  "todo"           => "static_pages#todo",     as: "todo"
   
     devise_for :users, path: "users", path_names: { sign_in: "login", sign_out: "logout", sign_up: "register" }
     as :user do
@@ -186,6 +185,7 @@ Website::Application.routes.draw do
     get  "onradio/6music" => "on_radio#six_music"
     get  "video"          => "video#index"
     get  "payapal"        => "pay_a_pal#index"
+    get  "ip-tools"       => "ip_tools#index"
     match '*foo' => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 

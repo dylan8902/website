@@ -1,0 +1,24 @@
+<% provide(:title, "IP Tools") %>
+<% provide(:description, "IP Subnet calculator and useful IP convertors") %>
+
+<h1>IP Tools</h1>
+
+<div class="well">
+	<form>
+		<input class="form-control" name="q" placeholder="Enter an IP or Integer" value="<%= params[:q] %>">
+	</form>
+</div>
+
+
+<% if @results %>
+	<table class="table table-striped">
+	<% @results.each do |result| %>
+		<tr>
+			<td><h3><%= result.first %></h3></td>
+		<% result.drop(1).each do |row| %>
+			<td><h3><code><%= row %></code></h3></td>
+		<% end %>
+		</tr>
+	<% end %>
+	</table>
+<% end %>
