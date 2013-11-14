@@ -2,27 +2,14 @@
 <% provide(:description, "Real-time feed of all things me. A scrollaable history of all my data.") %>
 
 <h1>Stream</h1>
-
 <section class="row">
-	<article class="col-md-5 text-right">
-		Thu 12th September Hello
+<% @stream.each do |post| %>
+	<article class="col-md-6">
+		<h3><%= post[:title] %></h3>
+		<p><%= post[:description] %></p>
+		<small><%= timestamp post[:created_at]%></small>
 	</article>
-	<article class="col-md-2 text-center">
-		|
-	</article>
-	<article class="col-md-5 text-left">
-		Hello
-	</article>
-	
-	<article class="col-md-5 text-right">
-		Hello
-	</article>
-	<article class="col-md-2 text-center">
-		|
-	</article>
-	<article class="col-md-5 text-left">
-		Hello
-	</article>
-	
+<% end %>
 	
 </section>
+<%= paginate @stream %>
