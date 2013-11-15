@@ -90,6 +90,6 @@
 	</article>
 	<article class="col-md-3">
 		<h3><%= link_to "Location", locations_url %></h3>
-		<%= link_to raw("<img src=\"#{@location.google_image}\" alt=\"#{@location.text}\" class=\"img-circle\">"),locations_url unless @location.nil? %>
+		<%= link_to image_tag(@location.google_image, alt: "Last Location", class: "img-circle"), locations_url unless @location.nil? %>
 	</article>
 </section>
