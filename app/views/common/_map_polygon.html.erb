@@ -5,10 +5,13 @@
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
 			maxZoom: 18
 		});
+	<% if @locations.first %>
 		var center = new L.LatLng(<%= @locations.first.lat %>, <%= @locations.first.lng %>);
+	<% else %>
+		var center = new L.LatLng(53, -2);
+	<% end %>
 		map.setView(center, 6).addLayer(cloudmade);
 		var p1, p2, line
-		
 	<% @locations.each_with_index do |location, i| %>
 		<% next if i == 0 %>
 		p1 = new L.LatLng(<%= location.lat %>, <%= location.lng %>);

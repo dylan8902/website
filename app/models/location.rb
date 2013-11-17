@@ -22,13 +22,14 @@ class Location < ActiveRecord::Base
 
     url = "https://maps.google.com/locationhistory/b/0/kml?startTime=#{start_time}000&endTime=#{end_time}000"
     response = RestClient.get url, "Authorization" => "GoogleLogin auth=#{auth}"
+    logger.info response.body
     return response.body
   end
 
 
   def self.update
     if Location.last
-      start_time = Location.last.created_at.to_i
+      start_time = Location.first.created_at.to_i
     else
       start_time = 1275350400
     end
@@ -39,8 +40,8 @@ class Location < ActiveRecord::Base
     coord_elements = kml.css('gx|coord')
     when_elements.each_with_index do |timestamp, i|
       xy = coord_elements[i].text.split(" ")
-      timestamp = DateTime.parse(timestamp.text)
-      Location.create(lat: xy[1], lng: xy[0], created_at: timestamp) unless Location.where("UNIX_TIMESTAMP(created_at) = ?", timestamp.to_i).count > 0
+      timestamp = DateTime.parse(timestamp.text).utc
+      Location.where(lat: BigDecimal.new(xy[1]), lng: BigDecimal.new(xy[0]), created_at: timestamp).first_or_create
     end
   end
 
