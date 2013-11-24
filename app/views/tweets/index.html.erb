@@ -4,8 +4,8 @@
 <h1>Tweets</h1>
 <ol class="breadcrumb">
 	<li class="active">Tweets</li>
-	<li><%= link_to 'Statistics', tweets_stats_path, "data-no-turbolink" => true %></li>
-	<li><%= link_to 'Map', tweets_map_path, "data-no-turbolink" => true %></li>
+	<li><%= link_to 'Statistics', tweets_stats_path %></li>
+	<li><%= link_to 'Map', tweets_map_path %></li>
 </ol>
 
 <% @tweets.each do |tweet| %>

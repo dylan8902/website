@@ -5,8 +5,8 @@
 <ol class="breadcrumb">
 	<li><%= link_to 'Tweets', tweets_path %></li>
 	<li class="active">Tweet</li>
-	<li><%= link_to 'Statistics', tweets_stats_path, "data-no-turbolink" => true %></li>
-	<li><%= link_to 'Map', tweets_map_path, "data-no-turbolink" => true %></li>
+	<li><%= link_to 'Statistics', tweets_stats_path %></li>
+	<li><%= link_to 'Map', tweets_map_path %></li>
 </ol>
 
 <%= render 'tweet', tweet: @tweet %>

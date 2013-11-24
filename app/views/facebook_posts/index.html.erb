@@ -4,8 +4,8 @@
 <h1>Facebook Posts</h1>
 <ol class="breadcrumb">
   <li class="active">Facebook Posts</li>
-  <li><%= link_to 'Statistics', facebook_posts_stats_path, "data-no-turbolink" => true %></li>
-  <li><%= link_to 'Map', facebook_posts_map_path, "data-no-turbolink" => true %></li>
+  <li><%= link_to 'Statistics', facebook_posts_stats_path %></li>
+  <li><%= link_to 'Map', facebook_posts_map_path %></li>
 </ol>
 
 <% @facebook_posts.each do |facebook_post| %>

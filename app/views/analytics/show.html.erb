@@ -5,7 +5,7 @@
 <ol class="breadcrumb">
   <li><%= link_to 'Analytics', analytics_path %></li>
   <li class="active"><%= @analytic.id %></li>
-  <li><%= link_to 'Statistics', analytics_stats_path, "data-no-turbolink" => true %></li>
+  <li><%= link_to 'Statistics', analytics_stats_path %></li>
 </ol>
 
 <h2><%= link_to @analytic.uri, @analytic.uri %></h2>
