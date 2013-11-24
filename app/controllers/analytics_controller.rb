@@ -41,7 +41,7 @@ class AnalyticsController < ApplicationController
   # GET /analytics/stats.json
   # GET /analytics/stats.xml
   def stats
-    @stats = time_data Analytic.all
+    @stats = time_data Analytic.where("created_at > ?", Time.now - 1.year)
 
     respond_to do |format|
       format.html # stats.html.erb

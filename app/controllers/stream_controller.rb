@@ -19,7 +19,7 @@ class StreamController < ApplicationController
     BlogPost.all.each do |post|
       @stream << {
         title: post.title,
-        description: post.text.to(400).html_safe + "...",
+        description: post.text.html_safe,
         icon: :edit,
         created_at: post.created_at,
         link: blog_post_path(post)
@@ -45,10 +45,28 @@ class StreamController < ApplicationController
         link: facebook_post_path(post)
       }
     end
-
-    @stream.sort_by! do |post|
-      post[:created_at]
+    
+    Listen.all.each do |listen|
+      @stream << {
+        title: "Listen",
+        description: listen.track + " - " + listen.artist,
+        icon: "music",
+        created_at: listen.created_at,
+        link: music_listen_path(listen)
+      }
     end
+    
+    Photo.all.each do |photo|
+      @stream << {
+        title: "Photo",
+        description: "<h5>#{photo.title}</h5><img src=\"#{photo.thumbnail}\" class=\"thumbnail\">".html_safe,
+        icon: "camera",
+        created_at: photo.created_at,
+        link: photo_path(photo)
+      }
+    end
+
+    @stream.sort_by! { |post| post[:created_at] }
     @stream.reverse!
     @stream = @stream.paginate(@page)
 
