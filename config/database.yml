@@ -8,8 +8,8 @@ development:
   encoding: utf8
   database: dylan8902_website
   pool: 5
-  username: dylan8902
-  password: encarta2
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   host: localhost
 
 # Warning: The database defined as "test" will be erased and
@@ -26,6 +26,6 @@ production:
   encoding: utf8
   database: dylan8902_production
   pool: 5
-  username: dylan8902
-  password: encarta2
+  username: <%= ENV['DATABASE_USER'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   host: localhost
