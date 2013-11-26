@@ -76,11 +76,6 @@ module ApplicationHelper
     will_paginate model, renderer: BootstrapPagination::Rails, bootstrap: 3
   end
 
-  #TODO Create a nice way to send css through to layout to render  
-  #adds extra css to <head>
-  def extra_css css
-    return if css.empty?
-  end
   
   #the html required to delegate openid to myopenid
   def open_id_delegate

@@ -1,18 +1,22 @@
 <% provide(:title, "Bring on the Wall") %>
-<h1>Bring on the Wall</h1>
+<% provide(:description, "A game to test your knowledge of your friends' music tastes") %>
+<% provide(:extrahead, "<style>.correct,.wrong{cursor:pointer;padding:5px;}</style>".html_safe) %>
 
-<section class="container">
-	<p>a game to test your knowledge of your friends' music tastes</p>
-	<h2 id="artist"></h2>
-	<div id="wall"></div>
-	<h3 id="status"></h3>
-	<p id="bottom"><span id="score">Score: 0</span> | <span id="level">Level: 1</span></p>
-	<p id="player"></p>
-	<footer>
-		<p>Made in 24-hours at <a href="http://london.musichackday.org/2011/">Music Hackday London 2011</a> by <a href="https://dyl.anjon.es">Dylan</a></p>
-	</footer>
+<section class="row text-center">
+	<div class="col-md-3"></div>
+	<article class="col-md-6">
+		<h1>Bring on the Wall</h1>
+		<p class="well">a game to test your knowledge of your friends' music tastes</p>
+		<h2 id="artist"></h2>
+		<div id="wall"></div>
+		<h3 id="status"></h3>
+		<p class="lead"><span id="score">Score: 0</span> | <span id="level">Level: 1</span></p>
+		<span id="player"></span>
+		<footer>
+			<p>Made in 24-hours at <a href="http://london.musichackday.org/2011/">Music Hackday London 2011</a> by <a href="https://dyl.anjon.es">Dylan</a></p>
+		</footer>
+	</article>
 </section>
-
 <script type="text/javascript"> 
 	var access_token;
 	var name;
@@ -31,7 +35,7 @@
 			}
 		}
 		$('#status').html('OK, Are you ready?');
-		$('#status').after('<button id="go" class="btn large primary">Yes I Am!</button>');
+		$('#status').after('<button id="go" class="btn btn-success large primary">Yes I Am!</button>');
 	}
 	function createLevel() {
 		$('#wall').html('');
@@ -207,12 +211,12 @@
 			});
 		}
 
-		$('#go').live('click', function() {
+		$(document).on('click', '#go', function() {
 			$(this).remove();
 			$('#status').html('');
 			createLevel();
 		});
-		$('.skip').live('click', function() {
+		$(document).on('click', '.skip', function() {
 			score -= 50*level;
 			$('#score').html('Score: '+score)
 			level++;
@@ -223,7 +227,7 @@
 			var buzz = new Audio('/uploads/buzz.mp3');
 			buzz.play();
 		});
-		$('.correct').live('click', function() {
+		$(document).on('click', '.correct', function() {
 			score += 20*level;
 			$('#score').html('Score: '+score)
 			level++;
@@ -234,14 +238,14 @@
 			var ding = new Audio('/uploads/ding.mp3');
 			ding.play();
 		});
-		$('.wrong').live('click', function() {
+		$(document).on('click', '.wrong', function() {
 			$(this).remove();
 			score = score-20;
 			$('#score').html('Score: '+score);
 			var buzz = new Audio('/uploads/buzz.mp3');
 			buzz.play();
 		});
-		$('#replay').live('click', function() {
+		$(document).on('click', '#replay', function() {
 			window.location = '/wall';
 		});
 	});

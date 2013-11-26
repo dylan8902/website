@@ -1,0 +1,24 @@
+<% provide(:title, "Bring on the Wall: High Scores") %>
+<% provide(:description, "Facebook uses who have played and their scores") %>
+<% provide(:extrahead, "<style>table{margin:20px auto;font-size:22pt;}td{padding:10px;}</style>".html_safe )%>
+
+<section class="row text-center">
+	<div class="col-md-3"></div>
+	<article class="col-md-6">
+		<h1><%= link_to "Bring on the Wall", wall_path %></h1>
+		<h2>High Scores</h2>
+		<table class="table-striped">
+		<% @high_scores.each_with_index do |high_score, index| %>
+			<tr>
+				<td style="font-weight:bold"><%= index + 1 %></td>
+				<td><%= high_score.image %></td>
+				<td><%= link_to high_score.name, high_score.facebook_link %></td>
+				<td><%= high_score.score %></td>
+			</tr>
+		<% end %>
+		</table>
+		<footer>
+			<p>Made in 24-hours at <a href="http://london.musichackday.org/2011/">Music Hackday London 2011</a> by <a href="https://dyl.anjon.es">Dylan</a></p>
+		</footer>
+	</article>
+</section>
