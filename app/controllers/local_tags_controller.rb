@@ -44,12 +44,10 @@ class LocalTagsController < ApplicationController
   def create
 
     if user_signed_in?
-      params[:local_tag][:user_id] = current_user.id
-    else
-      params[:local_tag][:user_id] = nil
+      user_id = current_user.id
     end
 
-    @local_tag = LocalTag.new(params[:local_tag])
+    @local_tag = LocalTag.new(local_tag_params.merge(user_id: user_id))
 
     respond_to do |format|
       if @local_tag.save
@@ -72,7 +70,7 @@ class LocalTagsController < ApplicationController
     @local_tag = LocalTag.find(params[:id])
 
     respond_to do |format|
-      if @local_tag.update_attributes(params[:local_tag])
+      if @local_tag.update_attributes(local_tag_params)
         format.html { redirect_to @local_tag, notice: 'Local tag was successfully updated.' }
         format.json { head :no_content }
         format.xml { head :no_content }
@@ -98,5 +96,10 @@ class LocalTagsController < ApplicationController
       format.xml { head :no_content }
     end
   end
+
+  private
+    def local_tag_params
+      params.require(:local_tag).permit(:title, :description, :lat, :lng)
+    end
 
 end

@@ -10,7 +10,9 @@
 				<%= timestamp(blog_comment.updated_at) %>
 			<% end %>
 			</small>
-			<%= link_to "Edit", edit_blog_post_blog_comment_path(blog_comment.blog_post, blog_comment), class: "btn btn-primary btn-xs" if current_user and current_user.id == blog_comment.user_id %>
+		<% if current_user and current_user.id == blog_comment.user_id %>
+			<%= link_to "Edit", edit_blog_post_blog_comment_path(blog_comment.blog_post, blog_comment), class: "btn btn-primary btn-xs" %>
+		<% end %>
 		</h4>
 		<%= blog_comment.comment %>
 	</div>
