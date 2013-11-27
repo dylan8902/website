@@ -130,6 +130,7 @@ Website::Application.routes.draw do
     get  "onradio/2"      => "on_radio#two"
     get  "onradio/3"      => "on_radio#three"
     get  "onradio/6music" => "on_radio#six_music"
+    get  "ontherun"       => "on_the_run#index"
     get  "payapal"        => "pay_a_pal#index"
 
     get  "photos/all"     => "photos#all",             as: "all_photos"
