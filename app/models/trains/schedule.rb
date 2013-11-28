@@ -124,7 +124,7 @@ class Trains::Schedule < ActiveRecord::Base
     end
     
     conditions = "tiploc_code = ? 
-      AND (stp_indicator = 'P' OR CIF_stp_indicator = 'N')
+      AND (stp_indicator = 'P' OR stp_indicator = 'N')
       AND #{record_identity}
       AND #{public_string} IS NOT NULL
       AND schedule_start_date <= ?

@@ -62,7 +62,7 @@
 		<tbody>
 			<% @schedules.each do |schedule| %>
 			<tr>
-				<td><%= link_to schedule.uid, trains_schedule_uid_and_date_path(schedule.uid, @date.year, @date.month, @date.day) %></td>
+				<td><%= link_to schedule.train_uid, trains_schedule_uid_and_date_path(schedule, @date.year, @date.month, @date.day) %></td>
 				<%= "<td>#{schedule.time_at @origin}</td>".html_safe unless @origin.nil? %>
 				<td><%= link_to schedule.destination.location.name, schedule.destination.location unless schedule.destination.location.nil? %></td>
 				<%= "<td>#{schedule.origin.public_departure} from #{link_to(schedule.origin.location.name, schedule.origin.location)}</td>".html_safe unless schedule.origin.location == @origin %>

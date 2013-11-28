@@ -9,15 +9,20 @@
   <li class="active"><%= @operating_company.name %></li>
 </ol>
 
-<section class="panel panel-default">
-	<header class="panel-heading">
-		<h3 class="panel-title">Operating Routes</h3>
-	</header>
-	<article class="panel-body">
-		<div class="list-group">
-		<% @operating_company.routes.each do |route| %>
-			<%= link_to "#{route[:origin].location.name} - #{route[:destination].location.name}", trains_schedule_uid_path(route[:schedule]), class: "list-group-item" %>
-		<% end %>
-		</div>
+<section class="row">
+	<article class="col-md-5">
+		<section class="panel panel-default">
+			<header class="panel-heading">
+				<h3 class="panel-title">Operating Routes</h3>
+			</header>
+			<article class="panel-body">
+				<div class="list-group">
+				<% @routes.each do |route| %>
+					<%= link_to "#{route[:origin].location.name} - #{route[:destination].location.name}", trains_schedule_uid_path(route[:schedule]), class: "list-group-item" %>
+				<% end %>
+				</div>
+				<%= paginate @routes %>
+			</article>
+		</section>
 	</article>
 </section>

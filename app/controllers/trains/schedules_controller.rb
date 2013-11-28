@@ -68,8 +68,8 @@ class Trains::SchedulesController < ApplicationController
       end
     end
     
-    conditions = "CIF_train_uid = ? AND schedule_start_date <= ? AND schedule_end_date >= ?"
-    @schedule = Trains::Schedule.where(conditions, params[:uid], @date, @date).limit(1).order("CIF_stp_indicator ASC").first || render_404 and return
+    conditions = "train_uid = ? AND schedule_start_date <= ? AND schedule_end_date >= ?"
+    @schedule = Trains::Schedule.where(conditions, params[:uid], @date, @date).limit(1).order("stp_indicator ASC").first || render_404 and return
 
     respond_to do |format|
       format.html

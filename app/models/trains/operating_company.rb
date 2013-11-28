@@ -1,11 +1,12 @@
+require 'will_paginate/array'
 class Trains::OperatingCompany < ActiveRecord::Base
   self.table_name = "train_operating_companies"
 
-  def routes
+  def routes(page = nil)
     routes = Array.new
-    schedules = Trains::Schedule.where("atoc_code = ? AND (CIF_stp_indicator = ? OR CIF_stp_indicator = ?)", self.atoc, "P", "N")
+    schedules = Trains::Schedule.where("atoc_code = ? AND (stp_indicator = ? OR stp_indicator = ?)", self.atoc, "P", "N").limit(1)
     schedules.each do |schedule|
-      hash = { origin: schedule.origin, destination: schedule.destination, schedule: schedule.uid }
+      hash = { origin: schedule.origin, destination: schedule.destination, schedule: schedule.train_uid }
       routes << hash unless routes.include? hash
     end
     return routes

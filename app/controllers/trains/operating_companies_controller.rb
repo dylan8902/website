@@ -1,3 +1,4 @@
+require 'will_paginate/array'
 class Trains::OperatingCompaniesController < ApplicationController
 
   # GET /trains/operating-companies
@@ -21,6 +22,9 @@ class Trains::OperatingCompaniesController < ApplicationController
   # GET /trains/operating-companies/1.xml
   def show
     @operating_company = Trains::OperatingCompany.find(params[:id])
+    
+    @page[:order] = "id"
+    @routes = @operating_company.routes(@page).paginate(@page)
 
     respond_to do |format|
       format.html
