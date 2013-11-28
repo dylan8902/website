@@ -1,6 +1,6 @@
 <% provide(:title, "Bring on the Wall") %>
 <% provide(:description, "A game to test your knowledge of your friends' music tastes") %>
-<% provide(:extrahead, "<style>.correct,.wrong{cursor:pointer;padding:5px;}</style>".html_safe) %>
+<% provide(:extrahead, "<style>.correct,.wrong{cursor:pointer;padding:5px;}table{margin:20px auto;font-size:22pt;}td{padding:10px;}</style>".html_safe )%>
 
 <section class="row text-center">
 	<div class="col-md-3"></div>
@@ -126,13 +126,13 @@
 		$('#player').remove();
 		$.ajax({
 			type     : 'POST',
-			dataType : 'jsonp',
-			url      : '/wall',
-			data     : 'name='+name+'&facebook_id='+facebook_id+'&score='+score+'auth=',
+			dataType : 'json',
+			url      : '/wall/highscores.json',
+			data     : 'name='+name+'&facebook_id='+facebook_id+'&score='+score,
 			success  : 
 				function(reply){
 					$('#artist').html('Congratulations '+name+', you got '+score);
-					$('#artist').after('<h2 class="title">HIGHSCORES</h2><table id="highscores"></table><p><button class="btn primary large" id="replay">Play Again</button>');
+					$('#artist').after('<h2 class="title">HIGHSCORES</h2><table id="highscores" class="table table-stripped"></table><p><button class="btn primary large" id="replay">Play Again</button>');
 					for(var i in reply)
 						$('#highscores').append('<tr><td>'+(Number(i)+1)+'</td><td><img src="https://graph.facebook.com/'+reply[i].facebook_id+'/picture?type=square" /></td><td><a href="https://www.facebook.com/profile.php?id='+reply[i].facebook_id+'" target="_blank" title="Facebook Profile">'+reply[i].name+'</a></td><td style="text-align:right;">'+reply[i].score+'</td></tr>');
 					var sum = 0;

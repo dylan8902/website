@@ -191,7 +191,7 @@ Website::Application.routes.draw do
 
     get  "video"          => "video#index"
     get  "wall"           => "wall#index"
-    get  "wall/highscores"=> "wall#high_scores"
+    get  "wall/highscores"=> "wall#high_scores",        as: "wall_high_scores"
     post "wall/highscores"=> "wall#submit_score"
     get  "who"            => "static_pages#who"
     match '*foo'          => 'application#error_404', via: [:get, :post, :patch, :delete]

@@ -14,13 +14,14 @@ class WallController < ApplicationController
 
     respond_to do |format|
       if @wall_score.save
+        high_scores = WallScore.limit(10)
         format.html { redirect_to wall_high_scores_path, notice: "You scored #{@wall_score.score}" }
-        format.json { render json: @wall_score, status: :created, location: wall_high_scores_path }
-        format.xml  { render xml: @wall_score, status: :created,  location: wall_high_scores_path }
+        format.json { render json: high_scores, status: :created }
+        format.xml  { render xml: high_scores, status: :created }
       else
         format.html { render action: "index" }
-        format.json { render json: @wall_score.errors, status: :unprocessable_entity }
-        format.xml  { render xml: @wall_score.errors, status: :unprocessable_entity }
+        format.json { render json: high_scores, status: :unprocessable_entity }
+        format.xml  { render xml: high_scores, status: :unprocessable_entity }
       end
     end
 
