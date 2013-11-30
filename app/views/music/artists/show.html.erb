@@ -5,9 +5,9 @@
 
 <h1><%= @artist['name'] %></h1>
 
-<p><%= @artist['artist_type'] %></p>
+<p><%= icon "group" %> <%= @artist['artist_type'] %></p>
 <p><%= @artist['disambiguation'] %></p>
-<p><%= @artist['begin_date'] %> <%= " - " + @artist['end_date'] if @artist['end_date'] %></p>
+<p><%= icon "time" %> <%= @artist['begin_date'] %> <%= " - " + @artist['end_date'] if @artist['end_date'] %></p>
 
 <img src="https://www.bbc.co.uk/music/images/artists/542x305/<%= @artist['gid'] %>.jpg" title="<%= @artist['name'] %>" alt="<%= @artist['name'] %>" class="thumbnail">
 
@@ -25,9 +25,9 @@
 
 <section class="row">
 
-<% if @artist['reviews'] %>
+<% if @artist['reviews'] and @artist['reviews'].count > 0 %>
 	<article class="col-md-4">
-		<h2>Reviews</h2>
+		<h2><%= icon "pencil" %> Reviews</h2>
 		<table>
 		<% @artist['reviews'].each do |review| %>
 			<tr>
@@ -39,15 +39,27 @@
 	</article>
 <% end %>
 
-<% if @artist['links'] %>
+<% if @artist['links'] and @artist['links'].count > 0 %>
 	<article class="col-md-4">
-		<h2>Links</h2>
+		<h2><%= icon "external-link" %> Links</h2>
 		<ul>
 		<% @artist['links'].each do |link| %>
-			<li><%= link_to link['name'], link['url' ]%></li>
+			<li><%= link_to link['name'], link['url' ] %></li>
 		<% end %>
 		</ul>
 	</article>
 <% end %>
+
+<% if @artist['listens'] and @artist['listens'].count > 0 %>
+	<article class="col-md-4">
+		<h2><%= icon "music" %> My Plays</h2>
+		<ul>
+		<% @artist['listens'].each do |listen| %>
+			<li><%= link_to listen.track, music_listen_path(listen) %> <%= timestamp listen.created_at %></li>
+		<% end %>
+		</ul>
+	</article>
+<% end %>
+
 
 </section>

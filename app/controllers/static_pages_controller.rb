@@ -72,9 +72,9 @@ class StaticPagesController < ApplicationController
   end
   
   
-  # POST /sitemap
-  # POST /sitemap.json
-  # POST /sitemap.xml
+  # GET /sitemap
+  # GET /sitemap.json
+  # GET /sitemap.xml
   def sitemap
     @sitemap = Array.new
     @sitemap << { url: "/", status: "80%" }
@@ -86,5 +86,22 @@ class StaticPagesController < ApplicationController
     end
   end
 
+
+  # GET /cron
+  # GET /cron.json
+  # GET /cron.xml
+  def cron
+    Photo.update
+    Tweet.update
+    Listen.update
+    BbcTwitter.update
+    Location.update
+
+    respond_to do |format|
+      format.html # cron.html.erb
+      format.json { render json: true, :callback => params[:callback] }
+      format.xml { render xml: true }
+    end
+  end
   
 end

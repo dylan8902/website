@@ -93,6 +93,8 @@ class Music::ArtistsController < ApplicationController
         "bbc_radio:track" => params[:title]
       }
     end
+    
+    @artist['listens'] = Listen.where("artist_mbid = ?", params[:id]).limit(10)
 
     respond_to do |format|
       format.html # show.html.erb

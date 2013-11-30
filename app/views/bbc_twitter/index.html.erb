@@ -44,7 +44,19 @@
 		</aside>
 		
 		<h4>How many mentions in the headlines per day</h4>
-		<%= jqplot 150, 400, [@graph], Statistics.bar_chart_options %>
+		<%= jqplot 150, 400, [@graph], seriesDefaults:{
+            renderer:"$.jqplot.BarRenderer"
+        },
+        axes: {
+            xaxis: {
+                renderer: "$.jqplot.CategoryAxisRenderer",
+                ticks: ['J','F','M','A','M','J','J','A','S','O','N','D']
+            },
+            yaxis:{
+              tickOptions:{ formatString:'%d'},
+              min: 0
+           }
+        } %>
 
 	</article>
 

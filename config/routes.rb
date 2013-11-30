@@ -84,6 +84,7 @@ Website::Application.routes.draw do
     post "contact"        => "static_pages#message"  
     get  "cleversounds"   => "cleversounds#index"
     get  "clock"          => "clock#index"
+    get  "cron"           => "static_pages#cron"
 
     get  "drop/:uri" => "drops#show", as: "drop"
     resources :drops,             path: "drop",       only: [:index, :create]
