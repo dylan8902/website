@@ -1,10 +1,25 @@
 class Listen < ActiveRecord::Base
   default_scope { order('created_at DESC') }
-  
-  def to param
-    artist_mbid
+
+
+  def image_url
+    if self.artist_mbid != ""
+      return "https://www.bbc.co.uk/music/images/artists/542x305/#{self.artist_mbid}.jpg"
+    else
+      return "/images/no_mbzid_544x306.png"
+    end
   end
-  
+
+
+  def artist_url
+    if self.artist_mbid != ""
+      return  "/music/artists/" + self.artist_mbid
+    else
+      return  "/music/artists?q=" + URI::escape(self.artist)
+    end
+  end
+
+
   def self.update
     url = "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=dylan8902&api_key=" +
           ENV['LASTFM_API_KEY'] + "&format=json&limit=50&page=1"

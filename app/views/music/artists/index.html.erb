@@ -1,13 +1,29 @@
 <% provide(:title, "Music:: Artist") %>
+<% provide(:title, "Artist search.") %>
+
 <h1>Artist</h1>
 
-<form class="input-append">
-  <input class="span2" name="q" type="text" placeholder="Find an artist" value="<%= params[:q] unless params[:q].nil? %>">
-  <input class="btn" type="submit">Search</button>
-</form>
+<ol class="breadcrumb">
+  <li><%= link_to "Music", music_root_path %></li>
+  <li class="active">Artists</li>
+</ol>
 
-<% @artists.each do |artist| %>
-<article>
-  <h4><%= link_to artist['name'], "/music/artists/#{artist['id']}" %></h4>
+<article class="well">
+	<form class="form-inline" role="form" action="<%= music_artists_path %>">
+		<div class="form-group">
+			<label class="sr-only" for="q">Find an Artist</label>
+			<input class="form-control" id="q" name="q" placeholder="Find an Artist">
+		</div>
+		<button type="submit" class="btn btn-default">Search</button>
+	</form>
 </article>
-<% end %>
+
+<section class="row">
+	<article class="col-md-4">
+		<nav class="list-group">
+		<% @artists.each do |artist| %>
+		  	<%= link_to artist['name'], "/music/artists/#{artist['id']}", class: "list-group-item" %>
+		<% end %>
+		</nav>
+	</article>
+</section>
