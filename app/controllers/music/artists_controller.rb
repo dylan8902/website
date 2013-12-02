@@ -95,6 +95,8 @@ class Music::ArtistsController < ApplicationController
     end
     
     @artist['listens'] = Listen.where("artist_mbid = ?", params[:id]).limit(10)
+    
+    @artist['gig_performances'] = GigArtist.where("mbid = ?", params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

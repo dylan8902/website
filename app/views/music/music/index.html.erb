@@ -38,14 +38,21 @@
 
 	<article class="col-md-3">
 
-		<h3><%= link_to "DJ Events", music_dj_events_path %></h3>
+		<h3><%= link_to "Recent Gigs", music_gigs_path %></h3>
 		<ul>
-			<% @dj_events. each do |dj_event| %>
-				<li><%= link_to dj_event.title, music_dj_event_path(dj_event) %></li>
-			<% end %>
+		<% @gigs. each do |gig| %>
+			<li><%= link_to gig.name, music_gig_path(gig) %></li>
+		<% end %>
 		</ul>
 
-		<h3>Music Stuff</h3>
+		<h3><%= link_to "DJ Events", music_dj_events_path %></h3>
+		<ul>
+		<% @dj_events. each do |dj_event| %>
+			<li><%= link_to dj_event.title, music_dj_event_path(dj_event) %></li>
+		<% end %>
+		</ul>
+
+		<h3><%= link_to "Music Stuff", projects_path %></h3>
 
 		<div class="well">
 			<h5>Test your knowledge of your friends music tastes</h5>

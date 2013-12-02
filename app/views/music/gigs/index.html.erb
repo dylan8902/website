@@ -1,0 +1,16 @@
+<% provide(:title, "Music:: Gigs") %>
+<% provide(:description, "The concerts and festivals I have been to") %>
+
+<h1>Gigs</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Music', music_root_path %></li>
+	<li class="active">Gigs</li>
+</ol>
+
+<% @gigs.each do |gig| %>
+<article>
+	<h4><%= link_to gig.name, [:music, gig] %></h4>
+</article>
+<% end %>
+
+<%= paginate @gigs %>

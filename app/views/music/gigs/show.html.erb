@@ -1,0 +1,28 @@
+<% provide(:title, "Music::Gig:: #{@gig.name}") %>
+<% provide(:description, "I went to #{@gig.name}") %>
+
+<h1><%= @gig.name %></h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Music', music_root_path %></li>
+	<li><%= link_to 'Gigs', music_gigs_path %></li>
+	<li class="active"><%= @gig.name %></li>
+</ol>
+
+<p><%= @gig.venue %> - <%= @gig.created_at %></p>
+
+<% @gig.gig_artists.each_with_index do |artist, i| %>
+	<%= "<section class=\"row\">".html_safe if i == 0 or i % 3 == 0 %>
+	<article class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h5 class="panel-title"><%= link_to artist.name, artist.link %></h5>
+			</div>
+			<div class="panel-body">
+				<%= link_to image_tag(artist.image_url, alt: artist.name, class: "img-thumbnail"), artist.link %>
+			</div>
+		</div>
+	</article>
+	<%= "</section>".html_safe if i == 2 or (i-2) % 3 == 0 or artist == @gig.gig_artists.last %>
+<% end %>
+
+<%= link_to 'Back', music_gigs_path %>
