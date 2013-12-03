@@ -1,0 +1,17 @@
+<% provide(:title, "Gigs:: Stats") %>
+<% provide(:description, "Statistics on when I go to concerts or festivals.") %>
+
+<h1>Gigs</h1>
+
+<ol class="breadcrumb">
+	<li><%= link_to 'Music', music_root_path %></li>
+	<li><%= link_to 'Gigs', music_gigs_path %></li>
+	<li><%= link_to 'Map', music_gigs_map_path %></li>
+	<li class="active">Statistics</li>
+</ol>
+
+<h2>Statistics</h2>
+
+<%= render 'common/time_stats' %>
+
+<%= link_to 'Back', photos_path %>

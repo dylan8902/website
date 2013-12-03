@@ -84,7 +84,7 @@
 
 <% if @artist['gig_performances'] and @artist['gig_performances'].count > 0 %>
 	<article class="col-md-4">
-		<h2><%= icon "calendar" %> Seen At</h2>
+		<h2><%= icon "calendar" %> Gigs Seen At</h2>
 		<ul>
 		<% @artist['gig_performances'].each do |gig_performance| %>
 			<li><%= link_to gig_performance.gig.name, music_gig_path(gig_performance.gig) %></li>

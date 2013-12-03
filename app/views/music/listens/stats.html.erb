@@ -1,13 +1,15 @@
 <% provide(:title, "Music:: Listens:: Stats") %>
 <% provide(:description, "Statistics on when I listen to music") %>
 
-<h1>Listen Stats</h1>
+<h1>Listens</h1>
 
 <ol class="breadcrumb">
-  <li><%= link_to "Music", music_root_path %></li>
-  <li><%= link_to "Listens", music_listens_path %></li>
-  <li class="active">Statistics</li>
+	<li><%= link_to "Music", music_root_path %></li>
+	<li><%= link_to "Listens", music_listens_path %></li>
+	<li class="active">Statistics</li>
 </ol>
+
+<h2>Statistics</h2>
 
 <%= render 'common/time_stats' %>
 

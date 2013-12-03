@@ -7,7 +7,7 @@ class Music::MusicController < ApplicationController
     Project.hit 33
     @listens = Listen.limit(12)
     @dj_events = DjEvent.limit(5)
-    @gigs = Gig.limit(5)
+    @gigs = Gig.limit(3)
     
     respond_to do |format|
       format.html # index.html.erb

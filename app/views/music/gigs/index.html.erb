@@ -2,15 +2,26 @@
 <% provide(:description, "The concerts and festivals I have been to") %>
 
 <h1>Gigs</h1>
+
 <ol class="breadcrumb">
 	<li><%= link_to 'Music', music_root_path %></li>
 	<li class="active">Gigs</li>
+	<li><%= link_to 'Map', music_gigs_map_path %></li>
+	<li><%= link_to 'Statistics', music_gigs_stats_path %></li>
 </ol>
 
-<% @gigs.each do |gig| %>
-<article>
-	<h4><%= link_to gig.name, [:music, gig] %></h4>
-</article>
-<% end %>
+
+<p>
+	I have been to the following concerts/festivals:
+</p>
+<section class="row">
+	<article class="col-md-6">
+		<nav class="list-group">
+		<% @gigs.each do |gig| %>
+		  	<%= link_to gig.name, [:music, gig], class: "list-group-item" %>
+		<% end %>
+		</nav>
+	</article>
+</section>
 
 <%= paginate @gigs %>

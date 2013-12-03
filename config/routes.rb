@@ -116,12 +116,18 @@ Website::Application.routes.draw do
 
     namespace :music do
       root to: "music#index"
-      resources :dj_events, path: "dj"
-      resources :gigs,    only: [:index, :show]
+
       get  "artists/:id/:title" => "artists#show"
       resources :artists, only: [:index, :show] do
         get  ":id/:title" => "artists#show"
       end
+
+      resources :dj_events, path: "dj"
+
+      get "gigs/map"      => "gigs#map",      as: "gigs_map"
+      get "gigs/stats"    => "gigs#stats",    as: "gigs_stats"
+      resources :gigs,    only: [:index, :show]
+
       get "listens/stats" => "listens#stats", as: "listen_stats"
       resources :listens, only: [:index, :show]
     end

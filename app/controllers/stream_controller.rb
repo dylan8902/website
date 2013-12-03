@@ -65,6 +65,16 @@ class StreamController < ApplicationController
         link: photo_path(photo)
       }
     end
+    
+    Gig.all.each do |gig|
+      @stream << {
+        title: "Gig",
+        description: gig.name,
+        icon: "calendar",
+        created_at: gig.created_at,
+        link: music_gig_path(gig)
+      }
+    end
 
     @stream.sort_by! { |post| post[:created_at] }
     @stream.reverse!
