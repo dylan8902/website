@@ -99,6 +99,7 @@ Website::Application.routes.draw do
     get  "facebook/stats" => "facebook_posts#stats",  as: "facebook_posts_stats"
     resources :facebook_posts,    path: "facebook",   only: [:index, :show]
 
+    get  "first-aid"      => "first_aid#index"
     get  "friendmap"      => "friendmap#index"
     get  "friendstv"      => "friends_tv#index"
     get  "foebook"        => "static_pages#gone"

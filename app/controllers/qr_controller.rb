@@ -2,7 +2,7 @@ class QrController < ApplicationController
   
   # GET /qr
   def index 
-    Project.hit 435
+    Project.hit 45
   end
  
 end
