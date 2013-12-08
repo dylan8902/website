@@ -151,6 +151,7 @@ Website::Application.routes.draw do
     post "pdfy"           => "pdfy#pdf"
     get  "qr"             => "qr#index"
     get  "reading"        => "reading#index"
+    get  "realtime"       => "realtime#index"
     get  "speak"          => "speak#index"
     get  "samaritans"     => "samaritans#index"
 

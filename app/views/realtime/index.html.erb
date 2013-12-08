@@ -1,0 +1,86 @@
+<% provide(:title, "Realtime") %>
+<% provide(:description, "A websockets application running on a node server") %>
+
+<h1>Realtime Drawing - Websockets</h1>
+
+<canvas id="canvas" width="800" height="300" class="thumbnail"></canvas>
+
+<p id="status">Connecting...</p>
+<div class="form-group">
+	<label for="width">Line Width</label>
+	<input id="width" type="range" min="1" max="16" value="10">
+</div>
+<div class="form-group">
+	<label for="colour">Colour</label>
+	<input id="colour" type="color" value="red">
+</div>		
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	var draw = false;
+
+	//calculate offsets and sizes
+	var offsetX;
+	var offsetY;
+	function calculateSizeAndOffset() {
+		canvas.width = $("#canvas").parent().width();
+		var canvasOffset = $("#canvas").offset();
+		offsetX = canvasOffset.left;
+		offsetY = canvasOffset.top;
+	};
+	$(window).resize(function() {
+		calculateSizeAndOffset();
+	});
+	calculateSizeAndOffset();
+
+	window.WebSocket = window.WebSocket || window.MozWebSocket;
+	if (!window.WebSocket) {
+		$('#status').html('Sorry, but your browser doesn\'t support WebSockets. Use Chrome.');
+	     return;
+	}
+
+	var connection = new WebSocket('ws://test.dyl.anjon.es:3000');
+	connection.onopen = function () {
+		$('#status').html('Connected: Start drawing.');
+		connection.send(JSON.stringify({channel: window.location.hash.substring(1)}));
+	};
+	connection.onerror = function (error) {
+		$('#status').html('Sorry, but there\'s some problem with your connection or the server is down.');
+	};
+	connection.onmessage = function (message) {
+		var json = JSON.parse(message.data);
+		if (!json.data)
+			return;
+		ctx.lineWidth = json.data.width;
+		ctx.strokeStyle = json.data.colour;
+		ctx.lineCap = 'round';
+		ctx.beginPath();
+		ctx.moveTo(json.data.x,json.data.y);
+		ctx.lineTo(json.data.x+1,json.data.y+1);
+		ctx.stroke();
+	};
+
+	setInterval(function() {
+		if (connection.readyState !== 1)
+			$('#status').html('Error!');
+	}, 3000);
+
+	$("#canvas").mousedown(function(){draw=true;});
+	$("#canvas").mouseup(function(){draw=false;});
+	$("#canvas").mousemove(function(e) {
+	if (draw)
+		connection.send(JSON.stringify({channel: window.location.hash.substring(1), data: {x: parseInt(e.clientX - offsetX), y: parseInt(e.clientY - offsetY), width: $('#width').val(), colour: $('#colour').val()}}));
+	});
+
+	if (canvas.ontouchmove) {
+		canvas.ontouchmove = function(e) {
+			e.preventDefault();
+			connection.send(JSON.stringify({channel: window.location.hash.substring(1), data: {x: e.pageX, y: e.pageY, width: $('#width').val(), colour: $('#colour').val()}}));
+		};
+	}
+
+});
+</script>
