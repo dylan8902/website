@@ -3,9 +3,14 @@ class Trains::Schedule < ActiveRecord::Base
   self.table_name = "train_schedules"
 
   has_many :schedule_locations
-  
-  
+
+
   def to_param
+    self.train_uid
+  end
+
+
+  def uid
     self.train_uid
   end
 
@@ -25,7 +30,7 @@ class Trains::Schedule < ActiveRecord::Base
   end
 
 
-  def timing_load
+  def timing_load_details
     timing_load = Trains::TimingLoad.find_by_code(self.timing_load)
     return timing_load unless timing_load.nil?
     return Trains::TimingLoad.new(name: self.timing_load)
@@ -43,13 +48,13 @@ class Trains::Schedule < ActiveRecord::Base
 
 
   def train_class
-    self.train_class = "" if self.train_class.nil?
-    Trains::TrainClass.find_by_code(self.train_class)
+    self.train_class_code = "" if self.train_class_code.nil?
+    Trains::TrainClass.find_by_code(self.train_class_code)
   end
 
 
   def power_type
-    Trains::PowerType.find_by_code(self.power_type)
+    Trains::PowerType.find_by_code(self.power_type_code)
   end
 
 
@@ -204,11 +209,11 @@ class Trains::Schedule < ActiveRecord::Base
       course_indicator: schedule['schedule_segment']['CIF_course_indicator'],
       train_service_code: schedule['schedule_segment']['CIF_train_service_code'],
       business_sector: schedule['schedule_segment']['CIF_business_sector'],
-      power_type: schedule['schedule_segment']['CIF_power_type'],
+      power_type_code: schedule['schedule_segment']['CIF_power_type'],
       timing_load: schedule['schedule_segment']['CIF_timing_load'],
       speed: schedule['schedule_segment']['CIF_speed'],
       operating_characteristics: schedule['schedule_segment']['CIF_operating_characteristics'],
-      train_class: schedule['schedule_segment']['CIF_train_class'],
+      train_class_code: schedule['schedule_segment']['CIF_train_class'],
       sleepers: schedule['schedule_segment']['CIF_sleepers'],
       reservations: schedule['schedule_segment']['CIF_reservations'],
       connection_indicator: schedule['schedule_segment']['CIF_connection_indicator'],
@@ -251,8 +256,8 @@ class Trains::Schedule < ActiveRecord::Base
     end
     return src << "&size=320x320&sensor=false".html_safe
   end
-  
-  
+
+
   def title
     if self.origin and self.destination
       "#{self.train_uid}: #{self.origin.location.name} to #{self.destination.location.name}"

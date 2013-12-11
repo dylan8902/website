@@ -2,9 +2,13 @@
 <% provide(:description, "A record of your train journeys.") %>
 
 <h1>Your Train Journeys</h1>
+
 <ol class="breadcrumb">
 	<li><%= link_to 'Trains', trains_root_path, title: "Trains Home" %></li>
 	<li class="active">Journeys</li>
+	<li><%= link_to "Schedules", trains_schedules_path %></li>
+	<li><%= link_to "Locations", trains_locations_path %></li>
+	<li><%= link_to "Companies", trains_operating_companies_path %></li>
 </ol>
 
 <section class="row">

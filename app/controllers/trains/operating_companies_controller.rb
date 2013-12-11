@@ -5,7 +5,8 @@ class Trains::OperatingCompaniesController < ApplicationController
   # GET /trains/operating-companies.json
   # GET /trains/operating-companies.xml
   def index
-    @q = params['q']    
+    @q = params['q']
+    @page[:order] = params[:order] || "name ASC"
     @operating_companies =  Trains::OperatingCompany.where("name = ? OR atoc = ? OR name LIKE ?", @q, @q, "#{@q}%").paginate(@page)
 
     respond_to do |format|

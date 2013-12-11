@@ -4,10 +4,11 @@
 <h1>Train Locations</h1>
 
 <ol class="breadcrumb">
-  <li><%= link_to "Trains", trains_root_path %></li>
-  <li><%= link_to "Schedules", trains_schedules_path %></li>
-  <li class="active">Locations</li>
-  <li><%= link_to "Companies", trains_operating_companies_path %></li>
+	<li><%= link_to "Trains", trains_root_path %></li>
+	<li><%= link_to 'Journeys', trains_journeys_path, title: "Your Train Journeys" %></li>
+	<li><%= link_to "Schedules", trains_schedules_path %></li>
+	<li class="active">Locations</li>
+	<li><%= link_to "Companies", trains_operating_companies_path %></li>
 </ol>
 
 <%= form_tag(trains_locations_path, :method => "get") do %>

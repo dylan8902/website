@@ -4,19 +4,21 @@
 <h1>Trains</h1>
 
 <ol class="breadcrumb">
-  <li class="active">Trains</li>
-  <li><%= link_to "Schedules", trains_schedules_path %></li>
-  <li><%= link_to "Locations", trains_locations_path %></li>
-  <li><%= link_to "Companies", trains_operating_companies_path %></li>
+	<li class="active">Trains</li>
+	<li><%= link_to 'Journeys', trains_journeys_path, title: "Your Train Journeys" %></li>
+	<li><%= link_to "Schedules", trains_schedules_path %></li>
+	<li><%= link_to "Locations", trains_locations_path %></li>
+	<li><%= link_to "Companies", trains_operating_companies_path %></li>
 </ol>
 
 <section class="row">
 
 	<article class="col-md-8">
 		<header class="jumbotron">
-			<h1>Track your train journeys</h1>
+			<h2>Track your train journeys</h2>
 			<p>Pun intended.</p>
 			<%= link_to "Login or Register", trains_journeys_path, class: "btn btn-default" if current_user.nil? %>
+			<%= link_to "Your Journeys", trains_journeys_path, class: "btn btn-default" if current_user %>
 		</header>
 	</article>
 
