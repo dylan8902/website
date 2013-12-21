@@ -172,7 +172,6 @@ Website::Application.routes.draw do
 
     namespace :trains do
       root                                         to: 'static_pages#index'
-      get  'schedules/update',                     to: 'schedules#update',      as: 'schedule_update'
       get  'schedules/id/:id',                     to: 'schedules#show_by_id',  as: 'schedule_id'
       get  'schedules/:uid',                       to: 'schedules#show_by_uid', as: 'schedule_uid'
       get  'schedules/:uid/:year/:month/:day',     to: 'schedules#show_by_uid', as: 'schedule_uid_and_date'

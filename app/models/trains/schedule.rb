@@ -176,21 +176,21 @@ class Trains::Schedule < ActiveRecord::Base
   def is_bus?
     self.category == "BS"
   end
-  
-  
+
+
   def self.parse_file
-    file = "test/schedule.json"
-    
+    file = "/Users/dylan/Downloads/schedule.json"
+
     unless File.exist? file
       logger.error "No file to parse found (#{file})"
       return false
     end
-    
+
     File.open(file).each do |line|
       json = JSON.parse(line)
       Trains::Schedule.add json['JsonScheduleV1'] unless json['JsonScheduleV1'].nil?
     end
-    
+
   end
 
 

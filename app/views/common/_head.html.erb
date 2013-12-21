@@ -1,4 +1,5 @@
 <title><%= full_title(yield(:title)) %></title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Dylan Jones">
 <meta name="description" content="<%= yield(:description) %>">
@@ -23,6 +24,11 @@
 <% end %>
 
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+<!--[if lt IE 9]>  
+	<script src="/scripts/html5shiv.js"></script>
+	<script src="/scripts/respond.js"></script>
+<![endif]-->
 
 <% if yield(:map) == "map" then %>
 <link rel="stylesheet" href="/scripts/leaflet.css">

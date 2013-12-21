@@ -78,7 +78,7 @@ class Trains::SchedulesController < ApplicationController
 
     conditions = "train_uid = ? AND schedule_start_date <= ? AND schedule_end_date >= ?"
     @schedule = Trains::Schedule.where(conditions, params[:uid], @date, @date).order("stp_indicator ASC").first || render_404 and return
-  
+
     puts @schedule.inspect
 
     respond_to do |format|
@@ -103,20 +103,5 @@ class Trains::SchedulesController < ApplicationController
     end
   end
 
-
-  # GET /trains/schedules/update
-  # GET /trains/schedules/update.json
-  # GET /trains/schedules/update.xml
-  def update
-
-    logger.info("Starting schedule update")
-    Trains::Schedule.parse_file
-
-    respond_to do |format|
-      format.html { redirect_to trains_schedules_url, notice: "Schedules are being updated" }
-      format.json { head :no_content }
-      format.xml { head :no_content }
-    end
-  end
 
 end
