@@ -51,7 +51,7 @@
 	var id = 15;
 	var last = "<%= @radio_station.recent_tracks.first.title if @radio_station.recent_tracks.count > 0 %>";
 	var progress = 1;
-	var session;
+	var session = {};
 	var b = <%= Time.parse(@radio_station.show['end']).to_i - Time.now.to_i %>;
 	var a = <%= Time.parse(@radio_station.show['end']).to_i - Time.parse(@radio_station.show['start']).to_i %>;
 
@@ -152,7 +152,7 @@
 							if(typeof session.key != 'undefined') {
 								scrobble(track.name, track.artist['#text'], track.date['uts'], 0);
 							}
-							else if(typeof session != 'undefined') {
+							else if(session != {}) {
 								postToFacebook(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], parseInt(track.date['uts'])+180);
 							}
 							addTrackToTable(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], 0)
@@ -242,22 +242,22 @@
 						}
 						if(typeof(reply.news[0]) != 'undefined') {
 							$('#information').append('<section><h5>News</h5><table id="news"></table></section>');
-							for(var a in reply[0].news) {
-								var news = reply[0].news[a];
+							for(var a in reply.news) {
+								var news = reply.news[a];
 								$('#news').append('<tr><td><a href="'+news.url+'" target="_blank">'+news.title+'</a></td><td>'+news.description+'</td></tr>');
 							}
 						}
 						if(typeof(reply.songkick.resultsPage.results.event) != 'undefined') {
 							$('#information').append('<section><h5>Events</h5><ul id="events"></ul></section>');
-							for(var a in reply[0].songkick.resultsPage.results.event) {
-								var event = reply[0].songkick.resultsPage.results.event[a];
+							for(var a in reply.songkick.resultsPage.results.event) {
+								var event = reply.songkick.resultsPage.results.event[a];
 								$('#events').append('<li><a href="'+event.uri+'" target="_blank">'+event.displayName+'</a></li>');
 							}
 						}
 						if(typeof(reply.links[0]) != 'undefined') {
 							$('#information').append('<section><h5>Links</h5><ul id="links"></ul></section>');
-							for(var a in reply[0].links) {
-								var link = reply[0].links[a];
+							for(var a in reply.links) {
+								var link = reply.links[a];
 								$('#links').append('<li><a href="'+link.url+'" target="_blank">'+link.name+'</a></li>');
 							}
 						}
