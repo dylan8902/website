@@ -56,6 +56,7 @@ class EpisodesController < ApplicationController
   def stats
     Project.hit 42
     @stats = time_data Episode.all
+    @cloud = word_cloud Episode.pluck(:title)
 
     respond_to do |format|
       format.html # index.html.erb

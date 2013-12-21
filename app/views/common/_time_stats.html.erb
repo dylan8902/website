@@ -1,7 +1,8 @@
 <section class="row">
 	<article class="col-md-4 col-sm-6">
 		<h4>Time of Day</h4>
-		<%= jqplot 200, 320, [@stats[:hours]], 
+		<%= jqplot 200, 320, [@stats[:hours]],
+		seriesColors:['#3D288E'],
 		seriesDefaults:{
             renderer:"$.jqplot.BarRenderer"
         },
@@ -19,7 +20,8 @@
 	</article>
 	<article class="col-md-4 col-sm-6">
 		<h4>Days of Week</h4>
-		<%= jqplot 200, 320, [@stats[:days_of_week]], 
+		<%= jqplot 200, 320, [@stats[:days_of_week]],
+		seriesColors:['#3D288E'],
 		seriesDefaults:{
             renderer:"$.jqplot.BarRenderer"
         },
@@ -37,7 +39,8 @@
 	</article>
 	<article class="col-md-4 col-sm-6">
 		<h4>Month in Year</h4>
-		<%= jqplot 200, 320, [@stats[:month_in_year]], 
+		<%= jqplot 200, 320, [@stats[:month_in_year]],
+		seriesColors:['#3D288E'],
 		seriesDefaults:{
             renderer:"$.jqplot.BarRenderer"
         },

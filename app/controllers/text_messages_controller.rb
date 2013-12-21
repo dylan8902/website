@@ -68,12 +68,14 @@ class TextMessagesController < ApplicationController
   # GET /sms/cloud.json
   # GET /sms/cloud.xml
   def cloud 
-    Project.find(32).hit
+    Project.hit 32
 
+    @cloud = word_cloud TextMessage.pluck(:text)
+    
     respond_to do |format|
       format.html # cloud.html.erb
-      format.json { render json: time_data(TextMessage.all, :hash), callback: params[:callback] }
-      format.xml { render xml: time_data(TextMessage.all, :hash) }
+      format.json { render json: @cloud, callback: params[:callback] }
+      format.xml { render xml: @cloud }
     end
   end
   

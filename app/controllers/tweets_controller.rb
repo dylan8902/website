@@ -50,7 +50,8 @@ class TweetsController < ApplicationController
   # GET /tweets/stats.xml
   def stats
    @stats = time_data Tweet.all
-    
+   @cloud = word_cloud Tweet.pluck(:text)
+ 
     respond_to do |format|
       format.html # stats.html.erb
       format.json { render json: time_data(Tweet.all, :hash), callback: params[:callback] }

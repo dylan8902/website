@@ -1,5 +1,6 @@
 module Statistics
-  
+
+
   def time_data data, type = :array
     months = Array.new(13).fill(0)
     days = Array.new(7).fill(0)
@@ -26,5 +27,21 @@ module Statistics
       return time
     end
   end
-  
+
+
+  def word_cloud array, limit = 200
+    array.map! {|x| x.split(' ')}
+    cloud = Hash.new(0)
+    i = 0
+    while i < array.length
+      array[i].each do |x|
+        word = x.downcase.tr('^a-z', '')
+        cloud[word] += 1 unless word.empty?
+      end
+      i += 1
+    end
+    return cloud.sort_by {|k,v| v}.reverse[0..limit]
+  end
+
+
 end
