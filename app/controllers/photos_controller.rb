@@ -32,7 +32,7 @@ class PhotosController < ApplicationController
   # GET /photos/stats.json
   # GET /photos/stats.xml
   def stats
-   @stats = time_data Photo.all
+    @stats = time_data Photo.all
     
     respond_to do |format|
       format.html # stats.html.erb
