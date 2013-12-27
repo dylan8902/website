@@ -6,13 +6,13 @@
 		
 		  <div class="form-group<%= " has-error" if errors_for resource, :email %>">
 		    <%= f.label :email, class: "control-label" %>
-		    <%= f.email_field :email, class: "form-control" %>
+		    <%= f.email_field :email, class: "form-control", autofocus: true, required: true %>
 		    <span class="help-block"><%= errors_for resource, :email %></span>
 		  </div>
 		  
 		  <div class="form-group<%= " has-error" if errors_for resource, :password %>">
 			<%= f.label :password, class: "control-label" %>
-		  	<%= f.password_field :password, class: "form-control" %>
+		  	<%= f.password_field :password, class: "form-control", required: true %>
 		    <span class="help-block"><%= errors_for resource, :password %></span>
 		  </div>
 		

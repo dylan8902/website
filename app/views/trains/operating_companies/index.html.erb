@@ -14,7 +14,7 @@
 
 <%= form_tag(trains_operating_companies_path, :method => "get", :class => "text-center") do %>
 	<div class="input-append well">
-		<%= text_field_tag(:q, @from, class: "form-control", placeholder: "Search for a company", autocomplete: "off", "data-type" => "companies", "data-link" => "companies", value: @q) %>
+		<%= text_field_tag(:q, @from, class: "form-control", placeholder: "Search for a company", autofocus: true, value: @q) %>
 	</div>
 <% end %>
 

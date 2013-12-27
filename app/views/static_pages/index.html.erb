@@ -90,6 +90,7 @@
 	</article>
 	<article class="col-md-3">
 		<h3><%= link_to "Location", locations_url %></h3>
-		<%= link_to image_tag(@location.google_image, alt: "Last Location", class: "img-circle"), locations_url unless @location.nil? %>
+		<%= link_to image_tag(@location.google_image, alt: "Last Location", class: "img-circle"), locations_url %>
+		<p><%= timestamp @location.created_at %></p>
 	</article>
 </section>

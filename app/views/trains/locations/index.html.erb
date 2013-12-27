@@ -13,7 +13,7 @@
 
 <%= form_tag(trains_locations_path, :method => "get") do %>
 	<div class="input-append well">
-		<%= text_field_tag(:q, @from, class: "typeahead form-control", placeholder: "Search for a location", autocomplete: "off", "data-type" => "locations", "data-link" => "locations", value: @q) %>
+		<%= text_field_tag(:q, @from, class: "typeahead form-control", placeholder: "Search for a location", autofocus: true, value: @q) %>
 		<a class="btn geo" data-field="q" style="display:none"><%= icon("map-marker") %></a>
 	</div>
 <% end %>
