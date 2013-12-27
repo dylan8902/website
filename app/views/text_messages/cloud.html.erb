@@ -1,9 +1,0 @@
-<% provide(:title, "SMS:: Cloud") %>
-<% provide(:description, "A word cloud of the most popular words sent to and from me.") %>
-<% provide(:extrahead, "<link href=\"/scripts/jqcloud.css\" rel=\"stylesheet\">".html_safe ) %>
-
-<h1>SMS Cloud</h1>
-
-<%= render 'common/word_cloud' %>
-
-<%= link_to 'Back', text_messages_path %>

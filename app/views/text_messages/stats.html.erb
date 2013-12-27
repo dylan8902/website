@@ -1,6 +1,16 @@
-<% provide(:title, "SMS:: Stats") %>
+<% provide(:title, "Text Messages:: Stats") %>
 <% provide(:description, "Statistics on when I send and receive texts") %>
 
-<h1>SMS Stats</h1>
+<h1>Text Messages</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Text Messages', text_messages_path %></li>
+	<li class="active">Statistics</li>
+</ol>
+
+<h2>Statistics</h2>
 <%= render 'common/time_stats' %>
+
+<h2>Word Cloud</h2>
+<%= render 'common/word_cloud' %>
+
 <%= link_to 'Back', text_messages_path %>

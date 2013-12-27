@@ -1,6 +1,13 @@
-<% provide(:title, "Text Message:: #{@text_message.text}") %>
-<h1>Text Message</h1>
+<% provide(:title, "Text Messages:: #{@text_message.contact}") %>
+<% provide(:description, "A text message sent to/from #{@text_message.contact}") %>
 
-<%= render 'text_message', :text_message => @text_message %>
+<h1>Text Messages</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Text Messages', text_messages_path %></li>
+	<li class="active"><%= @text_message.contact %></li>
+	<li><%= link_to 'Statistics', text_message_stats_path %></li>
+</ol>
+
+<%= render 'text_message', text_message: @text_message %>
 
 <%= link_to 'Back', text_messages_path %>
