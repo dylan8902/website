@@ -1,0 +1,43 @@
+<% provide(:title, "Phonecalls") %>
+<% provide(:description, "All my outgoing phonecalls.") %>
+
+<h1>Phonecalls</h1>
+<ol class="breadcrumb">
+	<li class="active">Phonecalls</li>
+	<li><%= link_to 'Statistics', phonecalls_stats_path %></li>
+</ol>
+
+<% @phonecalls.each do |phonecall| %>
+	<%= render 'phonecall', phonecall: phonecall %>
+<% end %>
+
+<%= paginate @phonecalls %>
+
+<section id="drop">Upload phonecalls CSV</section>
+
+<script>
+	// <![CDATA[
+	$(document).ready(function() {
+		var holder = document.getElementById('drop');
+		holder.ondragover = function () { this.className = 'hover'; return false; };
+		holder.ondragend = function () { this.className = ''; return false; };
+		holder.ondragleave = function () { this.className = ''; return false; };
+		holder.ondrop = function(e) {
+			e.preventDefault();
+			this.className = '';
+			var file = e.dataTransfer.files[0];
+			var reader = new FileReader();
+			$('#drop').html('Reading File...');
+			reader.onload = function (event) {
+				$('#drop').html('Uploading...');
+				$.post('<%= phonecalls_path %>.json', { file: event.target.result }, function(data) {
+					$('#drop').html('<h2>Success!</h2>');
+					console.log(data);
+				});
+			};
+			reader.readAsDataURL(file);
+			return false;
+		};
+	});
+	//]]!>
+</script>

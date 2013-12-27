@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131210190301) do
+ActiveRecord::Schema.define(version: 20131227161406) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -199,6 +199,20 @@ ActiveRecord::Schema.define(version: 20131210190301) do
 
   add_index "locations", ["lat"], name: "index_locations_on_lat", using: :btree
   add_index "locations", ["lng"], name: "index_locations_on_lng", using: :btree
+
+  create_table "phonecalls", force: true do |t|
+    t.string   "date"
+    t.string   "time"
+    t.string   "contact"
+    t.string   "category"
+    t.string   "duration"
+    t.string   "price"
+    t.string   "included"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "phonecalls", ["contact"], name: "index_phonecalls_on_contact", using: :btree
 
   create_table "photos", force: true do |t|
     t.string   "title"
