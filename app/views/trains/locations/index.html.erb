@@ -11,10 +11,12 @@
 	<li><%= link_to "Companies", trains_operating_companies_path %></li>
 </ol>
 
-<%= form_tag(trains_locations_path, :method => "get") do %>
+<%= form_tag(trains_locations_path, method: :get) do %>
 	<div class="input-append well">
-		<%= text_field_tag(:q, @from, class: "typeahead form-control", placeholder: "Search for a location", autofocus: true, value: @q) %>
-		<a class="btn geo" data-field="q" style="display:none"><%= icon("map-marker") %></a>
+		<div class="input-group">
+			<%= text_field_tag(:q, @from, class: "form-control", placeholder: "Search for a location", autofocus: true, value: @q) %>
+			<a class="btn btn-success geo input-group-btn" data-field="q" data-url="/trains/locations" title="Locate Me"><%= icon("location-arrow") %></a>
+		</div>
 	</div>
 <% end %>
 
