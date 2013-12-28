@@ -29,8 +29,16 @@ module Statistics
   end
 
 
-  def word_cloud array, limit = 200
-    array.map! {|x| x.split(' ')}
+  def word_cloud array, options = {}
+    options[:split] = true if options[:split].nil?
+    options[:limit] = 200 if options[:limit].nil?
+
+    if options[:split]
+      array.map! {|x| x.split(' ')}
+    else
+      array.map! {|x| [x]}
+    end
+
     cloud = Hash.new(0)
     i = 0
     while i < array.length
@@ -40,7 +48,7 @@ module Statistics
       end
       i += 1
     end
-    return cloud.sort_by {|k,v| v}.reverse[0..limit]
+    return cloud.sort_by {|k,v| v}.reverse[0..options[:limit]]
   end
 
 

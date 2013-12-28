@@ -50,7 +50,7 @@ class Music::ListensController < ApplicationController
   # GET /music/listens/stats.xml
   def stats
     @stats = time_data Listen.all
-    @cloud = word_cloud Listen.pluck(:artist)
+    @cloud = word_cloud Listen.pluck(:artist), split: false, limit: 60
 
     respond_to do |format|
       format.html # stats.html.erb
