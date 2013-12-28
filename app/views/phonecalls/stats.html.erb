@@ -1,0 +1,13 @@
+<% provide(:title, "Phonecalls:: Stats") %>
+<% provide(:description, "Statistics on when I made Phonecalls") %>
+
+<h1>Phonecalls</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Phonecalls', phonecalls_path %></li>
+	<li class="active">Statistics</li>
+</ol>
+
+<h2>Statistics</h2>
+<%= render 'common/time_stats' %>
+
+<%= link_to 'Back', phonecalls_path %>

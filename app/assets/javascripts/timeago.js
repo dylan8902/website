@@ -133,4 +133,6 @@ function dateToString(timestamp) {
 	fin = fin + ', '+ daynumber + ' '+mns[nd.getMonth()]+' '+nd.getFullYear();
 	return fin;
 }
-var timeagoRefresh = setInterval('timeago', 500);
+$(document).ready(function() {
+	var timeagoRefresh = setInterval(function() { timeago(); }, 500);
+});

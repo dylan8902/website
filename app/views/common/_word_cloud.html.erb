@@ -1,0 +1,13 @@
+<div id="wordcloud"></div>
+<script type="text/javascript" src="/scripts/jqcloud.js"></script>
+<script type="text/javascript">
+var word_list = new Array(
+<% @cloud.each do |word| %>
+	{ text: "<%= word[0] %>", weight: <%= word[1] %> },
+<% end %>
+	{}
+  );
+  $(document).ready(function() {
+    $("#wordcloud").jQCloud(word_list);
+  });
+</script>

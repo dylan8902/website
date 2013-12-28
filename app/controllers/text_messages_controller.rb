@@ -38,7 +38,7 @@ class TextMessagesController < ApplicationController
   # GET /sms/contact/4474766782.json
   # GET /sms/contact/4474766782.xml
   def contact
-    @text_messages = TextMessage.find_all_by_contact(params[:contact]).paginate(:page => params[:page])
+    @text_messages = TextMessage.find_all_by_contact(params[:contact]).paginate(@page)
     @contact = params[:contact]
     
     respond_to do |format|
@@ -54,7 +54,9 @@ class TextMessagesController < ApplicationController
   # GET /sms/stats.xml
   def stats
     Project.hit 15
+    Project.hit 32
     @stats = time_data TextMessage.all
+    @cloud = word_cloud TextMessage.pluck(:text)
     
     respond_to do |format|
       format.html # stats.html.erb
@@ -63,18 +65,5 @@ class TextMessagesController < ApplicationController
     end
   end
 
-
-  # GET /sms/cloud
-  # GET /sms/cloud.json
-  # GET /sms/cloud.xml
-  def cloud 
-    Project.find(32).hit
-
-    respond_to do |format|
-      format.html # cloud.html.erb
-      format.json { render json: time_data(TextMessage.all, :hash), callback: params[:callback] }
-      format.xml { render xml: time_data(TextMessage.all, :hash) }
-    end
-  end
   
 end

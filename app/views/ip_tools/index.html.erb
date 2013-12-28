@@ -5,10 +5,9 @@
 
 <div class="well">
 	<form>
-		<input class="form-control" name="q" placeholder="Enter an IP or Integer" value="<%= params[:q] %>">
+		<input class="form-control" name="q" placeholder="Enter an IP or Integer" value="<%= params[:q] %>" autofocus>
 	</form>
 </div>
-
 
 <% if @results %>
 	<table class="table table-striped">

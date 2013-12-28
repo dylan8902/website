@@ -1,0 +1,17 @@
+<% provide(:title, "Phonecall:: #{@phonecall.contact}") %>
+<% provide(:description, "I made a phonecall to #{@phonecall.contact}") %>
+
+<h1>Phonecalls</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Phonecalls', phonecalls_path %></li>
+	<li class="active"><%= @phonecall.contact %></li>
+	<li><%= link_to 'Statistics', phonecalls_stats_path %></li>
+</ol>
+
+<h2><%= @phonecall.contact %></h2>
+<p><%= icon 'time' %> <%= @phonecall.duration %></p>
+<p><%= icon 'info' %> <%= @phonecall.category %></p>
+<p><%= icon 'money' %> <%= @phonecall.price %></p>
+<p><%= timestamp @phonecall.created_at %></p>
+
+<%= link_to 'Back', phonecalls_path %>

@@ -71,7 +71,7 @@ class Music::ArtistsController < ApplicationController
       if response.code == 200
         json = JSON.parse response.body
         if json['resultsPage']
-          @artist['songkick'] = json['songkick']
+          @artist['songkick'] = json
         end
       end
       

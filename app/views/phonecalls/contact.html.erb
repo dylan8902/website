@@ -1,0 +1,15 @@
+<% provide(:title, "Phonecalls:: #{@contact}") %>
+<% provide(:description, "Phonecalls to #{@contact}") %>
+
+<h1>Phonecalls</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Phonecalls', phonecalls_path %></li>
+	<li class="active"><%= @contact %></li>
+	<li><%= link_to 'Statistics', phonecalls_stats_path %></li>
+</ol>
+
+<% @phonecalls.each do |phonecall| %>
+	<%= render 'phonecall', phonecall: phonecall %>
+<% end %>
+
+<%= paginate @phonecalls %>

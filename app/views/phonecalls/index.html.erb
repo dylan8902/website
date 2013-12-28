@@ -1,19 +1,19 @@
-<% provide(:title, "Bank Transactions") %>
+<% provide(:title, "Phonecalls") %>
+<% provide(:description, "All my outgoing phonecalls.") %>
 
-<h1>Bank Transactions</h1>
+<h1>Phonecalls</h1>
+<ol class="breadcrumb">
+	<li class="active">Phonecalls</li>
+	<li><%= link_to 'Statistics', phonecalls_stats_path %></li>
+</ol>
 
-<table class="table table-striped">	
-	<% @bank_transactions.each do |transaction| %>
-	<tr>
-		<td><%= transaction.created_at.strftime("%F") %></td>
-		<td><%= transaction.description %></td>
-		<td><%= transaction.amount %></td>
-		<td><%= transaction.balance %></td>
-	</tr>
-	<% end %>
-</table>
+<% @phonecalls.each do |phonecall| %>
+	<%= render 'phonecall', phonecall: phonecall %>
+<% end %>
 
-<section id="drop">Upload statement.csv</section>
+<%= paginate @phonecalls %>
+
+<section id="drop">Upload phonecalls CSV</section>
 
 <script>
 	// <![CDATA[
@@ -30,7 +30,7 @@
 			$('#drop').html('Reading File...');
 			reader.onload = function (event) {
 				$('#drop').html('Uploading...');
-				$.post('<%= bank_transactions_path %>.json', { file: event.target.result }, function(data) {
+				$.post('<%= phonecalls_path %>.json', { file: event.target.result }, function(data) {
 					$('#drop').html('<h2>Success!</h2>');
 					console.log(data);
 				});

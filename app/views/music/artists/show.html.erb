@@ -3,7 +3,7 @@
 <% provide(:image, "https://www.bbc.co.uk/music/images/artists/542x305/#{@artist['gid']}.jpg") %>
 <% provide(:og, @og) %>
 
-<h1>Artist - <%= @artist['name'] %></h1>
+<h1><%= @artist['name'] %></h1>
 
 <ol class="breadcrumb">
   <li><%= link_to "Music", music_root_path %></li>
@@ -13,8 +13,9 @@
 
 <p><%= icon "group" %> <%= @artist['artist_type'] %></p>
 <p><%= @artist['disambiguation'] %></p>
+<% if @artist['begin_date'] %>
 <p><%= icon "time" %> <%= @artist['begin_date'] %> <%= " - " + @artist['end_date'] if @artist['end_date'] %></p>
-
+<% end %>
 <img src="https://www.bbc.co.uk/music/images/artists/542x305/<%= @artist['gid'] %>.jpg" title="<%= @artist['name'] %>" alt="<%= @artist['name'] %>" class="thumbnail">
 
 <% if @artist['wikipedia_article'] %>

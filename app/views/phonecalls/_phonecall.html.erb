@@ -1,0 +1,8 @@
+<blockquote class="phonecall">
+	<p>
+		<%= link_to phonecall.contact, phonecall_contact_path(phonecall.contact) %> - <%= phonecall.duration %>
+	</p>
+	<small>
+		<%= link_to timestamp(phonecall.created_at), phonecall %>
+	</small>
+</blockquote>

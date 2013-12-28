@@ -50,6 +50,7 @@ class FacebookPostsController < ApplicationController
   # GET /facebook/stats.xml
   def stats
    @stats = time_data FacebookPost.all
+   @cloud = word_cloud FacebookPost.pluck(:text)
     
     respond_to do |format|
       format.html # stats.html.erb

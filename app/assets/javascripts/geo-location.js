@@ -1,12 +1,13 @@
 $(document).ready(function() {
   if (navigator.geolocation != null) {
   	$('.geo').on('click', function() {
-      var field = $(this).attr('data-field');
+      var field = $(this).data('field');
+      var url = $(this).data('url');
       navigator.geolocation.getCurrentPosition(function(position) {
 	      $.ajax({
 		      type     : 'GET',
 		      dataType : 'jsonp',
-		      url      : '/locations.json',
+		      url      : url + '.json',
 		      data     : 'lat='+position.coords.latitude+'&lng='+position.coords.longitude,
 		      success  : 
 		        function(data) {

@@ -28,7 +28,7 @@
 		<button id="facebook" class="btn btn-secondary">Connect to Facebook</button>
 
 		<h3>Recently Played</h3>
-		<table id="tracks">
+		<table id="tracks" class="table table-striped">
 			<% @radio_station.recent_tracks.each_with_index do |track, i| %>
 			<tr id="track-<%= @radio_station.recent_tracks.count - i %>">
 				<td><%= track.image %></td>
@@ -46,12 +46,19 @@
 	</section>
 </section>
 
+<footer>
+	<p>Programme information here is provided by the BBC and supported by <a href="http://backstage.bbc.co.uk" title="BBC Backstage">backstage.bbc.co.uk</a>. Track information is provided by <a href="http://last.fm">LastFM</a>,
+	event information is provided by <a href="http://songkick.com" title="Website">Songkick</a>, biographical information comes from <a href="http://wikipedia.org" title="Wikipedia">Wikipedia</a> and is licenced by
+	<a href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License" title="Creative Commons Attribution-Sharealike 3.0 Unported License">CC-BY-SA</a>.</p>
+	<p>The page should automatically load any new content. <a href="/stuff">More stuff like this by Dylan Jones</a>.</p>
+</footer>
+
 <script type="text/javascript">
 	// <![CDATA[
 	var id = 15;
 	var last = "<%= @radio_station.recent_tracks.first.title if @radio_station.recent_tracks.count > 0 %>";
 	var progress = 1;
-	var session;
+	var session = {};
 	var b = <%= Time.parse(@radio_station.show['end']).to_i - Time.now.to_i %>;
 	var a = <%= Time.parse(@radio_station.show['end']).to_i - Time.parse(@radio_station.show['start']).to_i %>;
 
@@ -152,7 +159,7 @@
 							if(typeof session.key != 'undefined') {
 								scrobble(track.name, track.artist['#text'], track.date['uts'], 0);
 							}
-							else if(typeof session != 'undefined') {
+							else if(session != {}) {
 								postToFacebook(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], parseInt(track.date['uts'])+180);
 							}
 							addTrackToTable(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], 0)
@@ -223,10 +230,10 @@
 					function(reply) { 
 						$('#loading').fadeOut(200);
 						if(typeof(reply.wikipedia_article) != 'undefined')
-							$('#information').append('<section><h5>Biography</h5><p id="biography">'+reply.wikipedia_article.content+'</p></section>');
+							$('#information').append('<section><h3>Biography</h3><p id="biography">'+reply.wikipedia_article.content+'</p></section>');
 						if(typeof(reply['7digital']) != 'undefined') {
 							if(typeof(reply['7digital'].releases.release) != 'undefined') {
-								$('#information').append('<section><h5>Releases</h5><table id="releases"></table><img src="/images/7digital.png" alt="7 Digital" style="height:14px;"></section>');
+								$('#information').append('<section><h3>Releases</h3><table id="releases"></table><img src="/images/7digital.png" alt="7 Digital" style="height:14px;"></section>');
 								for(var a in reply['7digital'].releases.release) {
 									var release = reply['7digital'].releases.release[a];
 									$('#releases').append('<tr><td><img src="'+release.image+'" alt="Artwork"></td><td><a href="'+release.url+'" target="_blank">'+release.title+'</a></td><td><iframe frameborder="0" height="40" scrolling="no" src="https://instant.7digital.com/iframe.htm?releaseid='+release.id+'&amp;partnerid=3143&amp;buttontext=BUY" width="60"></iframe></td></tr>');
@@ -234,30 +241,30 @@
 							}
 						}
 						if(typeof(reply.reviews[0]) != 'undefined') {
-							$('#information').append('<section><h5>Reviews</h5><table id="reviews"></table></section>');
+							$('#information').append('<section><h3>Reviews</h3><table id="reviews"></table></section>');
 							for(var a in reply.reviews) {
 								var review = reply.reviews[a];
 								$('#reviews').append('<tr><td><img src="'+review.release.artwork.small+'" alt="Artwork"></td><td><a href="http://www.bbc.co.uk/music/reviews/'+review.url_key+'" target="_blank">'+review.release.title+'</a></td><td>'+review.short_synopsis+'<br>By '+review.reviewer+'</td></tr>');
 							}
 						}
 						if(typeof(reply.news[0]) != 'undefined') {
-							$('#information').append('<section><h5>News</h5><table id="news"></table></section>');
-							for(var a in reply[0].news) {
-								var news = reply[0].news[a];
+							$('#information').append('<section><h3>News</h3><table id="news"></table></section>');
+							for(var a in reply.news) {
+								var news = reply.news[a];
 								$('#news').append('<tr><td><a href="'+news.url+'" target="_blank">'+news.title+'</a></td><td>'+news.description+'</td></tr>');
 							}
 						}
 						if(typeof(reply.songkick.resultsPage.results.event) != 'undefined') {
-							$('#information').append('<section><h5>Events</h5><ul id="events"></ul></section>');
-							for(var a in reply[0].songkick.resultsPage.results.event) {
-								var event = reply[0].songkick.resultsPage.results.event[a];
+							$('#information').append('<section><h3>Events</h3><ul id="events"></ul></section>');
+							for(var a in reply.songkick.resultsPage.results.event) {
+								var event = reply.songkick.resultsPage.results.event[a];
 								$('#events').append('<li><a href="'+event.uri+'" target="_blank">'+event.displayName+'</a></li>');
 							}
 						}
 						if(typeof(reply.links[0]) != 'undefined') {
-							$('#information').append('<section><h5>Links</h5><ul id="links"></ul></section>');
-							for(var a in reply[0].links) {
-								var link = reply[0].links[a];
+							$('#information').append('<section><h3>Links</h3><ul id="links"></ul></section>');
+							for(var a in reply.links) {
+								var link = reply.links[a];
 								$('#links').append('<li><a href="'+link.url+'" target="_blank">'+link.name+'</a></li>');
 							}
 						}

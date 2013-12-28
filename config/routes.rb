@@ -44,6 +44,7 @@ Website::Application.routes.draw do
     get "onradio6music", to: redirect("/onradio/6music")
     get "projects",      to: redirect("/stuff")
     get "projects/:id",  to: redirect("/stuff/%{id}")
+    get "sms/cloud",     to: redirect("/sms/stats")
     get "texts",         to: redirect("sms/stats")
     get "texts/:id",     to: redirect("/sms/%{id}")
     get "smsstats",      to: redirect("sms/stats")
@@ -129,6 +130,7 @@ Website::Application.routes.draw do
       get "gigs/stats"    => "gigs#stats",    as: "gigs_stats"
       resources :gigs,    only: [:index, :show]
 
+      get "listens/all"   => "listens#all",   as: "all_listens"
       get "listens/stats" => "listens#stats", as: "listen_stats"
       resources :listens, only: [:index, :show]
     end
@@ -142,10 +144,15 @@ Website::Application.routes.draw do
     get  "ontherun"       => "on_the_run#index"
     get  "payapal"        => "pay_a_pal#index"
 
+    get  "phonecalls/all" => "phonecalls#all",         as: "all_phonecalls"
+    get  "phonecalls/stats" => "phonecalls#stats",     as: "phonecalls_stats"
+    get  "phonecalls/contact/:contact" => "phonecalls#contact", as: "phonecall_contact"
+    resources :phonecalls,                             only: [:index, :show, :create]
+
     get  "photos/all"     => "photos#all",             as: "all_photos"
     get  "photos/map"     => "photos#map",             as: "photos_map"
     get  "photos/stats"   => "photos#stats",           as: "photos_stats"
-    resources :photos,                                only: [:index, :show]
+    resources :photos,                                 only: [:index, :show]
 
     get  "pdfy"           => "pdfy#index"
     post "pdfy"           => "pdfy#pdf"
@@ -156,10 +163,9 @@ Website::Application.routes.draw do
     get  "samaritans"     => "samaritans#index"
 
     get  "sms/all"        => "text_messages#all",      as: "all_text_messages"
-    get  "sms/cloud"      => "text_messages#cloud",    as: "text_message_cloud"
     get  "sms/stats"      => "text_messages#stats",    as: "text_message_stats"
     get  "sms/contact/:contact" => "text_messages#contact", as: "text_message_contact"
-    resources :text_messages,     path: "sms",        only: [:index, :show]
+    resources :text_messages,     path: "sms",         only: [:index, :show]
 
     get  "stream"         => "stream#index"
     get  "sitemap"        => "static_pages#sitemap"
