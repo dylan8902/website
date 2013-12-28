@@ -130,6 +130,7 @@ Website::Application.routes.draw do
       get "gigs/stats"    => "gigs#stats",    as: "gigs_stats"
       resources :gigs,    only: [:index, :show]
 
+      get "listens/all"   => "listens#all",   as: "all_listens"
       get "listens/stats" => "listens#stats", as: "listen_stats"
       resources :listens, only: [:index, :show]
     end
