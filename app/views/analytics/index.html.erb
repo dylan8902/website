@@ -7,6 +7,13 @@
   <li><%= link_to 'Statistics', analytics_stats_path %></li>
 </ol>
 
+<dl>
+	<dt>Total</dt>
+	<dd><%= @analytics[:total] %></dd>
+	<dt>Last 24 Hours</dt>
+	<dd><%= @analytics[:day] %></dd>
+</dl>
+
 <section class="row">
 
 	<article class="col-md-4">
@@ -16,7 +23,6 @@
 			<li><%= link_to ip, analytics_path + "?ip=#{URI::escape(ip)}" %></li>
 		<% end %>
 		</ul>
-		<%= paginate @analytics[:ips] %>
 	</article>
 
 	<article class="col-md-4">
@@ -26,7 +32,6 @@
 			<li><%= link_to uri, uri %></li>
 		<% end %>
 		</ul>
-		<%= paginate @analytics[:uris] %>
 	</article>
 
 	<article class="col-md-4">
@@ -36,7 +41,6 @@
 			<li><%= link_to user_agent, analytics_path + "?user_agent=#{URI::escape(user_agent)}" %></li>
 		<% end %>
 		</ul>
-		<%= paginate @analytics[:uris] %>
 	</article>
 
 </section>
