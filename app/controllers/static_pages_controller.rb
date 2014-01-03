@@ -97,6 +97,7 @@ class StaticPagesController < ApplicationController
     BbcTwitter.update
     Location.update
     Gig.update
+    TextMessage.update
 
     respond_to do |format|
       format.html # cron.html.erb
