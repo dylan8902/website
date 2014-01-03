@@ -2,7 +2,11 @@
 <% provide(:title, "Add a new project to the site") %>
 
 <h1>New Project</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Stuff', '/stuff' %></li>
+	<li class="active">New</li>
+</ol>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Back', '/stuff' %>

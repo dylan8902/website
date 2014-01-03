@@ -1,11 +1,8 @@
 require 'open-uri'
 class TextMessage < ActiveRecord::Base    
   default_scope { order('created_at DESC') }
-  
-  def self.update_url
-    "https://dl.dropboxusercontent.com/sh/ubukii3foribrrz/G5hiE5qYld/sms.xml?token_hash=AAGxzw22f-4svibsz3kDKQYLD3f1nyErWK5XTvbyKeBuzg"
-  end
-  
+
+
   def self.normalise_phone_number number
     number = number.gsub(' ','').gsub('+','')
     if number.start_with? '0' and number.length == 11
@@ -13,19 +10,19 @@ class TextMessage < ActiveRecord::Base
     end
     return number
   end
-  
-  
+
+
   def self.update
-    xml = Nokogiri::XML(open('sms.xml'))
+    xml = Nokogiri::XML(open(ENV['SMS_LINK']))
     xml.css('sms').each do |sms|
-      TextMessage.create(
+      TextMessage.where(
         text: sms.attribute('body').value,
         sent: sms.attribute('type').value.to_i - 1,
         contact: TextMessage.normalise_phone_number(sms.attribute('address').value),
         created_at: DateTime.parse(sms.attribute('readable_date')),
-        updated_at: DateTime.now
-      )
+      ).first_or_create(updated_at: DateTime.now)
     end
   end
+
 
 end

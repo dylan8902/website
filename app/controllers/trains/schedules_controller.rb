@@ -58,28 +58,14 @@ class Trains::SchedulesController < ApplicationController
   # GET /trains/schedules/P123.xml
   def show_by_uid
 
-=begin
-  
-    @schedules = Trains::Schedule.where(train_uid: params[:uid])
-    if @schedules.count == 0
-      render_404
-      return
-    end
-=end
     if params[:year].nil? or params[:month].nil? or params[:day].nil?
-      @date = Date.today
+      @date = Time.new Date.current.year, Date.current.month, Date.current.day
     else
-      begin
-        @date = Date.new(params[:year].to_i, params[:month].to_i, params[:day].to_i)
-      rescue => e
-        render_404 and return
-      end
+      @date = Time.strptime(params[:year] + "-" + params[:month] + "-" + params[:day], '%Y-%m-%d')
     end
 
     conditions = "train_uid = ? AND schedule_start_date <= ? AND schedule_end_date >= ?"
     @schedule = Trains::Schedule.where(conditions, params[:uid], @date, @date).order("stp_indicator ASC").first || render_404 and return
-
-    puts @schedule.inspect
 
     respond_to do |format|
       format.html
@@ -98,8 +84,8 @@ class Trains::SchedulesController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => @schedule, :methods => [:power_type, :destination, :origin, :schedule_locations, :atoc, :category, :train_class], :callback => params['callback'] }
-      format.xml { render :xml => @schedule, :methods => [:power_type, :destination, :origin, :schedule_locations, :atoc, :category, :train_class] }
+      format.json { render json: @schedule, methods: [:power_type, :destination, :origin, :schedule_locations, :atoc, :category, :train_class], callback: params['callback'] }
+      format.xml { render xml: @schedule, methods: [:power_type, :destination, :origin, :schedule_locations, :atoc, :category, :train_class] }
     end
   end
 

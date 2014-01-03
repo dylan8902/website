@@ -28,7 +28,9 @@ class IsMyBusDelayedController < ApplicationController
     if params['lat'] and params['lng']
       @page[:order] = params[:order] || "distance ASC"
       @page[:limit] = params[:limit] || 5
-      distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{params['lat']})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{params['lat']}*pi()/180)*POWER(SIN((lng-#{params['lng']})*pi()/180/2),2)))"
+      lat = BigDecimal.new params['lat']
+      lng = BigDecimal.new params['lng']
+      distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{lat})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{lat}*pi()/180)*POWER(SIN((lng-#{lng})*pi()/180/2),2)))"
       @stops =  BusStop.select("bus_stops.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").paginate(@page)
     end
 

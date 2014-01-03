@@ -10,10 +10,13 @@ class AnalyticsController < ApplicationController
   # GET /analytics.json
   # GET /analytics.xml
   def index
+    day =  Analytic.where("created_at > ?", Time.now - 1.day)
     @analytics = {}
-    @analytics[:ips] = Analytic.uniq.pluck(:ip).paginate(@page)
-    @analytics[:uris] = Analytic.uniq.pluck(:uri).paginate(@page)
-    @analytics[:user_agents] = Analytic.uniq.pluck(:user_agent).paginate(@page)
+    @analytics[:ips] = day.uniq.pluck(:ip)
+    @analytics[:uris] = day.uniq.pluck(:uri)
+    @analytics[:user_agents] = day.uniq.pluck(:user_agent)
+    @analytics[:total] = Analytic.count
+    @analytics[:day] = day.count
 
     respond_to do |format|
       format.html # index.html.erb
@@ -41,12 +44,13 @@ class AnalyticsController < ApplicationController
   # GET /analytics/stats.json
   # GET /analytics/stats.xml
   def stats
-    @stats = time_data Analytic.where("created_at > ?", Time.now - 1.year)
+    year = Analytic.where("created_at > ?", Time.now - 1.year)
+    @stats = time_data year
 
     respond_to do |format|
       format.html # stats.html.erb
-      format.json { render json: time_data(Analytic.all, :hash), callback: params[:callback] }
-      format.xml { render xml: time_data(Analytic.all, :hash) }
+      format.json { render json: time_data(year, :hash), callback: params[:callback] }
+      format.xml { render xml: time_data(year, :hash) }
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131227161406) do
+ActiveRecord::Schema.define(version: 20140102183941) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -30,7 +30,9 @@ ActiveRecord::Schema.define(version: 20131227161406) do
     t.datetime "updated_at"
   end
 
+  add_index "analytics", ["created_at"], name: "index_analytics_on_created_at", using: :btree
   add_index "analytics", ["ip"], name: "index_analytics_on_ip", using: :btree
+  add_index "analytics", ["referer"], name: "index_analytics_on_referer", using: :btree
   add_index "analytics", ["user_agent"], name: "index_analytics_on_user_agent", using: :btree
 
   create_table "bank_transactions", force: true do |t|

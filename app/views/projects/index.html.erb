@@ -13,6 +13,7 @@
 	<% css = "btn" %>
 	<% css += " btn-primary" if params[:order] == "title" %>
 	<%= link_to "A-Z", request.path + "?order=title", class: css %>
+	<%= link_to "New", '/stuff/new', class: 'btn' if current_user and current_user.admin? %>
 </nav>
 
 <% @projects.each_with_index do |project, i| %>
