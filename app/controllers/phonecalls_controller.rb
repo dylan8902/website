@@ -103,7 +103,7 @@ class PhonecallsController < ApplicationController
   def stats
     Project.hit 26
     @stats = time_data Phonecall.all
-    
+
     respond_to do |format|
       format.html # stats.html.erb
       format.json { render json: time_data(Photo.all, :hash), callback: params[:callback] }
