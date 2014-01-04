@@ -1,5 +1,6 @@
 <% provide(:title, "Photo:: #{@photo.title}") %>
 <% provide(:description, "I uploaded a photo: #{@photo.title}") %>
+<% provide(:image, @photo.original) %>
 
 <h1>Photos</h1>
 <ol class="breadcrumb">
