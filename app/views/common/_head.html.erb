@@ -12,7 +12,9 @@
 <meta name="twitter:title" content="<%= yield(:title) %>">
 <meta name="twitter:description" content="<%= yield(:description) %>">
 <meta name="twitter:creator" content="@dylan8902">
+<% if yield(:image) != "" %>
 <meta name="twitter:image:src" content="<%= yield(:image) %>">
+<% end %>
 
 <% if @og then %>
 	<% @og.each do |k, v| %>

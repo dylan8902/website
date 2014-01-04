@@ -1,4 +1,6 @@
 <% provide(:title, "Music:: Listens:: #{@listen.artist} - #{@listen.track}") %>
+<% provide(:description, "I listened to #{@listen.track} performed by #{@listen.artist}") %>
+<% provide(:image, @listen.image_url) %>
 
 <h1><%= @listen.artist %> - <%= @listen.track %></h1>
 
