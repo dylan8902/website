@@ -10,4 +10,16 @@
 <h2>Statistics</h2>
 <%= render 'common/time_stats' %>
 
+<h2>Facts and Figures</h2>
+<dl>
+	<dt>First recorded outgoing call</dt>
+	<dd><%= Phonecall.last.created_at %></dd>
+	<dt>Most recent recorded outgoing call</dt>
+	<dd><%= Phonecall.first.created_at %></dd>
+	<dt>Total outgoing calls</dt>
+	<dd><%= Phonecall.count %></dd>
+	<dt>Most expensive outgoing call</dt>
+	<dd>&pound;<%= Phonecall.order("price DESC").first.price %></dd>
+</dl>
+
 <%= link_to 'Back', phonecalls_path %>
