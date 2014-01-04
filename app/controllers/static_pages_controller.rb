@@ -1,7 +1,4 @@
 class StaticPagesController < ApplicationController
-  include ErrorHelper
-  before_filter :authenticate_user!, only: [:todo]
-  before_filter :authenticate_admin!, only: [:todo]
   
   
   # GET /
@@ -26,12 +23,15 @@ class StaticPagesController < ApplicationController
   
   
   # GET /who
+  # GET /who.json
+  # GET /who.xml
   def who
-  end
-  
-  
-  # GET /todo
-  def todo
+
+    respond_to do |format|
+      format.html # who.html.erb
+      format.json { render json: "Dylan Jones", callback: params[:callback] }
+      format.xml { render xml: "Dylan Jones" }
+    end
   end
   
   
@@ -81,7 +81,7 @@ class StaticPagesController < ApplicationController
     
     respond_to do |format|
       format.html # sitemap.html.erb
-      format.json { render json: @sitemap, :callback => params[:callback] }
+      format.json { render json: @sitemap, callback: params[:callback] }
       format.xml { render xml: @sitemap }
     end
   end
@@ -101,7 +101,7 @@ class StaticPagesController < ApplicationController
 
     respond_to do |format|
       format.html # cron.html.erb
-      format.json { render json: true, :callback => params[:callback] }
+      format.json { render json: true, callback: params[:callback] }
       format.xml { render xml: true }
     end
   end
