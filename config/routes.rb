@@ -17,6 +17,14 @@ Website::Application.routes.draw do
     end
   end
 
+  #hiddengifts
+  constraints Hostname.new("hiddengifts.co.uk") do
+    scope module: 'hidden_gifts' do
+      get ""         => 'static_pages#index'
+      match '*foo'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
+    end
+  end
+
   #ismytraindelayed
   constraints Hostname.new("ismytraindelayed.com") do
     get ""         => "is_my_train_delayed#departures"
