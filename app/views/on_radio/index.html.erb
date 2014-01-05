@@ -59,6 +59,8 @@
 	var last = "<%= @radio_station.recent_tracks.first.title if @radio_station.recent_tracks.count > 0 %>";
 	var progress = 1;
 	var session = {};
+	var facebook = false;
+	var lastfm = false;
 	var b = <%= Time.parse(@radio_station.show['end']).to_i - Time.now.to_i %>;
 	var a = <%= Time.parse(@radio_station.show['end']).to_i - Time.parse(@radio_station.show['start']).to_i %>;
 
@@ -156,10 +158,10 @@
 						last = last.toString();
 						var test = track.name.toString();
 						if(test!=last) {
-							if(typeof session.key != 'undefined') {
+							if(lastfm) {
 								scrobble(track.name, track.artist['#text'], track.date['uts'], 0);
 							}
-							else if(session != {}) {
+							else if(facebook) {
 								postToFacebook(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], parseInt(track.date['uts'])+180);
 							}
 							addTrackToTable(track.name, track.artist['#text'], track.artist.mbid, track.date['uts'], 0)
@@ -317,6 +319,7 @@
 							$('#scrobble').html('Scrobbling for '+session.name);
 							$('#scrobble').attr('disabled','disabled');
 							$('#facebook').remove();
+							lastfm = true;
 						}
 						else
 							$('#scrobble').html('No Scrobbling at the moment, sorry');
@@ -339,6 +342,7 @@
 			$('#facebook').html('Connected to Facebook');
 			$('#facebook').attr('disabled','disabled');
 			$('#scrobble').remove();
+			facebook = true;
 		}
 	});
 	//]]!>
