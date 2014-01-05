@@ -9,12 +9,18 @@ class Trains::SchedulesController < ApplicationController
 
   	if params['origin'] and params['origin'].length > 0 then
       @from = params['origin']
-      @origin =  Trains::Location.where("crs = ? OR tiploc = ? OR name LIKE ?", @from, @from, "#{@from}%").limit(1).first
+      crs = Trains::Location.where("crs = ?", @from)
+      tiploc = Trains::Location.where("tiploc = ?", @from)
+      name =  Trains::Location.where("name LIKE ?", "#{@from}%")
+      @origin = [crs, tiploc, name].flatten.first
     end
 
     if params['destination'] and params['destination'].length > 0 then
       @to = params['destination']
-      @destination =  Trains::Location.where("crs = ? OR tiploc = ? OR name LIKE ?", @to, @to, "#{@to}%").limit(1).first
+      crs = Trains::Location.where("crs = ?", @to)
+      tiploc = Trains::Location.where("tiploc = ?", @to)
+      name =  Trains::Location.where("name LIKE ?", "#{@to}%")
+      @destination = [crs, tiploc, name].flatten.first
     end
 
     if params['date'].nil?
