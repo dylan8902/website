@@ -1,0 +1,14 @@
+<% provide(:title, "Sitemap") %>
+<% provide(:description, "There are lots of things on this site, here is a list of some of them.") %>
+
+<h1>Sitemap</h1>
+
+<section class="row">
+	<article class="col-md-7">
+		<nav class="list-group">
+		<% @sitemap.each do |page| %>
+  			<%= link_to page[:loc], page[:loc], class: "list-group-item" %>
+		<% end %>
+		</nav>
+  	</article>
+</section>
