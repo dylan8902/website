@@ -8,13 +8,13 @@ class ProjectsController < ApplicationController
   # GET /stuff.json
   # GET /stuff.xml
   def index
-
     @projects = Project.paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @projects, callback: params[:callback] }
       format.xml { render xml: @projects }
+      format.rss { render 'feed' }
     end
   end
 
@@ -30,6 +30,7 @@ class ProjectsController < ApplicationController
       format.html { render 'index.html.erb' }
       format.json { render json: @projects, callback: params[:callback] }
       format.xml { render xml: @projects }
+      format.rss { render 'feed' }
     end
   end
 

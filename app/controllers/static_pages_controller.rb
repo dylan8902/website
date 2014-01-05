@@ -76,13 +76,45 @@ class StaticPagesController < ApplicationController
   # GET /sitemap.json
   # GET /sitemap.xml
   def sitemap
-    @sitemap = Array.new
-    @sitemap << { url: "/", status: "80%" }
-    
+
+    @sitemap = [
+      { loc: root_url, changefreq: :always },
+      { loc: who_url, changefreq: :monthly },
+      { loc: all_stuff_url, changefreq: :monthly },
+      { loc: contact_url, changefreq: :monthly },
+    ]
+    Project.where("url LIKE ?", "%dyl.anjon.es/%").each do |project|
+      @sitemap << { loc: project.url, lastmod: project.updated_at.iso8601, changefreq: :always }
+    end
+
+    @sitemap << { loc: blog_posts_url, changefreq: :monthly }
+    @sitemap << { loc: blog_tags_url, changefreq: :monthly }
+    BlogPost.all.each do |blog_post|
+      @sitemap << { loc: blog_post_url(blog_post), lastmod: blog_post.updated_at.iso8601, changefreq: :never }
+    end
+
+    Episode.all.each do |episode|
+      @sitemap << { loc: episode_url(episode), lastmod: episode.created_at.iso8601, changefreq: :never }
+    end
+
+    @sitemap << { loc: facebook_posts_url }
+    @sitemap << { loc: facebook_posts_stats_url }
+    @sitemap << { loc: facebook_posts_map_url }
+    FacebookPost.all.each do |facebook_post|
+      @sitemap << { loc: facebook_post_url(facebook_post), lastmod: facebook_post.created_at.iso8601, changefreq: :never }
+    end
+
+    @sitemap << { loc: tweets_url }
+    @sitemap << { loc: tweets_stats_url }
+    @sitemap << { loc: tweets_map_url }
+    Tweet.all.each do |tweet|
+      @sitemap << { loc: tweet_url(tweet), lastmod: tweet.created_at.iso8601, changefreq: :never }
+    end
+
     respond_to do |format|
       format.html # sitemap.html.erb
       format.json { render json: @sitemap, callback: params[:callback] }
-      format.xml { render xml: @sitemap }
+      format.xml { @sitemap }
     end
   end
 

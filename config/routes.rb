@@ -200,7 +200,6 @@ Website::Application.routes.draw do
       resources :journeys,            path: 'journeys',            except: [:new] do
         resources :journey_legs,      path: 'legs',                except: [:index]
       end
-      resources :sessions,                                         only: [:create]
       resources :schedules,                                        only: [:index]
       resources :locations,                                        only: [:index, :show]
       resources :operating_companies, path: 'operating-companies', only: [:index, :show]

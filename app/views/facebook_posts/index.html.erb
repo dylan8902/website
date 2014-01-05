@@ -1,5 +1,6 @@
 <% provide(:title, "Facebook Posts") %>
 <% provide(:description, "A record of my posts on Facebook.") %>
+<% provide(:extrahead, rss_link(facebook_posts_path)) %>
 
 <h1>Facebook Posts</h1>
 <ol class="breadcrumb">
