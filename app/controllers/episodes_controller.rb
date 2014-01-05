@@ -15,6 +15,7 @@ class EpisodesController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @episodes, callback: params[:callback] }
       format.xml { render xml: @episodes }
+      format.rss { render 'feed' }
     end
   end
 
@@ -31,6 +32,7 @@ class EpisodesController < ApplicationController
       format.html { render 'index.html.erb' }
       format.json { render json: @episodes, callback: params[:callback] }
       format.xml { render xml: @episodes }
+      format.rss { render 'feed' }
     end
   end
 

@@ -91,4 +91,9 @@ module ApplicationHelper
     Digest::MD5.hexdigest string
   end
 
+  #RSS feed
+  def rss_link url
+    return "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"#{url}.rss\">".html_safe
+  end
+
 end

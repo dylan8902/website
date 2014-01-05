@@ -1,6 +1,7 @@
 <% provide(:title, "Episodes") %>
 <% provide(:description, "A record of the programmes I watch on the BBC iPlayer. Keeping track to plot statistics and create trends.") %>
 <% provide(:image, root_path + "images/project13.png")%>
+<% provide(:extrahead, rss_link(episodes_path)) %>
 
 <h1>Episodes</h1>
 <ol class="breadcrumb">

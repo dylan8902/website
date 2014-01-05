@@ -12,6 +12,7 @@ class PhotosController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @photos, callback: params[:callback] }
       format.xml { render xml: @photos }
+      format.rss { render 'feed' }
     end
   end
 

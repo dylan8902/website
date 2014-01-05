@@ -12,6 +12,7 @@ class TweetsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @tweets, callback: params[:callback] }
       format.xml { render xml: @tweets }
+      format.rss { render 'feed' }
     end
   end
 
@@ -27,6 +28,7 @@ class TweetsController < ApplicationController
       format.html { render 'index.html.erb' }
       format.json { render json: @tweets, callback: params[:callback] }
       format.xml { render xml: @tweets }
+      format.rss { render 'feed' }
     end
   end
 

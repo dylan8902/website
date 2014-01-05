@@ -12,6 +12,7 @@ class FacebookPostsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @facebook_posts, callback: params[:callback] }
       format.xml { render xml: @facebook_posts }
+      format.rss { render 'feed' }
     end
   end
 
@@ -27,6 +28,7 @@ class FacebookPostsController < ApplicationController
       format.html { render 'index.html.erb' }
       format.json { render json: @facebook_posts, callback: params[:callback] }
       format.xml { render xml: @facebook_posts }
+      format.rss { render 'feed' }
     end
   end
 

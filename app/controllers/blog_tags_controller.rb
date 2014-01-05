@@ -1,3 +1,4 @@
+require 'will_paginate/array'
 class BlogTagsController < ApplicationController
   include ErrorHelper
   before_filter :authenticate_user!, only: [:delete]
@@ -31,6 +32,7 @@ class BlogTagsController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @tag, methods: [:blog_posts], callback: params[:callback] }
       format.xml { render xml: @tag, methods: [:blog_posts] }
+      format.rss { render 'blog_posts/feed' }
     end
   end
 

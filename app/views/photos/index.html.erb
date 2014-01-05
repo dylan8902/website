@@ -1,5 +1,6 @@
 <% provide(:title, "Photos") %>
 <% provide(:description, "Photos uploaded to my Flickr.") %>
+<% provide(:extrahead, rss_link(photos_path)) %>
 
 <h1>Photos</h1>
 <ol class="breadcrumb">

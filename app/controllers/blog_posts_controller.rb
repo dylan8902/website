@@ -15,6 +15,7 @@ class BlogPostsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @blog_posts, callback: params[:callback] }
       format.xml { render xml: @blog_posts }
+      format.rss { render 'feed' }
     end
   end
 
@@ -30,6 +31,7 @@ class BlogPostsController < ApplicationController
       format.html { render 'index.html.erb' }
       format.json { render json: @blog_posts, callback: params[:callback] }
       format.xml { render xml: @blog_posts }
+      format.rss { render 'feed' }
     end
   end
 
