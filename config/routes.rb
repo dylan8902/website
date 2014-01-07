@@ -129,6 +129,15 @@ Website::Application.routes.draw do
     resources :locations,         path: "location",   only: [:index, :show]
     resources :local_tags,        path: "localtags",  except: [:new]
     get  "md5"            => "md5#index"
+    namespace :mole do
+      root to: "static_pages#index"
+      resources :high_scores, only: [:index, :create]
+      resources :donations,   only: [:index, :create]
+      resources :addons,      only: [:index]
+      get "total"    => "static_pages#total"
+      get "privacy"  => "static_pages#privacy"
+      get "facebook" => "static_pages#facebook"
+    end
     get  "molly"          => "molly#index"
     get  "musicwall"      => "musicwall#index"
 
