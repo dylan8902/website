@@ -1,3 +1,4 @@
+require 'rest_client'
 class Mole::StaticPagesController < ApplicationController
 
 
@@ -25,6 +26,28 @@ class Mole::StaticPagesController < ApplicationController
   def facebook
     Project.hit 51
     render layout: '../mole/static_pages/facebook'
+  end
+
+
+  # GET /mole/total
+  # GET /mole/total.json
+  # GET /mole/total.xml
+  def total
+    begin
+      response = RestClient.get "https://api.justgiving.com/#{ENV['JUSTGIVING_API_KEY']}/v1/fundraising/pages/thebteam-cardiff"
+      if response.code == 200
+        @total = JSON.parse response.body
+      end
+    rescue => e
+      logger.error "Mole Total: #{e.message}"
+      @total = { grandTotalRaisedExcludingGiftAid: "Sorry, JustGiving is unavailable at this time." }
+    end
+
+    respond_to do |format|
+      format.html # total.html.erb
+      format.json { render json: @total, callback: params[:callback] }
+      format.xml { render xml: @total }
+    end
   end
 
 end

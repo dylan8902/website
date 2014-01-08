@@ -1,0 +1,16 @@
+<% provide(:title, "Whack-the-Mole: Total") %>
+<% provide(:description, "The amount of money raised by Whack-the-Mole.") %>
+<% provide(:image, root_url + "images/project51.png") %>
+
+<h1>Whack-the-Mole</h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Whack-the-Mole", mole_root_path %></li>
+  <li><%= link_to "High Scores", mole_high_scores_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-4">
+		<h2><%= @total[:grandTotalRaisedExcludingGiftAid] %></h2>
+	</article>
+</section>
