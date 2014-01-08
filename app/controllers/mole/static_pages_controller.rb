@@ -20,4 +20,11 @@ class Mole::StaticPagesController < ApplicationController
     end
   end
 
+
+  # GET /mole/facebook
+  def facebook
+    Project.hit 51
+    render layout: '../mole/static_pages/facebook'
+  end
+
 end

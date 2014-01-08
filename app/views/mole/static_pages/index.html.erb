@@ -17,6 +17,8 @@
 		<p>One of the approaches we took to generate revenue, was to develop this app. It was quickly made at <a href="http://charityhack.org">Charity Hack 2012</a>.</p>
 		<h4>Download it now!</h4>
 		<a href="https://play.google.com/store/apps/details?id=dyl.anjon.es.mole" class="btn btn-danger btn-large"><%= icon("android") %> Google Play</a>
+		or
+		<%= link_to "Try Online", mole_facebook_path, class: "btn btn-primary btn-large" %>
 	</article>
 	<article class="col-md-5">
 		<img src="/images/project51.png" class="img-thumbnail">
@@ -37,7 +39,7 @@
 		</ul>
 	</article>
 	<article class="col-md-5">
-		<h4>High Scores</h4>
+		<h4><%= link_to "High Scores", mole_high_scores_path %></h4>
 		<%= render 'mole/high_scores/high_scores' %>
 	</article>
 </section>
