@@ -4,6 +4,11 @@
 
 <h1>Whack-the-Mole</h1>
 
+<ol class="breadcrumb">
+  <li class="active">Whack-the-Mole</li>
+  <li><%= link_to "High Scores", mole_high_scores_path %></li>
+</ol>
+
 <section class="row">
 	<article class="col-md-7">
 		<p>I participated in <a href="http://www.princes-trust.org.uk/support_us/million_makers/corporate_million_makers.aspx">Million Makers</a> in my first few months at BT.
@@ -17,13 +22,6 @@
 		<img src="/images/project51.png" class="img-thumbnail">
 	</article>
 </section>
-
-<h4>Screenshots</h4>
-<img src="https://lh4.ggpht.com/t74PXQbBxRbV1ZW29AAvnPcfHEOYHTwE2T_tNSvwESJXyc13QNDb98zmRxnA5rCtvic=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
-<img src="https://lh5.ggpht.com/FFFv4Wt4-vyFIrdx0_WnKC97X6TUAZF7zoz_lgwpt6jx24hVIKpKLG1s4hBR1jJESrGA=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
-<img src="https://lh5.ggpht.com/RQsYPrles0fv28hIZudTxzSkTuqmar6edO9VRXCwTI3xqw5jZZE3DXgsavRBwrE3mQ=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
-<img src="https://lh3.ggpht.com/DbqufAMjHVGtQYujrSVlK26NbCUPc2oc-XJBvB6aGp7J2l7ONsDsB-S0zL96xnJitj8=h310-rw" class="img-thumbnail" style="width:194px;height:310px">
-<img src="https://lh5.ggpht.com/WsTfWjQZIvT_pVdaM0hQSfxZjHUDEThLwVVBI34mvQ2osDZ5YPdhJT26vP3f1a8L4A=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
 
 <hr>
 
@@ -40,8 +38,15 @@
 	</article>
 	<article class="col-md-5">
 		<h4>High Scores</h4>
-		<ol>
-			<li>1. Coming Soon</li>
-		</ol>
+		<%= render 'mole/high_scores/high_scores' %>
 	</article>
 </section>
+
+<hr>
+
+<h4>Screenshots</h4>
+<img src="https://lh4.ggpht.com/t74PXQbBxRbV1ZW29AAvnPcfHEOYHTwE2T_tNSvwESJXyc13QNDb98zmRxnA5rCtvic=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
+<img src="https://lh5.ggpht.com/FFFv4Wt4-vyFIrdx0_WnKC97X6TUAZF7zoz_lgwpt6jx24hVIKpKLG1s4hBR1jJESrGA=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
+<img src="https://lh5.ggpht.com/RQsYPrles0fv28hIZudTxzSkTuqmar6edO9VRXCwTI3xqw5jZZE3DXgsavRBwrE3mQ=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
+<img src="https://lh3.ggpht.com/DbqufAMjHVGtQYujrSVlK26NbCUPc2oc-XJBvB6aGp7J2l7ONsDsB-S0zL96xnJitj8=h310-rw" class="img-thumbnail" style="width:194px;height:310px">
+<img src="https://lh5.ggpht.com/WsTfWjQZIvT_pVdaM0hQSfxZjHUDEThLwVVBI34mvQ2osDZ5YPdhJT26vP3f1a8L4A=h310-rw" class="img-thumbnail" style="width:174px;height:310px">

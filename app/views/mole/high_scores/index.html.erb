@@ -1,0 +1,12 @@
+<% provide(:title, "Whack-the-Mole") %>
+<% provide(:description, "Raising money for the Prince's Trust charity. This app was made at Charity Hack 2012 for the Million Makers scheme.") %>
+<% provide(:image, root_url + "images/project51.png") %>
+
+<h1>Whack-the-Mole</h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Whack-the-Mole", mole_root_path %></li>
+  <li class="active">High Scores</li>
+</ol>
+
+<%= render 'high_scores' %>

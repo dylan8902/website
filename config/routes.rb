@@ -131,9 +131,9 @@ Website::Application.routes.draw do
     get  "md5"            => "md5#index"
     namespace :mole do
       root to: "static_pages#index"
-      resources :high_scores, only: [:index, :create]
-      resources :donations,   only: [:index, :create]
-      resources :addons,      only: [:index]
+      resources :high_scores,  path: "high-scores",   only: [:index, :create]
+      resources :donations,                           only: [:index, :create]
+      resources :addons,                              only: [:index]
       get "total"    => "static_pages#total"
       get "privacy"  => "static_pages#privacy"
       get "facebook" => "static_pages#facebook"

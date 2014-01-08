@@ -1,0 +1,10 @@
+<table class="table table-striped">
+	<thead>
+		<tr><th>Pos</th><th></th><th>Name</th><th>Score</th></tr>
+	</thead>
+	<tbody>
+	<% @high_scores.each_with_index do |high_score, index| %>
+		<tr><td><%= index + 1 %></td><td><%= high_score.image %></td><td><%= high_score.name %></td><td><%= high_score.score %></td></tr>
+	<% end %>
+	</tbody>
+</table>
