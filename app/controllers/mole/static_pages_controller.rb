@@ -15,7 +15,6 @@ class Mole::StaticPagesController < ApplicationController
 
   # GET /mole/privacy
   def privacy
-
     respond_to do |format|
       format.html # privacy.html.erb
     end
@@ -33,13 +32,14 @@ class Mole::StaticPagesController < ApplicationController
   # GET /mole/total.json
   # GET /mole/total.xml
   def total
+      url = "https://api.justgiving.com/#{ENV['JUSTGIVING_API_KEY']}/v1/fundraising/pages/thebteam-cardiff"
     begin
       response = RestClient.get "https://api.justgiving.com/#{ENV['JUSTGIVING_API_KEY']}/v1/fundraising/pages/thebteam-cardiff"
       if response.code == 200
         @total = JSON.parse response.body
       end
     rescue => e
-      logger.error "Mole Total: #{e.message}"
+      logger.error "Mole Total: #{e.message} - #{url}"
       @total = { grandTotalRaisedExcludingGiftAid: "Sorry, JustGiving is unavailable at this time." }
     end
 

@@ -1,0 +1,19 @@
+<% provide(:title, "Whack-the-Mole: Donation") %>
+<% provide(:description, "Thanks for purchasing the addon. Your money has gone straight to the Prince's Trust.") %>
+<% provide(:image, root_url + "images/project51.png") %>
+
+<h1>Whack-the-Mole</h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Whack-the-Mole", mole_root_path %></li>
+  <li><%= link_to "High Scores", mole_high_scores_path %></li>
+  <li class="active">Donation</li>
+</ol>
+
+<h2>THANK YOU!</h2>
+<p>Your purchase has been added to your account and you can use it whenever you use facebook to login to play.</p>
+<p>The money you spent has gone directly to the Prince's Trust. Nice one!</p>
+
+<footer>
+	<%= link_to "Privacy", mole_privacy_path %>
+</footer>
