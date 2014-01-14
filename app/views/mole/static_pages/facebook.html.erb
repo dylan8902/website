@@ -1,0 +1,167 @@
+<!doctype>
+<html>
+	<head>
+		<%= javascript_include_tag "application" %>
+		<style>
+		html{
+			margin:0;
+			padding:0
+		}
+		body{
+			padding:0px;
+			color:white;
+			font-size:24pt;
+			font-family:sans-serif;
+			background-image:url("/images/grass_bg.jpg");
+			background-repeat:repeat;
+			text-align:center;
+		}
+		h1 {
+			margin:10px;
+			padding:10px;
+		}
+		button {
+			color:white;
+			display:block;
+			background:green;
+			font-size:20pt;
+			padding:15px;
+			border-radius:10px;
+			margin:10px auto;
+			border:2px solid black;
+			cursor:pointer;
+		}
+		table {
+			margin:10px auto;
+		}
+		td {
+			width:150px;
+			height:150px;
+			background-image:url("/images/hill.png");
+			background-repeat:no-repeat;
+			background-position: center;
+			cursor:pointer;
+		}
+		#mole {
+			margin-left:20px;
+		}
+		#scoreboard {
+			margin:0;
+			padding:5px;
+			font-size:12pt;
+			color:white;
+		}
+		a {
+			font-size:12pt;
+			cursor:pointer;
+		}
+		ol {
+			margin: 10px auto;
+			text-align:left;
+			width:80%;
+		}
+		</style>
+		<script>
+		var mole = 0;
+		var score = 0;
+		var level = 1;
+		var lives = 3;
+		var playing = false;
+		var mole_up_for = 3000;
+
+		function highScores() {
+			$("#game").html('<h1>High Scores</h1><ol id="scores"></ol><button onclick="back()">Back to Menu</button>');
+			$.ajax({
+				type     : 'GET',
+				dataType : 'jsonp',
+				url      : '/mole/highscores.json?limit=10',
+				success  : 
+					function(data) {
+						for (var i in data)
+							$('#scores').append('<li>' + data[i].name + ' - ' + data[i].score + '</li>');
+					}
+			});
+		}
+
+		function back() {
+			window.location = '/mole/facebook?';
+		}
+
+		function newGame() {
+			$("#game").html('<h1>Whack-the-Mole</h1><div id="scoreboard"></div><table><tr><td id="mole1" data-mole="1""></td><td id="mole2" data-mole="2"></td><td id="mole3" data-mole="3"></td></tr><tr><td id="mole4" data-mole="4"></td><td id="mole5" data-mole="5"></td><td id="mole6" data-mole="6"></td></tr><tr><td id="mole7" data-mole="7"></td><td id="mole8" data-mole="8"></td><td id="mole9" data-mole="9"></td></tr></table>');
+			playing = true;
+			updateScoreBoard();
+			createMole();
+		}
+
+		function createMole() {
+			if (!playing)
+				return;
+			mole_up_for -= 240;
+			mole = Math.floor(Math.random()*9)+1;
+			$("#mole"+mole).html('<img id="mole" src="/images/mole.png" style="display:none">');
+			$("#mole").fadeIn(1000);
+			setTimeout(destroyMoles, mole_up_for)
+		}
+
+		function destroyMoles() {
+			mole = 0;
+			if($('#mole').length > 0) {
+				lives--;
+				$('#mole').fadeOut(400, function() {
+					$('#mole').remove();
+				});
+			}
+		    if (playing)
+				createMole();
+			updateScoreBoard();
+		}
+
+		function whack(hit) {
+
+			if (!playing) {
+				updateScoreBoard();
+				return;
+			}
+				
+			if (mole == hit) {
+				mole = 0;
+				score += 500;
+				level++;
+				$('#mole').fadeOut(400, function() {
+					$('#mole').remove();
+				});;
+			}
+			else {
+				score -= 100;
+				lives--;
+			}
+			updateScoreBoard();
+
+		}
+
+		function updateScoreBoard() {
+			$("#scoreboard").html("Score: " + score + " Lives: " + lives);
+			if (lives == 0) {
+				playing = false;
+				if(confirm('Game Over! You scored ' + score + '! Would you like to play again?')) {
+					back();
+				}
+			}
+			$("#scoreboard").append(' <a onclick="back()">Back to Menu</a>');
+		}
+
+		$(document).ready(function() {
+			$(document).on("click", "td", function(e) {
+				e.preventDefault();
+				whack($(this).attr("data-mole"));
+			});
+		});
+		</script>
+	</head>
+	<body id="game">
+		<h1>Whack-the-Mole</h1>
+		<button onclick="newGame()">New Game</button>
+		<button onclick="highScores()">High Scores</button>
+	</body>
+</html>    

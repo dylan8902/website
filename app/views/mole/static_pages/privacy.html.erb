@@ -1,0 +1,19 @@
+<% provide(:title, "Whack-the-Mole: Privacy") %>
+<% provide(:description, "A bit of information about the data collected when playing Whack-the-Mole.") %>
+<% provide(:image, root_url + "images/project51.png") %>
+
+<h1>Whack-the-Mole</h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Whack-the-Mole", mole_root_path %></li>
+  <li class="active">Privacy</li>
+  <li><%= link_to "High Scores", mole_high_scores_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-4">
+		Pretty simply, we do not share your information with anyone. You decide if / what your name is if it appears
+		on the public high scores chart. Donations are processed externally with JustGiving and we do not see your
+		payment method or details.
+	</article>
+</section>

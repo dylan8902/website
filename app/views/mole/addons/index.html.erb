@@ -1,0 +1,21 @@
+<% provide(:title, "Whack-the-Mole: Addons") %>
+<% provide(:description, "Buy one of the addons to donate extra money to The Prince's Trust.") %>
+<% provide(:image, root_url + "images/project51.png") %>
+
+<h1>Whack-the-Mole</h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Whack-the-Mole", mole_root_path %></li>
+  <li><%= link_to "High Scores", mole_high_scores_path %></li>
+  <li class="active">Addons</li>
+</ol>
+
+<table class="table table-striped">
+<% @addons.each do |addon| %>
+	<tr><td><%= addon.name %></td><td><%= number_to_currency addon.amount, unit: "£" %></td></tr>
+<% end %>
+</table>
+
+<footer>
+	<%= link_to "Privacy", mole_privacy_path %>
+</footer>

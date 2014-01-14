@@ -119,7 +119,7 @@ Website::Application.routes.draw do
     get  "first-aid"      => "first_aid#index"
     get  "friendmap"      => "friendmap#index"
     get  "friendstv"      => "friends_tv#index"
-    get  "foebook"        => "static_pages#gone"
+    get  "foebook"        => "application#error_410"
     get  "IbeforeE"       => "i_before_e#index"
     get  "ip-tools"       => "ip_tools#index"
     resources :iphone_locations,  path: "iphone",     only: [:index, :show]
@@ -129,6 +129,17 @@ Website::Application.routes.draw do
     resources :locations,         path: "location",   only: [:index, :show]
     resources :local_tags,        path: "localtags",  except: [:new]
     get  "md5"            => "md5#index"
+    namespace :mole do
+      root to: "static_pages#index"
+      get  "highscores/all"    => "high_scores#all"
+      resources :high_scores,     path: "highscores", only: [:index, :create]
+      resources :donations,       path: "purchase",   only: [:create]
+      get  "addons/all"        => "addons#all"
+      resources :addons,                              only: [:index]
+      get  "total"    => "static_pages#total"
+      get  "privacy"  => "static_pages#privacy"
+      get  "facebook" => "static_pages#facebook"
+    end
     get  "molly"          => "molly#index"
     get  "musicwall"      => "musicwall#index"
 

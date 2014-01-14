@@ -1,0 +1,58 @@
+<% provide(:title, "Whack-the-Mole") %>
+<% provide(:description, "Raising money for the Prince's Trust charity. This app was made at Charity Hack 2012 for the Million Makers scheme.") %>
+<% provide(:image, root_url + "images/project51.png") %>
+
+<h1>Whack-the-Mole</h1>
+
+<ol class="breadcrumb">
+  <li class="active">Whack-the-Mole</li>
+  <li><%= link_to "High Scores", mole_high_scores_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-7">
+		<p>I participated in <a href="http://www.princes-trust.org.uk/support_us/million_makers/corporate_million_makers.aspx">Million Makers</a> in my first few months at BT.
+			It is a scheme run by <a href="http://princes-trust.org.uk/">>The Prince's Trust</a>.
+			It is a competition between companies to raise money for the Prince's Trust by running a mini-enterprise.</p>
+		<p>One of the approaches we took to generate revenue, was to develop this app. It was quickly made at <a href="http://charityhack.org">Charity Hack 2012</a>.</p>
+		<h4>Download it now!</h4>
+		<a href="https://play.google.com/store/apps/details?id=dyl.anjon.es.mole" class="btn btn-danger btn-large"><%= icon("android") %> Google Play</a>
+		or
+		<%= link_to "Try Online", mole_facebook_path, class: "btn btn-primary btn-large" %>
+	</article>
+	<article class="col-md-5">
+		<img src="/images/project51.png" class="img-thumbnail">
+	</article>
+</section>
+
+<hr>
+
+<h4>Screenshots</h4>
+<img src="https://lh4.ggpht.com/t74PXQbBxRbV1ZW29AAvnPcfHEOYHTwE2T_tNSvwESJXyc13QNDb98zmRxnA5rCtvic=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
+<img src="https://lh5.ggpht.com/FFFv4Wt4-vyFIrdx0_WnKC97X6TUAZF7zoz_lgwpt6jx24hVIKpKLG1s4hBR1jJESrGA=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
+<img src="https://lh5.ggpht.com/RQsYPrles0fv28hIZudTxzSkTuqmar6edO9VRXCwTI3xqw5jZZE3DXgsavRBwrE3mQ=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
+<img src="https://lh3.ggpht.com/DbqufAMjHVGtQYujrSVlK26NbCUPc2oc-XJBvB6aGp7J2l7ONsDsB-S0zL96xnJitj8=h310-rw" class="img-thumbnail" style="width:194px;height:310px">
+<img src="https://lh5.ggpht.com/WsTfWjQZIvT_pVdaM0hQSfxZjHUDEThLwVVBI34mvQ2osDZ5YPdhJT26vP3f1a8L4A=h310-rw" class="img-thumbnail" style="width:174px;height:310px">
+
+<hr>
+
+<section class="row">
+	<article class="col-md-7">
+		<h4>Features</h4>
+		<ul>
+			<li>Donate to get addons such as themes and extra lives</li>
+			<li>Connect to Facebook</li>
+			<li>Share you High Score</li>
+			<li>Brilliant Graphics</li>
+			<li>All money goes to the Prince's Trust</li>
+		</ul>
+	</article>
+	<article class="col-md-5">
+		<h4><%= link_to "High Scores", mole_high_scores_path %></h4>
+		<%= render 'mole/high_scores/high_scores' %>
+	</article>
+</section>
+
+<footer>
+	<%= link_to "Privacy", mole_privacy_path %>
+</footer>
