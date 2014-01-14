@@ -22,6 +22,11 @@ class ApplicationController < ActionController::Base
   end
 
 
+  def error_410
+    render_410
+  end
+
+
   def configure_devise_params
     devise_parameter_sanitizer.for(:sign_up) do |u|
       u.permit(:name, :email, :password, :password_confirmation)

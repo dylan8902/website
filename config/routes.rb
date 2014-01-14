@@ -119,7 +119,7 @@ Website::Application.routes.draw do
     get  "first-aid"      => "first_aid#index"
     get  "friendmap"      => "friendmap#index"
     get  "friendstv"      => "friends_tv#index"
-    get  "foebook"        => "static_pages#gone"
+    get  "foebook"        => "application#error_410"
     get  "IbeforeE"       => "i_before_e#index"
     get  "ip-tools"       => "ip_tools#index"
     resources :iphone_locations,  path: "iphone",     only: [:index, :show]

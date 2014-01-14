@@ -4,7 +4,7 @@
 	</thead>
 	<tbody>
 	<% @high_scores.each_with_index do |high_score, index| %>
-		<tr><td><%= index + 1 %></td><td><%= high_score.image %></td><td><%= high_score.name %></td><td><%= high_score.score %></td></tr>
+		<tr><td><h3><%= index + 1 %></h3></td><td><%= high_score.image %></td><td><h4><%= high_score.name %></h4></td><td><h3><%= high_score.score %></h3></td></tr>
 	<% end %>
 	</tbody>
 </table>

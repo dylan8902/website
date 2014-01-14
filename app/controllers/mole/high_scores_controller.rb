@@ -7,6 +7,7 @@ class Mole::HighScoresController < ApplicationController
   # GET /mole/high-scores.xml
   def index
     @page[:limit] = 20
+    @page[:order]  = "score DESC"
     @high_scores = Mole::HighScore.paginate(@page)
 
     respond_to do |format|
@@ -23,6 +24,7 @@ class Mole::HighScoresController < ApplicationController
   def all
 
     @page[:per_page] = Mole::HighScore.count
+    @page[:order]  = "score DESC"
     @high_scores = Mole::HighScore.paginate(@page)
 
     respond_to do |format|

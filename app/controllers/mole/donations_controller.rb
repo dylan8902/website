@@ -7,12 +7,6 @@ class Mole::DonationsController < ApplicationController
   # POST /mole/purchase.json
   # POST /mole/purchase.xml
   def create
-    if params[:env] == "sandbox"
-      domain = "api-sandbox.justgiving.com"
-    else
-      domain = "api.justgiving.com"
-    end
-
     check = just_giving_api_call params
 
     error = 'Donation Failed' if check[:status] != 'Accepted'
@@ -56,15 +50,23 @@ class Mole::DonationsController < ApplicationController
 
   private
     def just_giving_api_call params
-      begin
-        response = RestClient.get "https://#{domain}/#{ENV['JUSTGIVING_API_KEY']}/v1/donation/#{params[:jg]}"
-        if response.code == 200
-          check = JSON.parse response.body
-        end
-      rescue => e
-        check = { status: "Failed" }
-        logger.error "Checking Mole Donation: #{e.message}"
+
+      if params[:env] == "sandbox"
+        domain = "api-sandbox.justgiving.com"
+      else
+        domain = "api.justgiving.com"
       end
-      return { thirdPartyReference: "5lives", amount: 2, status: 'Accepted' }
+
+#      begin
+#        response = RestClient.get "https://#{domain}/#{ENV['JUSTGIVING_API_KEY']}/v1/donation/#{params[:jg]}"
+#        if response.code == 200
+#          check = JSON.parse response.body
+#        end
+#      rescue => e
+        check = { status: "Failed" }
+ #       logger.error "Checking Mole Donation: #{e.message}"
+#      end
+
+      return check
     end
 end
