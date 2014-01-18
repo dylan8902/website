@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en-gb">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Into The Woods :: <%= yield(:title) %></title>
+	<meta name="description" content="The musical story of wishful characters entering a wood">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="/images/leaf.png" type="image/x-icon">
+	<style type="text/css">
+		html {
+			margin:0px;
+			padding:0px;
+			background:#f0f1c1;
+			height:100%;
+			width:100%;
+			font-size:12pt;
+			font-family:Lucinda Sans, Georgia, serif;
+			vertical-align:middle;
+			text-align:center;
+			color:#001f00;
+		}
+		body {
+			margin:0px auto 0px auto;
+			padding:0px;
+			background:url('/images/treesilhouette.png');
+			background-repeat:no-repeat;
+			background-position:left bottom;
+			width:960px;
+			min-height:540px;
+		}
+		header {
+			margin:0px 0px 10px 0px;
+			padding:5px 0px 5px 0px;
+			width:100%;
+			display:block;
+		}
+		footer {
+			margin:30px 0px 0px 0px;
+			padding:10px;
+			clear:both;
+			display:block;
+		}
+		nav {
+			margin:10px 0px 0px 0px;
+			padding:70px 0px 70px 0px;
+			background-color:transparent;
+			background:url('/images/rope.png');
+			background-repeat:repeat-y;
+			background-position:right top;
+			height:90%;
+			width:160px;	
+			font-weight:bold;
+			text-align:left;
+			display:block;
+			float:left;
+		}
+		nav a, nav a:hover, nav a:visited, nav a:active {
+			margin:10px;
+			border:none;
+			display:block;
+		}
+		h1 {
+			margin:0px;
+			padding:0px;
+			font-size:95%;
+		}
+		h1 img {
+			width:368px;
+		}
+		h2 {
+			margin:10px 0px;
+			padding:5px;
+			font-size:170%;
+			cursor:default;
+		}
+		h2 a:hover {
+			text-decoration:none;
+		}
+		h3 {
+			margin:5px;
+			padding:0px;
+			font-size:130%;
+		}
+		h4 {
+			margin:5px;
+			padding:0px;
+			font-size:120%;
+		}
+		section {
+			margin:10px;
+			padding:10px 20px;
+			display:block;
+		}
+		p {
+			margin:0px;
+			padding:5px;
+		}
+		q {
+			margin:5px;
+			padding:5px;
+			font-style:italic;
+			display:block;
+		}
+		table {
+			margin:auto;
+			padding:0px;
+		}
+		tr,td {
+			margin:0px;
+			padding:5px;
+		}
+		input, textarea, select, option {
+			margin:0px;
+			padding:5px;
+			width:180px;
+			max-width:200px;
+			font-family:Lucinda Sans, serif;
+			font-size:90%;
+			border:1px solid black;
+		}
+		input[type=submit] {
+			width:150px;
+		}
+		a,a:visited {
+			border:none;
+			color:#004000;
+			text-decoration:none;
+		}
+		a:hover,a:active {
+			border:none;
+			text-decoration:underline;
+		}
+		time {
+			cursor:default;
+		}
+		img {
+			margin:2px;
+			padding:2px;
+			border:0;
+			vertical-align:middle;
+		}
+		br {
+			clear:both;
+		}
+		.page {
+			margin:0px;
+			padding:0px;
+			float:right;
+			width:800px;
+		}
+		.alignLt {
+			text-align:left;
+		}
+		.alignRt {
+			text-align:right;
+		}
+		.button {
+			margin:5px;
+			padding:10px;
+			display:inline-block;
+			background: #c3e045;
+			background-image:-moz-linear-gradient(
+				center bottom,
+				rgb(163,187,58) 18%,
+				rgb(218,250,77) 100%
+			);	
+			background-image:-webkit-gradient(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0.18, rgb(163,187,58)),
+				color-stop(1, rgb(218,250,77))
+			);
+			border:1px solid #004000;
+			-moz-border-radius:4px;
+			-o-border-radius:4px;
+			-webkit-border-radius:4px;
+			border-radius:10px;
+			font-weight:bold;
+			text-decoration:none;
+			cursor:pointer;
+			-moz-transition:all .3s linear;
+			-o-transition:all .3s linear;
+			-webkit-transition:all .3s linear;
+			transition:all .3s linear;
+		}
+		.button:hover {
+			background:#c3e045;
+			background-image:-moz-linear-gradient(
+				center bottom,
+				rgb(163,187,58) 18%,
+				#c3e045 100%
+			);
+			background-image:-webkit-gradient(
+				linear,
+				left bottom,
+				left top,
+				color-stop(0.18, rgb(163,187,58)),
+				color-stop(1, #c3e045))
+			);
+			border:1px solid #869c30;
+			-moz-border-radius:4px;
+			-o-border-radius:4px;
+			-webkit-border-radius:4px;
+			border-radius:10px;
+			-moz-box-shadow:#004000 0px 0px 15px;
+			-o-box-shadow:#004000 0px 0px 15px;
+			-webkit-box-shadow:#004000 0px 0px 15px;
+			box-shadow:#004000 0px 0px 15px;
+			text-decoration:none;
+		}
+		.small {
+			font-size:80%;
+		}
+		.big {
+			font-size:120%;
+		}
+		.error {
+			margin:auto;
+			width:300px;
+			padding-left:50px;
+			background-image:url('/images/error.png');
+			background-repeat:no-repeat;
+			background-position:10px;
+		}
+		.success {
+			margin:auto;
+			width:300px;
+			padding-left:50px;
+			background-image:url('/images/success.png');
+			background-repeat:no-repeat;
+			background-position:10px;
+		}
+		.free {
+			min-width:75px;
+			background:#66a266;
+		}
+		.booked {
+			min-width:75px;
+			cursor:default;
+			background:#ff4d4d;
+		}
+		.overflow {
+			min-width:75px;
+			cursor:default;
+			background:#adad85;
+		}
+		#leaves {
+			position:fixed;
+			top:0;
+			left:0;
+			height:100%;
+			width:100%;
+			z-index:-1;
+		}
+		#leaves > div {
+			position:absolute;
+			width:40px;
+			height:40px;
+			-webkit-animation-iteration-count:infinite,infinite;
+			-webkit-animation-direction:normal,normal;
+			-webkit-animation-timing-function:linear,ease-in;
+		}
+		#leaves > div > img {
+			position:absolute;
+			width:40px;
+			height:40px;
+			-webkit-animation-iteration-count:infinite;
+			-webkit-animation-direction:alternate;
+			-webkit-animation-timing-function:ease-in-out;
+			-webkit-transform-origin:50% -100%;
+		}
+		#title {
+			margin:auto;
+			width:368px;
+			height:294px;
+			display:block;
+		}
+		@-webkit-keyframes fade {
+			0%	{ opacity:0.4; }
+			95%	{ opacity:0.2; }
+			100% { opacity:0; }
+		}
+		@-webkit-keyframes drop {
+			0%	{ -webkit-transform:translate(0px,-50px); }
+			100% { -webkit-transform:translate(0px,800px); }
+		}
+		@-webkit-keyframes clockwiseSpin {
+			0%	{ -webkit-transform:rotate(-50deg); }
+			100%{ -webkit-transform:rotate(50deg); }
+		}
+		@-webkit-keyframes counterclockwiseSpinAndFlip  {
+			0%	{ -webkit-transform:scale(-1,1) rotate(50deg); }
+			100% { -webkit-transform:scale(-1,1) rotate(-50deg); }
+		}
+		/*
+			MOBILE / SMALL SCREENS
+		*/
+		@media only screen and (max-width:520px) {
+			html {
+				font-size:10pt;
+				text-align:center;
+				min-width:100px;
+			}
+			body {
+				padding:0px;
+				background:none;
+				width:auto;
+			}
+			h1 {
+				font-size:10pt;
+			}
+			nav {
+				margin:5px;
+				padding:5px;
+				background:none;
+				float:none;
+			}
+			nav a, nav a:hover, nav a:visited, nav a:active {
+				width:auto;
+				display:inline;
+				margin:10px;
+			}
+			article {
+				padding:5px;
+			}
+			label {
+				font-size:90%;
+			}
+			input, textarea, select, option {
+				margin:0px;
+				padding:5px;
+				font-size:90%;
+				width:200px;
+				max-width:200px;
+			}
+			img {
+				max-width:700px;
+				max-height:700px;
+			}
+			tr,td {
+				margin:0px;
+				padding:0px;
+			}
+			.page {
+				width:auto;
+				float:none;
+			}
+			.booked, .free, .overflow {
+				min-width:50px;
+			}
+			#leaves {
+				display:none;
+			}
+			#title  {
+				width:200px;
+				height:188px;
+			}
+		}
+	</style>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<!--[if !IE]><!-->
+	<script type="text/javascript">
+	/*
+		File: Leaves.js
+		Abstract: Defines JavaScript functionality for the leaves sample.
+		          Creates all the leaves but do not animate them. Determines which
+		          spin animation should be applied to each leaf.
+		Version: 1.0
+		
+		Disclaimer: IMPORTANT:  This Apple software is supplied to you by
+		Apple Inc. ("Apple") in consideration of your agreement to the
+		following terms, and your use, installation, modification or
+		redistribution of this Apple software constitutes acceptance of these
+		terms.  If you do not agree with these terms, please do not use,
+		install, modify or redistribute this Apple software.
+		
+		In consideration of your agreement to abide by the following terms, and
+		subject to these terms, Apple grants you a personal, non-exclusive
+		license, under Apple's copyrights in this original Apple software (the
+		"Apple Software"), to use, reproduce, modify and redistribute the Apple
+		Software, with or without modifications, in source and/or binary forms;
+		provided that if you redistribute the Apple Software in its entirety and
+		without modifications, you must retain this notice and the following
+		text and disclaimers in all such redistributions of the Apple Software.
+		Neither the name, trademarks, service marks or logos of Apple Inc.
+		may be used to endorse or promote products derived from the Apple
+		Software without specific prior written permission from Apple.  Except
+		as expressly stated in this notice, no other rights or licenses, express
+		or implied, are granted by Apple herein, including but not limited to
+		any patent rights that may be infringed by your derivative works or by
+		other works in which the Apple Software may be incorporated.
+		
+		The Apple Software is provided by Apple on an "AS IS" basis.  APPLE
+		MAKES NO WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
+		THE IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS
+		FOR A PARTICULAR PURPOSE, REGARDING THE APPLE SOFTWARE OR ITS USE AND
+		OPERATION ALONE OR IN COMBINATION WITH YOUR PRODUCTS.
+		
+		IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL
+		OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+		SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+		INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE, REPRODUCTION,
+		MODIFICATION AND/OR DISTRIBUTION OF THE APPLE SOFTWARE, HOWEVER CAUSED
+		AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE),
+		STRICT LIABILITY OR OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE
+		POSSIBILITY OF SUCH DAMAGE.
+		
+		Copyright (C) 2008 Apple Inc. All Rights Reserved.
+		
+		*/
+		
+		
+		/* Define the number of leaves to be used in the animation */
+		const NUMBER_OF_LEAVES = 15;
+		
+		/* 
+		    Called when the "Falling Leaves" page is completely loaded.
+		*/
+		function init() {
+		    /* Get a reference to the element that will contain the leaves */
+		    var container = document.getElementById('leaves');
+		    /* Fill the empty container with new leaves */
+		    for (var i = 0; i < NUMBER_OF_LEAVES; i++) {
+		        container.appendChild(createALeaf());
+		    }
+		}
+		
+		/*
+		    Receives the lowest and highest values of a range and
+		    returns a random integer that falls within that range.
+		*/
+		function randomInteger(low, high) {
+		    return low + Math.floor(Math.random() * (high - low));
+		}
+		
+		/*
+		   Receives the lowest and highest values of a range and
+		   returns a random float that falls within that range.
+		*/
+		function randomFloat(low, high) {
+		    return low + Math.random() * (high - low);
+		}
+		
+		/*
+		    Receives a number and returns its CSS pixel value.
+		*/
+		function pixelValue(value) {
+		    return value + 'px';
+		}
+		
+		/*
+		    Returns a duration value for the falling animation.
+		*/
+		
+		function durationValue(value) {
+		    return value + 's';
+		}
+		
+		/*
+		    Uses an img element to create each leaf. "Leaves.css" implements two spin 
+		    animations for the leaves: clockwiseSpin and counterclockwiseSpinAndFlip. This
+		    function determines which of these spin animations should be applied to each leaf.
+		    
+		*/
+		function createALeaf() {
+		    /* Start by creating a wrapper div, and an empty img element */
+		    var leafDiv = document.createElement('div');
+		    var image = document.createElement('img');
+		    image.src = '/images/leaf.png';
+		    leafDiv.style.top = "-100px";
+		    /* Position the leaf at a random location along the screen */
+		    leafDiv.style.left = pixelValue(randomInteger(0, window.innerWidth));
+		    /* Randomly choose a spin animation */
+		    var spinAnimationName = (Math.random() < 0.5) ? 'clockwiseSpin' : 'counterclockwiseSpinAndFlip';
+		    /* Set the -webkit-animation-name property with these values */
+		    leafDiv.style.webkitAnimationName = 'fade, drop';
+		    image.style.webkitAnimationName = spinAnimationName;
+		    /* Figure out a random duration for the fade and drop animations */
+		    var fadeAndDropDuration = durationValue(randomFloat(15, 30));
+		    /* Figure out another random duration for the spin animation */
+		    var spinDuration = durationValue(randomFloat(4, 8));
+		    /* Set the -webkit-animation-duration property with these values */
+		    leafDiv.style.webkitAnimationDuration = fadeAndDropDuration + ', ' + fadeAndDropDuration;
+		    var leafDelay = durationValue(randomFloat(3, 10));
+		    leafDiv.style.webkitAnimationDelay = leafDelay + ', ' + leafDelay;
+		    image.style.webkitAnimationDuration = spinDuration;
+		    // add the <img> to the <div>
+		    leafDiv.appendChild(image);
+		    /* Return this img element so it can be added to the document */
+		    return leafDiv;
+		}
+		/* Calls the init function when the "Falling Leaves" page is full loaded */
+		window.addEventListener('load', init, false);
+	</script>
+	<!--<![endif]-->
+</head>
+<body>
+<div id="leaves"></div>
+<nav>
+	<a href="/intothewoods" title="Home">Home</a>
+	<a href="/intothewoods/synopsis" title="Synopsis">Synopsis</a>
+	<a href="/intothewoods/events" title="Events">Events</a>
+	<a href="/intothewoods/contact" title="Contact">Contact</a>
+</nav>
+<section class="page">
+	<header>
+		<h1>Central Hall Musical Society Presents</h1>
+		<img id="title" src="/images/intothewoods.png" alt="Into The Woods">
+	</header>
+	<%= yield %>
+</section>
+<footer></footer>
+<%= render 'common/google_analytics' %>
+</body>
+</html>

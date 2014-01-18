@@ -24,6 +24,11 @@ Website::Application.routes.draw do
       match '*foo'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
     end
   end
+  
+  #intothewoodsyork
+  constraints Hostname.new("intothewoodsyork.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/intothewoods/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+  end
 
   #ismytraindelayed
   constraints Hostname.new("ismytraindelayed.com") do
@@ -121,6 +126,12 @@ Website::Application.routes.draw do
     get  "friendstv"      => "friends_tv#index"
     get  "foebook"        => "application#error_410"
     get  "IbeforeE"       => "i_before_e#index"
+    namespace :into_the_woods, path: "intothewoods" do
+       root to: "static_pages#index"
+       get "synopsis"     => "static_pages#synopsis"
+       get "events"       => "static_pages#events"
+       get "contact"      => "static_pages#contact"
+    end
     get  "ip-tools"       => "ip_tools#index"
     resources :iphone_locations,  path: "iphone",     only: [:index, :show]
     get  "jewellery"      => "jewellery#index"
