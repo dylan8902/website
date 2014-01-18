@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en-gb">
+<head>
+	<meta charset="utf-8">
+	<title><%= yield(:title) %></title>
+	<meta name="description" content="<%= yield(:description) %>">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<meta property="og:title" content="West Side Story 2103">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="West Side Story 2013">
+	<meta property="og:url" content="http://westsidestory2013.com">
+	<meta property="og:image" content="https://dyl.anjon.es/images/project48.png">
+	<meta property="og:email" content="centralhall@yusu.org">
+	<meta property="fb:admins" content="512982904,193973177401241">
+	<link rel="shortcut icon" href="/images/westsidestory.ico">
+	<link rel="canonical" href="https://dyl.anjon.es/westsidestory">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alfa+Slab+One" type="text/css">
+	<link rel="stylesheet" href="/scripts/westsidestory.css" type="text/css">
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="/scripts/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+	<ul id="top" class="nav-bar">
+		<% active = " class=\"active\"".html_safe %>
+		<li<%= active if params[:action] == "index" %>><a href="/westsidestory" accesskey="1" title="Home">Home</a></li>
+		<li<%= active if params[:action] == "synopsis" %>><a href="/westsidestory/synopsis" title="The Synopsis">Synopsis</a></li>
+		<li<%= active if params[:action] == "team" %>><a href="/westsidestory/team" title="The Team">Team</a></li>
+		<li<%= active if params[:action] == "cast" %>><a href="/westsidestory/cast" title="The Cast">Cast</a></li>
+		<li<%= active if params[:action] == "tickets" %>><a href="/westsidestory/tickets" title="Get Tickets">Tickets</a></li>
+		<li<%= active if params[:action] == "contact" %>><a href="/westsidestory/contact" title="Contact the Team" accesskey="9">Contact</a></li>
+		<li style="float:right" class="hide-for-small"><a href="https://www.facebook.com/WestSideStory2013" title="Facebook" style="width:38px;height:38px;padding:0;"><img src="/images/westsidestory/facebook.png" alt="Facebook" style="width:38px;height:38px;"></a></li>
+		<li style="float:right" class="hide-for-small"><a href="https://twitter.com/WestSideStory13" title="Twitter" style="width:38px;height:38px;padding:0;"><img src="/images/westsidestory/twitter.png" alt="Twitter" style="width:38px;height:38px;"></a></li>
+	</ul>
+	<%= yield %>
+	<%= render 'common/google_analytics' %>
+</body>
+</html>

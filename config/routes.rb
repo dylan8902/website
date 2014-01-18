@@ -24,10 +24,18 @@ Website::Application.routes.draw do
       match '*foo'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
     end
   end
-  
+
   #intothewoodsyork
   constraints Hostname.new("intothewoodsyork.dyl.anjon.es") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/intothewoods/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+  end
+
+  #westsidestory
+  constraints Hostname.new("westsidestory2013.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+  end
+  constraints Hostname.new("westsidestory.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
   end
 
   #ismytraindelayed
@@ -245,6 +253,16 @@ Website::Application.routes.draw do
     get  "wall"           => "wall#index"
     get  "wall/highscores"=> "wall#high_scores",        as: "wall_high_scores"
     post "wall/highscores"=> "wall#submit_score"
+
+    namespace :west_side_story, path: "westsidestory" do
+       root to: "static_pages#index"
+       get "synopsis"     => "static_pages#synopsis"
+       get "team"         => "static_pages#team"
+       get "cast"         => "static_pages#cast"
+       get "tickets"      => "static_pages#tickets"
+       get "contact"      => "static_pages#contact"
+    end
+
     get  "who"            => "static_pages#who"
     match '*foo'          => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
