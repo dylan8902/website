@@ -25,6 +25,19 @@ Website::Application.routes.draw do
     end
   end
 
+  #intothewoodsyork
+  constraints Hostname.new("intothewoodsyork.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/intothewoods/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+  end
+
+  #westsidestory
+  constraints Hostname.new("westsidestory2013.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+  end
+  constraints Hostname.new("westsidestory.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+  end
+
   #ismytraindelayed
   constraints Hostname.new("ismytraindelayed.com") do
     get ""         => "is_my_train_delayed#departures"
@@ -121,6 +134,12 @@ Website::Application.routes.draw do
     get  "friendstv"      => "friends_tv#index"
     get  "foebook"        => "application#error_410"
     get  "IbeforeE"       => "i_before_e#index"
+    namespace :into_the_woods, path: "intothewoods" do
+       root to: "static_pages#index"
+       get "synopsis"     => "static_pages#synopsis"
+       get "events"       => "static_pages#events"
+       get "contact"      => "static_pages#contact"
+    end
     get  "ip-tools"       => "ip_tools#index"
     resources :iphone_locations,  path: "iphone",     only: [:index, :show]
     get  "jewellery"      => "jewellery#index"
@@ -234,6 +253,16 @@ Website::Application.routes.draw do
     get  "wall"           => "wall#index"
     get  "wall/highscores"=> "wall#high_scores",        as: "wall_high_scores"
     post "wall/highscores"=> "wall#submit_score"
+
+    namespace :west_side_story, path: "westsidestory" do
+       root to: "static_pages#index"
+       get "synopsis"     => "static_pages#synopsis"
+       get "team"         => "static_pages#team"
+       get "cast"         => "static_pages#cast"
+       get "tickets"      => "static_pages#tickets"
+       get "contact"      => "static_pages#contact"
+    end
+
     get  "who"            => "static_pages#who"
     match '*foo'          => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
