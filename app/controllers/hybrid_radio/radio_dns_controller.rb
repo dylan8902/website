@@ -30,7 +30,7 @@ class HybridRadio::RadioDnsController < ApplicationController
         result[:cname] = cname.name.to_s
         result[:services].each do |k, v|
           lookup = "_#{k}._tcp.#{result[:cname]}"
-          res = resolver.getresources(lookup, Resolv::DNS::Resource::IN::ANY).first
+          res = resolver.getresources(lookup, Resolv::DNS::Resource::IN::SRV).first
           result[:services][k] = { host: res.target.to_s, port: res.port } if res
         end
       end
