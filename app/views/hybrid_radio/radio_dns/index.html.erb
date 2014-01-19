@@ -70,7 +70,7 @@
 				<td>RadioEPG</td>
 				<td><%= @result[:services][:radioepg][:host] %>:<%= @result[:services][:radioepg][:port] %></td>
 				<td><a href="http://<%= @result[:services][:radioepg][:host] %>:<%= @result[:services][:radioepg][:port] %>/radiodns/epg/XSI.xml">XSI.xml</a></td>
-				<td><a href="http://<%= @result[:services][:radioepg][:host] %>:<%= @result[:services][:radioepg][:port] %>/radiodns/epg/fm/<%= params[:ecc] %>/<%= params[:pi] %>/<%= params[:freq] %>/<%= Time.now.strftime("%Y%m%d")%>_PI.xml">Today's EPG</a></td>
+				<td><a href="http://<%= @result[:services][:radioepg][:host] %>:<%= @result[:services][:radioepg][:port] %>/radiodns/epg/fm/<%= params[:ecc] %>/<%= params[:pi] %>/<%= params[:freq] %>/<%= Time.now.strftime("%Y%m%d") %>_PI.xml">Today's EPG</a></td>
 				</td>
 			</tr>
 		<% end %>
