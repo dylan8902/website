@@ -1,0 +1,41 @@
+<% provide(:title, "Hybrid Radio: RadioVis") %>
+<% provide(:description, "Response from a RadioVis application server.") %>
+
+<h1>Hybrid Radio: RadioVis</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Introduction', hybrid_radio_root_path %></li>
+	<li><%= link_to 'RadioDNS', hybrid_radio_radiodns_path %></li>
+	<li class="active">RadioVIS</li>
+	<li><%= link_to 'RadioEPG', hybrid_radio_epg_path %></li>
+</ol>
+
+<p class="lead">This tool will show RadioVIS output for a given RadioVIS application server.</p>
+
+<form method="get" class="well form-inline">
+	<div class="form-group">
+		<label class="sr-only" for="host">Host</label>
+		<input name="host" placeholder="Host" class="form-control" value="<%= params[:host] %>">
+	</div>
+	:
+	<div class="form-group">
+		<label class="sr-only" for="port">Port</label>
+		<input name="port" placeholder="Port" class="form-control" value="<%= params[:port] %>">
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="topic">Topic</label>
+		<input name="topic" placeholder="Topic" class="form-control" value="<%= params[:topic] %>">
+	</div>	
+	<input type="submit" value="Connect" class="btn btn-default">
+</form>
+
+<section class="row">
+	<article class="col-md-6">
+		<h3>Examples:</h3>
+		<ul>
+			<li>Classic FM: <a href="/hybrid/radiovis/comet?host=vis.musicradio.com&amp;port=61613&amp;topic=/topic/fm/ce1/c2a1/10110">vis.musicradio.com:61613/topic/fm/ce1/c2a1/10110</a></li>
+		</ul>
+	</article>
+	<article class="col-md-6">
+		<%= @result %>
+	</article>
+</section>

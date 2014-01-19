@@ -133,13 +133,25 @@ Website::Application.routes.draw do
     get  "friendmap"      => "friendmap#index"
     get  "friendstv"      => "friends_tv#index"
     get  "foebook"        => "application#error_410"
+
+    namespace :hybrid_radio, path: "hybrid" do
+       root to: "static_pages#index"
+       get  "radiodns"    => "radio_dns#index"
+       get  "vis"         => "radio_vis#index"
+       get  "vis/comet"   => "radio_vis#comet"
+       get  "epg"         => "radio_epg#index"
+       get  "epg/id/lsrfm.com/lsrfm/[:date]_PI.xml" => "radio_epg#lsrfm_epg"
+    end
+
     get  "IbeforeE"       => "i_before_e#index"
+
     namespace :into_the_woods, path: "intothewoods" do
        root to: "static_pages#index"
        get "synopsis"     => "static_pages#synopsis"
        get "events"       => "static_pages#events"
        get "contact"      => "static_pages#contact"
     end
+
     get  "ip-tools"       => "ip_tools#index"
     resources :iphone_locations,  path: "iphone",     only: [:index, :show]
     get  "jewellery"      => "jewellery#index"

@@ -1,0 +1,33 @@
+<% provide(:title, "Hybrid Radio implementing RadioDNS") %>
+<% provide(:description, "My 3rd year Electronics project - an internet enabled FM radio implementing RadioDNS standards.") %>
+
+<h1>Hybrid Radio implementing RadioDNS</h1>
+<ol class="breadcrumb">
+	<li class="active">Introduction</li>
+	<li><%= link_to 'RadioDNS', hybrid_radio_radiodns_path %></li>
+	<li><%= link_to 'RadioVIS', hybrid_radio_vis_path %></li>
+	<li><%= link_to 'RadioEPG', hybrid_radio_epg_path %></li>
+</ol>
+
+<h2>Introduction</h2>
+<p>I developed an internet connected FM radio that implements RadioDNS technology for my 3rd year Electronics project.</p>
+
+<h2>What does that mean?</h2>
+<p>Well, you take the standard FM radio and and connect it to the internet, this allows the radio to get extra content for the listener including things like text and images. It also allows it to push information back to radio stations and other web services.</p>
+
+<p>I implemented a new technology called <a href="http://radiodns.org/">RadioDNS</a>.</p>
+<blockquote cite="http://radiodns.org/"><a href="http://radiodns.org/">RadioDNS</a> is open technology that lets broadcast radio and the internet work together: enhancing the listener experience, and making radio better.</blockquote>
+<p>This new technology is based on the <a href="http://en.wikipedia.org/wiki/Domain_Name_System">DNS</a> system that holds the internet up, allowing you to resolve URIs pointing to online content to support radio listening.</p>
+
+<h2>The Device</h2>
+<p>By the end of the project, I had a prototype radio with a full colour touch interface, ethernet and wi-fi connections, FM receiver, MP3 decoder and most importantly audio out. It implemented the RadioVIS and RadioEPG applications that discovered servcies for the currently tuned station and showed real-time text, images and schedule information to the listener.</p>
+
+<h2>Links</h2>
+<ul>
+	<li><a href="/hybrid/radiodns">RadioDNS</a>: Testing bits and pieces, resolving from FM</li>
+	<li><a href="/hybrid/vis">RadioVIS</a>: A server and client prototype for LSRfm</li>
+	<li><a href="/hybrid/epg">RadioEPG</a>: A server and client prototype for LSRfm</li>
+	<li><a href="https://docs.google.com/document/d/1FkbPXK6Q8i2sGr3l8qpczFuJoAYytom9mkskM8tIB_g">Google Document</a></li>
+	<li><a href="http://gmedia.co.uk/products/radiovis/">G Media</a>: Information on their use of RadioVIS</li>
+	<li><a href="http://www.dxradio.co.uk/ukrdscom.php">UK Programme Identifiers and Frequencies</a></li>
+</ul>

@@ -1,0 +1,90 @@
+<% provide(:title, "Hybrid Radio: RadioDNS") %>
+<% provide(:description, "Playground full of testing bits and bobs to play around with RadioDNS.") %>
+
+<h1>Hybrid Radio: RadioDNS</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Introduction', hybrid_radio_root_path %></li>
+	<li class="active">RadioDNS</li>
+	<li><%= link_to 'RadioVIS', hybrid_radio_vis_path %></li>
+	<li><%= link_to 'RadioEPG', hybrid_radio_epg_path %></li>
+</ol>
+
+<p class="lead">This tool will discover RadioDNS applications for given FM broadcast parameters.</p>
+
+<form method="get" class="well form-inline">
+	<div class="form-group">
+		<label class="sr-only" for="freq">Frequency</label>
+		<input name="freq" placeholder="Frequency" class="form-control" value="<%= params[:freq] %>">
+	</div>
+	.
+	<div class="form-group">
+		<label class="sr-only" for="pi">Programme ID</label>
+		<input name="pi" placeholder="Programme ID" class="form-control" value="<%= params[:pi] %>">
+	</div>
+	.
+	<div class="form-group">
+		<label class="sr-only" for="ecc">Country Code</label>
+		<input name="ecc" placeholder="Country Code" class="form-control" value="<%= params[:ecc] %>">
+	</div>	
+	.fm.radiodns.org
+	<input type="submit" value="Lookup" class="btn btn-default">
+</form>
+
+<section class="row">
+	<article class="col-md-6">
+		<h3>Examples:</h3>
+		<ul>
+			<li>Capital FM: <a href="/hybrid/radiodns?freq=09580&pi=c586&ecc=ce1">09580.c586.ce1.fm.radiodns.org</a></li>
+			<li>Classic FM: <a href="/hybrid/radiodns?freq=09990&pi=c2a1&ecc=ce1">09990.c2a1.ce1.fm.radiodns.org</a></li>
+			<li>Absolute Radio: <a href="/hybrid/radiodns?freq=10580&pi=c4b4&ecc=ce1">10580.c4b4.ce1.fm.radiodns.org</a></li>
+		</ul>
+	</article>
+<% if @result %>
+	<article class="col-md-6">
+		<h3>Results</h3>
+		<table class="table table-striped">
+			<tr>
+				<td>FQDN</td>
+				<td><%= @result[:fqdn] %></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>CNAME</td>
+				<td><%= @result[:cname] %></td>
+				<td></td>
+				<td></td>
+			</tr>
+
+		<% if @result[:services][:radiovis] %>
+			<tr>
+				<td>RadioVIS</td>
+				<td><%= @result[:services][:radiovis][:host] %>:<%= @result[:services][:radiovis][:port] %></td>
+				<td><a href="/hybrid/vis?host=<%= @result[:services][:radiovis][:host] %>&amp;port=<%= @result[:services][:radiovis][:port] %>&amp;topic=%2Ftopic%2Ffm%2F<%= params[:ecc] %>%2F<%= params[:pi] %>%2F<%= params[:freq] %>">Connect</a></td>
+				<td></td>
+			</tr>
+		<% end %>
+
+		<% if @result[:services][:radioepg] %>
+			<tr>
+				<td>RadioEPG</td>
+				<td><%= @result[:services][:radioepg][:host] %>:<%= @result[:services][:radioepg][:port] %></td>
+				<td><a href="http://<%= @result[:services][:radioepg][:host] %>:<%= @result[:services][:radioepg][:port] %>/radiodns/epg/XSI.xml">XSI.xml</a></td>
+				<td><a href="http://<%= @result[:services][:radioepg][:host] %>:<%= @result[:services][:radioepg][:port] %>/radiodns/epg/fm/<%= params[:ecc] %>/<%= params[:pi] %>/<%= params[:freq] %>/<%= Time.now.strftime("%Y%m%d")%>_PI.xml">Today's EPG</a></td>
+				</td>
+			</tr>
+		<% end %>
+
+		<% if @result[:services][:radiotag] %>
+			<tr>
+				<td>RadioTAG</td>
+				<td><%= @result[:services][:radiotag][:host] %>:<%= @result[:services][:radiotag][:port] %></td>
+				<td></td>
+				<td></td>
+			</tr>
+		<% end %>
+
+		</table>
+	</article>
+<% end %>
+</section>

@@ -1,0 +1,78 @@
+<% provide(:title, "Hybrid Radio: RadioVis") %>
+<% provide(:description, "Response from a RadioVis application server.") %>
+
+<h1>Hybrid Radio: RadioVis</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Introduction', hybrid_radio_root_path %></li>
+	<li><%= link_to 'RadioDNS', hybrid_radio_radiodns_path %></li>
+	<li class="active">RadioVIS</li>
+	<li><%= link_to 'RadioEPG', hybrid_radio_epg_path %></li>
+</ol>
+
+<p class="lead">This tool will show RadioVIS output for a given RadioVIS application server.</p>
+
+<form method="get" class="well form-inline">
+	<div class="form-group">
+		<label class="sr-only" for="host">Host</label>
+		<input id="host" name="host" placeholder="Host" class="form-control" value="<%= params[:host] %>">
+	</div>
+	:
+	<div class="form-group">
+		<label class="sr-only" for="port">Port</label>
+		<input id="port" name="port" placeholder="Port" class="form-control" value="<%= params[:port] %>">
+	</div>
+	<div class="form-group">
+		<label class="sr-only" for="topic">Topic</label>
+		<input id="topic" name="topic" placeholder="Topic" class="form-control" value="<%= params[:topic] %>">
+	</div>	
+	<input type="submit" value="Connect" class="btn btn-default">
+</form>
+
+<section class="row">
+	<article class="col-md-6">
+		<h3>Examples:</h3>
+		<ul>
+			<li>Classic FM: <a href="/hybrid/vis?host=vis.musicradio.com&amp;port=61613&amp;topic=/topic/fm/ce1/c2a1/10110">vis.musicradio.com:61613/topic/fm/ce1/c2a1/10110</a></li>
+		</ul>
+	</article>
+<% if params[:host] and params[:port] and params[:topic] %>
+	<article class="col-md-6">
+		<p id="image"></p>
+		<p id="text">Waiting for data...</p>
+	</article>
+<% end %>
+</section>
+
+<% if params[:host] and params[:port] and params[:topic] %>
+	<script type="text/javascript">
+	$(document).ready(function() {
+	
+		function sendRequest(type) {
+			var topic = $('#topic').val()+'/'+type;
+			var host = $('#host').val();
+			var port = $('#port').val();
+			$.ajax({
+				url: '/hybrid/vis/comet.json',
+				type: 'GET',
+				data: { 'topic': topic, 'host': host, 'port': port },
+				success: 
+					function(msg) {
+						if (msg.body == null)
+							return;
+						var data = msg.body.substr(5, msg.body.length);
+						if (type == "image") {
+							$('#image').html('<img src="' + data + '" alt="Loading Image" width="320" height="240" class="thumbnail">');
+						}
+						else if (type == "text") {
+							$('#text').html(data);
+						}
+						setTimeout(function(){ sendRequest(type); }, 10000);
+					}
+			});
+		}
+	
+			sendRequest('image');
+			sendRequest('text');
+	});
+	</script>
+<% end %>
