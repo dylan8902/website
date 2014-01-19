@@ -19,7 +19,6 @@ gem 'twitter'
 gem 'coderay'
 gem 'rest-client'
 gem 'nokogiri'
-gem 'stomp'
 
 group :development, :test do
   gem 'rspec-rails'

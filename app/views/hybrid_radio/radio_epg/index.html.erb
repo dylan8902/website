@@ -1,0 +1,41 @@
+<% provide(:title, "Hybrid Radio: RadioEPG") %>
+<% provide(:description, "Electronic Programme Guides for Hybrid Radios.") %>
+
+<h1>Hybrid Radio: RadioEPG</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Introduction', hybrid_radio_root_path %></li>
+	<li><%= link_to 'RadioDNS', hybrid_radio_radiodns_path %></li>
+	<li><%= link_to 'RadioVIS', hybrid_radio_vis_path %></li>
+	<li class="active">RadioEPG</li>
+</ol>
+
+<p>Station information and schedules can be made available through RadioDNS using the RadioEPG application. They are produced based on the DAB XML schema.</p>
+<p>The first of two types of XML documents is the XSI which describes the services available along with multimedia and links. The request is formed in the following format:</p>
+<p><code>http://&lt;Host&gt;:&lt;Port&gt;/radiodns/epg/XSI.xml</code></p>
+<ul>
+	<li><a href="http://epg.musicradio.com/radiodns/epg/XSI.xml" target="_blank">Classic FM XSI</a></li>
+</ul>
+
+<p>The second is programme information (PI) which contains schedule information for the day request:</p>
+<p><code>http://&lt;Host&gt;:&lt;Port&gt;/radiodns/epg/&lt;Broadcast Parameters&gt;/&lt;YYYYMMDD&gt;_PI.xml</code></p>
+<ul>
+	<li><a href="http://epg.musicradio.com/radiodns/epg/fm/ce1/c2a1/09990/<%= Time.now.strftime("%Y%m%d") %>_PI.xml" target="_blank">Classic FM for Today</a></li>
+	<li><a href="http://epg.musicradio.com/radiodns/epg/fm/ce1/c586/09580/<%= Time.now.strftime("%Y%m%d") %>_PI.xml" target="_blank">Capital FM for today</a></li>
+</ul>
+
+<p>These XML files can be parsed and used to create a human readable <abbr title="Electronic Programme Guide">EPG</abbr> for the listener. The example given below for Classic FM.</p>
+
+<section class="row">
+	<article class="col-md-8">
+		<%= @h %>		
+	</article>
+	<article class="col-md-4">
+		<h4><img src="http://owdo.thisisglobal.com/2.0/id/43/logo/64x64.png"> Classic FM</h4>
+		<h5>Today's Schedule</h5>
+		<table class="table table-striped">
+			<tr><td>12:00</td><td>Laurence Llewelyn Bowen</td></tr>
+			<tr><td>15:00</td><td>Charlotte Green's Culture Club</td></tr>
+			<tr><td>17:00</td><td>The Classic FM Chart</td></tr>
+		</table>
+	</article>
+</section>
