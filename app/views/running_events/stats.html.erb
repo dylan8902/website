@@ -1,0 +1,11 @@
+<% provide(:title, "Running:: Stats") %>
+<% provide(:description, "Statistics on when I go running.") %>
+
+<h1>Running</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Running', running_events_path %></li>
+	<li class="active">Statistics</li>
+	<li><%= link_to 'Map', running_events_map_path %></li>
+</ol>
+
+<%= link_to 'Back', running_events_path %>
