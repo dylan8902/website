@@ -1,5 +1,4 @@
 class RunningEventsController < ApplicationController
-  include Statistics
   include ErrorHelper
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_filter :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy]
@@ -52,12 +51,16 @@ class RunningEventsController < ApplicationController
   # GET /running/stats.json
   # GET /running/stats.xml
   def stats
-   @stats = time_data RunningEvent.all
+   @stats = {
+     total_distance: RunningEvent.sum(:distance),
+     total_time: RunningEvent.sum(:finish_time),
+     average_speed: RunningEvent.sum(:distance).to_f / RunningEvent.sum(:finish_time).to_f
+   }
  
     respond_to do |format|
       format.html # stats.html.erb
-      format.json { render json: time_data(RunningEvent.all, :hash), callback: params[:callback] }
-      format.xml { render xml: time_data(RunningEvent.all, :hash) }
+      format.json { render json: @stats, callback: params[:callback] }
+      format.xml { render xml: @stats }
     end
   end
 
