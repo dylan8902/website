@@ -41,4 +41,5 @@
 
 </section>
 
+<%= link_to "Edit", edit_running_event_path(@running_event), class: "btn btn-primary" if current_user and current_user.admin %>	
 <%= link_to 'Back', running_events_path %>
