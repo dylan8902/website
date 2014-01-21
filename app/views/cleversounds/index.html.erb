@@ -4,14 +4,56 @@
 <h1>Cleversounds</h1>
 <section class="row">
 	<article class="col-md-4">
+		<p class="lead">
+			Made for <a href='http://london.musichackday.org/2010/'>London Music Hack Day 2010</a>.
+			It plays your favourite music where you go.
+		</p>
 		<p>
-			This application was made for the <a href='http://london.musichackday.org/2010/'>London Music Hack Day 2010</a>.
-			Full details are available on the <a href='http://wiki.musichackday.org/index.php?title=Cleversounds' title='Music Hack Day Wiki' target='_blank'>wiki page</a>
-			but it basically is designed to play your favourite music where you go.
-			Register your phone's bluetooth MAC address and your musical tastes on the site and then when detected by a cleversounds jukebox, your music is played.
+			Register your phone's bluetooth MAC address and your musical tastes on the site and then when detected by a cleversounds
+			jukebox, your music is played.
 		</p>
 	</article>
 	<article class="col-md-8">
-		<img src="">
+
 	</article>
 </section>
+
+<hr>
+
+<section class="row">
+	<article class="col-md-6">
+		<h2><%= icon("beaker") %> The Hardware</h2>
+		<dl>
+			<dt>Bluetooth Dongle</dt>
+			<dd>An off-the-shelf USB bluetooth dongle</dd>
+			<dt>Windows XP Laptop</dt>
+			<dd>A web server running PHP and some bluetooth software</dd>
+		</dl>
+	</article>
+	<article class="col-md-6">
+		<h2><%= icon("cloud") %> The Website</h2>
+		<p>The website had 2 modes of operation: user facing and Jukebox.</p>
+		<p>
+			Users could login to the site and add their phone's bluetooth MAC address.
+			They could then connect their Facebook and LastFM profiles.
+			The website would fetch the users 'liked' artists and store these in a MySQL database.
+		</p>
+		<p>
+			In Jukebox mode, the website executed some code to trigger the export of MAC addresses seen by the bluetooth dongle.
+			It would then read that file and try to match to registered users.
+			The Jukebox would then pick an artist, with some logic based on if that artist had been played recently
+			and search for that track using the Echonest track API.
+		</p>
+		<p>
+			If a suitable track was found it would start playing this. At around 10 seconds before the end of the song,
+			it would run again so it had a track already downloaded and ready to play.
+		</p>
+		<p>
+			Once a track successfully started playing, the Jukebox would store the track details along with who it is playing the track for.
+			This allowed users to see when they logged into the website, what tracks were being played for them.
+			The Jukebox location was also stored so the plays could be shown on a map.
+		</p>
+	</article>
+</section>
+
+<p>Full details are available on the <a href='http://wiki.musichackday.org/index.php?title=Cleversounds' title='Music Hack Day Wiki' target='_blank'>wiki page</a></p>
