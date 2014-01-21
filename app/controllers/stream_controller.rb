@@ -76,6 +76,16 @@ class StreamController < ApplicationController
       }
     end
 
+    RunningEvent.all.each do |running_event|
+      @stream << {
+        title: "Running",
+        description: running_event.name,
+        icon: "trophy",
+        created_at: running_event.created_at,
+        link: running_event_path(running_event)
+      }
+    end
+
     @stream.sort_by! { |post| post[:created_at] }
     @stream.reverse!
     @stream = @stream.paginate(@page)
