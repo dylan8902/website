@@ -35,8 +35,8 @@
 	</article>
 	<article class="col-md-4">
 		<aside class="well">
-			<h2>Total of <%= @count %> twitter mentions</h2>
-			<p>Since <%= BbcTwitter.first.created_at.strftime("%d-%M-%Y") unless BbcTwitter.first.nil? %></p>
+			<span style="font-size:300%"><%= icon("twitter") %> <%= @count %> @mentions</span>
+			<p>since <%= BbcTwitter.first.created_at.strftime("%d-%M-%Y") unless BbcTwitter.first.nil? %></p>
 		</aside>
 	</article>
 </section>
