@@ -6,10 +6,16 @@
 	<li><%= link_to 'Music', music_root_path %></li>
 	<li class="active">DJ Events</li>
 </ol>
-<% @dj_events.each do |dj_event| %>
-<article>
-	<h4><%= link_to dj_event.title, [:music, dj_event] %></h4>
-</article>
-<% end %>
+
+<p>These are the events I have DJ'd</p>
+<section class="row">
+	<article class="col-md-6">
+		<nav class="list-group">
+		<% @dj_events.each do |dj_event| %>
+		  	<%= link_to dj_event.title, [:music, dj_event], class: "list-group-item" %>
+		<% end %>
+		</nav>
+	</article>
+</section>
 
 <%= paginate @dj_events %>
