@@ -30,6 +30,9 @@
 					<%= raw project.description %>
 				</p>
 			</div>
+			<div class="panel-footer">
+				<%= timestamp project.created_at %>
+			</div>
 		</div>
 	</article>
 	<%= "</section>".html_safe if i == 2 or (i-2) % 3 == 0 or project == @projects.last  %>
