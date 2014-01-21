@@ -9,9 +9,7 @@
 </p>
 
 <section class="row">
-	
-	<article class="col-md-6">
-		
+	<article class="col-md-4">
 		<h4>Todays Headlines</h4>
 		<ul class="list-group">
 		<% @latest.each do |story| %>
@@ -22,7 +20,8 @@
 			</li>
 		<% end %>
 		</ul>
-		
+	</article>
+	<article class="col-md-4">
 		<h4>Highest Mention Count</h4>
 		<ul class="list-group">
 		<% @most.each do |story| %>
@@ -33,33 +32,20 @@
 			</li>
 		<% end %>
 		</ul>
-
 	</article>
-	
-	<article class="col-md-6">
-
-		<aside class="jumbotron">
+	<article class="col-md-4">
+		<aside class="well">
 			<h2>Total of <%= @count %> twitter mentions</h2>
-			<p>Since <%= BbcTwitter.first.created_at unless BbcTwitter.first.nil? %></p>
+			<p>Since <%= BbcTwitter.first.created_at.strftime("%d-%M-%Y") unless BbcTwitter.first.nil? %></p>
 		</aside>
-		
-		<h4>How many mentions in the headlines per day</h4>
-		<%= jqplot 150, 400, [@graph], seriesDefaults:{
-            renderer:"$.jqplot.BarRenderer"
-        },
-        axes: {
-            xaxis: {
-                renderer: "$.jqplot.CategoryAxisRenderer",
-                ticks: ['J','F','M','A','M','J','J','A','S','O','N','D']
-            },
-            yaxis:{
-              tickOptions:{ formatString:'%d'},
-              min: 0
-           }
-        } %>
-
 	</article>
-
 </section>
+
+<hr>
+
+<h2>Statistics</h2>
+<%= render 'common/time_stats' %>
+
+
 
 
