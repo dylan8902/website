@@ -1,0 +1,8 @@
+<% provide(:title, "Running Event:: Edit") %>
+<% provide(:description, "Edit the running event: #{@running_event.name}.") %>
+
+<h1>Editing Running Event</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Back', running_events_path %>

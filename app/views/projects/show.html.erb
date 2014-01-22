@@ -1,6 +1,17 @@
 <% provide(:title, "Project:: #{@project.title}") %>
 <% provide(:description, @project.description) %>
+<% provide(:image, root_url + "images/project#{@project.id}.png") %>
 
-<h1><%= @project.title %></h1>
+<h1>Stuff</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Stuff', projects_path %></li>
+	<li class="active"><%= @project.title %></li>
+</ol>
 
-<%= link_to 'Back', projects_path %>
+<h2><%= @project.title %></h2>
+<p><%= icon("time") %> <%= timestamp @project.created_at %></p>
+<p><img src="<%= @project.image %>" alt="<%= @project.title %>" class="thumbnail"></p>
+<p><%= @project.description %></p>
+
+<%= link_to 'Back', projects_path, class: "btn btn-default" %>
+<%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" if current_user and current_user.admin %>

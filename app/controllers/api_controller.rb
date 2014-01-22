@@ -14,9 +14,14 @@ class ApiController < ApplicationController
       { url: "/photos", description: "Returns public photos from Flickr" },
       { url: "/tweets", description: "Returns public tweets from Twitter" },
       { url: "/locations", description: "Returns my location history" },
+      { url: "/music/listens", description: "Returns songs I have listened to" },
+      { url: "/music/dj", description: "Returns events I have DJ'd at" },
+      { url: "/music/gigs", description: "Returns gigs, concerts and festivals I have been to" },
       { url: "/onradio", description: "Returns show and track information" },
       { url: "/iphone", description: "Returns location information stored in iPhone" },
-      { url: "/browserwars", description: "Returns twitter information for major browsers" }
+      { url: "/browserwars", description: "Returns twitter information for major browsers" },
+      { url: "/bbc-twitter", description: "Returns today's BBC headlines that @metion Twitter or Tweets" },
+      { url: "/running", description: "Returns running event information for events I run in" }
     ]
     
     respond_to do |format|

@@ -119,6 +119,8 @@ Website::Application.routes.draw do
     get  "drop/:uri" => "drops#show", as: "drop"
     resources :drops,             path: "drop",       only: [:index, :create]
 
+    get  "dudewheresmycar"=> "dude_wheres_my_car#index"
+
     get  "episodes/add"   => "episodes#add"
     get  "episodes/all"   => "episodes#all"
     get  "episodes/stats" => "episodes#stats",        as: "episodes_stats"
@@ -217,19 +219,26 @@ Website::Application.routes.draw do
     get  "qr"             => "qr#index"
     get  "reading"        => "reading#index"
     get  "realtime"       => "realtime#index"
+
+    get  "running/all"    => "running_events#all",     as: "all_running_events"
+    get  "running/map"    => "running_events#map",     as: "running_events_map"
+    get  "running/stats"  => "running_events#stats",   as: "running_events_stats"
+    resources :running_events,  path: "running"
+
     get  "speak"          => "speak#index"
     get  "samaritans"     => "samaritans#index"
 
     get  "sms/all"        => "text_messages#all",      as: "all_text_messages"
     get  "sms/stats"      => "text_messages#stats",    as: "text_message_stats"
     get  "sms/contact/:contact" => "text_messages#contact", as: "text_message_contact"
-    resources :text_messages,     path: "sms",         only: [:index, :show]
+    resources :text_messages,   path: "sms",           only: [:index, :show]
 
     get  "stream"         => "stream#index"
     get  "sitemap"        => "static_pages#sitemap"
 
-    get  "stuff/all"  => "projects#all",              as: "all_stuff"
-    resources :projects,        path: "stuff",        as: "stuff"
+    get  "stuff/all"      => "projects#all"
+    resources :projects,        path: "stuff",         except: [:create]
+    resources :projects,                               only:   [:create]
 
     get  "timestables"    => "times_tables#index"
     post "timestables"    => "times_tables#new"

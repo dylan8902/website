@@ -1,0 +1,32 @@
+<% provide(:title, "Running:: Stats") %>
+<% provide(:description, "Statistics on when I go running.") %>
+
+<h1>Running</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Running', running_events_path %></li>
+	<li class="active">Statistics</li>
+	<li><%= link_to 'Map', running_events_map_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-4 col-sm-6">
+		<div class="well">
+			<p>Total Distance</p>
+			<p style="font-size:300%"><%= icon("road") %> <%= number_with_delimiter @stats[:total_distance] %>m</p>
+		</div>
+	</article>
+	<article class="col-md-4 col-sm-6">
+		<div class="well">
+			<p>Total Time</p>
+			<p style="font-size:300%"><%= icon("time") %> <%= Time.at(@stats[:total_time]).gmtime.strftime('%R:%S') %></p>
+		</div>
+	</article>
+	<article class="col-md-4 col-sm-6">
+		<div class="well">
+			<p>Average Speed</p>
+			<p style="font-size:300%"><%= icon("rocket") %> <%= number_with_precision(@stats[:average_speed], precision: 3, delimiter: '.') %>m/s</p>
+		</div>
+	</article>
+</section>
+
+<%= link_to 'Back', running_events_path %>

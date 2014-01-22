@@ -14,7 +14,7 @@
 	<% css = "btn" %>
 	<% css += " btn-primary" if params[:order] == "title" %>
 	<%= link_to "A-Z", request.path + "?order=title", class: css %>
-	<%= link_to "New", '/stuff/new', class: 'btn' if current_user and current_user.admin? %>
+	<%= link_to "New", new_project_path, class: 'btn' if current_user and current_user.admin? %>
 </nav>
 
 <% @projects.each_with_index do |project, i| %>
@@ -25,10 +25,13 @@
 				<h3 class="panel-title"><%= link_to raw(project.title), project.url %></h3>
 			</div>
 			<div class="panel-body">
-				<a class="thumbnail" href="<%= project.url %>"><img src="/images/project<%= project.id %>.png" alt="<%= project.title %>"></a>
+				<a class="thumbnail" href="<%= project.url %>"><img src="<%= project.image %>" alt="<%= project.title %>"></a>
 				<p>
 					<%= raw project.description %>
 				</p>
+			</div>
+			<div class="panel-footer">
+				<%= link_to timestamp(project.created_at), project %>
 			</div>
 		</div>
 	</article>

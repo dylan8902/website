@@ -12,4 +12,10 @@ class Project < ActiveRecord::Base
     project.save
   end
 
+
+  def image
+    return "/images/project#{self.id}.png"
+  end
+
+
 end
