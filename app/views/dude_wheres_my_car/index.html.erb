@@ -1,0 +1,47 @@
+<% provide(:title, "Dude, Where's My Car?") %>
+<% provide(:description, "Made for Over The Air 2012, this hack involves real-time GPS and OBD data from a car been transmitted by 3G to the website allowing trips to be then shared on Facebook.") %>
+<% provide(:image, root_url + "images/project46.png") %>
+
+<h1>Dude, Where's My Car?</h1>
+<section class="row">
+	<article class="col-md-6">
+		<p class="lead">
+			Made at <a href='http://overtheair.org/'>Over The Air 2012</a>.
+			Share real-time car journey data to Facebook, from your car!
+		</p>
+		<p>
+			Using a 3G dongle, mBed micro-controller with <abbr title="On-board Diagnostics">OBD</abbr> interface and GPS module.
+		</p>
+		<hr>
+		<p><%= icon("group") %> Made with Ali Bros</p>
+		<p><%= icon("trophy") %> Best Hack using the Facebook Graph API</p>
+		<p><%= icon("trophy") %> Best Hack using the mBed Micro-controller</p>
+	</article>
+	<article class="col-md-6">
+		<img src="/images/project46.png" alt="Screenshot" class="thumbnail">
+	</article>
+</section>
+
+<hr>
+
+<section class="row">
+	<article class="col-md-6">
+		<h2><%= icon("magic") %> How does it work?</h2>
+		<ul>
+			<li>GPS module gets latitude and longitude</li>
+			<li>On-board diagnostic (OBD) collects engine data such as temperature and speed</li>
+			<li>An mBed micro-controller fetches data</li>
+			<li>A vodaphone 3G dongle connected to the micro-controller via USB transmits real-time data collected</li>
+			<li>Store everything in a MySQL database on a server</li>
+			<li>An ID is associated to your Facebook account on the website and you choose what data to share to Facebook</li>
+			<li>Share 'trip' objects with your friends that contain the location data and engine data</li>
+		</ul>
+	</article>
+	<article class="col-md-6">
+		<h2><%= icon("desktop") %> The Website</h2>
+		<p>All written in PHP, the front-end site displays trip information.</p>
+		<p>You can select what timestamps make up a trip and share your trips to Facebook.</p>
+		<p>The trip page which is generated conatains all the Open Graph meta tags required by Facebook to display a route and some key statistics. This then appears on your profile like this:</p>
+		<img src="https://farm8.staticflickr.com/7241/7357821294_edcd24ae5b_o.jpg" alt="Timeline story" class="thumbnail">
+	</article>
+</section>

@@ -119,6 +119,8 @@ Website::Application.routes.draw do
     get  "drop/:uri" => "drops#show", as: "drop"
     resources :drops,             path: "drop",       only: [:index, :create]
 
+    get  "dudewheresmycar"=> "dude_wheres_my_car#index"
+
     get  "episodes/add"   => "episodes#add"
     get  "episodes/all"   => "episodes#all"
     get  "episodes/stats" => "episodes#stats",        as: "episodes_stats"
