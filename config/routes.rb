@@ -236,8 +236,9 @@ Website::Application.routes.draw do
     get  "stream"         => "stream#index"
     get  "sitemap"        => "static_pages#sitemap"
 
-    get  "stuff/all"      => "projects#all",           as: "all_stuff"
-    resources :projects,        path: "stuff",         as: "stuff"
+    get  "stuff/all"      => "projects#all"
+    resources :projects,        path: "stuff",         except: [:create]
+    resources :projects,                               only:   [:create]
 
     get  "timestables"    => "times_tables#index"
     post "timestables"    => "times_tables#new"

@@ -1,7 +1,11 @@
 <% provide(:title, "Project:: Edit") %>
-<h1>Editing project</h1>
+<% provide(:description, "Edit the project details") %>
+
+<h1>Stuff</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Stuff', projects_path %></li>
+	<li><%= link_to @project.title, @project %></li>
+	<li class="active">Edit</li>
+</ol>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @project %> |
-<%= link_to 'Back', projects_path %>
