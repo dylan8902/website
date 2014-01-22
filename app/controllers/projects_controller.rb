@@ -125,4 +125,5 @@ class ProjectsController < ApplicationController
     def project_params
       params.require(:project).permit(:name, :description, :url, :online)
     end
+
 end
