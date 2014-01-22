@@ -1,19 +1,44 @@
 <% provide(:title, "On the Run") %>
 <% provide(:description, "You need to leave the country quickly? How much have you got? We can tell you how far you could get away.") %>
+<% provide(:image, root_url + "images/project1.png") %>
 
 <h1>On the Run</h1>
 <section class="row">
-	<article class="col-md-4">
-		<p>
-			This application was made for the <a href='http://leedshack.com/'>Leeds Hack 2011</a>.
-			It basically lets you put in an amount of money you want to spend on a flight and tells you the furthest you can get.
+	<article class="col-md-6">
+		<p class="lead">
+			Made at <a href='http://leedshack.com/'>Leeds Hack 2011</a>.
+			Tells you how far you can get away, for an amount of money.
 		</p>
 		<p>
-			Reverse engineeing the BMI baby API, you can now select a destination based on price (rather than enetering the origin and destination and getting the price).
-			Most useful for when you need to leave the country quickly on a tight budget.
+			Say how much money you have to spend and 'On the Run' will calculate the furtheset distance
+			you can travel with BMI baby.
 		</p>
+		<p><%= icon("group") %> Made with Andy Mitchell</p>
+		<p><%= icon("trophy") %> Best Hack using BMI baby API</p>
 	</article>
-	<article class="col-md-8">
-		<img src="">
+	<article class="col-md-6">
+		<img src="/images/project1.png" alt="Screenshot" class="thumbnail">
+	</article>
+</section>
+
+<hr>
+
+<section class="row">
+	<article class="col-md-6">
+		<h2><%= icon("beaker") %> How does it work?</h2>
+		<ul>
+			<li>We scraped the BMI baby API all night getting flight details for each of their destinations flying from the UK, including cost for 1 adult for the next 2 weeks</li>
+			<li>Found latitude and longitude data for all airports</li>
+			<li>Stored everything in a MySQL database</li>
+			<li>We calculated the distance of each flight</li>
+			<li>You enter the maximum amount of money to spend</li>
+			<li>Results are then ordered based on distance from the UK departures airport(s) you choose</li>
+		</ul>
+	</article>
+	<article class="col-md-6">
+		<h2><%= icon("cloud") %> The Website</h2>
+		<p>All written in PHP, the front-end site displaying results from your search and a backend scraping the BMI baby API.</p>
+		<p>The flight destinations available to you are displayed on a Google Map, clicking on one takes you to the result on the page.</p>
+		<p>Each destination has a country and it's flag is also shown.</p>
 	</article>
 </section>
