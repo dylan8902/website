@@ -3,8 +3,8 @@
 
 <h1>Stuff</h1>
 <ol class="breadcrumb">
-	<li><%= link_to 'Stuff', projects_path %></li>
-	<li><%= link_to @project.title, @project %></li>
+	<li><%= link_to 'Stuff', stuff_index_path %></li>
+	<li><%= link_to @project.title, stuff_path(@project) %></li>
 	<li class="active">Edit</li>
 </ol>
 

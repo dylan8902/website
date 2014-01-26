@@ -20,8 +20,8 @@
 						<li<%= " class=\"active\"".html_safe if request.path.starts_with? who_path %>>
 							<%= link_to icon("user") + " About Me", who_path %>
 						</li>
-						<li<%= " class=\"active\"".html_safe if request.path.starts_with? '/stuff' %>>
-							<%= link_to icon("code") + " Stuff I've Made", '/stuff' %>
+						<li<%= " class=\"active\"".html_safe if request.path.starts_with? stuff_index_path %>>
+							<%= link_to icon("code") + " Stuff I've Made", stuff_index_path %>
 						</li>
 						<li<%= " class=\"active\"".html_safe if request.path.starts_with? blog_posts_path %>>
 							<%= link_to icon("edit") + " Blog", blog_posts_path %>

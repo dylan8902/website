@@ -14,7 +14,7 @@
 	<% css = "btn" %>
 	<% css += " btn-primary" if params[:order] == "title" %>
 	<%= link_to "A-Z", request.path + "?order=title", class: css %>
-	<%= link_to "New", new_project_path, class: 'btn' if current_user and current_user.admin? %>
+	<%= link_to "New", new_stuff_path, class: 'btn' if current_user and current_user.admin? %>
 </nav>
 
 <% @projects.each_with_index do |project, i| %>
@@ -31,7 +31,7 @@
 				</p>
 			</div>
 			<div class="panel-footer">
-				<%= link_to timestamp(project.created_at), project %>
+				<%= link_to timestamp(project.created_at), stuff_path(project) %>
 			</div>
 		</div>
 	</article>
