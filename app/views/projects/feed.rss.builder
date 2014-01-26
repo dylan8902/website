@@ -3,7 +3,7 @@ xml.rss :version => "2.0" do
   xml.channel do
     xml.title "Dylan Jones:: Stuff"
     xml.description "Things I have made available online."
-    xml.link "http://dyl.anjon.es/stuff"
+    xml.link stuff_index_path
 
     for project in @projects
       xml.item do

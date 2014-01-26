@@ -4,7 +4,7 @@
 
 <h1>Stuff</h1>
 <ol class="breadcrumb">
-	<li><%= link_to 'Stuff', projects_path %></li>
+	<li><%= link_to 'Stuff', stuff_index_path %></li>
 	<li class="active"><%= @project.title %></li>
 </ol>
 
@@ -13,5 +13,5 @@
 <p><img src="<%= @project.image %>" alt="<%= @project.title %>" class="thumbnail"></p>
 <p><%= @project.description %></p>
 
-<%= link_to 'Back', projects_path, class: "btn btn-default" %>
-<%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" if current_user and current_user.admin %>
+<%= link_to 'Back', stuff_index_path, class: "btn btn-default" %>
+<%= link_to 'Edit', edit_stuff_path(@project), class: "btn btn-primary" if current_user and current_user.admin %>

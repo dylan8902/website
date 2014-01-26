@@ -54,6 +54,7 @@ class ProjectsController < ApplicationController
   # GET /stuff/new.xml
   def new
     @project = Project.new
+    @url = stuff_index_path
 
     respond_to do |format|
       format.html # index.html.erb
@@ -66,6 +67,7 @@ class ProjectsController < ApplicationController
   # GET /stuff/1/edit
   def edit
     @project = Project.find(params[:id])
+    @url = stuff_path(@project)
   end
 
 

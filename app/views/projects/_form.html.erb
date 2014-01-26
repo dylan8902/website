@@ -1,7 +1,7 @@
 <section class="row">
 	<article class="col-md-5">
 
-		<%= form_for(@project) do |f| %>
+		<%= form_for(@project, url: @url) do |f| %>
 		  
 			<div class="form-group<%= " has-error" if errors_for @project, :title %>">
 				<%= f.label :title, class: "control-label" %>
