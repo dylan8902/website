@@ -1,5 +1,6 @@
 class WestSideStory::StaticPagesController < ApplicationController
   layout "west_side_story"
+  after_filter :analytics
 
 
   # GET /westsidestory
@@ -31,5 +32,10 @@ class WestSideStory::StaticPagesController < ApplicationController
   def contact
   end
 
+
+  private
+    def analytics
+      Project.hit 48
+    end
 
 end
