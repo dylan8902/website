@@ -58,7 +58,7 @@ module ApplicationHelper
   
   #gravatar icon
   def gravatar(email, size = 30)
-    src = "http://www.gravatar.com/avatar/#{Digest::MD5::hexdigest(email.strip.downcase)}.jpg?s=#{size}&d=identicon"
+    src = "https://secure.gravatar.com/avatar/#{Digest::MD5::hexdigest(email.strip.downcase)}.jpg?s=#{size}&d=identicon"
     return image_tag(src, { alt: "Gravatar", width: size, height: size, class: "img-circle" })
   end
   
