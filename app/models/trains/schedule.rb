@@ -10,13 +10,12 @@ class Trains::Schedule < ActiveRecord::Base
   end
 
 
-  def uid
-    self.train_uid
+  def cancellation?
+    return self.stp_indicator == "C"
   end
 
-
-  def headcode
-    self.signalling_id
+  def uid
+    self.train_uid
   end
 
 
@@ -259,11 +258,25 @@ class Trains::Schedule < ActiveRecord::Base
 
 
   def title
-    if self.origin and self.destination
+    if self.origin and self.destination and self.origin.location and self.destination.location
       "#{self.train_uid}: #{self.origin.location.name} to #{self.destination.location.name}"
+    elsif self.cancellation?
+      "#{self.train_uid}: Cancelled"
     else
       self.train_uid
     end
   end
+
+
+  def distances
+    distances = []
+    locations = self.schedule_locations
+    locations.each_with_index do |l, i|
+      distances << 0 if i == 0
+      distances << Trains::Location.network_link(locations[i-1].location, l.location, l.line).distance if i > 0
+    end
+    return distances
+  end
+
 
 end

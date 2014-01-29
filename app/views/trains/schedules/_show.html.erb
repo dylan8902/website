@@ -1,0 +1,200 @@
+<% provide(:title, "Train Schedule:: #{@schedule.title}") %>
+<% provide(:description, "") %>
+
+<h1><%= @schedule.title %></h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Trains", trains_root_path %></li>
+  <li><%= link_to "Schedules", trains_schedules_path %></li>
+  <li class="active"><%= @schedule.title %></li>
+</ol>
+
+<% if @schedule.cancellation? %>
+<div class="alert-box alert-danger alert">
+	<h4>Cancelled</h4>
+	<p>This service is not scheduled to run</p>
+</div>
+<% end %>
+
+<ul class="nav nav-tabs">
+	<li class="active">
+		<a href="#basic" data-toggle="tab">Basic</a>
+	</li>
+	<li>
+		<a href="#detailed" data-toggle="tab">Detailed</a>
+	</li>
+	<li>
+		<a  href="#calendar" data-toggle="tab"><%= icon("calendar") %> <%= @date.strftime('%Y-%m-%d') %></a>
+	</li>
+</ul>
+<section class="tab-content">
+
+	<article class="tab-pane active" id="basic">
+		<section class="row">
+
+			<article class="col-md-4">
+				
+			<% if @schedule.google_map_image then %>
+				<h4>Route Map</h4>
+				<%= image_tag @schedule.google_map_image, alt: "Route", class: "img-thumbnail" %>
+			<% end %>
+			
+				<h4>Service Details</h4>
+				<table class="table table-bordered table-striped">
+					<tbody>
+						<tr>
+							<td>Service Code</td><td><%= @schedule.service_code %></td>
+						</tr>
+						<tr>
+							<td>Status</td><td><%= @schedule.status.name if @schedule.status %></td>
+						</tr>
+						<tr>
+							<td>Operating Company</td><td><%= link_to @schedule.toc.name, @schedule.toc unless @schedule.toc.nil? %></td>
+						</tr>
+						<tr>
+							<td>Train Class</td><td><%= @schedule.train_class.name unless @schedule.train_class.nil? %></td>
+						</tr>
+						<% unless @schedule.catering.empty? %>
+						<tr>
+							<td>Catering</td>
+							<td> <% @schedule.catering.each do |catering| %>
+							<%= "#{catering.name}<br>".html_safe %>
+							<% end %>
+							</td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</article>
+			
+			<article class="col-md-8">
+			<% if @schedule.schedule_locations.size > 0 %>
+				<h4>Public Timetable</h4>
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Arrival</th>
+							<th>Location</th>
+							<th>Departure</th>
+							<th>Pfm</th>
+						</tr>
+					</thead>
+					<tbody>
+					<% @schedule.schedule_locations.each do |l| %>
+						<% if l.public_arrival or l.public_departure %>
+						<tr>
+							<td><%= l.public_arrival %></td>
+							<td><%= link_to l.location.name, l.location unless l.location.nil? %></td>
+							<td><%= l.public_departure %></td>
+							<td><%= l.platform %></td>
+						</tr>
+						<% end %>
+					<% end %>
+					</tbody>
+				</table>
+			<% end %>
+			</article>
+			
+		</section>
+	</article>
+	
+	<article class="tab-pane" id="detailed">
+		<section class="row">
+
+			<article class="col-md-4">
+
+			<% if @schedule.google_map_image then %>
+				<h4>Route Map</h4>
+				<%= image_tag @schedule.google_map_image, alt: "Route", class: "img-thumbnail" %>
+			<% end %>
+
+				<h4>Service Details</h4>
+				<table class="table table-bordered table-striped">
+					<tbody>
+						<tr>
+							<td>UID</td><td><%= @schedule.train_uid %></td>
+						</tr>
+						<tr>
+							<td>Signalling ID</td><td><%= @schedule.signalling_id %></td>
+						</tr>
+						<tr>
+							<td>Service Code</td><td><%= @schedule.service_code %></td>
+						</tr>
+						<tr>
+							<td>Status</td><td><%= @schedule.status.name if @schedule.status %></td>
+						</tr>
+						<tr>
+							<td>Operating Company</td><td><%= link_to @schedule.toc.name, @schedule.toc unless @schedule.toc.nil? %></td>
+						</tr>
+						<tr>
+							<td>Train Class</td><td><%= @schedule.train_class.name unless @schedule.train_class.nil? %></td>
+						</tr>
+						<tr>
+							<td>Timing Load</td><td><%= @schedule.timing_load unless @schedule.timing_load.nil? %></td>
+						</tr>
+						<tr>
+							<td>Category</td><td><%= link_to @schedule.category.name, @schedule.category unless @schedule.category.nil? %></td>
+						</tr>
+						<tr>
+							<td>Speed</td><td><%= @schedule.speed %></td>
+						</tr>
+						<tr>
+							<td>Power Type</td><td><%= link_to @schedule.power_type.name, @schedule.power_type unless @schedule.power_type.nil? %></td>
+						</tr>
+						<% unless @schedule.catering.empty? %>
+						<tr>
+							<td>Catering</td>
+							<td> <% @schedule.catering.each do |catering| %>
+							<%= "#{catering.name}<br>".html_safe %>
+							<% end %>
+							</td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</article>
+
+			<article class="col-md-8">
+			<% if @schedule.schedule_locations.size > 0 %>
+				<h4>Working Timetable</h4>
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Arrival</th>
+							<th>Public Arrival</th>
+							<th>Pass</th>
+							<th>Location</th>
+							<th>Departure</th>
+							<th>Public Departure</th>
+							<th>Pfm</th>
+							<th>Line</th>
+							<th>Distance</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% distances = @schedule.distances %>
+						<% @schedule.schedule_locations.each_with_index do |l, i| %>
+						<tr<%= " style=\"font-weight:bold\"".html_safe if l.public_arrival or l.public_departure %>>
+							<td><%= l.arrival %></td>
+							<td><%= l.public_arrival %></td>
+							<td><%= l.pass %></td>
+							<td><%= link_to l.location.name, l.location unless l.location.nil? %></td>
+							<td><%= l.departure %></td>
+							<td><%= l.public_departure %></td>
+							<td><%= l.platform %></td>
+							<td><%= l.line %></td>
+							<td><%= distances[0..i].inject(:+) %>m</td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+			<% end %>
+			</article>
+			
+		</section>
+	</article>
+
+</section>
+
+<%= render 'trains/static_pages/footer' %>
+

@@ -24,7 +24,7 @@ class Trains::LocationsController < ApplicationController
       tiploc = Trains::Location.where("tiploc = ? AND (#{stations})", @q)
       name =  Trains::Location.where("name LIKE ? AND (#{stations})", "#{@q}%")
       @locations = [crs, tiploc, name]
-      @locations = @locations.flatten.paginate(@page)
+      @locations = @locations.flatten.uniq.paginate(@page)
     end
 
     respond_to do |format|
@@ -46,6 +46,21 @@ class Trains::LocationsController < ApplicationController
       format.html
       format.xml { render xml: @location }
       format.json { render json: @location, callback: params['callback'] }
+    end
+
+  end
+
+
+  # GET /trains/locations/map
+  # GET /trains/locations/map.json
+  # GET /trains/locations/map.xml
+  def map
+    @locations =Trains::Location.where("lat IS NOT NULL AND lng IS NOT NULL")
+
+    respond_to do |format|
+      format.html
+      format.xml { render xml: @locations }
+      format.json { render json: @locations, callback: params['callback'] }
     end
 
   end

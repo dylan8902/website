@@ -248,11 +248,12 @@ Website::Application.routes.draw do
       get  'schedules/id/:id',                     to: 'schedules#show_by_id',  as: 'schedule_id'
       get  'schedules/:uid',                       to: 'schedules#show_by_uid', as: 'schedule_uid'
       get  'schedules/:uid/:year/:month/:day',     to: 'schedules#show_by_uid', as: 'schedule_uid_and_date'
+      get  'locations/map',                        to: 'locations#map',         as: 'locations_map'
+      resources :locations,                                        only: [:index, :show]
       resources :journeys,            path: 'journeys',            except: [:new] do
         resources :journey_legs,      path: 'legs',                except: [:index]
       end
       resources :schedules,                                        only: [:index]
-      resources :locations,                                        only: [:index, :show]
       resources :operating_companies, path: 'operating-companies', only: [:index, :show]
       resources :power_types,         path: 'power-types',         only: [:index, :show]
       resources :categories,                                       only: [:index, :show]

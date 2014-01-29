@@ -18,8 +18,38 @@
 </p>
 
 <section class="row">
+
 	<article class="col-md-4">
 		<%= @location.map_image %>
 	</article>
-	
+
+<% if @location.network_links.count > 0 %>
+	<article class="col-md-4">
+		<h4>Network Links</h4>
+		<p><%= pluralize @location.network_links.count, "network link" %></p>
+		<table class="table table-striped">
+		<% @location.network_links.each do |network_link| %>
+			<tr>
+				<td><%= link_to network_link.destination, network_link.destination %></td>
+				<td><%= network_link.line %></td>
+				<td><%= network_link.distance %>m</td>
+				<td><%= network_link.initial_direction %></td>
+			</tr>
+		<% end %>
+		</table>
+	</article>
+<% end %>
+
+<% if @location.platforms.count > 0 %>
+	<article class="col-md-4">
+		<h4>Platforms</h4>
+		<p><%= pluralize @location.platforms.count, "platform" %></p>
+		<ul>
+		<% @location.platforms.each do |platform| %>
+			<li><%= platform.name %></li>
+		<% end %>
+		</ul>
+	</article>
+<% end %>
+
 </section>
