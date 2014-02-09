@@ -2,6 +2,11 @@
 <% provide(:description, "#{@user.name} is using dyl.anjon.es applications.") %>
 
 <h1><%= gravatar @user.email, 80 %> <%= @user.name %></h1>
+<ol class="breadcrumb">
+  <li class="active"><%= @user.name %></li>
+  <li><%= link_to 'Episodes', user_episodes_path(@user) %></li>
+</ol>
+
 <section class="row">
 	<article class="col-md-5">
 		

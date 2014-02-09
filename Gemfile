@@ -19,6 +19,7 @@ gem 'twitter'
 gem 'coderay'
 gem 'rest-client'
 gem 'nokogiri'
+gem 'blue_geo'
 
 group :development, :test do
   gem 'rspec-rails'

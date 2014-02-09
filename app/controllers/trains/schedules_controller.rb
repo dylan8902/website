@@ -71,7 +71,12 @@ class Trains::SchedulesController < ApplicationController
     end
 
     conditions = "train_uid = ? AND schedule_start_date <= ? AND schedule_end_date >= ?"
-    @schedule = Trains::Schedule.where(conditions, params[:uid], @date, @date).order("stp_indicator ASC").first || render_404 and return
+    @schedule = Trains::Schedule.where(conditions, params[:uid], @date, @date).order("stp_indicator ASC").first
+
+    unless @schedule
+      @schedule = Trains::Schedule.where(train_uid: params[:uid]).order("schedule_start_date DESC, stp_indicator ASC").first || render_404 and return
+      @date = Time.strptime(@schedule.start_date, '%Y-%m-%d')
+    end
 
     respond_to do |format|
       format.html
@@ -85,7 +90,6 @@ class Trains::SchedulesController < ApplicationController
   # GET /trains/schedules/id/1.json
   # GET /trains/schedules/id/1.xml
   def show_by_id
-
     @schedule = Trains::Schedule.find(params[:id])
 
     respond_to do |format|

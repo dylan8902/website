@@ -26,10 +26,16 @@
 	</h4>
 	<div class="accordion" id="advanced">
 		<div id="advanced-options" class="accordion-body collapse out">
-			<label><%= check_box_tag(:non_public, true, @non_public) %> Include non-public schedules</label>
-			<br>
-			<label><%= check_box_tag(:buses, true, @buses) %> Include bus schedules</label>
-			<br>
+			<section class="row">
+				<article class="col-md-3">
+					<label><%= check_box_tag(:non_public, true, @non_public) %> Include non-public schedules</label>
+					<label><%= check_box_tag(:buses, true, @buses) %> Include bus schedules</label>
+				</article>
+				<article class="col-md-3">
+					<label for+"date">Date</label>
+					<%= date_field_tag(:date, @date.to_date , class: "form-control small") %>
+				</article>
+			</section>
 		</div>
 	</div>
 	<div>

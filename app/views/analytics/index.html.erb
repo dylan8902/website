@@ -15,30 +15,39 @@
 </dl>
 
 <section class="row">
+	
+	<article class="col-md-4">
+		<h2>Projects</h2>
+		<table>
+		<% @analytics[:projects].each do |project| %>
+			<tr><td><%= link_to project.title, project.url %></td><td><%= project.hits %></td></tr>
+		<% end %>
+		</table>
+	</article>
 
 	<article class="col-md-4">
+
 		<h2>Recent IPs</h2>
 		<ul>
 		<% @analytics[:ips].each do |ip| %>
-			<li><%= link_to ip, analytics_path + "?ip=#{URI::escape(ip)}" %></li>
+			<li><%= link_to ip, analytics_search_path + "?ip=#{u(ip)}" %></li>
 		<% end %>
 		</ul>
-	</article>
 
-	<article class="col-md-4">
-		<h2>Recent Pages</h2>
-		<ul>
-		<% @analytics[:uris].each do |uri| %>
-			<li><%= link_to uri, uri %></li>
-		<% end %>
-		</ul>
-	</article>
-
-	<article class="col-md-4">
 		<h2>Recent Browsers</h2>
 		<ul>
 		<% @analytics[:user_agents].each do |user_agent| %>
-			<li><%= link_to user_agent, analytics_path + "?user_agent=#{URI::escape(user_agent)}" %></li>
+			<li><%= link_to user_agent, analytics_search_path + "?user_agent=#{u(user_agent)}" %></li>
+		<% end %>
+		</ul>
+
+	</article>
+
+	<article class="col-md-4">
+		<h2>Recent Visits</h2>
+		<ul>
+		<% @analytics[:visits].each do |visit| %>
+			<li><%= link_to visit.uri, visit %></li>
 		<% end %>
 		</ul>
 	</article>

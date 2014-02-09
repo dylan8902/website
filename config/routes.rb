@@ -83,6 +83,7 @@ Website::Application.routes.draw do
     get "tvstats",       to: redirect("/episodes/stats")
     get "music/artist",  to: redirect("/music/artists")
     get "music/artist/:id", to: redirect("/music/artists/%{id}")
+    get "listens/:id",   to: redirect("/music/listens/%{id}")
   
     get ""                => "static_pages#index",    as: "root"
 
@@ -91,8 +92,7 @@ Website::Application.routes.draw do
 
     get  "analysis"       => "analysis#index"
 
-    get  "analytics/ip/:ip" => "analytics#ip"
-    get  "analytics/user-agent/:user_agent" => "analytics#user_agent"
+    get  "analytics/search" => "analytics#search",    as: "analytics_search"
     get  "analytics/stats"  => "analytics#stats",     as: "analytics_stats"
     resources :analytics,                             only: [:index, :show]
 
@@ -124,6 +124,8 @@ Website::Application.routes.draw do
     get  "episodes/add"   => "episodes#add"
     get  "episodes/all"   => "episodes#all"
     get  "episodes/stats" => "episodes#stats",        as: "episodes_stats"
+    get  "episodes/users/:id" => "episodes#user",     as: "user_episodes"
+    get  "episodes/users/:id/stats" => "episodes#user_stats",     as: "user_episodes_stats"
     resources :episodes,                              only: [:index, :show]
 
     get  "facebook/all"   => "facebook_posts#all",    as: "all_facebook_posts"
@@ -248,11 +250,12 @@ Website::Application.routes.draw do
       get  'schedules/id/:id',                     to: 'schedules#show_by_id',  as: 'schedule_id'
       get  'schedules/:uid',                       to: 'schedules#show_by_uid', as: 'schedule_uid'
       get  'schedules/:uid/:year/:month/:day',     to: 'schedules#show_by_uid', as: 'schedule_uid_and_date'
+      get  'locations/map',                        to: 'locations#map',         as: 'locations_map'
+      resources :locations,                                        only: [:index, :show]
       resources :journeys,            path: 'journeys',            except: [:new] do
         resources :journey_legs,      path: 'legs',                except: [:index]
       end
       resources :schedules,                                        only: [:index]
-      resources :locations,                                        only: [:index, :show]
       resources :operating_companies, path: 'operating-companies', only: [:index, :show]
       resources :power_types,         path: 'power-types',         only: [:index, :show]
       resources :categories,                                       only: [:index, :show]

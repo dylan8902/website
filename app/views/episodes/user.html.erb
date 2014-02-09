@@ -1,0 +1,17 @@
+<% provide(:title, "Episodes:: #{@user.name}") %>
+<% provide(:description, "A record of the programmes #{@user.name} has watched on the BBC iPlayer. Keeping track to plot statistics and create trends.") %>
+<% provide(:image, root_path + "images/project13.png")%>
+<% provide(:extrahead, rss_link(user_episodes_path(@user))) %>
+
+<h1>Episodes</h1>
+<ol class="breadcrumb">
+  <li><%= link_to 'Episodes', episodes_path %></li>
+  <li class="active"><%= @user.name %></li>
+  <li><%= link_to 'Statistics', user_episodes_stats_path(@user) %></li>
+</ol>
+
+<h2><%= gravatar @user.email, 80 %> <%= @user.name %></h2>
+
+<%= render 'grid' %>
+
+<%= paginate @episodes %>

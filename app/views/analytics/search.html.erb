@@ -1,0 +1,22 @@
+<% provide(:title, "Analytics:: Search") %>
+<% provide(:description, "Visits from specific IP or User-Agent") %>
+
+<h1>Analytics</h1>
+<ol class="breadcrumb">
+  <li><%= link_to 'Analytics', analytics_path %></li>
+  <li class="active">Search</li>
+  <li><%= link_to 'Statistics', analytics_stats_path %></li>
+</ol>
+
+<p><%= pluralize @analytics.count, "visit" %></p>
+
+<table class="table table-striped" style="max-width:100%">
+<% @analytics.each do |analytic| %>
+	<tr>
+		<td><%= link_to analytic.uri, analytic.uri %></td>
+		<td class="width:400px"><%= timestamp analytic.created_at %></td>
+	</tr>
+<% end %>
+</table>
+
+<%= paginate @analytics %>
