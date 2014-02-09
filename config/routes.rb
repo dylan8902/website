@@ -62,6 +62,9 @@ Website::Application.routes.draw do
   #dyl.anjon.es
   constraints Hostname.new("dyl.anjon.es") do
 
+    #301 non-https traffic
+    match "/(*path)" => redirect {|params, req| "https://#{req.host}:#{req.port}/#{params[:path]}" }, via: [:get, :post, :patch, :delete], protocol: "http" if Rails.env.production?
+
     #301s
     get "",              to: redirect("/api"), constraints: { subdomain: 'api' }
     get "blog/id/:id",   to: redirect("/blog/%{id}")
