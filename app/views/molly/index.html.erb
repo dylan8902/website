@@ -21,7 +21,7 @@
 	</article>
 	<article class="col-md-6">
 		<h2>Funny Examples</h2>
-		<p><a href="/molly#your%20mum">Your Mum</a></p>
+		<p><a href="/molly#Your Mum" class="example" data-text="Your Mum">Your Mum</a></p>
 		<h2>How does it work?</h2>
 		<p><strong>JavaScript</strong> - just locally in your browser not using any text-to-speach web services.</p>
 		<p>The javascript library is <a href="https://github.com/kripken/speak.js/" title="Github page">speak.js</a>, a speech synthesizer.</p>
@@ -63,10 +63,6 @@
 
 	$(document).ready(function() {
 
-		var hash = window.location.hash.substring(1);
-		if(hash)
-			$('#text').val(hash);
-
 		track = document.createElement('audio');
 		track.setAttribute('src', '/uploads/molly.wav');
 		track.setAttribute('ontimeupdate', 'updateTime()');
@@ -78,6 +74,17 @@
 				prepareText();
 				track.play();
 			}
+		});
+
+		var hash = window.location.hash.substring(1);
+		if(hash) {
+			$('#text').val(hash);
+			$('#play').click();
+		}
+
+		$('.example').click(function(e) {
+			$('#text').val($(this).data('text'));
+			$('#play').click();
 		});
 
 	});
