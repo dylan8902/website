@@ -40,7 +40,7 @@ class BlogPostsController < ApplicationController
   # GET /blog/1.json
   # GET /blog/1.xml
   def show
-    @blog_post = BlogPost.find(params[:id])
+    @blog_post = BlogPost.find(params[:id]) || render_404
 
     @comments = @blog_post.blog_comments.paginate(@page)
     @comment = BlogComment.new

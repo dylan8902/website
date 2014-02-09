@@ -62,14 +62,10 @@ Website::Application.routes.draw do
   #dyl.anjon.es
   constraints Hostname.new("dyl.anjon.es") do
 
-    #301 non-https traffic
-    constraints(:protocol => (Rails.env.production? ? /http/ : /https/)) do
-      match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/#{params[:path]}" }, via: [:get, :post, :patch, :delete]
-    end
-
     #301s
     get "",              to: redirect("/api"), constraints: { subdomain: 'api' }
     get "blog/id/:id",   to: redirect("/blog/%{id}")
+    get "blog/post/:id", to: redirect("/blog/%{id}")
     get "lifestream",    to: redirect("/stream")
     get "onradio",       to: redirect("/onradio/1")
     get "onradio1",      to: redirect("/onradio/1")
@@ -88,7 +84,7 @@ Website::Application.routes.draw do
     get "tvstats",       to: redirect("/episodes/stats")
     get "music/artist",  to: redirect("/music/artists")
     get "music/artist/:id", to: redirect("/music/artists/%{id}")
-    get "listens/:id",   to: redirect("/music/listens/%{id}")
+    get "listen/:id",    to: redirect("/music/listens/%{id}")
 
     get ""                => "static_pages#index",    as: "root"
 
