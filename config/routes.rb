@@ -83,6 +83,7 @@ Website::Application.routes.draw do
     get "tvstats",       to: redirect("/episodes/stats")
     get "music/artist",  to: redirect("/music/artists")
     get "music/artist/:id", to: redirect("/music/artists/%{id}")
+    get "listens/:id",   to: redirect("/music/listens/%{id}")
   
     get ""                => "static_pages#index",    as: "root"
 
@@ -91,8 +92,7 @@ Website::Application.routes.draw do
 
     get  "analysis"       => "analysis#index"
 
-    get  "analytics/ip/:ip" => "analytics#ip"
-    get  "analytics/user-agent/:user_agent" => "analytics#user_agent"
+    get  "analytics/search" => "analytics#search",    as: "analytics_search"
     get  "analytics/stats"  => "analytics#stats",     as: "analytics_stats"
     resources :analytics,                             only: [:index, :show]
 
