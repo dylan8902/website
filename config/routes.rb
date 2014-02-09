@@ -58,12 +58,14 @@ Website::Application.routes.draw do
   constraints Hostname.new("dylanjones.info") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
   end
-  
+
   #dyl.anjon.es
   constraints Hostname.new("dyl.anjon.es") do
 
     #301 non-https traffic
-    match "/(*path)" => redirect {|params, req| "https://#{req.host}:#{req.port}/#{params[:path]}" }, via: [:get, :post, :patch, :delete], protocol: "http" if Rails.env.production?
+    constraints(:protocol => (Rails.env.production? ? /http/ : /https/)) do
+      match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/#{params[:path]}" }, via: [:get, :post, :patch, :delete]
+    end
 
     #301s
     get "",              to: redirect("/api"), constraints: { subdomain: 'api' }
@@ -87,7 +89,7 @@ Website::Application.routes.draw do
     get "music/artist",  to: redirect("/music/artists")
     get "music/artist/:id", to: redirect("/music/artists/%{id}")
     get "listens/:id",   to: redirect("/music/listens/%{id}")
-  
+
     get ""                => "static_pages#index",    as: "root"
 
     get  "accounts/all"   => "accounts#all",          as: "all_accounts"
