@@ -1,4 +1,5 @@
 class Episode < ActiveRecord::Base
+  belongs_to :user
   default_scope { order('created_at DESC') }
 
 
@@ -12,7 +13,7 @@ class Episode < ActiveRecord::Base
   end
 
 
-  def self.add url
+  def self.add url, user
     params = url.split('/')
     
     response = RestClient.get "http://www.bbc.co.uk/programmes/#{params[5]}.json"
@@ -39,7 +40,7 @@ class Episode < ActiveRecord::Base
       description = json['programme']['long_synopsis']
     end
     
-    return Episode.create(pid:params[5], title: title, description: description)
+    return Episode.create(pid:params[5], title: title, description: description, user_id: user.id)
   end
 
 end

@@ -6,7 +6,12 @@
 <ol class="breadcrumb">
   <li><%= link_to 'Episodes', episodes_path %></li>
   <li class="active"><%= @episode.title %></li>
-  <li><%= link_to 'Statistics', episodes_stats_path %></li>
+<% if current_user %>
+	<li><%= link_to 'Your Statistics', user_episodes_stats_path(current_user) %></li>
+	<li><%= link_to 'My Statistics', episodes_stats_path %></li>
+<% else %>
+	<li><%= link_to 'My Statistics', episodes_stats_path %></li>
+<% end %>
 </ol>
 
 <h2><%= @episode.title %></h2>

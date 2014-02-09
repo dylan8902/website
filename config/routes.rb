@@ -124,6 +124,8 @@ Website::Application.routes.draw do
     get  "episodes/add"   => "episodes#add"
     get  "episodes/all"   => "episodes#all"
     get  "episodes/stats" => "episodes#stats",        as: "episodes_stats"
+    get  "episodes/users/:id" => "episodes#user",     as: "user_episodes"
+    get  "episodes/users/:id/stats" => "episodes#user_stats",     as: "user_episodes_stats"
     resources :episodes,                              only: [:index, :show]
 
     get  "facebook/all"   => "facebook_posts#all",    as: "all_facebook_posts"

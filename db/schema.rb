@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140128083904) do
+ActiveRecord::Schema.define(version: 20140129183736) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -134,7 +134,10 @@ ActiveRecord::Schema.define(version: 20140128083904) do
     t.string   "description", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
+
+  add_index "episodes", ["user_id"], name: "index_episodes_on_user_id"
 
   create_table "facebook_posts", force: true do |t|
     t.string   "text"
