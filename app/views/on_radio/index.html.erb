@@ -182,7 +182,7 @@
 				function(reply) {
 					$('#show-info').html(''+reply.show.programme.title+': '+reply.show.programme.short_synopsis);
 					$('#show-image').attr('src','https://www.bbc.co.uk/iplayer/images/episode/'+reply.show.programme.pid+'_640_360.jpg');
-					$('#show-title').html(reply.programme.display_title.title);
+					$('#show-title').html(reply.show.programme.display_titles.title);
 					$('#show-title').attr('href','http://www.bbc.co.uk/programmes/'+reply.show.programme.pid);
 					a = reply.show.programme.duration;
 					b = reply.show.programme.duration;
@@ -195,7 +195,6 @@
 	}
 
 	$(document).ready(function() {
-
 		var textlastid = 0;
 		var refreshTracks = setInterval(function() {
 			updateTracks();
@@ -238,7 +237,7 @@
 								$('#information').append('<section><h3>Releases</h3><table id="releases"></table><img src="/images/7digital.png" alt="7 Digital" style="height:14px;"></section>');
 								for(var a in reply['7digital'].releases.release) {
 									var release = reply['7digital'].releases.release[a];
-									$('#releases').append('<tr><td><img src="'+release.image+'" alt="Artwork"></td><td><a href="'+release.url+'" target="_blank">'+release.title+'</a></td><td><iframe frameborder="0" height="40" scrolling="no" src="https://instant.7digital.com/iframe.htm?releaseid='+release.id+'&amp;partnerid=3143&amp;buttontext=BUY" width="60"></iframe></td></tr>');
+									$('#releases').append('<tr><td><img src="'+release.image+'" alt="Artwork"></td><td><a href="'+release.url+'" target="_blank">'+release.title+'</a></td><td width="60"><iframe frameborder="0" height="40" scrolling="no" src="https://instant.7digital.com/iframe.htm?releaseid='+release.id+'&amp;partnerid=3143&amp;buttontext=BUY" width="60"></iframe></td></tr>');
 								}
 							}
 						}
