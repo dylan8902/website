@@ -14,7 +14,7 @@
 <% @analytics.each do |analytic| %>
 	<tr>
 		<td><%= link_to analytic.uri, analytic.uri %></td>
-		<td class="width:400px"><%= timestamp analytic.created_at %></td>
+		<td class="width:400px"><%= link_to timestamp(analytic.created_at), analytic %></td>
 	</tr>
 <% end %>
 </table>

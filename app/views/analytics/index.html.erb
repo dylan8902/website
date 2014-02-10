@@ -44,12 +44,21 @@
 	</article>
 
 	<article class="col-md-4">
+
+		<h2>Recent Referes</h2>
+		<ul>
+		<% @analytics[:referers].each do |referer| %>
+			<li><%= link_to referer, analytics_search_path + "?referer=#{u(referer)}" %></li>
+		<% end %>
+		</ul>
+
 		<h2>Recent Visits</h2>
 		<ul>
 		<% @analytics[:visits].each do |visit| %>
 			<li><%= link_to visit.uri, visit %></li>
 		<% end %>
 		</ul>
+
 	</article>
 
 </section>
