@@ -1,16 +1,16 @@
-class Hostname
+class Domain
   def initialize(domain)
     @domain = domain
   end
   def matches?(request)
-    request.host.include? @domain
+    request.host == @domain || request.host == "dev.#{@domain}"
   end
 end
 
 Website::Application.routes.draw do
 
   #keepintouchabroad
-  constraints Hostname.new("keepintouchabroad.com") do
+  constraints Domain.new("keepintouchabroad.com") do
     scope module: 'kita' do
       get ""         => 'static_pages#index'
       match '*foo'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
@@ -18,7 +18,7 @@ Website::Application.routes.draw do
   end
 
   #hiddengifts
-  constraints Hostname.new("hiddengifts.co.uk") do
+  constraints Domain.new("hiddengifts.co.uk") do
     scope module: 'hidden_gifts' do
       get ""         => 'static_pages#index'
       match '*foo'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
@@ -26,20 +26,20 @@ Website::Application.routes.draw do
   end
 
   #intothewoodsyork
-  constraints Hostname.new("intothewoodsyork.dyl.anjon.es") do
+  constraints Domain.new("intothewoodsyork.dyl.anjon.es") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/intothewoods/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
   end
 
   #westsidestory
-  constraints Hostname.new("westsidestory2013.dyl.anjon.es") do
+  constraints Domain.new("westsidestory2013.dyl.anjon.es") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
   end
-  constraints Hostname.new("westsidestory.dyl.anjon.es") do
+  constraints Domain.new("westsidestory.dyl.anjon.es") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
   end
 
   #ismytraindelayed
-  constraints Hostname.new("ismytraindelayed.com") do
+  constraints Domain.new("ismytraindelayed.com") do
     get ""         => "is_my_train_delayed#departures"
     get "arrivals" => "is_my_train_delayed#arrivals"
     get "service"  => "is_my_train_delayed#service"
@@ -48,28 +48,24 @@ Website::Application.routes.draw do
   end
 
   #ismybusdelayed
-  constraints Hostname.new("ismybusdelayed.com") do
+  constraints Domain.new("ismybusdelayed.com") do
     get ""         => "is_my_bus_delayed#index"
     get "stops"    => "is_my_bus_delayed#stops"
     match '*foo'   => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
   #dylanjones.info
-  constraints Hostname.new("dylanjones.info") do
+  constraints Domain.new("dylanjones.info") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
   end
 
   #dyl.anjon.es
-  constraints Hostname.new("dyl.anjon.es") do
-
-    #301 non-https traffic
-    constraints(:protocol => (Rails.env.production? ? /http/ : /https/)) do
-      match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/#{params[:path]}" }, via: [:get, :post, :patch, :delete]
-    end
+  constraints Domain.new("dyl.anjon.es") do
 
     #301s
     get "",              to: redirect("/api"), constraints: { subdomain: 'api' }
     get "blog/id/:id",   to: redirect("/blog/%{id}")
+    get "blog/post/:id", to: redirect("/blog/%{id}")
     get "lifestream",    to: redirect("/stream")
     get "onradio",       to: redirect("/onradio/1")
     get "onradio1",      to: redirect("/onradio/1")
@@ -88,7 +84,7 @@ Website::Application.routes.draw do
     get "tvstats",       to: redirect("/episodes/stats")
     get "music/artist",  to: redirect("/music/artists")
     get "music/artist/:id", to: redirect("/music/artists/%{id}")
-    get "listens/:id",   to: redirect("/music/listens/%{id}")
+    get "listen/:id",    to: redirect("/music/listens/%{id}")
 
     get ""                => "static_pages#index",    as: "root"
 
@@ -295,5 +291,8 @@ Website::Application.routes.draw do
     get  "who"            => "static_pages#who"
     match '*foo'          => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
+
+  root to: "static_pages#error_404", as: "error_404"
+  match '*foo'   => 'static_pages#error_404', via: [:get, :post, :patch, :delete]
 
 end

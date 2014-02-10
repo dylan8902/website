@@ -9,6 +9,8 @@
 </ol>
 
 <h2><%= link_to @analytic.uri, @analytic.uri %></h2>
-<h3><%= link_to @analytic.ip, analytics_search_path + "?ip=#{u(@analytic.ip)}" %> using <%= link_to @analytic.user_agent, analytics_search_path + "?user_agent=#{u(@analytic.user_agent)}" %></h3>
+<h3><%= link_to @analytic.ip, analytics_search_path + "?ip=#{u(@analytic.ip)}" %></h3>
+<p><%= link_to @analytic.user_agent, analytics_search_path + "?user_agent=#{u(@analytic.user_agent)}" %></p>
+<p><%= link_to @analytic.referer, analytics_search_path + "?referer=#{u(@analytic.referer)}" if @analytic.referer %></p>
 <p><%= timestamp @analytic.created_at %></p>
 <%= link_to 'Back', analytics_path %>

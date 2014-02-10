@@ -10,12 +10,13 @@ class AnalyticsController < ApplicationController
   # GET /analytics.json
   # GET /analytics.xml
   def index
-    day =  Analytic.where("created_at > ?", Time.now - 1.day).order("created_at DESC")
+    day = Analytic.where("created_at > ?", Time.now - 1.day).order("created_at DESC")
     @analytics = {}
     @analytics[:projects] = Project.all.order("hits DESC")
     @analytics[:ips] = day.uniq.pluck(:ip)
     @analytics[:visits] = day
     @analytics[:user_agents] = day.uniq.pluck(:user_agent)
+    @analytics[:referers] = day.uniq.pluck(:referer)
     @analytics[:total] = Analytic.count
     @analytics[:day] = day.count
 
