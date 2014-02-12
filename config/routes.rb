@@ -116,6 +116,7 @@ Website::Application.routes.draw do
     get  "cleversounds"   => "cleversounds#index"
     get  "clock"          => "clock#index"
     get  "cron"           => "static_pages#cron"
+    get  "deepdive"       => "deep_dive#index"
 
     get  "drop/:uri" => "drops#show", as: "drop"
     resources :drops,             path: "drop",       only: [:index, :create]

@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en-gb">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>Content Discovery Video Player</title>
+	<meta name="description" content="Discover content while watching stuff.">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="shortcut icon" href="/favicon.ico">
+	<style type="text/css">
+	/* 
+	html5doctor.com Reset Stylesheet
+	v1.6.1
+	Last Updated: 2010-09-17
+	Author: Richard Clark - http://richclarkdesign.com 
+	Twitter: @rich_clark
+	*/
+	html, body, div, span, object, iframe,
+	h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+	abbr, address, cite, code,
+	del, dfn, em, img, ins, kbd, q, samp,
+	small, strong, sub, sup, var,
+	b, i,
+	dl, dt, dd, ol, ul, li,
+	fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td,
+	article, aside, canvas, details, figcaption, figure, 
+	footer, header, hgroup, menu, nav, section, summary,
+	time, mark, audio, video {
+		margin:0;
+		padding:0;
+		border:0;
+		outline:0;
+		font-size:100%;
+		vertical-align:baseline;
+		background:transparent;
+	}
+	body {
+		line-height:1;
+	}
+	article,aside,details,figcaption,figure,
+	footer,header,hgroup,menu,nav,section { 
+		display:block;
+	}
+	nav ul {
+		list-style:none;
+	}
+	blockquote, q {
+		quotes:none;
+	}
+	blockquote:before, blockquote:after,
+	q:before, q:after {
+		content:'';
+		content:none;
+	}
+	a {
+		margin:0;
+		padding:0;
+		font-size:100%;
+		vertical-align:baseline;
+		background:transparent;
+	}
+	ins {
+		background-color:#ff9;
+		color:#000;
+		text-decoration:none;
+	}
+	mark {
+		background-color:#ff9;
+		color:#000; 
+		font-style:italic;
+		font-weight:bold;
+	}
+	del {
+		text-decoration: line-through;
+	}
+	abbr[title], dfn[title] {
+		border-bottom:1px dotted;
+		cursor:help;
+	}
+	table {
+		border-collapse:collapse;
+		border-spacing:0;
+	}
+	hr {
+		display:block;
+		height:1px;
+		border:0;   
+		border-top:1px solid #cccccc;
+		margin:1em 0;
+		padding:0;
+	}
+	input, select {
+		vertical-align:middle;
+	}
+	html, body {
+		margin:0px;
+		padding:0px;
+		font-family:sans-serif;
+		font-size:10pt;
+		text-align:center;
+		overflow-x:hidden;
+		background:rgb(43,34,25);
+		color:#EEEDED;
+	}
+	h1 {
+		font-size:24pt;
+		padding:10px;
+	}
+	h2 {
+		font-size:18pt;
+		padding:10px;
+	}
+	video, img {
+		margin:5px;
+		max-width:80%;
+		max-height:80%;
+		border-radius:3px;
+	}
+	input[type="range"] {
+		width:100%;
+		cursor:e-resize;
+	}
+	section {
+		width:90%;
+		margin:0px;
+		padding:5px;
+		text-align:left;
+		overflow-x:hidden;
+	}
+	a, a:hover, a:visited {
+		color:#BFBDBA;
+		text-decoration:none;
+	}
+	a:hover {
+		color:#BFBDBA;
+		text-decoration:underline;
+	}
+	#facebook {
+		text-align:left;
+		margin-left:10px;
+		font-size:14pt;
+	}
+	#video {
+		height:400px;
+		box-shadow:0 0 5px 5px #554E47;
+	}
+	#curated, #social {
+		height:100px;
+	}
+	#curated article, #social article {
+		position:absolute;
+		margin:0px;
+		padding:0px;
+		display:inline-block;
+		width:100px;
+		height:100px;
+		cursor:pointer;
+		background:#221B14;
+		box-shadow:2px 2px 2px #332F2B;
+		border-radius:3px;
+	}
+	#curated article:hover, #social article:hover, .selected {
+		background:black;
+		color:white;
+	}
+	#bookmarks {
+		height:20px;
+	}
+	#bookmarks article {
+		position:absolute;
+		margin:0px;
+		padding:0px;
+		display:inline-block;
+		width:20px;
+		height:20px;
+		cursor:pointer;
+	}
+	#container {
+		padding:20px;
+		font-size:24pt;
+		color:white;
+		height:100%;
+		width:100%;
+		z-index:1000;
+	}
+	#blackout {
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		position:fixed;
+		background:rgba(0, 0, 0, 0.7);
+		z-index:1000;
+	}
+	</style>
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<%= javascript_include_tag "application" %>
+	<script type="text/javascript" src="http://cdn.beaconpush.com/clients/client-1.js"></script>
+	<script type="text/javascript">
+		/*
+			GLOBALS
+		*/
+		var video;
+		var keyframes;	//Video Timing Data
+		var frameSize = 110;
+		var bookmarks = [];
+		var facebook;
+		
+		function refreshTimeline() {
+			$('#progress').val(Math.floor(video.currentTime)/Math.floor(video.duration)*100);
+			$('#curated article').each(function(index) {
+				var time = $('#keyframe-'+index).attr('data-time');
+				$('#keyframe-'+index).css('left',frameSize*(time-video.currentTime));
+			});
+			$('#bookmarks article').each(function(index) {
+				var time = $('#bookmark-'+index).attr('data-time');
+				$('#bookmark-'+index).css('left',frameSize*(time-video.currentTime));
+			});
+			$('#social article').each(function(index) {
+				var time = $('#social-'+index).attr('data-time');
+				$('#social-'+index).css('left',frameSize*(time-video.currentTime));
+			});
+			var refresh = setTimeout("refreshTimeline()",50);
+		}
+		
+		/*
+			Play the video and start timeline
+		*/
+		function canPlay() {
+			$('#progress').attr('max',video.duration);
+			refreshTimeline();
+		}
+		
+		/*
+			Play/Pause Button Pushed
+		*/
+		function playPause() {
+			if(video.paused) {
+				$.ajax({
+					type	: 'GET',
+					dataType: 'jsonp',
+					url		: 'http://dyl.anjon.es/scripts/json.php',
+					data	: 'channel=<?php echo $channel; ?>&command=play&time='+video.currentTime,
+					success	: 
+						function(data) {
+						}
+				});
+			}
+			else {
+				$.ajax({
+					type	: 'GET',
+					dataType: 'jsonp',
+					url		: 'http://dyl.anjon.es/scripts/json.php',
+					data	: 'channel=<?php echo $channel; ?>&command=pause&time='+video.currentTime,
+					success	: 
+						function(data) {
+						}
+				});
+			}
+  		}
+
+  		/*
+  			Adds the bookmark to local storage and
+  			adds a star to the user timeline
+  		*/
+  		function bookmark() {
+  			$.ajax({
+				type	: 'GET',
+				dataType: 'jsonp',
+				url		: 'http://dyl.anjon.es/scripts/json.php',
+				data	: 'channel=<?php echo $channel; ?>&command=bookmark&time='+video.currentTime+'&facebook='+facebook,
+				success	: 
+					function(data) {
+					}
+				});
+  		}
+
+		function played() {
+			$('#pause').html('Pause');
+		}
+
+		function paused() {
+			$('#pause').html('Play');
+		}
+
+		$(document).ready(function() {
+		
+			/*
+				FACEBOOK
+			*/
+			if(window.location.hash.length!=0) {
+				$.ajax({
+					type     : 'GET',
+					dataType : 'jsonp',
+					url      : 'https://graph.facebook.com/me',
+					data     : 'fields=name&'+window.location.hash.substring(1),
+					success  : 
+						function(reply) {
+								$('#facebook').html('<img src="http://graph.facebook.com/'+reply.id+'/picture?type=square" style="height:20px;margin-bottom:-2px;">  '+reply.name);
+								facebook = reply.id;
+						}
+				});
+			}
+		
+			/*
+				Load in the JSON file and set up keyframes
+			*/
+			$.ajax({
+				type	: 'GET',
+				dataType: 'json',
+				url		: '/uploads/example1.json',
+				success	: 
+					function(data) {
+						$('#title').html(data.title);
+						$('#video').attr('src',data.uri).attr('preload','auto');
+						video = document.getElementById("video");
+						video.addEventListener('play', played, false);
+						video.addEventListener('pause', paused, false);
+						video.addEventListener('canplay', canPlay, false);
+						video.removeAttribute('controls');
+						keyframes = data.layers[0].keyframes;
+						for(var a in data.layers[0].keyframes) {
+							var item = data.layers[0].keyframes[a];
+							$('#curated').append('<article id="keyframe-'+a+'" title="'+item.title+'" data-type="'+item.type+'" data-uri="'+item.uri+'" data-time="'+item.time+'" style="left:'+(frameSize*item.time)+'px;">'+item.title+'</article>');
+						}
+					},
+					error	:
+						function() {
+							alert('Could not get metadata file');
+						}
+			});
+			
+			/*
+				Load in bookmarks
+			*/
+
+			
+			/*
+				Move slider to update time
+			*/
+			$('#progress').change(function() {
+				video.currentTime = $(this).val();
+				video.pause();
+			});
+			
+			/*
+				Play/Pause
+			*/
+			$('#video').click(function() {
+				playPause();
+			});
+			
+			/*
+				Expand article on click
+			*/
+			$(document).on('click','article', function() {
+				$.ajax({
+					type	: 'GET',
+					dataType: 'jsonp',
+					url		: 'http://dyl.anjon.es/scripts/json.php',
+					data	: 'channel=<?php echo $channel; ?>&command=pause&time='+video.currentTime,
+					success	: 
+						function(data) {
+						}
+				});
+				$.ajax({
+					type	: 'POST',
+					dataType: 'jsonp',
+					url		: 'http://172.16.72.208/m',
+					data	: 'user=me&message='+$(this).attr('id').replace('keyframe-',''),
+					success	: 
+						function(data) {
+						}
+				});
+				
+				$('#container').html('<h2>'+$(this).attr('title')+'</h2>');
+				switch($(this).attr('data-type')) {
+					case 'image':
+						$('#container').append('<img src="'+$(this).attr('data-uri')+'">');
+					break;
+
+					case 'video':
+						$('#container').append('<video src="'+$(this).attr('data-uri')+'" controls preload="auto"></video>');
+					break;
+
+					default:
+						$('#container').append($(this).attr('data-uri'));
+					break;
+				}
+				$('#blackout').slideUp(700).fadeIn(600);
+			});
+			
+			/*
+				Close article
+			*/
+			$(document).on('click', '#blackout', function() {
+				$('#blackout').fadeOut(1000);
+			});
+			
+			/*
+				Listen for Commands
+			*/
+			Beacon.connect('d8cb8546', ['<?php echo $channel; ?>']);
+			Beacon.listen(function (data) {
+				if(data.command=='pause')
+					video.pause();
+				else if(data.command=='play') {
+					video.currentTime = data.time;
+					video.play();
+				}
+				else if(data.command=='bookmark') {
+					bookmarks.push(data.time);
+					if(data.facebook.length)
+						var image = '<img src="http://graph.facebook.com/'+data.facebook+'/picture?type=square" style="height:20px;">';
+					else
+						var image = '';
+					$('#bookmarks').append('<article id="bookmark-'+(bookmarks.length-1)+'" title="Bookmark" data-time="'+data.time+'">'+image+'</article>');
+				}
+			});
+			
+			/*
+				LISTEN FOR BOOKMARK ACTION
+			*/
+			$(document).keydown(function(e) {
+				var press;
+				if(e.keyCode==32) {
+					bookmark();
+				}
+			});
+			
+
+		});
+	</script>
+</head>
+<body>
+	<p id="facebook"><a href="https://www.facebook.com/dialog/oauth?client_id=319492878095504&redirect_uri=http://dyl.anjon.es/deepdive&response_type=token">Connect with facebook</a></p>
+	<h1 id="title">Choose a Video</h1>
+	<video id="video"></video>
+	<p id="controls">
+		<input id="progress" type="range" min="0" value="0">
+		<section id="curated"></section>
+		<section id="bookmarks"></section>
+	</p>
+	<div id="blackout" style="display:none"><div id="container"></div></div>
+</body>
+</html>
