@@ -85,6 +85,8 @@ Website::Application.routes.draw do
     get "music/artist",  to: redirect("/music/artists")
     get "music/artist/:id", to: redirect("/music/artists/%{id}")
     get "listen/:id",    to: redirect("/music/listens/%{id}")
+    get "listens/:id",   to: redirect("/music/listens/%{id}")
+    get "playorslay",    to: redirect("/slayorplay")
 
     get ""                => "static_pages#index",    as: "root"
 
