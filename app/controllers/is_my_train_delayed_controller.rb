@@ -11,8 +11,11 @@ class IsMyTrainDelayedController < ApplicationController
     @from = params[:from]
     @to = params[:to]
     
-    @trains = get_trains(@from, @to, @departing) unless @from.nil? and @to.nil?
-
+    unless @from.nil? and @to.nil?
+      @trains = get_trains(@from, @to, @departing)
+      @stations = did_you_mean @from, @to if @trains == []
+    end
+ 
     respond_to do |format|
       format.html
       format.json { render json: @trains, callback: params[:callback] }
@@ -30,7 +33,10 @@ class IsMyTrainDelayedController < ApplicationController
     @from = params[:from]
     @to = params[:to]
 
-    @trains = get_trains(@from, @to, @departing) unless @from.nil? and @to.nil?
+    unless @from.nil? and @to.nil?
+      @trains = get_trains(@from, @to, @departing)
+      @stations = did_you_mean @from, @to if @trains == []
+    end
 
     respond_to do |format|
       format.html 
@@ -75,6 +81,14 @@ class IsMyTrainDelayedController < ApplicationController
 
 
   private
+    def did_you_mean(from, to)
+      stations = { from: [], to: [] }
+      stations[:from] = Trains::Location.where("station = 1 AND name LIKE ?", "%#{from}%").limit(3) unless from.empty?
+      stations[:to] = Trains::Location.where("station = 1 AND name LIKE ?", "%#{to}%").limit(3) unless to.empty?
+      return stations
+    end
+
+
     def get_trains(from, to, departing)
       if from
         url = "http://ojp.nationalrail.co.uk/service/ldb/liveTrainsJson?departing="

@@ -85,6 +85,8 @@ Website::Application.routes.draw do
     get "music/artist",  to: redirect("/music/artists")
     get "music/artist/:id", to: redirect("/music/artists/%{id}")
     get "listen/:id",    to: redirect("/music/listens/%{id}")
+    get "listens/:id",   to: redirect("/music/listens/%{id}")
+    get "playorslay",    to: redirect("/slayorplay")
 
     get ""                => "static_pages#index",    as: "root"
 
@@ -116,6 +118,7 @@ Website::Application.routes.draw do
     get  "cleversounds"   => "cleversounds#index"
     get  "clock"          => "clock#index"
     get  "cron"           => "static_pages#cron"
+    get  "deepdive"       => "deep_dive#index"
 
     get  "drop/:uri" => "drops#show", as: "drop"
     resources :drops,             path: "drop",       only: [:index, :create]

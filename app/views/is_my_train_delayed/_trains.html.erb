@@ -1,7 +1,20 @@
 <% if @trains == [] %>
 	<p>Sorry, no train information for that journey</p>
 	<p>Please note, this service works with direct journeys and trains scheduled in the next few hours</p>
+
+	<% if @stations[:from].count > 0 or @stations[:to].count > 0 %>
+		<h3>Did you mean...?</h3>
+		<% @stations[:from].each do |station| %>
+			<p><%= link_to station, "?from=#{u(station)}&to=#{u(@to)}" %></p>
+		<% end %>
+		<% @stations[:to].each do |station| %>
+			<p><%= link_to station, "?to=#{u(station)}&from=#{u(@from)}" %></p>
+		<% end %>
+	</ul>
+	<% end %>
+
 <% end %>
+
 
 <% if @trains and @trains != [] %>
 	<table>
