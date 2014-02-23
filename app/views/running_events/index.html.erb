@@ -31,6 +31,12 @@
 			</tbody>
 		</table>
 	</article>
+	<article class="col-md-5">
+		<article class="well">
+			<h2>Total Distance</h2>
+			<p style="font-size:300%"><%= icon("road") %> <%= number_with_delimiter RunningEvent.sum(:distance) %>m</p>
+		</article>
+	</article>
 </section>
 
 <%= link_to "New", new_running_event_path, class: "btn btn-primary" if current_user and current_user.admin %>	
