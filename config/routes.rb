@@ -10,6 +10,9 @@ end
 Website::Application.routes.draw do
 
   #keepintouchabroad
+  constraints Domain.new("www.keepintouchabroad.com") do
+    match "/(*path)" => redirect {|params, req| "http://keepintouchabroad.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("keepintouchabroad.com") do
     scope module: 'kita' do
       get ""         => 'static_pages#index'
@@ -18,6 +21,9 @@ Website::Application.routes.draw do
   end
 
   #hiddengifts
+  constraints Domain.new("www.hiddengifts.co.uk") do
+    match "/(*path)" => redirect {|params, req| "http://hiddengifts.co.uk#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("hiddengifts.co.uk") do
     scope module: 'hidden_gifts' do
       get ""         => 'static_pages#index'
@@ -26,24 +32,39 @@ Website::Application.routes.draw do
   end
 
   #stjohn
+  constraints Domain.new("www.stjohn.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "http://www.stjohnwales.org.uk/apps/firstaidapp#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("stjohn.dyl.anjon.es") do
-    match "/(*path)" => redirect {|params, req| "http://www.stjohnwales.org.uk/apps/firstaidapp/#{params[:path]}.#{params[:format]}"}, via: [:get, :post, :patch, :delete]
+    match "/(*path)" => redirect {|params, req| "http://www.stjohnwales.org.uk/apps/firstaidapp#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
   end
 
   #intothewoodsyork
+  constraints Domain.new("www.intothewoodsyork.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/intothewoods#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("intothewoodsyork.dyl.anjon.es") do
-    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/intothewoods/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/intothewoods#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
   end
 
   #westsidestory
+  constraints Domain.new("www.westsidestory2013.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("westsidestory2013.dyl.anjon.es") do
-    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
+  constraints Domain.new("www.westsidestory.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
   end
   constraints Domain.new("westsidestory.dyl.anjon.es") do
-    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/westsidestory#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
   end
 
   #ismytraindelayed
+  constraints Domain.new("www.ismytraindelayed.com") do
+    match "/(*path)" => redirect {|params, req| "http://ismytraindelayed.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("ismytraindelayed.com") do
     get ""         => "is_my_train_delayed#departures"
     get "arrivals" => "is_my_train_delayed#arrivals"
@@ -53,6 +74,9 @@ Website::Application.routes.draw do
   end
 
   #ismybusdelayed
+  constraints Domain.new("www.ismybusdelayed.com") do
+    match "/(*path)" => redirect {|params, req| "http://ismybusdelayed.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("ismybusdelayed.com") do
     get ""         => "is_my_bus_delayed#index"
     get "stops"    => "is_my_bus_delayed#stops"
@@ -60,13 +84,18 @@ Website::Application.routes.draw do
   end
 
   #dylanjones.info
+  constraints Domain.new("www.dylanjones.info") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("dylanjones.info") do
-    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/#{params[:path]}"}, via: [:get, :post, :patch, :delete]
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
   end
 
   #dyl.anjon.es
+  constraints Domain.new("www.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("dyl.anjon.es") do
-
     #301s
     get "",              to: redirect("/api"), constraints: { subdomain: 'api' }
     get "blog/id/:id",   to: redirect("/blog/%{id}")
