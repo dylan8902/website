@@ -31,6 +31,10 @@ class Music::ArtistsController < ApplicationController
   # GET /music/artist/1234-567ab-cdef-0012.xml
   def show
     Project.hit 14
+    
+    unless params[:id] and params[:id].length == 36
+      redirect_to music_artists_path + "?q=#{params[:id]}" and return
+    end
 
     @artist = Hash.new
     
