@@ -5,10 +5,10 @@
 	<% if @stations[:from].count > 0 or @stations[:to].count > 0 %>
 		<h3>Did you mean...?</h3>
 		<% @stations[:from].each do |station| %>
-			<p><%= link_to station, "?from=#{u(station)}&to=#{u(@to)}" %></p>
+			<p><%= link_to station, "?from=#{u(station.crs)}&to=#{u(@to)}" %></p>
 		<% end %>
 		<% @stations[:to].each do |station| %>
-			<p><%= link_to station, "?to=#{u(station)}&from=#{u(@from)}" %></p>
+			<p><%= link_to station, "?to=#{u(station.crs)}&from=#{u(@from)}" %></p>
 		<% end %>
 	</ul>
 	<% end %>

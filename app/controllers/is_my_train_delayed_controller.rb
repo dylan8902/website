@@ -83,8 +83,8 @@ class IsMyTrainDelayedController < ApplicationController
   private
     def did_you_mean(from, to)
       stations = { from: [], to: [] }
-      stations[:from] = Trains::Location.where("station = 1 AND name LIKE ?", "%#{from}%").limit(3) unless from.empty?
-      stations[:to] = Trains::Location.where("station = 1 AND name LIKE ?", "%#{to}%").limit(3) unless to.empty?
+      stations[:from] = Trains::Location.where("station = 1 AND name LIKE ?", "%#{from}%").limit(5) unless from.empty?
+      stations[:to] = Trains::Location.where("station = 1 AND name LIKE ?", "%#{to}%").limit(5) unless to.empty?
       return stations
     end
 
