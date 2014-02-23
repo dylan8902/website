@@ -24,6 +24,11 @@ Website::Application.routes.draw do
       match '*foo'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
     end
   end
+  
+  #stjohn
+  constraints Domain.new("stjohn.dyl.anjon.es") do
+    match "/(*path)" => redirect {|params, req| "http://www.stjohnwales.org.uk/apps/firstaidapp/#{params[:path]}.#{params[:format]}"}, via: [:get, :post, :patch, :delete]
+  end
 
   #intothewoodsyork
   constraints Domain.new("intothewoodsyork.dyl.anjon.es") do
