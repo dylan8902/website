@@ -44,12 +44,12 @@ class Trains::LocationsController < ApplicationController
     
     @og = {
         "og:title" => @location,
-        "og:type" => "train_track:station",
+        "og:type" => "train-track:station",
         "og:url" => request.original_url,
         "og:image" => "https://maps.google.com/maps?ll=#{@location.lat},#{@location.lng}&amp;z=15&amp;output=embed",
         "og:site_name" => "dyl.anjon.es",
         "fb:app_id" => "272514462916508",
-        "train_track:crs" => @location.crs
+        "train-track:crs" => @location.crs
       }
 
     respond_to do |format|
