@@ -41,6 +41,16 @@ class Trains::LocationsController < ApplicationController
   # GET /trains/locations/1.xml
   def show
     @location =Trains::Location.find(params[:id])
+    
+    @og = {
+        "og:title" => @location,
+        "og:type" => "train_track:station",
+        "og:url" => request.original_url,
+        "og:image" => "https://maps.google.com/maps?ll=#{@location.lat},#{@location.lng}&amp;z=15&amp;output=embed",
+        "og:site_name" => "dyl.anjon.es",
+        "fb:app_id" => "272514462916508",
+        "train_track:crs" => @location.crs
+      }
 
     respond_to do |format|
       format.html
