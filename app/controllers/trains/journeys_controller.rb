@@ -24,6 +24,17 @@ class Trains::JourneysController < ApplicationController
   def show
     @journey = Trains::Journey.find(params[:id])
 
+    @og = {
+      "og:title" => @journey,
+      "og:type" => "train-track:train_journey",
+      "og:url" => request.original_url,
+      "og:image" => @journey.google_map_image,
+      "og:site_name" => "dyl.anjon.es",
+      "fb:app_id" => "272514462916508",
+      "train-track:origin_station" => trains_location_url(@journey.origin),
+      "train-track:destination_station" => trains_location_url(@journey.destination)
+    }
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @journey, methods: [:origin, :destination, :legs], callback: params[:callback] }
