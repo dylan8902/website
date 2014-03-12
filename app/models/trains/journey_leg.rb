@@ -1,8 +1,10 @@
 class Trains::JourneyLeg < ActiveRecord::Base
   self.table_name = 'train_journey_legs'
   belongs_to :train_journey
-  validates :departure_crs, presence: true
-  validates :arrival_crs, presence: true
+  validates :departure_crs, presence: true, length: { is: 3 }
+  validates :departure_time, presence: true
+  validates :arrival_crs, presence: true, length: { is: 3 }
+  validates :arrival_time, presence: true
   before_save :ensure_crs_uppercase
 
 

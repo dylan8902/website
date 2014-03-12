@@ -57,7 +57,8 @@ class Trains::JourneyLegsController < ApplicationController
   def create
     @journey = Trains::Journey.find(params[:journey_id])
     render_403 and return if @journey.user_id != current_user.id
-
+    @url = "/trains/journeys/#{@journey.id}/legs"
+    @method = :POST
     @journey_leg = Trains::JourneyLeg.new(journey_leg_params.merge(journey_id: @journey.id))
 
     respond_to do |format|
@@ -108,7 +109,7 @@ class Trains::JourneyLegsController < ApplicationController
     @journey_leg.destroy
 
     respond_to do |format|
-      format.html { redirect_to trains_journeys_url }
+      format.html { redirect_to @journey_leg.journey }
       format.json { head :no_content }
       format.xml { head :no_content }
     end

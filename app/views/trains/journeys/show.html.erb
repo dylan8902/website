@@ -1,7 +1,7 @@
 <% provide(:title, "Train Journey:: #{@journey.to_s}") %>
-<% provide(:description, "#{@journey.user.name}'s journey") %>
+<% provide(:description, "#{@journey.user.name}'s journey to #{@journey.destination} from #{@journey.origin}") %>
 
-<h1>Journey <small><%= @journey %></small></h1>
+<h1>Train Journey <small><%= @journey %></small></h1>
 <ol class="breadcrumb">
 	<li><%= link_to 'Trains', trains_root_path, title: "Trains Home" %></li>
 	<li><%= link_to 'Journeys', trains_journeys_path, title: "Your Train Journeys" %></li>
@@ -20,11 +20,19 @@
 			</thead>
 			<tbody>
 			<% @journey.legs.each do |journey_leg| %>
-				<tr><td><%= journey_leg.departure_time %></td><td><%= link_to "#{journey_leg.origin} - #{journey_leg.destination}", journey_leg.link %></td><td><%= journey_leg.arrival_time %></td></tr>
+				<tr>
+					<td><%= journey_leg.departure_time.strftime("%H:%M") unless journey_leg.departure_time.nil? %></td>
+					<td><%= link_to "#{journey_leg.origin} - #{journey_leg.destination}", journey_leg.link %></td>
+					<td><%= journey_leg.arrival_time.strftime("%H:%M") unless journey_leg.arrival_time.nil? %></td>
+				<% if @journey.user == current_user %>
+					<td><%= link_to 'X', journey_leg.link, confirm: "Are you sure?", method: :delete, class: "btn btn-xs btn-danger" %></td>
+				<% end %>
+				</tr>
 			<% end %>
 			</tbody>
 		</table>
 		<%= link_to 'Add Leg', new_trains_journey_journey_leg_path(@journey), class: "btn btn-primary" if @journey.user == current_user %>
+		<%= link_to 'Delete Journey', @journey, confirm: "Are you sure?", method: :delete, class: "btn btn-danger" if @journey.user == current_user %>
 		<%= link_to 'Back to Journeys', trains_journeys_path, class: "btn btn-default" %>
 	</article>
 </section>
