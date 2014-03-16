@@ -178,7 +178,7 @@ class Trains::Schedule < ActiveRecord::Base
 
 
   def self.parse_file
-    file = "/Users/dylan/Downloads/schedule.json"
+    file = "/Users/dylan/file"
 
     unless File.exist? file
       logger.error "No file to parse found (#{file})"
@@ -220,7 +220,6 @@ class Trains::Schedule < ActiveRecord::Base
       service_branding: schedule['schedule_segment']['CIF_service_branding'],
       schedule_start_date: schedule['schedule_start_date'],
       train_status: schedule['train_status'],
-      transaction_type: schedule['transaction_type']
     )
     
     unless schedule['schedule_segment']['schedule_location'].nil? then
@@ -273,7 +272,8 @@ class Trains::Schedule < ActiveRecord::Base
     locations = self.schedule_locations
     locations.each_with_index do |l, i|
       distances << 0 if i == 0
-      distances << Trains::Location.network_link(locations[i-1].location, l.location, l.line).distance if i > 0
+      link = Trains::Location.network_link(locations[i-1].location, l.location, l.line)
+      distances << link.distance if i > 0 and link
     end
     return distances
   end
