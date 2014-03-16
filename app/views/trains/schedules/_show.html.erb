@@ -23,9 +23,11 @@
 	<li>
 		<a href="#detailed" data-toggle="tab">Detailed</a>
 	</li>
+<% if @date %>
 	<li>
 		<a  href="#calendar" data-toggle="tab"><%= icon("calendar") %> <%= @date.strftime('%Y-%m-%d') %></a>
 	</li>
+<% end %>
 </ul>
 <section class="tab-content">
 
