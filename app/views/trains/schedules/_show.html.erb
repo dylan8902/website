@@ -70,7 +70,7 @@
 			</article>
 			
 			<article class="col-md-8">
-			<% if @schedule.schedule_locations.size > 0 %>
+			<% if @schedule.public? %>
 				<h4>Public Timetable</h4>
 				<table class="table table-bordered table-striped">
 					<thead>
@@ -94,6 +94,9 @@
 					<% end %>
 					</tbody>
 				</table>
+			<% else %>
+			<h5>This schedule does not appear in the public timetable</h5>
+			<a href="#detailed" data-toggle="tab">View the working timetable</a>
 			<% end %>
 			</article>
 			

@@ -14,6 +14,15 @@ class Trains::Schedule < ActiveRecord::Base
     return self.stp_indicator == "C"
   end
 
+
+  def public?
+    self.schedule_locations.each do |l|
+      return true if l.public_arrival or l.public_departure
+    end
+    return false
+  end
+
+
   def uid
     self.train_uid
   end

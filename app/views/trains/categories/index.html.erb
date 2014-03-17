@@ -1,0 +1,53 @@
+<% provide(:title, 'Trains:: Categories') %>
+<% provide(:description, 'All the different types of train category you get in the UK.') %>
+
+<h1>Train Categories</h1>
+
+<ol class="breadcrumb">
+	<li><%= link_to "Trains", trains_root_path %></li>
+	<li><%= link_to 'Journeys', trains_journeys_path, title: "Your Train Journeys" %></li>
+	<li><%= link_to "Schedules", trains_schedules_path %></li>
+	<li><%= link_to "Locations", trains_locations_path %></li>
+	<li class="active">Categories</li>
+</ol>
+
+
+<%= form_tag(trains_categories_path, :method => "get", :class => "text-center") do %>
+	<div class="input-append well">
+		<%= text_field_tag(:q, @from, class: "form-control", placeholder: "Search for a category", autofocus: true, value: @q) %>
+	</div>
+<% end %>
+
+<% unless @categories.nil? %>
+
+	<p>
+		<%= pluralize @categories.total_entries, 'category' %> found
+	</p>
+
+	<% if @categories.size > 0 %>
+	<table class="table table-bordered table-striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Code</th>
+				<th>Name</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @categories.each do |category| %>
+			<tr>
+				<td><%= category.id %></td>
+				<td><%= category.code %></td>
+				<td><%= link_to category.name, category %></td>
+				<td><%= category.description %></td>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+
+	<%= paginate @categories %>
+
+	<% end %>
+
+<% end %>
