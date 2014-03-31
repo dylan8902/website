@@ -1,0 +1,28 @@
+<% provide(:title, 'Trains:: Power Type:: #{@power_type.name}') %>
+<% provide(:description, 'Train schedules for trains that are #{@power_type.name}.') %>
+
+<h1><%= @power_type.name %></h1>
+
+<ol class="breadcrumb">
+  <li><%= link_to "Trains", trains_root_path %></li>
+  <li><%= link_to "Power Types", trains_power_types_path %></li>
+  <li class="active"><%= @power_type.name %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-5">
+		<section class="panel panel-default">
+			<header class="panel-heading">
+				<h3 class="panel-title">Operating Routes</h3>
+			</header>
+			<article class="panel-body">
+				<div class="list-group">
+				<% @routes.each do |route| %>
+					<%= link_to "#{route[:origin].location.name} - #{route[:destination].location.name}", trains_schedule_uid_path(route[:schedule]), class: "list-group-item" %>
+				<% end %>
+				</div>
+				<%= paginate @routes %>
+			</article>
+		</section>
+	</article>
+</section>

@@ -1,0 +1,8 @@
+<p id="type"><a href="/">Departures</a> <a href="/arrivals" style="font-weight:bold">Arrivals</a></p>
+<form method="get" action= "/arrivals">
+	<label for="from">INTO:</label> <input id="from" type="text" name="from" value="<%= @from %>" required>
+	<label for="to">ORIGIN:</label> <input id="to" type="text" name="to" value="<%= @to %>" placeholder="(optional)">
+	<input type="submit" value="Is My Plane Delayed?">
+</form>
+	
+<%= render 'planes' %>

@@ -1,8 +1,12 @@
 class Trains::CategoriesController < ApplicationController
 
+  # GET /trains/categories
+  # GET /trains/categories.json
+  # GET /trains/categories.xml
   def index
-    @q = params['q']    
-    @categories =  Category.where("code = ? OR name LIKE ?", @q, "#{@q}%").paginate(@page)
+    @q = params['q']
+    @page[:order] = params[:order] || "name ASC"   
+    @categories =  Trains::Category.where("code = ? OR name LIKE ?", @q, "#{@q}%").paginate(@page)
 
     respond_to do |format|
       format.html
@@ -13,8 +17,14 @@ class Trains::CategoriesController < ApplicationController
   end
 
 
+  # GET /trains/categories/1
+  # GET /trains/categories/1.json
+  # GET /trains/categories/1.xml
   def show
-    @category = Category.find(params[:id])
+    @category = Trains::Category.find(params[:id])
+    @page[:order] = "id"
+    @page[:limit] = 5
+    @routes = @category.routes(@page).paginate(@page)
 
     respond_to do |format|
       format.html

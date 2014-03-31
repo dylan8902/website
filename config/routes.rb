@@ -83,6 +83,18 @@ Website::Application.routes.draw do
     match '*foo'   => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
+  #ismyplanedelayed
+  constraints Domain.new("www.ismyplanedelayed.com") do
+    match "/(*path)" => redirect {|params, req| "http://ismyplanedelayed.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
+  constraints Domain.new("ismyplanedelayed.com") do
+    get ""         => "is_my_plane_delayed#departures"
+    get "arrivals" => "is_my_plane_delayed#arrivals"
+    get "flight"   => "is_my_plane_delayed#flight"
+    get "airports" => "is_my_plane_delayed#airports"
+    match '*foo'   => 'application#error_404', via: [:get, :post, :patch, :delete]
+  end
+
   #dylanjones.info
   constraints Domain.new("www.dylanjones.info") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es#{req.fullpath}"}, via: [:get, :post, :patch, :delete]

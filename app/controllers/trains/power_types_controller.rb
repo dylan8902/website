@@ -5,6 +5,7 @@ class Trains::PowerTypesController < ApplicationController
   # GET /trains/power-types.xml
   def index
     @q = params['q']    
+    @page[:order] = "name ASC"    
     @power_types =  Trains::PowerType.where("code = ? OR name LIKE ?", @q, "#{@q}%").paginate(@page)
 
     respond_to do |format|
@@ -21,6 +22,9 @@ class Trains::PowerTypesController < ApplicationController
   # GET /trains/power-types/1.xml
   def show
     @power_type = Trains::PowerType.find(params[:id])
+    @page[:order] = "id"
+    @page[:limit] = 5
+    @routes = @power_type.routes(@page).paginate(@page)
 
     respond_to do |format|
       format.html

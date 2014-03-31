@@ -33,6 +33,7 @@ class Trains::Location < ActiveRecord::Base
 
 
   def self.network_link origin, destination, line
+    return nil if origin.nil? or destination.nil? or line.nil?
     sql = "(origin_tiploc = ? AND destination_tiploc = ?) OR (destination_tiploc = ? AND origin_tiploc = ?)"
     results = Trains::LocationDistance.where(sql, origin.tiploc, destination.tiploc, destination.tiploc, origin.tiploc)
     results.each do |result|
@@ -95,7 +96,7 @@ class Trains::Location < ActiveRecord::Base
 
 
   def map_marker_text
-    "#{self.name} - #{self.lat}, #{self.lng}"
+    "#{self.id}. #{self.name} - #{self.lat}, #{self.lng}"
   end
 
 end

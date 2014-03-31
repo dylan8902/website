@@ -39,6 +39,7 @@ class Trains::Journey < ActiveRecord::Base
     return "#{origin} to #{destination}"
   end
 
+
   def google_map_image
     return nil if self.legs.count == 0
     src = "https://maps.googleapis.com/maps/api/staticmap?path=color:0xff0000%7Cweight:7"
@@ -48,5 +49,12 @@ class Trains::Journey < ActiveRecord::Base
     src << "%7C#{legs.last.destination.lat},#{legs.last.destination.lng}" if legs.last.destination and legs.last.destination.lat and legs.last.destination.lng
     return src << "&size=320x320&sensor=false".html_safe
   end
+
+
+  def departure_time_and_date
+    return "" if self.departure_time.nil?
+    return self.departure_time.strftime("%d/%m/%Y - %H:%M")
+  end
+  
 
 end

@@ -2,8 +2,8 @@
 	var map;
 	$(document).ready(function () {
 		map = new L.Map('map');
-		var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/778f546f046c4a63849269eb53d92a84/997/256/{z}/{x}/{y}.png', {
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+		var cloudmade = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 			maxZoom: 18
 		});
 	<% if @locations.first %>

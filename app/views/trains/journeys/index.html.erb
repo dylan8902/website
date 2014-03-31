@@ -1,7 +1,7 @@
 <% provide(:title, "Train Journeys") %>
 <% provide(:description, "A record of your train journeys.") %>
 
-<h1>Your Train Journeys</h1>
+<h1>Train Journeys</h1>
 
 <ol class="breadcrumb">
 	<li><%= link_to 'Trains', trains_root_path, title: "Trains Home" %></li>
@@ -13,10 +13,12 @@
 
 <section class="row">
 	<article class="col-md-5">
+		<h2>Your Train Journeys</h2>
 		<table class="table table-striped">
 			<% @journeys.each do |journey| %>
 			<tr>
-				<td><%= journey.departure_time %></td><td><%= link_to journey, journey %></td>
+				<td><%= journey.departure_time_and_date %></td>
+				<td><%= link_to journey, journey %></td>
 			</tr>
 			<% end %>
 		</table>
