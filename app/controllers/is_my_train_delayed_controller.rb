@@ -62,9 +62,9 @@ class IsMyTrainDelayedController < ApplicationController
   end
 
 
-  # GET /station
-  # GET /station.json
-  # GET /station.xml
+  # GET /stations
+  # GET /stations.json
+  # GET /stations.xml
   def stations
     if params['lat'] and params['lng']
       @page[:order] = params[:order] || "distance ASC"

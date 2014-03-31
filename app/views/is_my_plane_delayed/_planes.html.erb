@@ -1,0 +1,16 @@
+<% if @planes == [] %>
+	<p>Sorry, no plane information for that journey</p>
+	<p>Please note, this service works with planes we know about (which is currently none)</p>
+
+	<% if @airports[:from].count > 0 or @airports[:to].count > 0 %>
+		<h3>Did you mean...?</h3>
+		<% @airports[:from].each do |airport| %>
+			<p><%= link_to airport, "?from=#{u(airport.iata)}&to=#{u(@to)}" %></p>
+		<% end %>
+		<% @airports[:to].each do |airport| %>
+			<p><%= link_to station, "?to=#{u(airport.iata)}&from=#{u(@from)}" %></p>
+		<% end %>
+	</ul>
+	<% end %>
+
+<% end %>
