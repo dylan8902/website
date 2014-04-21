@@ -1,11 +1,13 @@
 website
 =======
 
-This is the Ruby on Rails application that is my website. It contains the code for the following websites:
+A Ruby on Rails application running my sites:
 
 * dyl.anjon.es
 * ismytraindelayed.com
 * ismybusdelayed.com
+* ismyplanedelayed.com
+* hiddengifts.co.uk
 
 Feel free to re-use some of the code and suggest improvements/fixes
 
