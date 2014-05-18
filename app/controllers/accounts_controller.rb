@@ -16,6 +16,7 @@ class AccountsController < ApplicationController
       format.html # index.html.erb
       format.json { render json: @accounts, callback: params[:callback] }
       format.xml { render xml: @accounts }
+      format.rss { render 'feed' }
     end
   end
 
@@ -33,6 +34,7 @@ class AccountsController < ApplicationController
       format.html { render 'index.html.erb' }
       format.json { render json: @accounts, callback: params[:callback] }
       format.xml { render xml: @accounts }
+      format.rss { render 'feed' }
     end
   end
 
