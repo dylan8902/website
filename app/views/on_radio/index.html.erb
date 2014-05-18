@@ -15,7 +15,7 @@
 <section class="row">
 	<section class="col-md-6">
 		
-		<img id="show-image" class="listen thumbnail" src="http://ichef.bbci.co.uk/images/ic/<%= @radio_station.show['programme']['image']['pid'] %>.jpg" alt="Show Image" style="margin-top:15px">
+		<img id="show-image" class="listen thumbnail" src="http://ichef.bbci.co.uk/images/ic/480x270/<%= @radio_station.show['programme']['image']['pid'] %>.jpg" alt="Show Image" style="margin-top:15px">
 		<h2><a id="show-title" href="http://www.bbc.co.uk/programmes/<%= @radio_station.show['pid'] %>"><%= @radio_station.show['programme']['display_titles']['title'] %></a></h2>
 		<p id="show-info"><%= @radio_station.show['programme']['display_titles']['subtitle'] %>: <%= @radio_station.show['programme']['short_synopsis'] %></p>
 
@@ -181,7 +181,7 @@
 			success  : 
 				function(reply) {
 					$('#show-info').html(''+reply.show.programme.title+': '+reply.show.programme.short_synopsis);
-					$('#show-image').attr('src','http://ichef.bbci.co.uk/images/ic/'+reply.show.programme.image.pid+'.jpg');
+					$('#show-image').attr('src','http://ichef.bbci.co.uk/images/ic/480x270/'+reply.show.programme.image.pid+'.jpg');
 					$('#show-title').html(reply.show.programme.display_titles.title);
 					$('#show-title').attr('href','http://www.bbc.co.uk/programmes/'+reply.show.programme.pid);
 					a = reply.show.programme.duration;
