@@ -34,7 +34,6 @@ class Trains::LocationsController < ApplicationController
       format.xml { render xml: @locations }
       format.json { render json: @locations, callback: params['callback'] }
     end
-
   end
 
 
@@ -43,7 +42,7 @@ class Trains::LocationsController < ApplicationController
   # GET /trains/locations/1.xml
   def show
     @location =Trains::Location.find(params[:id])
-    
+
     @og = {
         "og:title" => @location,
         "og:type" => "train-track:station",
@@ -59,7 +58,6 @@ class Trains::LocationsController < ApplicationController
       format.xml { render xml: @location }
       format.json { render json: @location, callback: params['callback'] }
     end
-
   end
 
 
@@ -74,7 +72,6 @@ class Trains::LocationsController < ApplicationController
       format.xml { render xml: @locations }
       format.json { render json: @locations, callback: params['callback'] }
     end
-
   end
 
 end
