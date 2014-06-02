@@ -6,7 +6,7 @@ class FacebookPostsController < ApplicationController
   # GET /facebook.json
   # GET /facebook.xml
   def index
-    @facebook_posts = FacebookPost.paginate(@page)
+    @facebook_posts = FacebookPost.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,7 +22,7 @@ class FacebookPostsController < ApplicationController
   # GET /facebook/all.xml
   def all
     @page[:per_page] = FacebookPost.count
-    @facebook_posts = FacebookPost.paginate(@page)
+    @facebook_posts = FacebookPost.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }

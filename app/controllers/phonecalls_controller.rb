@@ -10,7 +10,7 @@ class PhonecallsController < ApplicationController
   # GET /phonecalls.xml
   def index
     @page[:per_page] = params[:limit] || 100
-    @phonecalls = Phonecall.paginate(@page)
+    @phonecalls = Phonecall.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -39,7 +39,7 @@ class PhonecallsController < ApplicationController
   # GET /phonecalls/all.xml
   def all
     @page[:per_page] = Phonecall.count
-    @phonecalls = Phonecall.paginate(@page)
+    @phonecalls = Phonecall.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }
@@ -86,7 +86,7 @@ class PhonecallsController < ApplicationController
   # GET /sms/contact/4474766782.json
   # GET /sms/contact/4474766782.xml
   def contact
-    @phonecalls = Phonecall.find_all_by_contact(params[:contact]).paginate(@page)
+    @phonecalls = Phonecall.find_all_by_contact(params[:contact]).order(@order).paginate(@page)
     @contact = params[:contact]
     
     respond_to do |format|

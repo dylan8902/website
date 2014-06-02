@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   # GET /stuff.json
   # GET /stuff.xml
   def index
-    @projects = Project.paginate(@page)
+    @projects = Project.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
   # GET /stuff/all.xml
   def all
     @page[:per_page] = Project.count
-    @projects = Project.paginate(@page)
+    @projects = Project.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }

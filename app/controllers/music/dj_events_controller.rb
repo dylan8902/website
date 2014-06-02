@@ -9,7 +9,7 @@ class Music::DjEventsController < ApplicationController
   # GET /music/dj.xml
   def index
     Project.hit 19
-    @dj_events = DjEvent.paginate(@page)
+    @dj_events = DjEvent.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb

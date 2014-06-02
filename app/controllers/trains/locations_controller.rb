@@ -1,5 +1,6 @@
 require 'will_paginate/array'
 class Trains::LocationsController < ApplicationController
+  include ApplicationHelper
 
 
   # GET /trains/locations
@@ -15,16 +16,17 @@ class Trains::LocationsController < ApplicationController
     end
 
     if params['lat'] and params['lng']
-      @page[:order] = params[:order] || "distance ASC"
-      distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{params['lat']})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{params['lat']}*pi()/180)*POWER(SIN((lng-#{params['lng']})*pi()/180/2),2)))"
-      @locations =  Trains::Location.select("train_locations.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").paginate(@page)
+      lat = params['lat'].to_f
+      lng = params['lng'].to_f
+      @order = params[:order] || "distance ASC"
+      @locations =  Trains::Location.select("train_locations.*, #{distance_sql(lat,lng)} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").order(@order).paginate(@page)
     else
-      @page[:order] = params[:order] || "name ASC"
+      @order = params[:order] || "name ASC"
       crs = Trains::Location.where("crs = ? AND (#{stations})", @q)
       tiploc = Trains::Location.where("tiploc = ? AND (#{stations})", @q)
       name =  Trains::Location.where("name LIKE ? AND (#{stations})", "#{@q}%")
       @locations = [crs, tiploc, name]
-      @locations = @locations.flatten.uniq.paginate(@page)
+      @locations = @locations.flatten.uniq.order(@order).paginate(@page)
     end
 
     respond_to do |format|

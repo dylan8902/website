@@ -8,9 +8,8 @@ class AccountsController < ApplicationController
   # GET /accounts.json
   # GET /accounts.xml
   def index
-    
     @account = Account.new
-    @accounts = Account.paginate(@page)
+    @accounts = Account.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,10 +24,9 @@ class AccountsController < ApplicationController
   # GET /accounts/all.json
   # GET /accounts/all.xml
   def all
-
     @account = Account.new
     @page[:per_page] = Account.count
-    @accounts = Account.paginate(@page)
+    @accounts = Account.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }

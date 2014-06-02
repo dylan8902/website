@@ -11,9 +11,8 @@ class ApplicationController < ActionController::Base
 
   def set_page_and_limit
     limit = params[:limit] || 30
-    order = params[:order] || "created_at DESC"
-    
-    @page = { page: params[:page], per_page: limit, order: order }
+    @order = params[:order] || "created_at DESC"
+    @page = { page: params[:page], per_page: limit }
   end
 
 

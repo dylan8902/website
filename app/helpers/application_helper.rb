@@ -96,4 +96,9 @@ module ApplicationHelper
     return "<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"#{url}.rss\">".html_safe
   end
 
+  #distance MySQL
+  def distance_sql lat, lng
+    return "7912*ASIN(SQRT(POWER(SIN((lat-#{lat})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{lat}*pi()/180)*POWER(SIN((lng-#{lng})*pi()/180/2),2)))"
+  end
+
 end

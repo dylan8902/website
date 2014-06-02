@@ -10,7 +10,7 @@ class TextMessagesController < ApplicationController
   # GET /sms.json
   # GET /sms.xml
   def index
-    @text_messages = TextMessage.paginate(@page)
+    @text_messages = TextMessage.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -38,7 +38,7 @@ class TextMessagesController < ApplicationController
   # GET /sms/contact/4474766782.json
   # GET /sms/contact/4474766782.xml
   def contact
-    @text_messages = TextMessage.find_all_by_contact(params[:contact]).paginate(@page)
+    @text_messages = TextMessage.find_all_by_contact(params[:contact]).order(@order).paginate(@page)
     @contact = params[:contact]
     
     respond_to do |format|

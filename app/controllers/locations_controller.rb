@@ -7,7 +7,7 @@ class LocationsController < ApplicationController
   def index
     Project.hit 4
     @page[:per_page] = params[:limit] || 100
-    @locations = Location.paginate(@page)
+    @locations = Location.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb

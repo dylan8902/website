@@ -67,9 +67,9 @@ class IsMyPlaneDelayedController < ApplicationController
   # GET /airports.xml
   def airports
     if params['lat'] and params['lng']
-      @page[:order] = params[:order] || "distance ASC"
+      @order = params[:order] || "distance ASC"
       distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{params['lat']})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{params['lat']}*pi()/180)*POWER(SIN((lng-#{params['lng']})*pi()/180/2),2)))"
-      @locations =  Airport.select("airports.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").paginate(@page)
+      @locations =  Airport.select("airports.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").order(@order).paginate(@page)
     else
       @locations =  Airport.all
     end

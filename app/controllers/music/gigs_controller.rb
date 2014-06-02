@@ -6,7 +6,7 @@ class Music::GigsController < ApplicationController
   # GET /music/gigs.json
   # GET /music/gigs.xml
   def index
-    @gigs = Gig.paginate(@page)
+    @gigs = Gig.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,8 +34,8 @@ class Music::GigsController < ApplicationController
   # GET /music/gigs/stats.json
   # GET /music/gigs/stats.xml
   def stats
-   @stats = time_data Gig.all
-    
+    @stats = time_data Gig.all
+
     respond_to do |format|
       format.html # stats.html.erb
       format.json { render json: time_data(Gig.all, :hash), callback: params[:callback] }
@@ -49,7 +49,7 @@ class Music::GigsController < ApplicationController
   # GET /music/gigs/map.xml
   def map
     @locations = Gig.where("lat IS NOT NULL AND lng IS NOT NULL")
-    
+
     respond_to do |format|
       format.html # map.html.erb
       format.json { render json: @locations, callback: params[:callback] }

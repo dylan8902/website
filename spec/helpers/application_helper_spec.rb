@@ -51,12 +51,22 @@ describe ApplicationHelper do
     end
     
   end
-  
-  
+
+
   describe "icon" do
     
     describe "an icon css helper" do
       it { icon("test").should eq("<i class=\"icon-test\"></i>".html_safe) }
+    end
+    
+  end
+
+
+  describe "distance_sql" do
+    
+    describe "the SQL calculatation for distance" do
+      sql = "7912*ASIN(SQRT(POWER(SIN((lat-1.0)*pi()/180/2),2)+COS(lat*pi()/180)*COS(1.0*pi()/180)*POWER(SIN((lng-1.0)*pi()/180/2),2)))"
+      it { distance_sql(1.0, 1.0).should eq(sql) }
     end
     
   end

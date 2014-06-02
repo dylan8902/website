@@ -6,7 +6,7 @@ class TweetsController < ApplicationController
   # GET /tweets.json
   # GET /tweets.xml
   def index
-    @tweets = Tweet.paginate(@page)
+    @tweets = Tweet.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,7 +22,7 @@ class TweetsController < ApplicationController
   # GET /tweets/all.xml
   def all
     @page[:per_page] = Tweet.count
-    @tweets = Tweet.paginate(@page)
+    @tweets = Tweet.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }

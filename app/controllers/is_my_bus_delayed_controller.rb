@@ -26,12 +26,12 @@ class IsMyBusDelayedController < ApplicationController
   # GET /stops.xml
   def stops
     if params['lat'] and params['lng']
-      @page[:order] = params[:order] || "distance ASC"
-      @page[:limit] = params[:limit] || 5
+      @order = params[:order] || "distance ASC"
+      @page[:per_page] = params[:limit] || 5
       lat = BigDecimal.new params['lat']
       lng = BigDecimal.new params['lng']
       distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{lat})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{lat}*pi()/180)*POWER(SIN((lng-#{lng})*pi()/180/2),2)))"
-      @stops =  BusStop.select("bus_stops.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").paginate(@page)
+      @stops =  BusStop.select("bus_stops.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").order(@order).paginate(@page)
     end
 
     respond_to do |format|

@@ -3,7 +3,6 @@ class Project < ActiveRecord::Base
   validates :description, presence: true
   validates :url, presence: true
 
-  default_scope { order('created_at DESC') }
 
   def self.hit id
     project = Project.where(id: id).first

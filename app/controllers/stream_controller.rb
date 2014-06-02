@@ -88,7 +88,7 @@ class StreamController < ApplicationController
 
     @stream.sort_by! { |post| post[:created_at] }
     @stream.reverse!
-    @stream = @stream.paginate(@page)
+    @stream = @stream.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
