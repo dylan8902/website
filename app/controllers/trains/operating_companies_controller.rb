@@ -23,7 +23,7 @@ class Trains::OperatingCompaniesController < ApplicationController
   # GET /trains/operating-companies/1.xml
   def show
     @operating_company = Trains::OperatingCompany.find(params[:id])
-    @routes = @operating_company.routes(@page).order(:id).paginate(@page)
+    @routes = @operating_company.routes(@page).paginate(@page)
 
     respond_to do |format|
       format.html

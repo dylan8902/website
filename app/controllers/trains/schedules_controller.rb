@@ -44,11 +44,11 @@ class Trains::SchedulesController < ApplicationController
     public = !@non_public
 
     if @origin and @destination then
-      @schedules = Trains::Schedule.get_schedules(@origin, @destination, @date, public, @buses).order(@order).paginate(@page)
+      @schedules = Trains::Schedule.get_schedules(@origin, @destination, @date, public, @buses).paginate(@page)
     elsif @origin then
-      @schedules = Trains::Schedule.get_schedules(@origin, nil, @date, public, @buses).order(@order).paginate(@page)
+      @schedules = Trains::Schedule.get_schedules(@origin, nil, @date, public, @buses).paginate(@page)
     elsif @destination then
-      @schedules = Trains::Schedule.get_schedules(nil, @destination, @date, public, @buses).order(@order).paginate(@page)
+      @schedules = Trains::Schedule.get_schedules(nil, @destination, @date, public, @buses).paginate(@page)
     end
 
     respond_to do |format|
