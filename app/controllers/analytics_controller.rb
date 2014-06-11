@@ -46,7 +46,7 @@ class AnalyticsController < ApplicationController
   # GET /analytics/search.json
   # GET /analytics/search.xml
   def search
-    @analytics = Analytic.where(params.permit([:ip, :user_agent])).paginate(@page)
+    @analytics = Analytic.where(params.permit([:ip, :user_agent])).order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # search.html.erb

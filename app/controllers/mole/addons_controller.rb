@@ -5,9 +5,8 @@ class Mole::AddonsController < ApplicationController
   # GET /mole/addons.json
   # GET /mole/addons.xml
   def index
-    @page[:limit] = 20
-    @page[:order] = :id
-    @addons = Mole::Addon.paginate(@page)
+    @page[:per_page] = 20
+    @addons = Mole::Addon.order(:id).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,8 +21,7 @@ class Mole::AddonsController < ApplicationController
   # GET /mole/addons/all.xml
   def all
     @page[:per_page] = Mole::Addon.count
-    @page[:order] = :id
-    @addons = Mole::Addon.paginate(@page)
+    @addons = Mole::Addon.order(:id).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }

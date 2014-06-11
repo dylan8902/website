@@ -11,9 +11,9 @@ class EpisodesController < ApplicationController
   # GET /episodes.xml
   def index
     if current_user
-      @episodes = current_user.episodes.paginate(@page)
+      @episodes = current_user.episodes.order(@order).paginate(@page)
     else
-      @episodes = Episode.where(user_id: 1).paginate(@page)
+      @episodes = Episode.where(user_id: 1).order(@order).paginate(@page)
     end
 
     respond_to do |format|
@@ -30,7 +30,7 @@ class EpisodesController < ApplicationController
   # GET /episodes/user/1.xml
   def user
     @user = User.find(params[:id])
-    @episodes = @user.episodes.paginate(@page)
+    @episodes = @user.episodes.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -46,7 +46,7 @@ class EpisodesController < ApplicationController
   # GET /episodes/all.xml
   def all
     @page[:per_page] = Episode.count
-    @episodes = Episode.paginate(@page)
+    @episodes = Episode.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }

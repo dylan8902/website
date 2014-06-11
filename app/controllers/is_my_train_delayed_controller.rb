@@ -67,9 +67,9 @@ class IsMyTrainDelayedController < ApplicationController
   # GET /stations.xml
   def stations
     if params['lat'] and params['lng']
-      @page[:order] = params[:order] || "distance ASC"
+      @order = params[:order] || "distance ASC"
       distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{params['lat']})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{params['lat']}*pi()/180)*POWER(SIN((lng-#{params['lng']})*pi()/180/2),2)))"
-      @stations =  Trains::Location.select("train_locations.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").paginate(@page)
+      @stations =  Trains::Location.select("train_locations.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").order(@order).paginate(@page)
     end
 
     respond_to do |format|

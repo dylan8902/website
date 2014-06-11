@@ -6,7 +6,7 @@ class Music::ListensController < ApplicationController
   # GET /music/listens.json
   # GET /music/listens.xml
   def index
-    @listens = Listen.paginate(@page)
+    @listens = Listen.order(@order).paginate(@page)
     
     respond_to do |format|
       format.html # show.html.erb
@@ -35,7 +35,7 @@ class Music::ListensController < ApplicationController
   # GET /music/listens/all.xml
   def all
     @page[:per_page] = Listen.count
-    @listens = Listen.paginate(@page)
+    @listens = Listen.order(@order).paginate(@page)
     
     respond_to do |format|
       format.html { render 'index.html.erb' }

@@ -6,9 +6,8 @@ class Mole::HighScoresController < ApplicationController
   # GET /mole/high-scores.json
   # GET /mole/high-scores.xml
   def index
-    @page[:limit] = 20
-    @page[:order]  = "score DESC"
-    @high_scores = Mole::HighScore.paginate(@page)
+    @page[:per_page] = 20
+    @high_scores = Mole::HighScore.order("score DESC").paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -24,8 +23,7 @@ class Mole::HighScoresController < ApplicationController
   def all
 
     @page[:per_page] = Mole::HighScore.count
-    @page[:order]  = "score DESC"
-    @high_scores = Mole::HighScore.paginate(@page)
+    @high_scores = Mole::HighScore.order("score DESC").paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }
@@ -43,11 +41,11 @@ class Mole::HighScoresController < ApplicationController
 
     respond_to do |format|
       if @high_score.save
-        @high_scores = Mole::HighScore.paginate(@page)
+        @high_scores = Mole::HighScore.order("score DESC").paginate(@page)
         format.html { redirect_to mole_high_scores_path, notice: 'High Score was successfully added.' }
         format.json { render json: @high_scores, status: :created }
       else
-        @high_scores = Mole::HighScore.paginate(@page)
+        @high_scores = Mole::HighScore.order("score DESC").paginate(@page)
         format.html { redirect_to mole_high_scores_path }
         format.json { render json: @high_scores, status: :unprocessable_entity }
       end
@@ -59,4 +57,5 @@ class Mole::HighScoresController < ApplicationController
     def high_score_params
       params.permit(:name, :facebook_id, :score)
     end
+
 end

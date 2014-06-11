@@ -6,7 +6,7 @@ class IphoneLocationsController < ApplicationController
   # GET /iphone.xml
   def index
     Project.hit 31
-    @locations = IphoneLocation.paginate(@page)
+    @locations = IphoneLocation.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb

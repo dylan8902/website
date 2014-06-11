@@ -1,12 +1,13 @@
 class PhotosController < ApplicationController
   include Statistics
 
+
   # GET /photos
   # GET /photos.json
   # GET /photos.xml
   def index
-    @page[:limit] = params[:limit] || 48
-    @photos = Photo.paginate(@page)
+    @page[:per_page] = params[:limit] || 48
+    @photos = Photo.order(@order).paginate(@page)
     
     respond_to do |format|
       format.html # index.html.erb
@@ -15,6 +16,7 @@ class PhotosController < ApplicationController
       format.rss { render 'feed' }
     end
   end
+
 
   # GET /photos/1
   # GET /photos/1.json
@@ -29,6 +31,7 @@ class PhotosController < ApplicationController
     end
   end
 
+
   # GET /photos/stats
   # GET /photos/stats.json
   # GET /photos/stats.xml
@@ -41,6 +44,7 @@ class PhotosController < ApplicationController
       format.xml { render xml: time_data(Photo.all, :hash) }
     end
   end
+
 
   # GET /photos/map
   # GET /photos/map.json

@@ -1,5 +1,5 @@
 class DropsController < ApplicationController
-  
+
   # GET /drops
   def index
   end
@@ -23,9 +23,8 @@ class DropsController < ApplicationController
   # POST /drops.json
   # POST /drops.xml
   def create
-        
+
     uri = Drop.generate_uri
-    
     content_type = params[:file]
     base64 = params[:file]
     @drop = Drop.new(base64: base64, content_type:content_type, uri: uri)

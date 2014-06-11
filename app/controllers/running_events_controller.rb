@@ -8,7 +8,7 @@ class RunningEventsController < ApplicationController
   # GET /running.json
   # GET /running.xml
   def index
-    @running_events = RunningEvent.paginate(@page)
+    @running_events = RunningEvent.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,7 +23,7 @@ class RunningEventsController < ApplicationController
   # GET /running/all.xml
   def all
     @page[:per_page] = RunningEvent.count
-    @running_events = RunningEvent.paginate(@page)
+    @running_events = RunningEvent.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }

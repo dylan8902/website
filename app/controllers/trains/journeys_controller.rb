@@ -7,7 +7,7 @@ class Trains::JourneysController < ApplicationController
   # GET /trains/journeys.json
   # GET /trains/journeys.xml
   def index
-    @journeys = Trains::Journey.where(user_id: current_user.id).paginate(@page)
+    @journeys = Trains::Journey.where(user_id: current_user.id).order(@order).paginate(@page)
     @journey = Trains::Journey.new
 
     respond_to do |format|

@@ -9,7 +9,7 @@ class BlogPostsController < ApplicationController
   # GET /blog.xml
   def index
     @page[:per_page] = params[:limit] || 5
-    @blog_posts = BlogPost.paginate(@page)
+    @blog_posts = BlogPost.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +25,7 @@ class BlogPostsController < ApplicationController
   # GET /blog/all.xml
   def all
     @page[:per_page] = BlogPost.count
-    @blog_posts = BlogPost.paginate(@page)
+    @blog_posts = BlogPost.order(@order).paginate(@page)
 
     respond_to do |format|
       format.html { render 'index.html.erb' }
@@ -42,7 +42,7 @@ class BlogPostsController < ApplicationController
   def show
     @blog_post = BlogPost.find(params[:id]) || render_404
 
-    @comments = @blog_post.blog_comments.paginate(@page)
+    @comments = @blog_post.blog_comments.order(@order).paginate(@page)
     @comment = BlogComment.new
     @url = blog_post_blog_comments_path(@blog_post)
 
