@@ -16,7 +16,7 @@ Website::Application.routes.draw do
   constraints Domain.new("keepintouchabroad.com") do
     scope module: 'kita' do
       get ""         => 'static_pages#index'
-      match '*foo'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
+      match '*url'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
     end
   end
 
@@ -27,7 +27,7 @@ Website::Application.routes.draw do
   constraints Domain.new("hiddengifts.co.uk") do
     scope module: 'hidden_gifts' do
       get ""         => 'static_pages#index'
-      match '*foo'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
+      match '*url'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
     end
   end
 
@@ -70,7 +70,7 @@ Website::Application.routes.draw do
     get "arrivals" => "is_my_train_delayed#arrivals"
     get "service"  => "is_my_train_delayed#service"
     get "stations" => "is_my_train_delayed#stations"
-    match '*foo'   => 'application#error_404', via: [:get, :post, :patch, :delete]
+    match '*url'   => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
   #ismybusdelayed
@@ -80,7 +80,7 @@ Website::Application.routes.draw do
   constraints Domain.new("ismybusdelayed.com") do
     get ""         => "is_my_bus_delayed#index"
     get "stops"    => "is_my_bus_delayed#stops"
-    match '*foo'   => 'application#error_404', via: [:get, :post, :patch, :delete]
+    match '*url'   => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
   #ismyplanedelayed
@@ -92,7 +92,7 @@ Website::Application.routes.draw do
     get "arrivals" => "is_my_plane_delayed#arrivals"
     get "flight"   => "is_my_plane_delayed#flight"
     get "airports" => "is_my_plane_delayed#airports"
-    match '*foo'   => 'application#error_404', via: [:get, :post, :patch, :delete]
+    match '*url'   => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
   #dylanjones.info
@@ -338,10 +338,10 @@ Website::Application.routes.draw do
     end
 
     get  "who"            => "static_pages#who"
-    match '*foo'          => 'application#error_404', via: [:get, :post, :patch, :delete]
+    match '*url'          => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
   root to: "static_pages#error_404", as: "error_404"
-  match '*foo'   => 'static_pages#error_404', via: [:get, :post, :patch, :delete]
+  match '*url'   => 'static_pages#error_404', via: [:get, :post, :patch, :delete]
 
 end
