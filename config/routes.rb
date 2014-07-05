@@ -285,6 +285,7 @@ Website::Application.routes.draw do
     get  "sms/contact/:contact" => "text_messages#contact", as: "text_message_contact"
     resources :text_messages,   path: "sms",           only: [:index, :show]
 
+    get  "squares"        => "squares#index"
     get  "stream"         => "stream#index"
     get  "sitemap"        => "static_pages#sitemap"
 
