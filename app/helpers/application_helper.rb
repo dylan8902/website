@@ -72,8 +72,8 @@ module ApplicationHelper
   end
   
   #bootsrap 3 paginator
-  def paginate model
-    will_paginate model, renderer: BootstrapPagination::Rails, bootstrap: 3
+  def paginate page
+    will_paginate page, renderer: BootstrapPagination::Rails, bootstrap: 3
   end
 
   

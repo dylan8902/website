@@ -11,8 +11,18 @@ class ApplicationController < ActionController::Base
 
   def set_page_and_limit
     limit = params[:limit] || 30
+    @page = { page: params[:page], per_page: limit.to_i }
+    
+    permitted = [
+      "created_at", "created_at DESC", "created_at ASC",
+      "updated_at", "updated_at DESC", "updated_at ASC",
+      "id", "id DESC", "id ASC",
+      "name", "name DESC", "name ASC",
+      "title", "title DESC", "title ASC",
+      "distance", "distance DESC", "distance ASC",
+    ]
     @order = params[:order] || "created_at DESC"
-    @page = { page: params[:page], per_page: limit }
+    error_404 unless permitted.include? @order
   end
 
 
@@ -34,8 +44,8 @@ class ApplicationController < ActionController::Base
       u.permit(:name, :email, :password, :password_confirmation, :current_password)
     end
   end
-  
-  
+
+
   def set_ie_header
     response.headers["X-UA-Compatible"] = "IE=edge,chrome=1"
   end
