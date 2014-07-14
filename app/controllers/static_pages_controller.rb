@@ -123,12 +123,12 @@ class StaticPagesController < ApplicationController
   # GET /cron.json
   # GET /cron.xml
   def cron
-    Tweet.update
     Listen.update
     BbcTwitter.update
     Location.update
     Gig.update
     TextMessage.update
+    Tweet.update
     Photo.update
 
     respond_to do |format|
