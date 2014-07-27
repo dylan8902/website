@@ -1,0 +1,3 @@
+#!/bin/sh
+source /opt/set_environment
+exec "/home/dylan8902/.rvm/rubies/ruby-2.1.2/bin/ruby" "$@"
