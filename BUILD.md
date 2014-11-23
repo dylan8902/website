@@ -6,7 +6,7 @@ Build
 * add <user> to sudoers list
 * login as <user>
 
-sudo yum install git curl-devel mysql mysql-devel mariadb-server -y
+sudo yum install git curl-devel mysql mysql-devel mariadb-server sqlite-devel -y
 cd /tmp/
 wget http://nginx.org/download/nginx-1.6.0.tar.gz
 tar -zxvf nginx-1.6.0.tar.gz
@@ -30,12 +30,20 @@ sudo chgrp <user> www
 
 git clone git@github.com:dylan8902/website.git
 
-sudo cp /var/www/website/config/server/ruby_wrapper /opt/rubby_wrapper
+sudo cp /var/www/website/config/server/ruby_wrapper /opt/ruby_wrapper
 cd /opt
+sudo chmod a+rwx ruby_wrapper
 sudo vi set_environment
 sudo chmod u+x set_environment
 
 * paste secret keys into set_environment
+
+source set_environment
+mysql -uroot
+CREATE USER '<DATABASE_USER>'@'localhost' IDENTIFIED BY '<DATABASE_PASSWORD>';
+GRANT ALL ON *.* TO '<DATABASE_USER>'@'localhost';
+FLUSH PRIVILEGES;
+exit
 
 sudo cp /var/www/website/config/server/nginx.conf /opt/nginx/conf/nginx.conf
 
@@ -49,4 +57,13 @@ sudo vi dyl.anjon.es.csr
 
 * paste ssl certificate request into dyl.anjon.es.csr
 
+sudo vi /opt/nginx/ssl/dyl.anjon.es.key
 
+* paste ssl certificate key into dyl.anjon.es.key
+
+cd /var/www/website
+bundle install
+rake db:create RAILS_ENV=production
+rake db:migrate RAILS_ENV=production
+rake assets:precompile
+sudo service nginx start
