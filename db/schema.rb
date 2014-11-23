@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140331201627) do
+ActiveRecord::Schema.define(version: 20141123222650) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -225,10 +225,10 @@ ActiveRecord::Schema.define(version: 20140331201627) do
   end
 
   create_table "mole_donations", force: true do |t|
-    t.integer  "donation_id",                                      null: false
-    t.integer  "facebook_id",   limit: 8
+    t.integer  "donation_id",                            null: false
+    t.integer  "facebook_id"
     t.integer  "mole_addon_id"
-    t.decimal  "amount",                  precision: 10, scale: 7, null: false
+    t.decimal  "amount",        precision: 10, scale: 7, null: false
     t.string   "source"
     t.string   "environment"
     t.datetime "created_at"
@@ -255,17 +255,17 @@ ActiveRecord::Schema.define(version: 20140331201627) do
     t.datetime "updated_at"
   end
 
-  add_index "phonecalls", ["contact"], name: "index_phonecalls_on_contact", using: :btree
+  add_index "phonecalls", ["contact"], name: "index_phonecalls_on_number", using: :btree
 
   create_table "photos", force: true do |t|
     t.string   "title"
-    t.text     "description"
-    t.string   "original"
     t.string   "thumbnail"
-    t.float    "lat"
-    t.float    "lng"
+    t.string   "original"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "lat"
+    t.float    "lng"
+    t.text     "description"
   end
 
   create_table "projects", force: true do |t|
@@ -367,8 +367,8 @@ ActiveRecord::Schema.define(version: 20140331201627) do
     t.datetime "updated_at"
   end
 
-  add_index "train_location_distances", ["destination_tiploc"], name: "index_train_location_distances_on_destination_tiploc", using: :btree
-  add_index "train_location_distances", ["origin_tiploc"], name: "index_train_location_distances_on_origin_tiploc", using: :btree
+  add_index "train_location_distances", ["destination_tiploc"], name: "index_train_location_distances_on_destination", using: :btree
+  add_index "train_location_distances", ["origin_tiploc"], name: "index_train_location_distances_on_origin", using: :btree
 
   create_table "train_locations", force: true do |t|
     t.string  "name"
@@ -501,8 +501,8 @@ ActiveRecord::Schema.define(version: 20140331201627) do
     t.string   "location"
     t.float    "lat"
     t.float    "lng"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_twitter_accounts", force: true do |t|
