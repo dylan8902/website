@@ -43,13 +43,18 @@ class Music::ArtistsController < ApplicationController
       @artist = JSON.load filename
     else
       
-      response = RestClient.get "http://www.bbc.co.uk/music/artists/#{URI::escape(params[:id])}.json"
-      if response.code == 200
-        json = JSON.parse response.body
-        if json['artist']
-          @artist = json['artist']
+      begin
+        response = RestClient.get "http://www.bbc.co.uk/music/artists/#{URI::escape(params[:id])}.json"
+        if response.code == 200
+          json = JSON.parse response.body
+          if json['artist']
+            @artist = json['artist']
+          end
         end
+      rescue
+        @artist['artist'] = nil
       end
+        
       
       response = RestClient.get "http://developer.echonest.com/api/v4/artist/profile?api_key=XACSR313AVJ9RJHE1&id=musicbrainz:artist:#{URI::escape(params[:id])}&format=json&bucket=id:7digital-UK&bucket=images&bucket=songs"
       if response.code == 200
