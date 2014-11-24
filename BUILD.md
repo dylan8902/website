@@ -3,11 +3,11 @@ Initial Build
 
 Login to new server as root
 
-Create new \<user\>
+Create new `<USER>`
 
-Add \<user\> to sudoers list
+Add `<USER>` to sudoers list
 
-Login as \<user\>
+Login as `<USER>`
 
 	sudo yum install git curl-devel mysql mysql-devel mariadb-server sqlite-devel -y
 	cd /tmp/
@@ -20,18 +20,16 @@ Login as \<user\>
 	sudo chmod o+x "/home/<user>"
 	rvmsudo passenger-install-nginx-module
 
-Use the source in /tmp/nginx-1.6.0
+Use the source in `/tmp/nginx-1.6.0`
 
-Install to /opt/nginx
+Install to `/opt/nginx`
 
-Add argument to install spdy module
-
-	--with-http_spdy_module
+Add argument to install spdy module `--with-http_spdy_module`
 
 	cd /var
 	sudo mkdir www
-	sudo chown <user> www
-	sudo chgrp <user> www
+	sudo chown <USER> www
+	sudo chgrp <USER> www
 
 Set up SSH key
 
