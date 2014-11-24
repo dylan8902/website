@@ -44,9 +44,7 @@ Initial Build
 	GRANT ALL ON *.* TO '<DATABASE_USER>'@'localhost';
 	FLUSH PRIVILEGES;
 	exit
-
 	sudo cp /var/www/website/config/server/nginx.conf /opt/nginx/conf/nginx.conf
-
 	sudo mkdir /opt/nginx/ssl
 	cd /opt/nginx/ssl
 	sudo vi dyl.anjon.es.crt
