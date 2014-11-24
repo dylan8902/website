@@ -78,7 +78,7 @@ Deploy Latest Version
 
 To update the app:
 
-	ssh <USER>@<SERVER> -R 3001:localhost:3306
+	ssh <USER>@<SERVER> -L 3001:localhost:3306
 	cd /var/www/website
 	git reset --hard
 	git pull origin
