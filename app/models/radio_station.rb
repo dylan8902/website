@@ -48,7 +48,7 @@ class RadioStation
       return nil if response.code != 200
       json = JSON.parse response.body
       json['recenttracks']['track'].each do |track|
-        self.recent_tracks << Track.new(artist_mbzid: track['artist']['mbid'], artist: track['artist']['#text'], title: track['name'], timestamp: track['date']['uts'].to_i)
+        self.recent_tracks << Track.new(artist_mbzid: track['artist']['mbid'], artist: track['artist']['#text'], title: track['name'], timestamp: track['date']['uts'].to_i) unless track['date'].nil?
       end
     else
       #TODO: Get the canonical episode to get the segments

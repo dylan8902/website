@@ -20,6 +20,7 @@ gem 'coderay'
 gem 'rest-client'
 gem 'nokogiri'
 gem 'blue_geo'
+gem 'recaptcha'
 
 group :development, :test do
   gem 'rspec-rails'

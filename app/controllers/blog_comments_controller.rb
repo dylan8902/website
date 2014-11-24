@@ -22,7 +22,7 @@ class BlogCommentsController < ApplicationController
     @comment = BlogComment.new(blog_comment_params.merge(blog_post_id: @blog_post.id, user_id: user_id))
 
     respond_to do |format|
-      if @comment.save
+      if verify_recaptcha(params) && @comment.save
         format.html { redirect_to @blog_post, notice: 'Thanks for the comment!' }
         format.json { render json: @blog_post, status: :created, location: @blog_post }
       else
@@ -43,7 +43,7 @@ class BlogCommentsController < ApplicationController
     render_403 and return if @comment.user_id != current_user.id
 
     respond_to do |format|
-      if @comment.update_attributes(blog_comment_params)
+      if verify_recaptcha(params) && @comment.update_attributes(blog_comment_params)
         format.html { redirect_to @blog_post, notice: 'Your comment was successfully updated.' }
         format.json { head :no_content }
         format.xml { head :no_content }

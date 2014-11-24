@@ -59,13 +59,14 @@ class StaticPagesController < ApplicationController
   # POST /contact.json
   # POST /contact.xml
   def message
-    sent = FeedbackMailer.email(params).deliver
+    sent = FeedbackMailer.email(params).deliver if verify_recaptcha(params)
+
     respond_to do |format|
       if sent
         format.html { redirect_to "/contact", notice: 'Thank you for your message.' }
         format.json { render json: nil, status: :created, location: contact_path }
       else
-        format.html { render action: "contact" }
+        format.html { redirect_to "/contact", notice: 'Not quite right?' }
         format.json { render json: "Not quite right?", status: :unprocessable_entity }
       end
     end

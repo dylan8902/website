@@ -12,7 +12,7 @@ class Listen < ActiveRecord::Base
 
 
   def artist_url
-    if self.artist_mbid != ""
+    if self.artist_mbid && self.artist_mbid != ""
       return  "/music/artists/" + self.artist_mbid
     else
       return  "/music/artists?q=" + URI::escape(self.artist)

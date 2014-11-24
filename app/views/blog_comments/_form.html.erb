@@ -17,6 +17,7 @@
 		<%= f.text_area :comment, class: "form-control", required: true %>
 		<span class="help-block"><%= errors_for @comment, :comment %></span>
 	</div>
+	<%= recaptcha_tags %>
 	<div class="actions"><%= f.submit "Submit", class: "btn btn-primary" %></div>
 
 <% end %>
