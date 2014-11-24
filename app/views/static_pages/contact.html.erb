@@ -26,6 +26,7 @@
 			 	<%= label_tag :message %>
 				<%= text_area_tag :message, nil, class: "form-control", placeholder: "Leave a message", required: "true" %>
 			</div>
+			<%= recaptcha_tags %>
 			<%= submit_tag "Send Message", class: "btn btn-primary" %>
 		<% end %>
 	</article>
