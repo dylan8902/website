@@ -3,8 +3,8 @@ Initial Build
 
 * login to new server as root
 * create new <user>
-* add <user> to sudoers list
-* login as <user>
+* add \<user\> to sudoers list
+* login as \<user\>
 
 	sudo yum install git curl-devel mysql mysql-devel mariadb-server sqlite-devel -y
 	cd /tmp/
