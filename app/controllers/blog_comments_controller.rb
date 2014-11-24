@@ -26,7 +26,7 @@ class BlogCommentsController < ApplicationController
         format.html { redirect_to @blog_post, notice: 'Thanks for the comment!' }
         format.json { render json: @blog_post, status: :created, location: @blog_post }
       else
-        format.html { render action: "new" }
+        format.html { redirect_to @blog_post, notice: 'Something wrong there!' }
         format.json { render json: @blog_post.errors, status: :unprocessable_entity }
       end
     end
@@ -48,7 +48,7 @@ class BlogCommentsController < ApplicationController
         format.json { head :no_content }
         format.xml { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { redirect_to @blog_post, notice: 'Something wrong there!' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
         format.xml { render xml: @comment.errors, status: :unprocessable_entity }
       end
