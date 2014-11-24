@@ -2,7 +2,7 @@ Initial Build
 =============
 
 * login to new server as root
-* create new <user>
+* create new \<user\>
 * add \<user\> to sudoers list
 * login as \<user\>
 
