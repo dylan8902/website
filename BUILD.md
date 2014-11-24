@@ -2,8 +2,11 @@ Initial Build
 =============
 
 Login to new server as root
+
 Create new \<user\>
+
 Add \<user\> to sudoers list
+
 Login as \<user\>
 
 	sudo yum install git curl-devel mysql mysql-devel mariadb-server sqlite-devel -y
@@ -18,7 +21,9 @@ Login as \<user\>
 	rvmsudo passenger-install-nginx-module
 
 Use the source in /tmp/nginx-1.6.0
+
 Install to /opt/nginx
+
 Add argument to install spdy module
 
 	--with-http_spdy_module
@@ -29,7 +34,8 @@ Add argument to install spdy module
 	sudo chgrp <user> www
 
 Set up SSH key
-Ddd to github and test
+
+Add to github and test
 
 	git clone git@github.com:dylan8902/website.git
 	sudo cp /var/www/website/config/server/ruby_wrapper /opt/ruby_wrapper
