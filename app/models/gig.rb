@@ -5,8 +5,13 @@ class Gig < ActiveRecord::Base
 
   def self.update page = 1
     url = "http://api.songkick.com/api/3.0/users/dylan8902/gigography.json?apikey=" + ENV['SONGKICK_API_KEY'] + "&page=#{page}"
-    response = RestClient.get url
-    return nil if response.code != 200
+    begin
+      response = RestClient.get url
+    rescue => e
+      logger.info "Gig update problem: " + e.message
+      return
+    end
+    return if response.code != 200
 
     json = JSON.parse response.body
     json['resultsPage']['results']['event'].each do |event|

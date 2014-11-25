@@ -13,9 +13,9 @@ class Listen < ActiveRecord::Base
 
   def artist_url
     if self.artist_mbid && self.artist_mbid != ""
-      return  "/music/artists/" + self.artist_mbid
+      return "/music/artists/" + self.artist_mbid
     else
-      return  "/music/artists?q=" + URI::escape(self.artist)
+      return "/music/artists?q=" + URI::escape(self.artist)
     end
   end
 
@@ -23,8 +23,13 @@ class Listen < ActiveRecord::Base
   def self.update
     url = "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=dylan8902&api_key=" +
           ENV['LASTFM_API_KEY'] + "&format=json&limit=50&page=1"
-    response = RestClient.get url
-    return nil if response.code != 200
+    begin
+      response = RestClient.get url
+    rescue => e
+      logger.info "Listen update problem: " + e.message
+      return
+    end
+    return if response.code != 200
     json = JSON.parse response.body
     json['recenttracks']['track'].reverse.each do |track|
       if track['date']

@@ -2,6 +2,7 @@ class RunningEventsController < ApplicationController
   include ErrorHelper
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_filter :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy]
+  after_filter :analytics
 
 
   # GET /running
@@ -51,11 +52,11 @@ class RunningEventsController < ApplicationController
   # GET /running/stats.json
   # GET /running/stats.xml
   def stats
-   @stats = {
-     total_distance: RunningEvent.sum(:distance),
-     total_time: RunningEvent.sum(:finish_time),
-     average_speed: RunningEvent.sum(:distance).to_f / RunningEvent.sum(:finish_time).to_f
-   }
+    @stats = {
+      total_distance: RunningEvent.sum(:distance),
+      total_time: RunningEvent.sum(:finish_time),
+      average_speed: RunningEvent.sum(:distance).to_f / RunningEvent.sum(:finish_time).to_f
+    }
  
     respond_to do |format|
       format.html # stats.html.erb
@@ -152,4 +153,9 @@ class RunningEventsController < ApplicationController
     def running_event_params
       params.require(:running_event).permit(:name, :location, :lat, :lng, :training, :link, :distance, :finish_time, :position, :created_at)
     end
+
+    def analytics
+      Project.hit 55
+    end
+
 end

@@ -19,11 +19,14 @@ class Location < ActiveRecord::Base
 
     response = RestClient.post url, data
     auth = response.body.split("Auth=")[1]
-
     url = "https://maps.google.com/locationhistory/b/0/kml?startTime=#{start_time}000&endTime=#{end_time}000"
-    response = RestClient.get url, "Authorization" => "GoogleLogin auth=#{auth}"
-    logger.info response.body
-    return response.body
+    begin
+      response = RestClient.get url, "Authorization" => "GoogleLogin auth=#{auth}"
+      return response.body
+    rescue => e
+      logger.info "Location update problem: " + e.message
+      return
+    end
   end
 
 
@@ -33,9 +36,12 @@ class Location < ActiveRecord::Base
     else
       start_time = 1275350400
     end
+    
     end_time = start_time + 2628000
-
-    kml = Nokogiri::XML(Location.get_kml(start_time, end_time))
+    response = Location.get_kml(start_time, end_time)
+    return if response.nil?
+    
+    kml = Nokogiri::XML(response)
     when_elements = kml.css('when')
     coord_elements = kml.css('gx|coord')
     when_elements.each_with_index do |timestamp, i|

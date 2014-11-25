@@ -5,6 +5,7 @@ class HybridRadio::RadioEpgController < ApplicationController
   # GET /hybrid/epg.json
   # GET /hybrid/epg.xml
   def index
+    Project.hit 54
     xml_block = <<-EOS
 <?xml version="1.0" encoding="UTF-8"?>
 <epg xml:lang="en" xmlns="http://www.worlddab.org/schemas/epgSchedule/14" xmlns:epg="http://www.worlddab.org/schemas/epgDataTypes/14" xmlns:repg="http://schemas.radiodns.org/epg/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.worlddab.org/schemas/epgSchedule/14 http://www.worlddab.org/schemas/epgSchedule/14/epgSchedule_14.xsd">

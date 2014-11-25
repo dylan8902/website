@@ -4,6 +4,7 @@ class HybridRadio::RadioDnsController < ApplicationController
   # GET /hybrid/radiodns.json
   # GET /hybrid/radiodns.xml
   def index
+    Project.hit 54
     if params[:freq] and params[:pi] and params[:ecc]
       @result = get_radio_dns_services params
     end

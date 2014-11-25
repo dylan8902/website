@@ -6,6 +6,7 @@ class BbcTwitterController < ApplicationController
   # GET /bbc-twitter.json
   # GET /bbc-twitter.xml
   def index
+    Project.hit 53
     @latest = BbcTwitter.latest
     @most = BbcTwitter.order("count DESC").limit(5)
     @stats = time_data BbcTwitter.all
@@ -17,6 +18,5 @@ class BbcTwitterController < ApplicationController
       format.xml { render xml: @latest }
     end
   end
-
 
 end
