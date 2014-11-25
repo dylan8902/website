@@ -1,4 +1,5 @@
 class IntoTheWoods::StaticPagesController < ApplicationController
+  after_filter :analytics
   layout "into_the_woods"
 
 
@@ -21,5 +22,10 @@ class IntoTheWoods::StaticPagesController < ApplicationController
   def contact
   end
 
+
+  private
+    def analytics
+      Project.hit 36
+    end
 
 end

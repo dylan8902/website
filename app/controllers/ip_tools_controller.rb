@@ -6,7 +6,7 @@ class IpToolsController < ApplicationController
   # GET /ip-tools.json
   # GET /ip-tools.xml
   def index
-    #Project.hit X
+    Project.hit 56
 
     if params[:q]
       @results = []

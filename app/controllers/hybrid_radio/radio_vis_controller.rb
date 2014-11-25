@@ -2,6 +2,7 @@ class HybridRadio::RadioVisController < ApplicationController
 
   # GET /hybrid/vis
   def index
+    Project.hit 54
   end
 
 
