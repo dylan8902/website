@@ -7,12 +7,13 @@
 	<article class="col-md-8">
 
 		<nav class="btn-group">
+			
 			<% css = "btn" %>
 			<% css += " btn-primary" if params[:order].nil? %>
-			<%= link_to "Most Recent", request.path, class: css %>
+			<%= link_to "A-Z", request.path, class: css %>
 			<% css = "btn" %>
-			<% css += " btn-primary" if params[:order] == "name" %>
-			<%= link_to "A-Z", request.path + "?order=name", class: css %>
+			<% css += " btn-primary" if params[:order] == "created_at DESC" %>
+			<%= link_to "Most Recent", request.path + "?order=created_at%20DESC", class: css %>
 		</nav>
 
 		<table class="table table-striped">
