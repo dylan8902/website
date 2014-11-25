@@ -126,11 +126,11 @@ class StaticPagesController < ApplicationController
   def cron
     Listen.update
     BbcTwitter.update
-    Location.update
     Gig.update
     TextMessage.update
     Tweet.update
     Photo.update
+    Location.update
 
     respond_to do |format|
       format.html # cron.html.erb
