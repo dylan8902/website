@@ -9,6 +9,10 @@ class AccountsController < ApplicationController
   # GET /accounts.xml
   def index
     @account = Account.new
+    limit = params[:limit] || Account.count
+    @page = { page: params[:page], per_page: limit.to_i }
+    @order = params[:order] || "name"
+
     @accounts = Account.order(@order).paginate(@page)
 
     respond_to do |format|
