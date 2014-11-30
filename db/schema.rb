@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20141123222650) do
   end
 
   create_table "analytics", force: true do |t|
-    t.text     "uri"
+    t.text     "uri",        limit: 255
     t.string   "ip"
     t.string   "user_agent"
     t.string   "referer"
@@ -43,10 +43,10 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.datetime "updated_at"
   end
 
-  add_index "analytics", ["created_at"], name: "index_analytics_on_created_at", using: :btree
-  add_index "analytics", ["ip"], name: "index_analytics_on_ip", using: :btree
-  add_index "analytics", ["referer"], name: "index_analytics_on_referer", using: :btree
-  add_index "analytics", ["user_agent"], name: "index_analytics_on_user_agent", using: :btree
+  add_index "analytics", ["created_at"], name: "index_analytics_on_created_at"
+  add_index "analytics", ["ip"], name: "index_analytics_on_ip"
+  add_index "analytics", ["referer"], name: "index_analytics_on_referer"
+  add_index "analytics", ["user_agent"], name: "index_analytics_on_user_agent"
 
   create_table "bank_transactions", force: true do |t|
     t.string   "description", null: false
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.datetime "updated_at"
   end
 
-  add_index "bus_stops", ["naptan_code"], name: "index_bus_stops_on_naptan_code", using: :btree
+  add_index "bus_stops", ["naptan_code"], name: "index_bus_stops_on_naptan_code"
 
   create_table "dj_events", force: true do |t|
     t.string   "title"
@@ -150,9 +150,10 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.integer  "user_id"
   end
 
-  add_index "episodes", ["user_id"], name: "index_episodes_on_user_id", using: :btree
+  add_index "episodes", ["user_id"], name: "index_episodes_on_user_id"
 
-  create_table "facebook_posts", force: true do |t|
+  create_table "facebook_posts", id: false, force: true do |t|
+    t.integer  "id",         limit: 8
     t.string   "text"
     t.string   "location"
     t.float    "lat"
@@ -215,8 +216,8 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.datetime "updated_at"
   end
 
-  add_index "locations", ["lat"], name: "index_locations_on_lat", using: :btree
-  add_index "locations", ["lng"], name: "index_locations_on_lng", using: :btree
+  add_index "locations", ["lat"], name: "index_locations_on_lat"
+  add_index "locations", ["lng"], name: "index_locations_on_lng"
 
   create_table "mole_addons", force: true do |t|
     t.string  "name",                            null: false
@@ -255,9 +256,10 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.datetime "updated_at"
   end
 
-  add_index "phonecalls", ["contact"], name: "index_phonecalls_on_number", using: :btree
+  add_index "phonecalls", ["contact"], name: "index_phonecalls_on_contact"
 
-  create_table "photos", force: true do |t|
+  create_table "photos", id: false, force: true do |t|
+    t.integer  "id",          limit: 8
     t.string   "title"
     t.string   "thumbnail"
     t.string   "original"
@@ -281,13 +283,13 @@ ActiveRecord::Schema.define(version: 20141123222650) do
   create_table "running_events", force: true do |t|
     t.string   "name"
     t.string   "location"
-    t.decimal  "lat",         precision: 10, scale: 7
-    t.decimal  "lng",         precision: 10, scale: 7
+    t.decimal  "lat",                     precision: 10, scale: 7
+    t.decimal  "lng",                     precision: 10, scale: 7
     t.integer  "finish_time"
     t.boolean  "training"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position"
+    t.integer  "position",    limit: 255
     t.string   "link"
     t.integer  "distance"
   end
@@ -313,21 +315,21 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.string "description"
   end
 
-  add_index "train_categories", ["code"], name: "index_train_categories_on_code", unique: true, using: :btree
+  add_index "train_categories", ["code"], name: "index_train_categories_on_code", unique: true
 
   create_table "train_catering", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_catering", ["code"], name: "index_train_catering_on_code", unique: true, using: :btree
+  add_index "train_catering", ["code"], name: "index_train_catering_on_code", unique: true
 
   create_table "train_classes", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_classes", ["code"], name: "index_train_classes_on_code", unique: true, using: :btree
+  add_index "train_classes", ["code"], name: "index_train_classes_on_code", unique: true
 
   create_table "train_journey_legs", force: true do |t|
     t.integer  "journey_id"
@@ -345,8 +347,8 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.integer  "distance"
   end
 
-  add_index "train_journey_legs", ["journey_id"], name: "index_train_journey_legs_on_journey_id", using: :btree
-  add_index "train_journey_legs", ["schedule_id"], name: "index_train_journey_legs_on_schedule_id", using: :btree
+  add_index "train_journey_legs", ["journey_id"], name: "index_train_journey_legs_on_journey_id"
+  add_index "train_journey_legs", ["schedule_id"], name: "index_train_journey_legs_on_schedule_id"
 
   create_table "train_journeys", force: true do |t|
     t.integer  "user_id"
@@ -354,7 +356,7 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.datetime "updated_at"
   end
 
-  add_index "train_journeys", ["user_id"], name: "index_train_journeys_on_user_id", using: :btree
+  add_index "train_journeys", ["user_id"], name: "index_train_journeys_on_user_id"
 
   create_table "train_location_distances", force: true do |t|
     t.string   "origin_tiploc"
@@ -367,8 +369,8 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.datetime "updated_at"
   end
 
-  add_index "train_location_distances", ["destination_tiploc"], name: "index_train_location_distances_on_destination", using: :btree
-  add_index "train_location_distances", ["origin_tiploc"], name: "index_train_location_distances_on_origin", using: :btree
+  add_index "train_location_distances", ["destination_tiploc"], name: "index_train_location_distances_on_destination_tiploc"
+  add_index "train_location_distances", ["origin_tiploc"], name: "index_train_location_distances_on_origin_tiploc"
 
   create_table "train_locations", force: true do |t|
     t.string  "name"
@@ -381,16 +383,16 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.boolean "station"
   end
 
-  add_index "train_locations", ["crs"], name: "index_train_locations_on_crs", using: :btree
-  add_index "train_locations", ["stanox"], name: "index_train_locations_on_stanox", using: :btree
-  add_index "train_locations", ["tiploc"], name: "index_train_locations_on_tiploc", using: :btree
+  add_index "train_locations", ["crs"], name: "index_train_locations_on_crs"
+  add_index "train_locations", ["stanox"], name: "index_train_locations_on_stanox"
+  add_index "train_locations", ["tiploc"], name: "index_train_locations_on_tiploc"
 
   create_table "train_operating_characteristics", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_operating_characteristics", ["code"], name: "index_train_operating_characteristics_on_code", using: :btree
+  add_index "train_operating_characteristics", ["code"], name: "index_train_operating_characteristics_on_code"
 
   create_table "train_operating_companies", force: true do |t|
     t.string  "name"
@@ -399,7 +401,7 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.string  "atoc"
   end
 
-  add_index "train_operating_companies", ["atoc"], name: "index_train_operating_companies_on_atoc", using: :btree
+  add_index "train_operating_companies", ["atoc"], name: "index_train_operating_companies_on_atoc"
 
   create_table "train_platforms", force: true do |t|
     t.string   "name"
@@ -409,14 +411,14 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.datetime "updated_at"
   end
 
-  add_index "train_platforms", ["tiploc"], name: "index_train_platforms_on_tiploc", using: :btree
+  add_index "train_platforms", ["tiploc"], name: "index_train_platforms_on_tiploc"
 
   create_table "train_power_types", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_power_types", ["code"], name: "index_train_power_types_on_code", using: :btree
+  add_index "train_power_types", ["code"], name: "index_train_power_types_on_code"
 
   create_table "train_reservations", force: true do |t|
     t.string "code"
@@ -424,7 +426,7 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.string "symbol"
   end
 
-  add_index "train_reservations", ["code"], name: "index_train_reservations_on_code", using: :btree
+  add_index "train_reservations", ["code"], name: "index_train_reservations_on_code"
 
   create_table "train_schedule_locations", force: true do |t|
     t.integer "schedule_id"
@@ -444,9 +446,9 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.string  "performance_allowance"
   end
 
-  add_index "train_schedule_locations", ["record_identity"], name: "index_train_schedule_locations_on_record_identity", using: :btree
-  add_index "train_schedule_locations", ["schedule_id"], name: "index_train_schedule_locations_on_schedule_id", using: :btree
-  add_index "train_schedule_locations", ["tiploc_code"], name: "index_train_schedule_locations_on_tiploc_code", using: :btree
+  add_index "train_schedule_locations", ["record_identity"], name: "index_train_schedule_locations_on_record_identity"
+  add_index "train_schedule_locations", ["schedule_id"], name: "index_train_schedule_locations_on_schedule_id"
+  add_index "train_schedule_locations", ["tiploc_code"], name: "index_train_schedule_locations_on_tiploc_code"
 
   create_table "train_schedules", force: true do |t|
     t.date    "schedule_start_date"
@@ -477,26 +479,27 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.string  "ransaction_type"
   end
 
-  add_index "train_schedules", ["headcode"], name: "index_train_schedules_on_headcode", using: :btree
-  add_index "train_schedules", ["schedule_end_date"], name: "index_train_schedules_on_schedule_end_date", using: :btree
-  add_index "train_schedules", ["schedule_start_date"], name: "index_train_schedules_on_schedule_start_date", using: :btree
-  add_index "train_schedules", ["train_uid"], name: "index_train_schedules_on_train_uid", using: :btree
+  add_index "train_schedules", ["headcode"], name: "index_train_schedules_on_headcode"
+  add_index "train_schedules", ["schedule_end_date"], name: "index_train_schedules_on_schedule_end_date"
+  add_index "train_schedules", ["schedule_start_date"], name: "index_train_schedules_on_schedule_start_date"
+  add_index "train_schedules", ["train_uid"], name: "index_train_schedules_on_train_uid"
 
   create_table "train_statuses", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_statuses", ["code"], name: "index_train_statuses_on_code", using: :btree
+  add_index "train_statuses", ["code"], name: "index_train_statuses_on_code"
 
   create_table "train_timing_loads", force: true do |t|
     t.string "code"
     t.string "name"
   end
 
-  add_index "train_timing_loads", ["code"], name: "index_train_timing_loads_on_code", using: :btree
+  add_index "train_timing_loads", ["code"], name: "index_train_timing_loads_on_code"
 
-  create_table "tweets", force: true do |t|
+  create_table "tweets", id: false, force: true do |t|
+    t.integer  "id",         limit: 8
     t.string   "text"
     t.string   "location"
     t.float    "lat"
@@ -513,8 +516,8 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.string  "access_token"
   end
 
-  add_index "user_twitter_accounts", ["screen_name"], name: "index_user_twitter_accounts_on_screen_name", using: :btree
-  add_index "user_twitter_accounts", ["user_id"], name: "index_user_twitter_accounts_on_user_id", using: :btree
+  add_index "user_twitter_accounts", ["screen_name"], name: "index_user_twitter_accounts_on_screen_name"
+  add_index "user_twitter_accounts", ["user_id"], name: "index_user_twitter_accounts_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -533,8 +536,8 @@ ActiveRecord::Schema.define(version: 20141123222650) do
     t.boolean  "admin"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
   create_table "wall_scores", force: true do |t|
     t.integer  "facebook_id", limit: 8
