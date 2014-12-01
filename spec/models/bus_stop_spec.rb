@@ -13,12 +13,12 @@ describe BusStop do
   describe "to string method" do
     
     describe "where there is no parent name" do
-      it { @bus_stop.to_s.should eq("common, locality") }
+      it { expect(@bus_stop.to_s).to eq("common, locality") }
     end
     
     describe "where there is a parent name" do
       before { @bus_stop.parent_locality_name = "parent" }
-      it { @bus_stop.to_s.should eq("common, locality, parent") }
+      it { expect(@bus_stop.to_s).to eq("common, locality, parent") }
     end
 
   end

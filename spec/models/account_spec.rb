@@ -7,7 +7,7 @@ describe Account do
   end
 
   describe "not valid when no name" do
-    it { @account.valid?.should eq(false) }
+    it { expect(@account.valid?).to eq(false) }
   end
 
 end
