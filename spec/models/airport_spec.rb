@@ -10,13 +10,11 @@ describe Airport do
   end
 
   describe "the to string method" do
-    subject { @airport.to_s }
-    it { should eq("Test (City, Country)") }
+    it { expect(@airport.to_s).to eq("Test (City, Country)") }
   end
 
   describe "the tmap marker text" do
-    subject { @airport.map_marker_text }
-    it { should eq("Test (City, Country)") }
+    it { expect(@airport.map_marker_text).to eq("Test (City, Country)") }
   end
 
 end

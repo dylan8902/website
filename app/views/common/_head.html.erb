@@ -40,6 +40,10 @@
 <!--[if lte IE 8]>
     <link rel="stylesheet" href="/scripts/leaflet.ie.css">
 <![endif]-->
+<script type="text/javascript" src="/scripts/leaflet.js"></script>
+<script type="text/javascript" src="/scripts/leaflet.markercluster.js"></script>
+<% end %>
+
 <script type="text/javascript">
 var _prum = [['id', '547b9a1eabe53d373b300dbc'],
              ['mark', 'firstbyte', (new Date()).getTime()]];
@@ -51,8 +55,5 @@ var _prum = [['id', '547b9a1eabe53d373b300dbc'],
     s.parentNode.insertBefore(p, s);
 })();
 </script>
-<script type="text/javascript" src="/scripts/leaflet.js"></script>
-<script type="text/javascript" src="/scripts/leaflet.markercluster.js"></script>
-<% end %>
 
 <%= yield(:extrahead) %>
