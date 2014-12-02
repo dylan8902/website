@@ -15,7 +15,7 @@ class BlogTag < ActiveRecord::Base
 
   def blog_posts
     ids = BlogTag.select(:blog_post_id).where(tag: self.tag)
-    BlogPost.find_all_by_id(ids)
+    BlogPost.where(id: ids)
   end
 
   

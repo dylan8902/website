@@ -9,8 +9,7 @@ class BlogTagsController < ApplicationController
   # GET /blog/tags.json
   # GET /blog/tags.xml
   def index
-    @order = params[:order] || :tag
-    @tags = BlogTag.uniq.pluck(:tag).order(@order).paginate(@page)
+    @tags = BlogTag.uniq.pluck(:tag).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
