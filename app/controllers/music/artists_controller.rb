@@ -13,8 +13,8 @@ class Music::ArtistsController < ApplicationController
       response = RestClient.get "http://musicbrainz.org/ws/2/artist/?fmt=json&limit=7&query=#{URI::escape(params[:q])}"
       if response.code == 200
         json = JSON.parse response.body
-        if json['artist']
-          @artists = json['artist']
+        if json['artists']
+          @artists = json['artists']
         end
       end
     end
@@ -44,12 +44,9 @@ class Music::ArtistsController < ApplicationController
     else
       
       begin
-        response = RestClient.get "http://www.bbc.co.uk/music/artists/#{URI::escape(params[:id])}.json"
+        response = RestClient.get "http://musicbrainz.org/ws/2/artist/#{URI::escape(params[:id])}?fmt=json&inc=aliases+tags"
         if response.code == 200
-          json = JSON.parse response.body
-          if json['artist']
-            @artist = json['artist']
-          end
+          @artist = JSON.parse response.body
         end
       rescue
         @artist['artist'] = nil

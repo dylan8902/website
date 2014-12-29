@@ -153,8 +153,11 @@
 			data     : 'method=user.getrecenttracks&user=bbc<%= @radio_station.id %>&api_key=ea5099237517b2b08252aed02e06a3ea&format=json&limit=5',
 			success  : 
 				function(reply) {
-					if(typeof(reply.recenttracks) != 'undefined') {
+					if (typeof(reply.recenttracks) != 'undefined') {
 						var track = reply.recenttracks.track[0];
+						if(typeof(track['@attr']) != 'undefined') {
+							track = reply.recenttracks.track[1];
+						}
 						last = last.toString();
 						var test = track.name.toString();
 						if(test!=last) {
@@ -230,25 +233,25 @@
 				success  : 
 					function(reply) { 
 						$('#loading').fadeOut(200);
-						if(typeof(reply.wikipedia_article) != 'undefined')
-							$('#information').append('<section><h3>Biography</h3><p id="biography">'+reply.wikipedia_article.content+'</p></section>');
+						if(typeof(reply.type) != 'undefined')
+							$('#information').append('<section><p><i class="icon-group"></i> '+reply.type+'</p></section>');
 						if(typeof(reply['7digital']) != 'undefined') {
-							if(typeof(reply['7digital'].releases.release) != 'undefined') {
+							if(typeof(reply['7digital'].releases.releases) != 'undefined') {
 								$('#information').append('<section><h3>Releases</h3><table id="releases"></table><img src="/images/7digital.png" alt="7 Digital" style="height:14px;"></section>');
-								for(var a in reply['7digital'].releases.release) {
-									var release = reply['7digital'].releases.release[a];
+								for(var a in reply['7digital'].releases.releases) {
+									var release = reply['7digital'].releases.releases[a];
 									$('#releases').append('<tr><td><img src="'+release.image+'" alt="Artwork"></td><td><a href="'+release.url+'" target="_blank">'+release.title+'</a></td><td width="60"><iframe frameborder="0" height="40" scrolling="no" src="https://instant.7digital.com/iframe.htm?releaseid='+release.id+'&amp;partnerid=3143&amp;buttontext=BUY" width="60"></iframe></td></tr>');
 								}
 							}
 						}
-						if(typeof(reply.reviews[0]) != 'undefined') {
+						if(typeof(reply.reviews) != 'undefined') {
 							$('#information').append('<section><h3>Reviews</h3><table id="reviews"></table></section>');
 							for(var a in reply.reviews) {
 								var review = reply.reviews[a];
 								$('#reviews').append('<tr><td><img src="'+review.release.artwork.small+'" alt="Artwork"></td><td><a href="http://www.bbc.co.uk/music/reviews/'+review.url_key+'" target="_blank">'+review.release.title+'</a></td><td>'+review.short_synopsis+'<br>By '+review.reviewer+'</td></tr>');
 							}
 						}
-						if(typeof(reply.news[0]) != 'undefined') {
+						if(typeof(reply.news) != 'undefined') {
 							$('#information').append('<section><h3>News</h3><table id="news"></table></section>');
 							for(var a in reply.news) {
 								var news = reply.news[a];
@@ -262,7 +265,7 @@
 								$('#events').append('<li><a href="'+event.uri+'" target="_blank">'+event.displayName+'</a></li>');
 							}
 						}
-						if(typeof(reply.links[0]) != 'undefined') {
+						if(typeof(reply.links) != 'undefined') {
 							$('#information').append('<section><h3>Links</h3><ul id="links"></ul></section>');
 							for(var a in reply.links) {
 								var link = reply.links[a];
