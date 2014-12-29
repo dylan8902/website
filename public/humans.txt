@@ -3,7 +3,7 @@
 	Lead Web Developer: Dylan Jones
 	Site: https://dyl.anjon.es/
 	Twitter: dylan8902
-	Location: Bristol, UK
+	Location: Cardiff, Wales
 /* SITE */
 	Language: Ruby
 	Framework: Rails
