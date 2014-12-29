@@ -11,12 +11,14 @@
   <li class="active"><%= @artist['name'] %></li>
 </ol>
 
-<p><%= icon "group" %> <%= @artist['artist_type'] %></p>
+<p><%= icon "group" %> <%= @artist['type'] %></p>
 <p><%= @artist['disambiguation'] %></p>
-<% if @artist['begin_date'] %>
-<p><%= icon "time" %> <%= @artist['begin_date'] %> <%= " - " + @artist['end_date'] if @artist['end_date'] %></p>
+<% if @artist['life-span']['ended'] and @artist['life-span']['begin'] and @artist['life-span']['end'] %>
+<p><%= icon "time" %> <%= @artist['life-span']['begin'] %> <%= " - " + @artist['life-span']['end'] %></p>
+<% elsif @artist['life-span']['begin'] %>
+<p><%= icon "time" %> Since <%= @artist['life-span']['begin'] %></p>
 <% end %>
-<img src="https://www.bbc.co.uk/music/images/artists/542x305/<%= @artist['gid'] %>.jpg" title="<%= @artist['name'] %>" alt="<%= @artist['name'] %>" class="thumbnail">
+<img src="https://www.bbc.co.uk/music/images/artists/542x305/<%= @artist['id'] %>.jpg" title="<%= @artist['name'] %>" alt="<%= @artist['name'] %>" class="thumbnail">
 
 <% if @artist['wikipedia_article'] %>
 <h2>Biography</h2>
@@ -69,11 +71,11 @@
 <% end %>
 
 
-<% if @artist['7digital'] and @artist['7digital']['releases']['release'].count > 0 %>
+<% if @artist['7digital'] and @artist['7digital']['releases']['releases'].count > 0 %>
 	<article class="col-md-4">
 		<h2><%= icon "bullhorn" %> Releases</h2>
 		<table>
-		<% @artist['7digital']['releases']['release'].each do |release| %>
+		<% @artist['7digital']['releases']['releases'].each do |release| %>
 			<tr>
 				<td><%= image_tag(release['image']) %></td>
 				<td><%= link_to release['title'], release['url'] %></td>
