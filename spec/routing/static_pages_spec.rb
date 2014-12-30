@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "routing to static pages" do
+RSpec.describe "routing to static pages" do
 
   it "routes http://dyl.anjon.es/ to index" do
     expect(get: "http://dyl.anjon.es/").to route_to(

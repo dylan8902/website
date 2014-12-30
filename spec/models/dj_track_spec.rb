@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 
-describe DjTrack do
+RSpec.describe DjTrack do
 
   before do
     @dj_track = DjTrack.new(
