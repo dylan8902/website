@@ -1,6 +1,6 @@
 require 'spec_helper.rb'
 
-describe BusStop do
+RSpec.describe BusStop do
 
   before do
     @bus_stop = BusStop.new(

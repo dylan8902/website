@@ -1,13 +1,13 @@
-require 'spec_helper.rb'
+require 'rails_helper.rb'
 
-describe Account do
+RSpec.describe Account do
 
   before do
     @account = Account.new
   end
 
-  describe "not valid when no name" do
-    it { expect(@account.valid?).to eq(false) }
+  it "is not valid without a name" do
+    expect(@account.valid?).to eq(false)
   end
 
 end
