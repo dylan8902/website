@@ -9,4 +9,5 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Website::Application.config.secret_key_base = ENV['SECRET_KEY_BASE']
+secret = Rails.env.production? ? ENV['SECRET_KEY_BASE'] : "top_secret_token"
+Website::Application.config.secret_key_base = secret
