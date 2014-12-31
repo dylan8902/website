@@ -1,85 +1,33 @@
-Initial Build
-=============
+Server Setup
+============
 
-Login to new server as root
+I have used Webfaction as my hosting company for my website. You can use my affiliate link if you wish to also: 
 
-Create new `<USER>`
+Initial Deployment
+==================
+Create a Ruby on Rails with Passenger application called www
+Create a MySQL database with a user
 
-Add `<USER>` to sudoers list
-
-Login as `<USER>`
-
-	sudo yum install git curl-devel mysql mysql-devel mariadb-server sqlite-devel -y
-	cd /tmp/
-	wget http://nginx.org/download/nginx-1.6.0.tar.gz
-	tar -zxvf nginx-1.6.0.tar.gz
-	\curl -sSL https://get.rvm.io | bash -s stable
-	source ~/.profile
-	rvm install 2.1.2
-	gem install passenger
-	sudo chmod o+x "/home/<user>"
-	rvmsudo passenger-install-nginx-module
-
-Use the source in `/tmp/nginx-1.6.0`
-
-Install to `/opt/nginx`
-
-Add argument to install spdy module `--with-http_spdy_module`
-
-	cd /var
-	sudo mkdir www
-	sudo chown <USER> www
-	sudo chgrp <USER> www
-
-Set up SSH key
-
-Add to github and test
-
-	git clone git@github.com:dylan8902/website.git
-	sudo cp /var/www/website/config/server/ruby_wrapper /opt/ruby_wrapper
-	cd /opt
-	sudo chmod a+rwx ruby_wrapper
-	sudo chmod u+x set_environment
-	sudo vi set_environment
-
-Paste secret keys into set_environment
-
-	source set_environment
-	mysql -uroot
-	CREATE USER '<DATABASE_USER>'@'localhost' IDENTIFIED BY '<DATABASE_PASSWORD>';
-	GRANT ALL ON *.* TO '<DATABASE_USER>'@'localhost';
-	FLUSH PRIVILEGES;
-	exit
-	sudo cp /var/www/website/config/server/nginx.conf /opt/nginx/conf/nginx.conf
-	sudo mkdir /opt/nginx/ssl
-	cd /opt/nginx/ssl
-	sudo vi dyl.anjon.es.crt
-
-Paste SSL certificate into dyl.anjon.es.crt
-
-	sudo vi dyl.anjon.es.csr
-
-Paste SSL certificate request into dyl.anjon.es.csr
-
-	sudo vi /opt/nginx/ssl/dyl.anjon.es.key
-
-Paste SSL certificate key into dyl.anjon.es.key
-
-	cd /var/www/website
+Setup Git with keys etc
+Add ruby, gem library etc paths to ~/.bashrc
+Export secret keys to ~/.bashrc
+	
+	git clone git@github.com:dylan8902/website.git website
+	update nginx conf to have correct root and environemnt
+	cd www/
 	bundle install
-	rake db:create RAILS_ENV=production
 	rake db:migrate RAILS_ENV=production
 	rake assets:precompile
-	sudo service nginx start
-
+	cd ../
+	./bin/restart
 
 Deploy Latest Version
 =====================
 
 To update the app:
 
-	ssh <USER>@<SERVER> -L 3001:localhost:3306
-	cd /var/www/website
+	ssh <USER>@<SERVER>
+	cd ~/webapps/www/website
 	git reset --hard
 	git pull origin
 	bundle install
