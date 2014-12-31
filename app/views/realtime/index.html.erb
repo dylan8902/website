@@ -42,7 +42,7 @@ $(document).ready(function() {
 	     return;
 	}
 
-	var connection = new WebSocket('ws://37.58.75.232:27285');
+	var connection = new WebSocket('ws://37.58.85.147:27285');
 	connection.onopen = function () {
 		$('#status').html('Connected: Start drawing.');
 		connection.send(JSON.stringify({channel: window.location.hash.substring(1)}));
