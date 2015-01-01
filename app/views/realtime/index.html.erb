@@ -31,9 +31,7 @@ $(document).ready(function() {
 		offsetX = canvasOffset.left;
 		offsetY = canvasOffset.top;
 	};
-	$(window).resize(function() {
-		calculateSizeAndOffset();
-	});
+	$(window).resize(calculateSizeAndOffset);
 	calculateSizeAndOffset();
 
 	window.WebSocket = window.WebSocket || window.MozWebSocket;

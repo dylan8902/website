@@ -61,7 +61,7 @@ class PhonecallsController < ApplicationController
     phonecalls.each do |phonecall|
       phonecall = phonecall.split(",")
       time = DateTime.strptime(phonecall[0] + " " + phonecall[1], '%d %b %y %H:%M:%S')
-      @phonecalls <<  Phonecall.create(
+      @phonecalls << Phonecall.create(
         date: phonecall[0],
         time: phonecall[1],
         contact: phonecall[2],
@@ -86,7 +86,7 @@ class PhonecallsController < ApplicationController
   # GET /sms/contact/4474766782.json
   # GET /sms/contact/4474766782.xml
   def contact
-    @phonecalls = Phonecall.find_all_by_contact(params[:contact]).order(@order).paginate(@page)
+    @phonecalls = Phonecall.where(contact: params[:contact]).order(@order).paginate(@page)
     @contact = params[:contact]
     
     respond_to do |format|

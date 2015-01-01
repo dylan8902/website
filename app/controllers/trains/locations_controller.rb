@@ -22,11 +22,11 @@ class Trains::LocationsController < ApplicationController
       @locations =  Trains::Location.select("train_locations.*, #{distance_sql(lat,lng)} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").order(@order).paginate(@page)
     else
       @order = params[:order] || "name ASC"
-      crs = Trains::Location.where("crs = ? AND (#{stations})", @q)
-      tiploc = Trains::Location.where("tiploc = ? AND (#{stations})", @q)
-      name =  Trains::Location.where("name LIKE ? AND (#{stations})", "#{@q}%")
+      crs = Trains::Location.where("crs = ? AND (#{stations})", @q).order(@order)
+      tiploc = Trains::Location.where("tiploc = ? AND (#{stations})", @q).order(@order)
+      name =  Trains::Location.where("name LIKE ? AND (#{stations})", "#{@q}%").order(@order)
       @locations = [crs, tiploc, name]
-      @locations = @locations.flatten.uniq.order(@order).paginate(@page)
+      @locations = @locations.flatten.uniq.paginate(@page)
     end
 
     respond_to do |format|
