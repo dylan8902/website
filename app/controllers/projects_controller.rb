@@ -79,7 +79,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.save
-        format.html { redirect_to @project, notice: 'Project was successfully created.' }
+        format.html { redirect_to projects_url, notice: 'Project was successfully created.' }
         format.json { render json: @project, status: :created, location: @project }
         format.xml { render xml: @project, status: :created, location: @project }
       else
@@ -97,7 +97,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       if @project.update_attributes(project_params)
-        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+        format.html { redirect_to projects_url, notice: 'Project was successfully updated.' }
         format.json { head :no_content }
         format.xml { head :no_content }
       else

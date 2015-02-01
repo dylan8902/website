@@ -6,6 +6,7 @@ class PringlesPricesController < ApplicationController
   # GET /pringles.json
   # GET /pringles.xml
   def index
+    Project.hit 57
     @tesco_price_today = PringlesPrice.tesco.first
     @asda_price_today = PringlesPrice.asda.first
 
