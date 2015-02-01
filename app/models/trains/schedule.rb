@@ -186,15 +186,14 @@ class Trains::Schedule < ActiveRecord::Base
   end
 
 
-  def self.parse_file
-    file = "/Users/dylan/file"
+  def self.import filename
 
-    unless File.exist? file
-      logger.error "No file to parse found (#{file})"
+    unless File.exist? filename
+      logger.error "No file to parse found (#{filename})"
       return false
     end
 
-    File.open(file).each do |line|
+    File.open(filename).each do |line|
       json = JSON.parse(line)
       Trains::Schedule.add json['JsonScheduleV1'] unless json['JsonScheduleV1'].nil?
     end
@@ -232,24 +231,26 @@ class Trains::Schedule < ActiveRecord::Base
     )
     
     unless schedule['schedule_segment']['schedule_location'].nil? then
-      schedule['schedule_segment']['schedule_location'].each do |location|
-        Trains::ScheduleLocation.create(
-          schedule_id: new_schedule.id,
-          location_type: location['location_type'],
-          record_identity: location['record_identity'],
-          tiploc_code: location['tiploc_code'],
-          tiploc_instance: location['tiploc_instance'],
-          departure: location['departure'],
-          public_departure: location['public_departure'],
-          arrival: location['arrival'],
-          public_arrival: location['public_arrival'],
-          pass: location['pass'],
-          platform: location['platform'],
-          line: location['line'],
-          engineering_allowance: location['engineering_allowance'],
-          pathing_allowance: location['pathing_allowance'],
-          performance_allowance: location['performance_allowance']
-        )
+      ActiveRecord::Base.transaction do
+        schedule['schedule_segment']['schedule_location'].each do |location|
+          Trains::ScheduleLocation.create(
+            schedule_id: new_schedule.id,
+            location_type: location['location_type'],
+            record_identity: location['record_identity'],
+            tiploc_code: location['tiploc_code'],
+            tiploc_instance: location['tiploc_instance'],
+            departure: location['departure'],
+            public_departure: location['public_departure'],
+            arrival: location['arrival'],
+            public_arrival: location['public_arrival'],
+            pass: location['pass'],
+            platform: location['platform'],
+            line: location['line'],
+            engineering_allowance: location['engineering_allowance'],
+            pathing_allowance: location['pathing_allowance'],
+            performance_allowance: location['performance_allowance']
+          )
+        end
       end
     end
   end
