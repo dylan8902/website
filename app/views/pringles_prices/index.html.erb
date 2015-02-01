@@ -12,7 +12,7 @@
 <section class="row">
 <% @prices.each do |price| %>
 	<% unless price.nil? %>
-	<article class="col-md-6">
+	<article class="col-md-5">
 		<h4><%= price.supermarket %></h4>
 		<article class="well" style="<%= price.css_style %>">
 			<p style="font-size:300%">
@@ -30,6 +30,9 @@
 	</article>
 	<% end %>
 <% end %>
+	<article class="col-md-2 text-center">
+		<img src="/images/pringles.png" alt="Pringles" title="I LOVE Pringles" style="height:300px;margin-top:30px">
+	</article>
 </section>
 
 <hr>
@@ -41,18 +44,78 @@
 
 <hr>
 
-<h2>Cost Over Time</h2>
-
-<%= jqplot 300, 820, @stats,
-	seriesColors:['#00539f', '#78be20'],
-	axes: {
-		xaxis: {
-			renderer: '$.jqplot.DateAxisRenderer'
-		},
-		yaxis: {
-			tickOptions: {
-				formatString: '&pound;%.03P'
+<section class="visible-lg">
+	<h2>Cost Over Time</h2>
+	<%= jqplot 300, 1000, @stats,
+		seriesColors: ['#00539f', '#78be20'],
+		axes: {
+			xaxis: {
+				renderer: '$.jqplot.DateAxisRenderer'
+			},
+			yaxis: {
+				tickOptions: {
+					formatString: '&pound;%.03P'
+				}
 			}
 		}
-	}
-%>
+	%>
+</section>
+
+<section class="visible-md">
+	<h2>Cost Over Time</h2>
+	<%= jqplot 300, 900, @stats,
+		seriesColors: ['#00539f', '#78be20'],
+		axes: {
+			xaxis: {
+				renderer: '$.jqplot.DateAxisRenderer'
+			},
+			yaxis: {
+				tickOptions: {
+					formatString: '&pound;%.03P'
+				}
+			}
+		}
+	%>
+</section>
+
+<section class="visible-sm">
+	<h2>Cost Over Time</h2>
+	<%= jqplot 300, 730, @stats,
+		seriesColors: ['#00539f', '#78be20'],
+		axes: {
+			xaxis: {
+				renderer: '$.jqplot.DateAxisRenderer'
+			},
+			yaxis: {
+				tickOptions: {
+					formatString: '&pound;%.03P'
+				}
+			}
+		}
+	%>
+</section>
+
+<section class="visible-xs">
+	<h2>Cost Over Time</h2>
+	<%= jqplot 300, 320, @stats,
+		seriesColors: ['#00539f', '#78be20'],
+		axes: {
+			xaxis: {
+				renderer: '$.jqplot.DateAxisRenderer'
+			},
+			yaxis: {
+				tickOptions: {
+					formatString: '&pound;%.03P'
+				}
+			}
+		}
+	%>
+</section>
+
+<hr>
+
+<h2>How does it work?</h2>
+<p>
+	I am using the offical <a href="https://secure.techfortesco.com/tescoapiweb/login.aspx" title="Tesco API Website">Tesco API</a>
+	and the unofficial <a href="http://www.ifc0nfig.com/asda-walmart-api/">Asda API</a>.
+</p>
