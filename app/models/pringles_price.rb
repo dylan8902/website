@@ -2,6 +2,12 @@ class PringlesPrice < ActiveRecord::Base
   default_scope { order('created_at DESC') }
 
 
+  def css_style
+    return "background-color:#00539f;border-color:#00539f" if supermarket == "Tesco"
+    return "background-color:#78be20;border-color:#78be20" if supermarket == "Asda"    
+  end
+
+
   def self.tesco
     return PringlesPrice.where(supermarket: "Tesco")
   end
@@ -9,6 +15,34 @@ class PringlesPrice < ActiveRecord::Base
 
   def self.asda
     return PringlesPrice.where(supermarket: "Asda")
+  end
+
+
+  def self.stats
+    tesco = Array.new
+    PringlesPrice.tesco.each do |pringles_price|
+      tesco << [pringles_price.created_at.strftime("%F"), pringles_price.price]
+    end
+    asda = Array.new
+    PringlesPrice.asda.each do |pringles_price|
+      asda << [pringles_price.created_at.strftime("%F"), pringles_price.price]
+    end
+    return [tesco, asda]
+  end
+
+
+  def self.winner
+    tesco = PringlesPrice.tesco.first
+    asda = PringlesPrice.asda.first
+    if tesco and asda
+      if tesco.price < asda.price
+        return tesco
+      elsif tesco.price > asda.price
+        return asda
+      else
+        return asda
+      end
+    end
   end
 
 
@@ -95,6 +129,7 @@ class PringlesPrice < ActiveRecord::Base
   def self.parse_asda_offer p
     return p["price"].gsub(/[^\d^\.]/, '').to_f
   end
+
 
   def self.update
     return if PringlesPrice.where("created_at > ?", Date.today).count > 0
