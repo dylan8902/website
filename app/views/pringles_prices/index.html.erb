@@ -1,0 +1,60 @@
+<% provide(:title, "Pringles") %>
+<% provide(:description, "An analysis into the cost of Pringles from supermarkets Asda and Tesco") %>
+
+<h1>Pringles</h1>
+
+<p class="well">
+	I love Pringles. Some might say I am addicted to Pringles, specifically Salt &amp; Vinegar. This app tracks the cost of 
+	Salt &amp; Vinegar pringles from Tesco and Asda and alerts me to any current offers.
+</p>
+
+<section class="row">
+	<article class="col-md-6">
+		<h4>Tesco</h4>
+		<article class="well" style="background-color:#00539f;border-color:#00539f">
+		<% unless @tesco_price_today.nil? %>
+			<p style="font-size:300%">
+				<%= number_to_currency(@tesco_price_today.price, unit: "£", separator: ".") %> per can
+			</p>
+			<p style="font-size:200%">
+				<%= "No offer" if @tesco_price_today.offer.empty? %>
+				<%= @tesco_price_today.offer %>
+			</p>
+			<p style="font-size:400%;text-decoration:underline">
+				= <%= number_to_currency(@tesco_price_today.price_inc_offer, unit: "£", separator: ".") %>
+			</p>
+			<p>on <%= @tesco_price_today.created_at.strftime("%d-%M-%Y") %></p>
+		<% end %>
+		</article>
+	</article>
+	<article class="col-md-6">
+		<h4>Asda</h4>
+		<article class="well" style="background-color:#78be20;border-color:#78be20">
+		<% unless @asda_price_today.nil? %>
+			<p style="font-size:300%">
+				<%= number_to_currency(@asda_price_today.price, unit: "£", separator: ".") %> per can
+			</p>
+			<p style="font-size:200%">
+				<%= "No offer" if @asda_price_today.offer.empty? %>
+				<%= @asda_price_today.offer %>
+			</p>
+			<p style="font-size:400%;text-decoration:underline">
+				= <%= number_to_currency(@asda_price_today.price_inc_offer, unit: "£", separator: ".") %>
+			</p>
+			<p>on <%= @asda_price_today.created_at.strftime("%d-%M-%Y") %></p>
+		<% end %>
+		</article>
+	</article>
+</section>
+
+<hr>
+
+<h2>Winner</h2>
+
+<hr>
+
+<h2>Cost Over Time</h2>
+
+
+
+
