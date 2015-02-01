@@ -268,6 +268,7 @@ Website::Application.routes.draw do
 
     get  "pdfy"           => "pdfy#index"
     post "pdfy"           => "pdfy#pdf"
+    get  "pringles"       => "pringles_prices#index"
     get  "qr"             => "qr#index"
     get  "reading"        => "reading#index"
     get  "realtime"       => "realtime#index"

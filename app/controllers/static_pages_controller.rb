@@ -126,6 +126,7 @@ class StaticPagesController < ApplicationController
   def cron
     Listen.update
     BbcTwitter.update
+    PringlesPrice.update
     Gig.update
     TextMessage.update
     Tweet.update

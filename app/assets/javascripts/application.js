@@ -16,3 +16,4 @@
 //= require jqplot
 //= require jqplot/plugins/barRenderer
 //= require jqplot/plugins/categoryAxisRenderer
+//= require jqplot/plugins/dateAxisRenderer

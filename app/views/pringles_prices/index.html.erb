@@ -1,0 +1,58 @@
+<% provide(:title, "Pringles") %>
+<% provide(:description, "An analysis into the cost of Pringles from supermarkets Asda and Tesco") %>
+
+<h1>Pringles</h1>
+
+<p class="well">
+	I love Pringles. Some might say I am addicted to Pringles, specifically Salt &amp; Vinegar. This app tracks the cost of 
+	Salt &amp; Vinegar pringles from Tesco and Asda and alerts me to any current offers.
+</p>
+
+<h2>Current Prices</h2>
+<section class="row">
+<% @prices.each do |price| %>
+	<% unless price.nil? %>
+	<article class="col-md-6">
+		<h4><%= price.supermarket %></h4>
+		<article class="well" style="<%= price.css_style %>">
+			<p style="font-size:300%">
+				<%= number_to_currency(price.price, unit: "£", separator: ".") %> per can
+			</p>
+			<p style="font-size:200%">
+				<%= "No offer" if price.offer.empty? %>
+				<%= price.offer %>
+			</p>
+			<p style="font-size:400%;text-decoration:underline">
+				= <%= number_to_currency(price.price_inc_offer, unit: "£", separator: ".") %>
+			</p>
+			<p>on <%= price.created_at.strftime("%d-%M-%Y") %></p>
+		</article>
+	</article>
+	<% end %>
+<% end %>
+</section>
+
+<hr>
+
+<h2>Winner</h2>
+<article class="well" style="<%= @winner.css_style %>">
+	<h1><%= @winner.supermarket %> with <%= number_to_currency(@winner.price_inc_offer, unit: "£", separator: ".") %> per can</h1>
+</article>
+
+<hr>
+
+<h2>Cost Over Time</h2>
+
+<%= jqplot 300, 820, @stats,
+	seriesColors:['#00539f', '#78be20'],
+	axes: {
+		xaxis: {
+			renderer: '$.jqplot.DateAxisRenderer'
+		},
+		yaxis: {
+			tickOptions: {
+				formatString: '&pound;%.03P'
+			}
+		}
+	}
+%>
