@@ -43,7 +43,6 @@ class Gig < ActiveRecord::Base
       end
           
       gig.save
-      
 
       event['performance'].each do |performer|
         if performer['artist']['identifier'].first
@@ -61,7 +60,6 @@ class Gig < ActiveRecord::Base
     end
 
   end
-
 
 
 end
