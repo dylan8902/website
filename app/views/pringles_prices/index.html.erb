@@ -25,7 +25,7 @@
 			<p style="font-size:400%;text-decoration:underline">
 				= <%= number_to_currency(price.price_inc_offer, unit: "£", separator: ".") %>
 			</p>
-			<p>on <%= price.created_at.strftime("%d-%M-%Y") %></p>
+			<p>on <%= price.created_at.strftime("%d-%m-%Y") %></p>
 		</article>
 	</article>
 	<% end %>
