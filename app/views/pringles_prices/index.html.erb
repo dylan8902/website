@@ -11,7 +11,7 @@
 <h2>Current Prices</h2>
 <section class="row">
 <% @prices.each do |price| %>
-	<% unless price.nil? %>
+	<% if price %>
 	<article class="col-md-5">
 		<h4><%= price.supermarket %></h4>
 		<article class="well" style="<%= price.css_style %>">
@@ -37,12 +37,14 @@
 
 <hr>
 
+<% if @winner %>
 <h2>Winner</h2>
 <article class="well" style="<%= @winner.css_style %>">
 	<h1><%= @winner.supermarket %> with <%= number_to_currency(@winner.price_inc_offer, unit: "£", separator: ".") %> per can</h1>
 </article>
 
 <hr>
+<% end %>
 
 <section class="visible-lg">
 	<h2>Cost Over Time</h2>
