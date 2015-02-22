@@ -85,7 +85,7 @@ RSpec.describe ApplicationHelper do
   describe "get_age" do
 
     it "returns my age today" do
-      expect(get_age).to eq(25)
+      expect(get_age).to eq(26)
     end
 
   end
