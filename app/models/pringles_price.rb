@@ -35,9 +35,9 @@ class PringlesPrice < ActiveRecord::Base
     tesco = PringlesPrice.tesco.first
     asda = PringlesPrice.asda.first
     if tesco and asda
-      if tesco.price < asda.price
+      if tesco.price_inc_offer < asda.price_inc_offer
         return tesco
-      elsif tesco.price > asda.price
+      elsif tesco.price_inc_offer > asda.price_inc_offer
         return asda
       else
         return asda
@@ -121,6 +121,8 @@ class PringlesPrice < ActiveRecord::Base
   def self.parse_tesco_offer p
     if p["OfferPromotion"] == "Any 2 for £3.00"
       return 1.50
+    elsif p["OfferPromotion"] == "Buy 1 Get 1 FREE Cheapest Product..."
+      return p["Price"] / 2
     end
     return p["Price"]
   end
