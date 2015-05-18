@@ -26,3 +26,5 @@
 
 #ignore the coverage report
 /coverage
+
+config/secrets.yml
