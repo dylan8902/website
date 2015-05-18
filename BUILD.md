@@ -21,6 +21,7 @@ To Deploy:
     mysql
     CREATE USER ''@'localhost' IDENTIFIED BY '';
     GRANT ALL PRIVILEGES ON *.* TO ''@'localhost' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
     exit
 
 - Set the secrets in config/secrets.yml.example and rename:
