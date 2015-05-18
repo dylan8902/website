@@ -1,35 +1,52 @@
-Server Setup
-============
 
-I have used Webfaction as my hosting company for my website. You can use my affiliate link if you wish to also: 
+To Deploy:
 
-Initial Deployment
-==================
-Create a Ruby on Rails with Passenger application called www
-Create a MySQL database with a user
+- Create a droplet on Digital Ocean using the Ruby on Rails application image
+- Login with the root password e-mailed to you
 
-Setup Git with keys etc
-Add ruby, gem library etc paths to ~/.bashrc
-Export secret keys to ~/.bashrc
-	
-	git clone git@github.com:dylan8902/website.git website
-	update nginx conf to have correct root and environemnt
-	cd www/
-	bundle install
-	rake db:migrate RAILS_ENV=production
-	rake assets:precompile
-	cd ../
-	./bin/restart
+    apt-get install git
+    git config --global user.name "Your Name"
+    git config --global user.email "your_email@example.com"
+    ssh-keygen -t rsa -C "your_email@example.com"
 
-Deploy Latest Version
-=====================
+- Add the public key generated to your Github Profile
 
-To update the app:
+    rm -rf /home/rails
+    git clone git@github.com:dylan8902/website.git /home/rails
+    cd /home/rails
+    bundle install
+    
+- Create the database user:
 
-	ssh <USER>@<SERVER>
-	cd ~/webapps/www/website
-	git reset --hard
-	git pull origin
-	bundle install
-	rake db:migrate RAILS_ENV=production
-	touch tmp/restart.txt
+    mysql
+    CREATE USER ''@'localhost' IDENTIFIED BY '';
+    GRANT ALL PRIVILEGES ON *.* TO ''@'localhost' WITH GRANT OPTION;
+    exit
+
+- Set the secrets in config/secrets.yml.example and rename:
+
+    vi config/secrets.yml.example
+    mv config/secrets.yml.example config/secrets.yml
+
+- Set up the database and asset pipeline and restart
+
+    rake db:create RAILS_ENV=production
+    rake db:migrate RAILS_ENV=production
+    rake assets:precompile RAILS_ENV=production
+    cd ..
+    chown -R rails rails/
+    chgrp -R www-data rails/
+    service unicorn restart
+
+
+To Update:
+    cd /home/rails
+    git pull
+    rake db:migrate RAILS_ENV=production
+    rake assets:precompile RAILS_ENV=production
+    service unicorn restart
+
+
+To Contribute:
+
+Please feel free to make pull requests!
