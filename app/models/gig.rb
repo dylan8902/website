@@ -4,7 +4,7 @@ class Gig < ActiveRecord::Base
 
 
   def self.update page = 1
-    url = "http://api.songkick.com/api/3.0/users/dylan8902/gigography.json?apikey=" + ENV['SONGKICK_API_KEY'] + "&page=#{page}"
+    url = "http://api.songkick.com/api/3.0/users/dylan8902/gigography.json?apikey=" + Rails.application.secrets.songkick_api_key + "&page=#{page}"
     begin
       response = RestClient.get url
     rescue => e

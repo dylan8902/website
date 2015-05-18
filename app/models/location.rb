@@ -11,8 +11,8 @@ class Location < ActiveRecord::Base
     url = "https://www.google.com/accounts/ClientLogin"
     data = {
       "accountType" => "HOSTED_OR_GOOGLE",
-      "Email" => ENV['GOOGLE_LOCATION_EMAIL'],
-      "Passwd" => ENV['GOOGLE_LOCATION_PASSWORD'],
+      "Email" => Rails.application.secrets.google_location_email,
+      "Passwd" => Rails.application.secrets.google_location_password,
       "source" => "website",
       "service" => "friendview"
     }

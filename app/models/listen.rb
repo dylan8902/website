@@ -22,7 +22,7 @@ class Listen < ActiveRecord::Base
 
   def self.update
     url = "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=dylan8902&api_key=" +
-          ENV['LASTFM_API_KEY'] + "&format=json&limit=50&page=1"
+          Rails.application.secrets.lastfm_api_key + "&format=json&limit=50&page=1"
     begin
       response = RestClient.get url
     rescue => e

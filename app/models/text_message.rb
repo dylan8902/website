@@ -13,7 +13,7 @@ class TextMessage < ActiveRecord::Base
 
 
   def self.update
-    xml = Nokogiri::XML(open(ENV['SMS_LINK']))
+    xml = Nokogiri::XML(open(Rails.application.secrets.sms_link))
     xml.css('sms').each do |sms|
       TextMessage.where(
         text: sms.attribute('body').value,
