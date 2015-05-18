@@ -48,8 +48,8 @@ class PringlesPrice < ActiveRecord::Base
 
   def self.get_tesco_session
     url =  "https://secure.techfortesco.com/tescolabsapi/restservice.aspx?command=LOGIN&email=" +
-            ENV['TESCO_EMAIL'] + "&password=" + ENV['TESCO_PASSWORD'] + "&developerkey=" +
-            ENV['TESCO_DEV_KEY'] + "&applicationkey=" + ENV['TESCO_APP_KEY']
+            Rails.application.secrets.tesco_email + "&password=" + Rails.application.secrets.tesco_password + "&developerkey=" +
+            Rails.application.secrets.tesco_dev_key + "&applicationkey=" + Rails.application.secrets.tesco_app_key
     begin
       response = RestClient.get url
     rescue => e

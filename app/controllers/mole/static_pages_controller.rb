@@ -32,9 +32,9 @@ class Mole::StaticPagesController < ApplicationController
   # GET /mole/total.json
   # GET /mole/total.xml
   def total
-      url = "https://api.justgiving.com/#{ENV['JUSTGIVING_API_KEY']}/v1/fundraising/pages/thebteam-cardiff"
+      url = "https://api.justgiving.com/#{Rails.application.secrets.justgiving_api_key}/v1/fundraising/pages/thebteam-cardiff"
     begin
-      response = RestClient.get "https://api.justgiving.com/#{ENV['JUSTGIVING_API_KEY']}/v1/fundraising/pages/thebteam-cardiff"
+      response = RestClient.get "https://api.justgiving.com/#{Rails.application.secrets.justgiving_api_key}/v1/fundraising/pages/thebteam-cardiff"
       if response.code == 200
         @total = JSON.parse response.body
       end

@@ -1,0 +1,24 @@
+<% provide(:title, "Trains") %>
+<% provide(:description, "A record of train journeys I have been on.") %>
+<% provide(:extrahead, rss_link(trains_path)) %>
+
+<h1>Trains</h1>
+<ol class="breadcrumb">
+	<li class="active">Trains</li>
+	<li><%= link_to 'Statistics', trains_stats_path %></li>
+	<li><%= link_to 'Map', trains_map_path %></li>
+</ol>
+
+<p>
+  Train Track is an app I have made that lets you track your train journeys.
+  <a href="http://traintrackapp.co.uk">You can read more about it on the Train Track website.</a>
+</p>
+
+<% @trains.each do |train| %>
+  <article>
+  	<h3><%= train.to_s %></h3>
+    <p><%= timestamp train.created_at %></p>
+  </article>
+<% end %>
+
+<%= paginate @trains %>

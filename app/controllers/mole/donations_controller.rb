@@ -58,7 +58,7 @@ class Mole::DonationsController < ApplicationController
       end
 
 #      begin
-#        response = RestClient.get "https://#{domain}/#{ENV['JUSTGIVING_API_KEY']}/v1/donation/#{params[:jg]}"
+#        response = RestClient.get "https://#{domain}/#{Rails.application.secrets.justgiving_api_key}/v1/donation/#{params[:jg]}"
 #        if response.code == 200
 #          check = JSON.parse response.body
 #        end

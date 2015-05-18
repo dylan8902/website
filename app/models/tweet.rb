@@ -4,12 +4,12 @@ class Tweet < ActiveRecord::Base
   def self.update
 
     client = Twitter::REST::Client.new do |config|
-      config.consumer_key        = ENV['TWITTER_CONSUMER_KEY']
-      config.consumer_secret     = ENV['TWITTER_CONSUMER_SECRET']
-      config.access_token        = ENV['TWITTER_OAUTH_TOKEN']
-      config.access_token_secret = ENV['TWITTER_OAUTH_TOKEN_SECRET']
+      config.consumer_key        = Rails.application.secrets.twitter_consumer_key
+      config.consumer_secret     = Rails.application.secrets.twitter_consumer_secret
+      config.access_token        = Rails.application.secrets.twitter_oauth_token
+      config.access_token_secret = Rails.application.secrets.twitter_oauth_token_secret
     end
-    
+
     tweets = client.user_timeline("dylan8902")
     tweets.each do |tweet|
       unless tweet.geo.nil?
@@ -28,7 +28,7 @@ class Tweet < ActiveRecord::Base
         updated_at: tweet.created_at
       )
     end
-    
+
   end
 
   def map_marker_text
