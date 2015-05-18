@@ -1,0 +1,17 @@
+<% provide(:title, "Trains:: Stats") %>
+<% provide(:description, "Statistics on when I go on train journeys") %>
+
+<h1>Trains</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Trains', trains_path %></li>
+	<li class="active">Statistics</li>
+	<li><%= link_to 'Map', trains_map_path %></li>
+</ol>
+
+<h2>Statistics</h2>
+<%= render 'common/time_stats' %>
+
+<h2>Word Cloud</h2>
+<%= render 'common/word_cloud' %>
+
+<%= link_to 'Back', trains_path %>

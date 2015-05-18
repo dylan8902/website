@@ -298,20 +298,27 @@ Website::Application.routes.draw do
     post "timestables"    => "times_tables#new"
 
     namespace :trains do
-      root                                         to: 'static_pages#index'
-      get  'schedules/id/:id',                     to: 'schedules#show_by_id',  as: 'schedule_id'
-      get  'schedules/:uid',                       to: 'schedules#show_by_uid', as: 'schedule_uid'
-      get  'schedules/:uid/:year/:month/:day',     to: 'schedules#show_by_uid', as: 'schedule_uid_and_date'
-      get  'locations/map',                        to: 'locations#map',         as: 'locations_map'
-      resources :locations,                                        only: [:index, :show]
+      get  'schedules/id/:id',                     to: 'application#error_410'
+      get  'schedules/:uid',                       to: 'application#error_410'
+      get  'schedules/:uid/:year/:month/:day',     to: 'application#error_410'
+      get  'locations/map',                        to: 'application#error_410'
+      get  'locations',                            to: 'application#error_410'
+      get  'locations/:id',                        to: 'application#error_410'
       resources :journeys,            path: 'journeys',            except: [:new] do
         resources :journey_legs,      path: 'legs',                except: [:index]
       end
-      resources :schedules,                                        only: [:index]
-      resources :operating_companies, path: 'operating-companies', only: [:index, :show]
-      resources :power_types,         path: 'power-types',         only: [:index, :show]
-      resources :categories,                                       only: [:index, :show]
+      get  'schedules',                            to: 'application#error_410'
+      get  'operating-companies',                  to: 'application#error_410'
+      get  'operating-companies/:id',              to: 'application#error_410'
+      get  'power-types',                          to: 'application#error_410'
+      get  'power-types/:id',                      to: 'application#error_410'
+      get  'categories',                           to: 'application#error_410'
+      get  'categories/:id',                       to: 'application#error_410'
     end
+    get  "trains/all"     => "trains#all",            as: "all_trains"
+    get  "trains/map"     => "trains#map",            as: "trains_map"
+    get  "trains/stats"   => "trains#stats",          as: "trains_stats"
+    resources :trains,                                             only: [:index, :show]
 
     get  "tweets/all"     => "tweets#all",            as: "all_tweets"
     get  "tweets/map"     => "tweets#map",            as: "tweets_map"

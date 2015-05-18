@@ -1,0 +1,15 @@
+<% provide(:title, "Train:: #{@train.to_s}") %>
+<% provide(:description, "I went from #{@train.origin} to #{@train.destination}") %>
+
+<h1>Trains</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Trains', trains_path %></li>
+	<li class="active">Train</li>
+	<li><%= link_to 'Statistics', trains_stats_path %></li>
+	<li><%= link_to 'Map', trains_map_path %></li>
+</ol>
+
+<h2><%= @train.to_s %></h2>
+<p><%= timestamp @train.created_at %></p>
+
+<%= link_to 'Back', trains_path %>
