@@ -297,24 +297,25 @@ Website::Application.routes.draw do
     get  "timestables"    => "times_tables#index"
     post "timestables"    => "times_tables#new"
 
-    namespace :trains do
-      get  'schedules/id/:id',                     to: 'application#error_410'
-      get  'schedules/:uid',                       to: 'application#error_410'
-      get  'schedules/:uid/:year/:month/:day',     to: 'application#error_410'
-      get  'locations/map',                        to: 'application#error_410'
-      get  'locations',                            to: 'application#error_410'
-      get  'locations/:id',                        to: 'application#error_410'
-      resources :journeys,            path: 'journeys',            except: [:new] do
-        resources :journey_legs,      path: 'legs',                except: [:index]
-      end
-      get  'schedules',                            to: 'application#error_410'
-      get  'operating-companies',                  to: 'application#error_410'
-      get  'operating-companies/:id',              to: 'application#error_410'
-      get  'power-types',                          to: 'application#error_410'
-      get  'power-types/:id',                      to: 'application#error_410'
-      get  'categories',                           to: 'application#error_410'
-      get  'categories/:id',                       to: 'application#error_410'
-    end
+    get  'trains/schedules/id/:id',                   to: 'application#error_410'
+    get  'trains/schedules/:uid',                     to: 'application#error_410'
+    get  'trains/schedules/:uid/:year/:month/:day',   to: 'application#error_410'
+    get  'trains/locations/map',                      to: 'application#error_410'
+    get  'trains/locations',                          to: 'application#error_410'
+    get  'trains/locations/:id',                      to: 'application#error_410'
+    get  'trains/journeys',                           to: 'application#error_410'
+    get  'trains/journeys/new',                       to: 'application#error_410'
+    get  'trains/journeys/:journey_id',               to: 'application#error_410'
+    get  'trains/journeys/:journey_id/legs',          to: 'application#error_410'
+    get  'trains/journeys/:journey_id/legs/:id',      to: 'application#error_410'
+    get  'trains/journeys/:journey_id/legs/new',      to: 'application#error_410'
+    get  'trains/schedules',                          to: 'application#error_410'
+    get  'trains/operating-companies',                to: 'application#error_410'
+    get  'trains/operating-companies/:id',            to: 'application#error_410'
+    get  'trains/power-types',                        to: 'application#error_410'
+    get  'trains/power-types/:id',                    to: 'application#error_410'
+    get  'trains/categories',                         to: 'application#error_410'
+    get  'trains/categories/:id',                     to: 'application#error_410'
     get  "trains/all"     => "trains#all",            as: "all_trains"
     get  "trains/map"     => "trains#map",            as: "trains_map"
     get  "trains/stats"   => "trains#stats",          as: "trains_stats"
