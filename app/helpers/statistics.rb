@@ -43,8 +43,8 @@ module Statistics
     i = 0
     while i < array.length
       array[i].each do |x|
-        word = x.downcase.tr('^a-z', '')
-        cloud[word] += 1 unless word.empty?
+        word = x.downcase.tr('^a-z', '') if x
+        cloud[word] += 1 if x and !word.empty?
       end
       i += 1
     end
