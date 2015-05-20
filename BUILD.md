@@ -39,6 +39,13 @@ To Deploy:
     chgrp -R www-data rails/
     service unicorn restart
 
+- Set up SSL
+  
+  cp config/server/default /etc/nginx/sites-enabled/default
+  openssl dhparam -out /root/dhparams.pem 2048
+  vi dyl.anjon.es.crt
+  vi dyl.anjon.es.key
+  service nginx restart
 
 To Update:
     cd /home/rails
