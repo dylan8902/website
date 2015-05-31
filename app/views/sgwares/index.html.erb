@@ -42,15 +42,17 @@
 
 	<section id="form">
 		<article>
-			<input id="name" type="text" placeholder="Player Name" required>
+			<input id="name" type="text" placeholder="Player Name" required autocomplete="off">
 			<input id="colour" type="color">
 		</article>
+		<hr>
 		<article>
-			<input id="size" type="number" placeholder="Sgwares Size" value="5">
+			<input id="size" type="number" placeholder="Sgwares Size" value="5" autocomplete="off">
 			<button onclick="newGame()">New Game</button>
 		</article>
+		Or
 		<article>
-			<input id="game-key" type="text" placeholder="Game Key">
+			<input id="game-key" type="text" placeholder="Game Key" autocomplete="false">
 			<button onclick="joinGameButton()">Join Game</button>
 		</article>
 	</section>
@@ -63,6 +65,10 @@
 		var playerKey;
 		var players;
 
+		/*
+		 * On Document Load:
+		 * If there's a hash, put it in the input
+		 */
 		(function() {
 			gameKey = window.location.hash.substring(1);
 			if (gameKey.length > 2) {
@@ -70,6 +76,10 @@
 			}
 		})();
 
+		/*
+		 * New Game Button Listener:
+		 * Use the size value and set the URL and join the game
+		 */
 		function newGame() {
 			var sgwares = new Firebase("https://sgwares.firebaseio.com/games");
 			var size = document.getElementById("size").value
@@ -78,12 +88,20 @@
 			joinGame(gameKey);
 		}
 
+		/*
+		 * Join Game Button Listener:
+		 * Set the URL and join the game
+		 */
 		function joinGameButton() {
 			gameKey = document.getElementById("game-key").value;
 			window.location = "#" + gameKey;
 			joinGame(gameKey);
 		}
 
+		/*
+		 * Hide the form and connect to the game
+		 * Set up all the game listeners
+		 */
 		function joinGame(gameKey) {
 			console.log("Joining game: ", gameKey);
 			document.getElementById("form").style.display = "none";
@@ -123,6 +141,9 @@
 			});
 		}
 
+		/*
+		 * Generate a grid with a given size
+		 */
 		function createGrid(size) {
 			var grid = document.getElementById("grid");
 			var id = 1;
@@ -139,6 +160,10 @@
 			}
 		}
 
+		/*
+		 * Take a click event of a sgware and
+		 * add move if it is close to a boundary
+		 */
 		function clickSgware(e) {
 			if (e.offsetX < 10) {
 				addMove(e.srcElement.id, "left");
@@ -147,6 +172,9 @@
 			}
 		}
 
+		/*
+		 * Send the move to the game 
+		 */
 		function addMove(sgware, side) {
 			var move = game.child("moves").push({
 				player: {
@@ -161,8 +189,9 @@
 		}
 
 		/*
-		 * Take a move and plot it on the grid update the
-		 * effected sgwares with data attributes
+		 * Take a move and plot it on the grid, update the
+		 * effected sgwares with data attributes and
+		 * check to see if this move awards the sgware
 		 */
 		function makeMove(move) {
 			var sgware = document.getElementById(move.sgware);
@@ -175,7 +204,7 @@
 					var aboveId = parseInt(move.sgware) - 5;
 					var aboveSgware = document.getElementById(aboveId);
 					if (aboveSgware) {
-						aboveSgware.setAttribute("data-bottom", move.player);
+						aboveSgware.setAttribute("data-bottom", move.player.key);
 						checkSgware(aboveSgware, move.player);
 					}			
 				} else if (move.side == "left") {
@@ -198,12 +227,17 @@
 			}
 		}
 
+		/*
+		 * Takes a sgware and a player and if that
+		 * sgware is complete, the player is given it
+		 */
 		function checkSgware(sgware, player) {
 			if (("top" in sgware.dataset) &&
 				("bottom" in sgware.dataset) &&
 				("left" in sgware.dataset) &&
 				("right" in sgware.dataset)) {
-					sgware.style.backgroundColor = players[player].colour;
+					sgware.title = player.name;
+					sgware.style.backgroundColor = player.colour;
 				}
 		}
 	</script>
