@@ -1,8 +1,201 @@
 <!doctype html>
 <head>
-	
+	<style>
+		html {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			margin: 0 auto;
+			padding: 10px;
+			text-align: center;
+			font-family: sans-serif;
+		}
+		article {
+			display: block;
+			margin: 40px;
+			padding: 0px;
+		}
+		input {
+			display: block;
+			margin: 5px auto;
+			font-size: 45px;
+			text-align: center;
+		}
+		button {
+			font-size: 25px;
+		}
+		div {
+			display: inline-block;
+			width: 50px;
+			height: 50px;
+			margin: -7px -3px 0 0;
+			padding: 0;
+			border-top: 3px solid #eaeaea;
+			border-left: 3px solid #eaeaea;
+		}
+	</style>
+	<script src="https://cdn.firebase.com/js/client/2.2.5/firebase.js"></script>
 </head>
 <body>
-	<h1>Squares</h1>
+	<h1>Sgwares</h1>
 
+	<section id="form">
+		<article>
+			<input id="name" type="text" placeholder="Player Name" required>
+			<input id="colour" type="color">
+		</article>
+		<article>
+			<input id="size" type="number" placeholder="Sgwares Size" value="5">
+			<button onclick="newGame()">New Game</button>
+		</article>
+		<article>
+			<input id="game-key" type="text" placeholder="Game Key">
+			<button onclick="joinGameButton()">Join Game</button>
+		</article>
+	</section>
+
+	<section id="grid"></section>
+
+	<script>
+		var gameKey;
+		var game;
+		var playerKey;
+		var players;
+
+		(function() {
+			gameKey = window.location.hash.substring(1);
+			if (gameKey.length > 2) {
+				var joinGame = document.getElementById("game-key").value = gameKey;
+			}
+		})();
+
+		function newGame() {
+			var sgwares = new Firebase("https://sgwares.firebaseio.com/games");
+			var size = document.getElementById("size").value
+			var gameKey = sgwares.push({ createdAt: Firebase.ServerValue.TIMESTAMP, size: parseInt(size)}).key();
+			window.location = "#" + gameKey;
+			joinGame(gameKey);
+		}
+
+		function joinGameButton() {
+			gameKey = document.getElementById("game-key").value;
+			window.location = "#" + gameKey;
+			joinGame(gameKey);
+		}
+
+		function joinGame(gameKey) {
+			console.log("Joining game: ", gameKey);
+			document.getElementById("form").style.display = "none";
+			
+			// get the game object
+			game = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey);
+
+			//create this player
+			playerKey = game.child("players").push({
+				name: document.getElementById("name").value,
+				colour: document.getElementById("colour").value
+			}).key();
+
+			// listen for player changes
+			var playersRef = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/players");
+			playersRef.on("value", function(snapshot) {
+				players = snapshot.val();
+			});
+
+			// get the current game data and setup the grid
+			game.once("value", function(snapshot) {
+				createGrid(snapshot.val().size);
+				for (var key in snapshot.val().moves) {
+					makeMove(snapshot.val().moves[key]);
+				}
+			});
+
+			// listen for any new moves
+			var moves = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/moves");
+			moves.on("child_added", function(snapshot) {
+				var move = snapshot.val();
+				makeMove(move);
+			});
+		}
+
+		function createGrid(size) {
+			var grid = document.getElementById("grid");
+			var id = 1;
+			for (var i = 1; i <= size; i++) {
+				for (var j = 1; j <= size; j++) {
+					var div = document.createElement("div");
+					div.id = id;
+					div.addEventListener("click", clickSgware);
+					id++;
+					grid.appendChild(div);
+				}
+				var br = document.createElement("br");
+				grid.appendChild(br);
+			}
+		}
+
+		function clickSgware(e) {
+			if (e.offsetX < 10) {
+				addMove(e.srcElement.id, "left");
+			} else if (e.offsetY < 10) {
+				addMove(e.srcElement.id, "top");
+			}
+		}
+
+		function addMove(sgware, side) {
+			var move = game.child("moves").push({
+				player: playerKey,
+				sgware: sgware,
+				side: side
+			});
+		}
+
+		/*
+		 * Take a move and plot it on the grid update the
+		 * effected sgwares with data attributes
+		 */
+		function makeMove(move) {
+			var sgware = document.getElementById(move.sgware);
+			if (sgware) {
+				if (move.side == "top") {
+					sgware.style.borderTopColor = players[move.player].colour;
+					sgware.setAttribute("data-top", move.player);
+					checkSgware(sgware, move.player);
+					//find the sgware above and set the bottom attribute
+					var aboveId = parseInt(move.sgware) - 5;
+					var aboveSgware = document.getElementById(aboveId);
+					if (aboveSgware) {
+						aboveSgware.setAttribute("data-bottom", move.player);
+						checkSgware(aboveSgware, move.player);
+					}			
+				} else if (move.side == "left") {
+					sgware.style.borderLeftColor = players[move.player].colour;
+					sgware.setAttribute("data-left", move.player);
+					checkSgware(sgware, move.player);
+					//find the sgware to the left and set the right attribute
+					//unless it is the most left
+					var leftId = parseInt(move.sgware) - 1;
+					if (leftId % 5 != 0) {
+						var leftSgware = document.getElementById(leftId);
+						if (leftSgware) {
+							leftSgware.setAttribute("data-right", move.player);
+							checkSgware(leftSgware, move.player);
+						}
+					}
+				} else {
+					console.log("Unknown side: ", move.side);
+				}
+			}
+		}
+
+		function checkSgware(sgware, player) {
+			if (("top" in sgware.dataset) &&
+				("bottom" in sgware.dataset) &&
+				("left" in sgware.dataset) &&
+				("right" in sgware.dataset)) {
+					sgware.style.backgroundColor = players[player].colour;
+				}
+		}
+	</script>
 </body>
