@@ -87,6 +87,7 @@ class PringlesPrice < ActiveRecord::Base
       price.price_inc_offer = parse_tesco_offer p
       return price
     else
+      logger.info "Tesco pringles missing: " + e.message
       return nil
     end
   end
@@ -136,9 +137,9 @@ class PringlesPrice < ActiveRecord::Base
   def self.update
     return if PringlesPrice.where("created_at > ?", Date.today).count > 0
     asda = get_asda_pringles
-    asda.save
+    asda.save if asda
     tesco = get_tesco_pringles
-    tesco.save
+    tesco.save if tesco
   end
 
 
