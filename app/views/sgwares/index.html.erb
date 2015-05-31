@@ -103,6 +103,10 @@
 				players = snapshot.val();
 			});
 
+			// if disconnected remove player from list
+			var playerRef = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/players/" + playerKey);
+			playerRef.onDisconnect().remove();
+
 			// get the current game data and setup the grid
 			game.once("value", function(snapshot) {
 				createGrid(snapshot.val().size);
@@ -145,9 +149,14 @@
 
 		function addMove(sgware, side) {
 			var move = game.child("moves").push({
-				player: playerKey,
+				player: {
+					key: playerKey,
+					name: document.getElementById("name").value,
+					colour: document.getElementById("colour").value
+				},
 				sgware: sgware,
-				side: side
+				side: side,
+				createdAt: Firebase.ServerValue.TIMESTAMP
 			});
 		}
 
@@ -159,8 +168,8 @@
 			var sgware = document.getElementById(move.sgware);
 			if (sgware) {
 				if (move.side == "top") {
-					sgware.style.borderTopColor = players[move.player].colour;
-					sgware.setAttribute("data-top", move.player);
+					sgware.style.borderTopColor = move.player.colour;
+					sgware.setAttribute("data-top", move.player.key);
 					checkSgware(sgware, move.player);
 					//find the sgware above and set the bottom attribute
 					var aboveId = parseInt(move.sgware) - 5;
@@ -170,8 +179,8 @@
 						checkSgware(aboveSgware, move.player);
 					}			
 				} else if (move.side == "left") {
-					sgware.style.borderLeftColor = players[move.player].colour;
-					sgware.setAttribute("data-left", move.player);
+					sgware.style.borderLeftColor = move.player.colour;
+					sgware.setAttribute("data-left", move.player.key);
 					checkSgware(sgware, move.player);
 					//find the sgware to the left and set the right attribute
 					//unless it is the most left
