@@ -287,7 +287,7 @@ Website::Application.routes.draw do
     resources :text_messages,   path: "sms",           only: [:index, :show]
 
     get  "sgwares"        => "sgwares#index"
-    get  "sgwares/facebook" => "sgwares#facebook"
+    post "sgwares/facebook" => "sgwares#facebook"
     get  "stream"         => "stream#index"
     get  "sitemap"        => "static_pages#sitemap"
 
