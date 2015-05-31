@@ -1,31 +1,8 @@
-<!doctype html>
-<head>
-	<style>
-		html {
-			margin: 0;
-			padding: 0;
-		}
-		body {
-			margin: 0 auto;
-			padding: 10px;
-			text-align: center;
-			font-family: sans-serif;
-		}
-		article {
-			display: block;
-			margin: 40px;
-			padding: 0px;
-		}
-		input {
-			display: block;
-			margin: 5px auto;
-			font-size: 45px;
-			text-align: center;
-		}
-		button {
-			font-size: 25px;
-		}
-		div {
+<% provide(:title, "Sgwares") %>
+<% provide(:description, "The game also known as Squares and Dots and Boxes.") %>
+<% provide(:extrahead, "
+	<style>	
+		div.sgware {
 			display: inline-block;
 			width: 50px;
 			height: 50px;
@@ -34,211 +11,274 @@
 			border-top: 3px solid #eaeaea;
 			border-left: 3px solid #eaeaea;
 		}
+		#game {
+			display: none;
+		}
 	</style>
-	<script src="https://cdn.firebase.com/js/client/2.2.5/firebase.js"></script>
-</head>
-<body>
-	<h1>Sgwares</h1>
+	<script src=\"https://cdn.firebase.com/js/client/2.2.5/firebase.js\"></script>
+".html_safe) %>
+	
+<h1>Sgwares</h1>
 
-	<section id="form">
-		<article>
-			<input id="name" type="text" placeholder="Player Name" required autocomplete="off">
-			<input id="colour" type="color">
+<section id="form">
+	<div class="form-group">
+		<label class="control-label" for="name">Name</label>
+		<input id="name" class="form-control" type="text" placeholder="Name" required autocomplete="off">
+	</div>
+	<div class="form-group">
+		<label class="control-label" for="name">Colour</label>
+		<input id="colour" class="form-control" type="color">
+	</div>
+	<section class="row">
+		<article class="col-md-6">
+			<h2>Create a new game..</h2>
+			<div class="form-group">
+				<label class="control-label" for="size">Grid Size</label>
+				<input id="size" class="form-control" type="number" placeholder="Grid Size" value="5" autocomplete="off">
+			</div>
+			<div class="actions">
+				<button class="btn btn-info" type="button" onclick="newGame()">New Game</button>
+			</div>
 		</article>
-		<hr>
-		<article>
-			<input id="size" type="number" placeholder="Sgwares Size" value="5" autocomplete="off">
-			<button onclick="newGame()">New Game</button>
-		</article>
-		Or
-		<article>
-			<input id="game-key" type="text" placeholder="Game Key" autocomplete="false">
-			<button onclick="joinGameButton()">Join Game</button>
+		<article class="col-md-6">
+			<h2>Join an existing game..</h2>
+			<div class="form-group">
+				<label class="control-label" for="size">Game Key</label>
+				<input id="game-key" class="form-control" type="text" placeholder="Game Key" autocomplete="false">
+			</div>
+			<div class="actions">
+				<button class="btn btn-warning" type="button" onclick="joinGameButton()">Join Game</button>
+			</div>
 		</article>
 	</section>
+</section>
 
-	<section id="grid"></section>
+<section id="game" class="row">
+	<article class="col-md-8">
+		<section id="grid" class="text-center"></section>
+	</article>
+	<article class="col-md-4">
+		<h2>Scores</h2>
+		<section id="players" class="list-group"></section>
+	</article>
+</section>
 
-	<script>
-		var gameKey;
-		var game;
-		var playerKey;
-		var players;
+<script>
+	var gameKey;
+	var game;
+	var playerKey;
+	var players;
 
-		/*
-		 * On Document Load:
-		 * If there's a hash, put it in the input
-		 */
-		(function() {
-			gameKey = window.location.hash.substring(1);
-			if (gameKey.length > 2) {
-				var joinGame = document.getElementById("game-key").value = gameKey;
+	/*
+	 * On Document Load:
+	 * If there's a hash, put it in the input
+	 */
+	(function() {
+		gameKey = window.location.hash.substring(1);
+		if (gameKey.length > 2) {
+			var joinGame = document.getElementById("game-key").value = gameKey;
+		}
+	})();
+
+	/*
+	 * New Game Button Listener:
+	 * Use the size value and set the URL and join the game
+	 */
+	function newGame() {
+		if (document.getElementById("name").value.length == 0) {
+			alert('Enter a name');
+			return false;
+		}
+		var sgwares = new Firebase("https://sgwares.firebaseio.com/games");
+		var size = document.getElementById("size").value
+		var gameKey = sgwares.push({ createdAt: Firebase.ServerValue.TIMESTAMP, size: parseInt(size)}).key();
+		window.location = "#" + gameKey;
+		joinGame(gameKey);
+	}
+
+	/*
+	 * Join Game Button Listener:
+	 * Set the URL and join the game
+	 */
+	function joinGameButton() {
+		if (document.getElementById("name").value.length == 0) {
+			alert('Enter a name');
+			return false;
+		}
+		gameKey = document.getElementById("game-key").value;
+		window.location = "#" + gameKey;
+		joinGame(gameKey);
+	}
+
+	/*
+	 * Hide the form and connect to the game
+	 * Set up all the game listeners
+	 */
+	function joinGame(gameKey) {
+		console.log("Joining game: ", gameKey);
+		document.getElementById("form").style.display = "none";
+		document.getElementById("game").style.display = "block";
+		
+		// get the game object
+		game = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey);
+
+		//create this player
+		playerKey = game.child("players").push({
+			name: document.getElementById("name").value,
+			colour: document.getElementById("colour").value,
+			connected: true
+		}).key();
+
+		// listen for player changes
+		var playersRef = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/players");
+		playersRef.on("value", function(snapshot) {
+			players = snapshot.val();
+			var playersList = document.getElementById("players");
+			for(var key in players) {
+				var player = snapshot.val()[key];
+				if (player.name) {
+					var a = document.createElement("a");
+					a.className = "list-group-item";
+					a.innerHTML = player.name;
+					var span = document.createElement("span");
+					span.className = "badge";
+					span.innerHTML = "0";
+					span.style.backgroundColor = player.colour;
+					span.id = "score-" + key;
+					a.insertBefore(span, a.firstChild);
+					playersList.appendChild(a);
+				}
 			}
-		})();
+		});
 
-		/*
-		 * New Game Button Listener:
-		 * Use the size value and set the URL and join the game
-		 */
-		function newGame() {
-			var sgwares = new Firebase("https://sgwares.firebaseio.com/games");
-			var size = document.getElementById("size").value
-			var gameKey = sgwares.push({ createdAt: Firebase.ServerValue.TIMESTAMP, size: parseInt(size)}).key();
-			window.location = "#" + gameKey;
-			joinGame(gameKey);
+		// if disconnected set player to be disconnected
+		var playerRef = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/players/" + playerKey);
+		playerRef.onDisconnect().update({ connected: false });
+		// if re-connected set player to be connected
+		var connectedRef = new Firebase('https://<your-firebase-app>.firebaseio.com/.info/connected');
+		connectedRef.on('value', function(snap) {
+			if (snap.val() === true) {
+				playerRef.update({ connected: true });
+			}
+		});
+
+		// get the current game data and setup the grid
+		game.once("value", function(snapshot) {
+			createGrid(snapshot.val().size);
+			for (var key in snapshot.val().moves) {
+				makeMove(snapshot.val().moves[key]);
+			}
+		});
+
+		// listen for any new moves
+		var moves = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/moves");
+		moves.on("child_added", function(snapshot) {
+			var move = snapshot.val();
+			makeMove(move);
+		});
+	}
+
+	/*
+	 * Generate a grid with a given size
+	 */
+	function createGrid(size) {
+		var grid = document.getElementById("grid");
+		var id = 1;
+		for (var i = 1; i <= size; i++) {
+			for (var j = 1; j <= size; j++) {
+				var div = document.createElement("div");
+				div.id = id;
+				div.className = "sgware";
+				div.addEventListener("click", clickSgware);
+				id++;
+				grid.appendChild(div);
+			}
+			var br = document.createElement("br");
+			grid.appendChild(br);
 		}
+	}
 
-		/*
-		 * Join Game Button Listener:
-		 * Set the URL and join the game
-		 */
-		function joinGameButton() {
-			gameKey = document.getElementById("game-key").value;
-			window.location = "#" + gameKey;
-			joinGame(gameKey);
+	/*
+	 * Take a click event of a sgware and
+	 * add move if it is close to a boundary
+	 */
+	function clickSgware(e) {
+		if (e.offsetX < 10) {
+			addMove(e.srcElement.id, "left");
+		} else if (e.offsetY < 10) {
+			addMove(e.srcElement.id, "top");
 		}
+	}
 
-		/*
-		 * Hide the form and connect to the game
-		 * Set up all the game listeners
-		 */
-		function joinGame(gameKey) {
-			console.log("Joining game: ", gameKey);
-			document.getElementById("form").style.display = "none";
-			
-			// get the game object
-			game = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey);
-
-			//create this player
-			playerKey = game.child("players").push({
+	/*
+	 * Send the move to the game 
+	 */
+	function addMove(sgware, side) {
+		var move = game.child("moves").push({
+			player: {
+				key: playerKey,
 				name: document.getElementById("name").value,
 				colour: document.getElementById("colour").value
-			}).key();
+			},
+			sgware: sgware,
+			side: side,
+			createdAt: Firebase.ServerValue.TIMESTAMP
+		});
+	}
 
-			// listen for player changes
-			var playersRef = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/players");
-			playersRef.on("value", function(snapshot) {
-				players = snapshot.val();
-			});
-
-			// if disconnected remove player from list
-			var playerRef = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/players/" + playerKey);
-			playerRef.onDisconnect().remove();
-
-			// get the current game data and setup the grid
-			game.once("value", function(snapshot) {
-				createGrid(snapshot.val().size);
-				for (var key in snapshot.val().moves) {
-					makeMove(snapshot.val().moves[key]);
-				}
-			});
-
-			// listen for any new moves
-			var moves = new Firebase("https://sgwares.firebaseio.com/games/" + gameKey + "/moves");
-			moves.on("child_added", function(snapshot) {
-				var move = snapshot.val();
-				makeMove(move);
-			});
-		}
-
-		/*
-		 * Generate a grid with a given size
-		 */
-		function createGrid(size) {
-			var grid = document.getElementById("grid");
-			var id = 1;
-			for (var i = 1; i <= size; i++) {
-				for (var j = 1; j <= size; j++) {
-					var div = document.createElement("div");
-					div.id = id;
-					div.addEventListener("click", clickSgware);
-					id++;
-					grid.appendChild(div);
-				}
-				var br = document.createElement("br");
-				grid.appendChild(br);
-			}
-		}
-
-		/*
-		 * Take a click event of a sgware and
-		 * add move if it is close to a boundary
-		 */
-		function clickSgware(e) {
-			if (e.offsetX < 10) {
-				addMove(e.srcElement.id, "left");
-			} else if (e.offsetY < 10) {
-				addMove(e.srcElement.id, "top");
-			}
-		}
-
-		/*
-		 * Send the move to the game 
-		 */
-		function addMove(sgware, side) {
-			var move = game.child("moves").push({
-				player: {
-					key: playerKey,
-					name: document.getElementById("name").value,
-					colour: document.getElementById("colour").value
-				},
-				sgware: sgware,
-				side: side,
-				createdAt: Firebase.ServerValue.TIMESTAMP
-			});
-		}
-
-		/*
-		 * Take a move and plot it on the grid, update the
-		 * effected sgwares with data attributes and
-		 * check to see if this move awards the sgware
-		 */
-		function makeMove(move) {
-			var sgware = document.getElementById(move.sgware);
-			if (sgware) {
-				if (move.side == "top") {
-					sgware.style.borderTopColor = move.player.colour;
-					sgware.setAttribute("data-top", move.player.key);
-					checkSgware(sgware, move.player);
-					//find the sgware above and set the bottom attribute
-					var aboveId = parseInt(move.sgware) - 5;
-					var aboveSgware = document.getElementById(aboveId);
-					if (aboveSgware) {
-						aboveSgware.setAttribute("data-bottom", move.player.key);
-						checkSgware(aboveSgware, move.player);
-					}			
-				} else if (move.side == "left") {
-					sgware.style.borderLeftColor = move.player.colour;
-					sgware.setAttribute("data-left", move.player.key);
-					checkSgware(sgware, move.player);
-					//find the sgware to the left and set the right attribute
-					//unless it is the most left
-					var leftId = parseInt(move.sgware) - 1;
-					if (leftId % 5 != 0) {
-						var leftSgware = document.getElementById(leftId);
-						if (leftSgware) {
-							leftSgware.setAttribute("data-right", move.player);
-							checkSgware(leftSgware, move.player);
-						}
+	/*
+	 * Take a move and plot it on the grid, update the
+	 * effected sgwares with data attributes and
+	 * check to see if this move awards the sgware
+	 */
+	function makeMove(move) {
+		var sgware = document.getElementById(move.sgware);
+		if (sgware) {
+			if (move.side == "top") {
+				sgware.style.borderTopColor = move.player.colour;
+				sgware.setAttribute("data-top", move.player.key);
+				checkSgware(sgware, move.player);
+				//find the sgware above and set the bottom attribute
+				var aboveId = parseInt(move.sgware) - 5;
+				var aboveSgware = document.getElementById(aboveId);
+				if (aboveSgware) {
+					aboveSgware.setAttribute("data-bottom", move.player.key);
+					checkSgware(aboveSgware, move.player);
+				}			
+			} else if (move.side == "left") {
+				sgware.style.borderLeftColor = move.player.colour;
+				sgware.setAttribute("data-left", move.player.key);
+				checkSgware(sgware, move.player);
+				//find the sgware to the left and set the right attribute
+				//unless it is the most left
+				var leftId = parseInt(move.sgware) - 1;
+				if (leftId % 5 != 0) {
+					var leftSgware = document.getElementById(leftId);
+					if (leftSgware) {
+						leftSgware.setAttribute("data-right", move.player);
+						checkSgware(leftSgware, move.player);
 					}
-				} else {
-					console.log("Unknown side: ", move.side);
 				}
+			} else {
+				console.log("Unknown side: ", move.side);
 			}
 		}
+	}
 
-		/*
-		 * Takes a sgware and a player and if that
-		 * sgware is complete, the player is given it
-		 */
-		function checkSgware(sgware, player) {
-			if (("top" in sgware.dataset) &&
-				("bottom" in sgware.dataset) &&
-				("left" in sgware.dataset) &&
-				("right" in sgware.dataset)) {
-					sgware.title = player.name;
-					sgware.style.backgroundColor = player.colour;
-				}
-		}
-	</script>
-</body>
+	/*
+	 * Takes a sgware and a player and if that
+	 * sgware is complete, the player is given it
+	 */
+	function checkSgware(sgware, player) {
+		if (("top" in sgware.dataset) &&
+			("bottom" in sgware.dataset) &&
+			("left" in sgware.dataset) &&
+			("right" in sgware.dataset)) {
+				sgware.title = player.name;
+				sgware.style.backgroundColor = player.colour;
+				var span = document.getElementById("score-" + player.key);
+				var score = parseInt(span.innerHTML) + 1;
+				span.innerHTML = score;
+			}
+	}
+</script>
