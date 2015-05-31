@@ -17,10 +17,10 @@ class Location < ActiveRecord::Base
       "service" => "friendview"
     }
 
-    response = RestClient.post url, data
-    auth = response.body.split("Auth=")[1]
-    url = "https://maps.google.com/locationhistory/b/0/kml?startTime=#{start_time}000&endTime=#{end_time}000"
     begin
+      response = RestClient.post url, data
+      auth = response.body.split("Auth=")[1]
+      url = "https://maps.google.com/locationhistory/b/0/kml?startTime=#{start_time}000&endTime=#{end_time}000"
       response = RestClient.get url, "Authorization" => "GoogleLogin auth=#{auth}"
       return response.body
     rescue => e
