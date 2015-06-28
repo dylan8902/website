@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
-  
-  
+
+
   # GET /
   # GET /.json
   # GET /.xml
@@ -12,7 +12,7 @@ class StaticPagesController < ApplicationController
     @blog_posts = BlogPost.limit(6)
     @location = Location.first
     @listens = Listen.limit(6)
-    
+
     data = { stuff: @stuff, tweets: @tweets, photos: @photos, episodes: @episodes, blog: @blog_posts, location: @location, listens: @listens }
     respond_to do |format|
       format.html # index.html.erb
@@ -20,8 +20,8 @@ class StaticPagesController < ApplicationController
       format.xml { render xml: data }
     end
   end
-  
-  
+
+
   # GET /who
   # GET /who.json
   # GET /who.xml
@@ -33,8 +33,8 @@ class StaticPagesController < ApplicationController
       format.xml { render xml: "Dylan Jones" }
     end
   end
-  
-  
+
+
   # GET /contact
   # GET /contact.json
   # GET /contact.xml
@@ -46,15 +46,15 @@ class StaticPagesController < ApplicationController
     @contact << { name: 'google', link: 'https://www.google.com/+DylanJones8902', text: 'google.com/+DylanJones8902', icon: "google-plus-sign" }
     @contact << { name: 'skype', link: 'skype://dylanjamesvernonjones?userinfo', text: 'dylanjamesvernonjones', icon: "skype" }
     @contact << { name: 'linkedin', link: 'http://uk.linkedin.com/in/dylanjamesvernonjones', text: 'linkedin.com/in/dylanjamesvernonjones', icon: "linkedin-sign" }
-    
+
     respond_to do |format|
       format.html # contact.html.erb
       format.json { render json: @contact, callback: params[:callback] }
       format.xml { render xml: @contact }
     end
   end
-  
-  
+
+
   # POST /contact
   # POST /contact.json
   # POST /contact.xml
@@ -71,8 +71,8 @@ class StaticPagesController < ApplicationController
       end
     end
   end
-  
-  
+
+
   # GET /sitemap
   # GET /sitemap.json
   # GET /sitemap.xml
@@ -132,6 +132,7 @@ class StaticPagesController < ApplicationController
     Tweet.update
     Photo.update
     Location.update
+    RunningEvent.update
 
     respond_to do |format|
       format.html # cron.html.erb
@@ -139,5 +140,5 @@ class StaticPagesController < ApplicationController
       format.xml { render xml: true }
     end
   end
-  
+
 end

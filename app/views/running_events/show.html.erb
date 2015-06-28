@@ -1,5 +1,6 @@
 <% provide(:title, "Running:: #{@running_event.name}") %>
 <% provide(:description, "I took part in #{@running_event.name}") %>
+<% provide(:map, "map") %>
 
 <h1>Running</h1>
 <ol class="breadcrumb">
@@ -42,5 +43,17 @@
 
 </section>
 
-<%= link_to "Edit", edit_running_event_path(@running_event), class: "btn btn-primary" if current_user and current_user.admin %>	
+<% if @running_event.kml %>
+
+<section class="row">
+	<article class="col-md-12">
+		<h2>Route</h2>
+		<div id="map" style="width:100%;height:600px"></div>
+		<%= render 'common/map_polygon' %>
+	</article>
+</section>
+
+<% end %>
+
+<%= link_to "Edit", edit_running_event_path(@running_event), class: "btn btn-primary" if current_user and current_user.admin %>
 <%= link_to 'Back', running_events_path %>

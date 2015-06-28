@@ -39,6 +39,8 @@ class RunningEventsController < ApplicationController
   # GET /running/1.xml
   def show
     @running_event = RunningEvent.find(params[:id])
+    @locations = @running_event.points
+    @zoom = "15"
 
     respond_to do |format|
       format.html # show.html.erb
@@ -57,7 +59,7 @@ class RunningEventsController < ApplicationController
       total_time: RunningEvent.sum(:finish_time),
       average_speed: RunningEvent.sum(:distance).to_f / RunningEvent.sum(:finish_time).to_f
     }
- 
+
     respond_to do |format|
       format.html # stats.html.erb
       format.json { render json: @stats, callback: params[:callback] }
@@ -71,7 +73,7 @@ class RunningEventsController < ApplicationController
   # GET /running/map.xml
   def map
     @locations = RunningEvent.where("lat IS NOT NULL AND lng IS NOT NULL")
-    
+
     respond_to do |format|
       format.html # map.html.erb
       format.json { render json: @locations, callback: params[:callback] }

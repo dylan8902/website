@@ -25,7 +25,7 @@
 					<td><%= timestamp running_event.created_at %></td>
 					<td><%= link_to running_event.name, running_event %></td>
 					<td><%= running_event.timing %></td>
-					<td><%= running_event.position.ordinalize %></td>
+					<td><%= running_event.position.ordinalize if running_event.position %></td>
 				</tr>
 			<% end %>
 			</tbody>
@@ -39,4 +39,4 @@
 	</article>
 </section>
 
-<%= link_to "New", new_running_event_path, class: "btn btn-primary" if current_user and current_user.admin %>	
+<%= link_to "New", new_running_event_path, class: "btn btn-primary" if current_user and current_user.admin %>
