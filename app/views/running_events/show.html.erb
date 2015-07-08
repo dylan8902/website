@@ -41,6 +41,10 @@
 	</article>
 <% end %>
 
+	<article class="col-md-4 col-sm-6">
+		<p class="well" style="font-size:300%"><%= icon("rocket") %> <%= number_with_precision(@pace, precision: 3, delimiter: '.') %>m/s</p>
+	</article>
+
 </section>
 
 <% if @running_event.kml %>
