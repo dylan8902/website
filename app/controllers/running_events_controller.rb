@@ -41,6 +41,7 @@ class RunningEventsController < ApplicationController
     @running_event = RunningEvent.find(params[:id])
     @locations = @running_event.points
     @zoom = "15"
+    @pace = @running_event.distance / @running_event.finish_time
 
     respond_to do |format|
       format.html # show.html.erb
