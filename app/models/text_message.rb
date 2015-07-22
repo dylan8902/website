@@ -1,5 +1,5 @@
 require 'open-uri'
-class TextMessage < ActiveRecord::Base    
+class TextMessage < ActiveRecord::Base
   default_scope { order('created_at DESC') }
 
 
@@ -13,7 +13,11 @@ class TextMessage < ActiveRecord::Base
 
 
   def self.update
-    xml = Nokogiri::XML(open(Rails.application.secrets.sms_link))
+    begin
+      xml = Nokogiri::XML(open(Rails.application.secrets.sms_link))
+    rescue => e
+      logger.info "Text message update problem: " + e.message
+    end
     xml.css('sms').each do |sms|
       TextMessage.where(
         text: sms.attribute('body').value,
