@@ -17,6 +17,7 @@ class TextMessage < ActiveRecord::Base
       xml = Nokogiri::XML(open(Rails.application.secrets.sms_link))
     rescue => e
       logger.info "Text message update problem: " + e.message
+      return
     end
     xml.css('sms').each do |sms|
       TextMessage.where(
