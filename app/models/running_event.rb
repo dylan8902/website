@@ -35,25 +35,29 @@ class RunningEvent < ActiveRecord::Base
   def self.update
     # get kml if there are events missing kml
     return if RunningEvent.where(kml: nil).count == 0
-    url = "https://www.google.com/maps/d/kml?mid=zZkcgeP1TSwY.kbwXND1rzFbk&forcekml=1&cid=mp&cv=la3B8yTDoVw.en_GB."
-
+    urls = [
+      "https://www.google.com/maps/d/kml?mid=zZkcgeP1TSwY.kbwXND1rzFbk&forcekml=1&cid=mp&cv=la3B8yTDoVw.en_GB.",
+       "https://www.google.com/maps/d/kml?mid=zZkcgeP1TSwY.kfzxvZaVxzyw&nl=1&forcekml=1&cid=mp&cv=AdfBTCeOTPg.en_GB."
+    ]
     begin
-      response = RestClient.get url
-      kml = Nokogiri::XML(response.body)
-      kml.css('Folder').each do |run|
-        title = run.css('name').first.text
-        event = RunningEvent.where(name: title).first
-        logger.info "The layer name does not match anything in db"
-        next if event.nil?
+      urls.each do |url|
+        response = RestClient.get url
+        kml = Nokogiri::XML(response.body)
+        kml.css('Folder').each do |run|
+          title = run.css('name').first.text
+          event = RunningEvent.where(name: title).first
+          logger.info "The layer name does not match anything in db"
+          next if event.nil?
 
-        locations = []
-        run.css('coordinates')[0].text.split(' ').each do |coord|
-          xyz = coord.split(',')
-          locations << Point.new(xyz)
+          locations = []
+          run.css('coordinates')[0].text.split(' ').each do |coord|
+            xyz = coord.split(',')
+            locations << Point.new(xyz)
+          end
+
+          logger.info "locations: " + locations.to_s
+          event.update_attribute(:kml, locations.to_json)
         end
-
-        logger.info "locations: " + locations.to_s
-        event.update_attribute(:kml, locations.to_json)
       end
     rescue => e
       logger.info "Location update problem: " + e.message
