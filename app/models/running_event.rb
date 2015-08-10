@@ -37,7 +37,7 @@ class RunningEvent < ActiveRecord::Base
     return if RunningEvent.where(kml: nil).count == 0
     urls = [
       "https://www.google.com/maps/d/kml?mid=zZkcgeP1TSwY.kbwXND1rzFbk&forcekml=1&cid=mp&cv=la3B8yTDoVw.en_GB.",
-       "https://www.google.com/maps/d/kml?mid=zZkcgeP1TSwY.kfzxvZaVxzyw&nl=1&forcekml=1&cid=mp&cv=AdfBTCeOTPg.en_GB."
+      "https://www.google.com/maps/d/kml?mid=zZkcgeP1TSwY.kfzxvZaVxzyw&usp=sharing&forcekml=1"
     ]
     begin
       urls.each do |url|
