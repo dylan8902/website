@@ -9,6 +9,16 @@ end
 
 Website::Application.routes.draw do
 
+  #armyarmyarmyarmyarmyarmyarmy.com
+  constraints Domain.new("www.armyarmyarmyarmyarmyarmyarmy.com") do
+    match "/(*path)" => redirect {|params, req| "http://armyarmyarmyarmyarmyarmyarmy.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
+  constraints Domain.new("armyarmyarmyarmyarmyarmyarmy.com") do
+    scope module: 'army' do
+      get ""         => 'static_pages#index'
+    end
+  end
+
   #keepintouchabroad
   constraints Domain.new("www.keepintouchabroad.com") do
     match "/(*path)" => redirect {|params, req| "http://keepintouchabroad.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
@@ -160,7 +170,7 @@ Website::Application.routes.draw do
 
     get  "browserwars"    => "browser_wars#index"
     get  "contact"        => "static_pages#contact"
-    post "contact"        => "static_pages#message"  
+    post "contact"        => "static_pages#message"
     get  "cleversounds"   => "cleversounds#index"
     get  "clock"          => "clock#index"
     get  "cron"           => "static_pages#cron"
