@@ -16,7 +16,6 @@ Website::Application.routes.draw do
   constraints Domain.new("armyarmyarmyarmyarmyarmyarmy.com") do
     scope module: 'army' do
       get ""         => 'static_pages#index'
-      match '*url'   => 'static_pages#index', via: [:get, :post, :patch, :delete]
     end
   end
 
@@ -171,7 +170,7 @@ Website::Application.routes.draw do
 
     get  "browserwars"    => "browser_wars#index"
     get  "contact"        => "static_pages#contact"
-    post "contact"        => "static_pages#message"  
+    post "contact"        => "static_pages#message"
     get  "cleversounds"   => "cleversounds#index"
     get  "clock"          => "clock#index"
     get  "cron"           => "static_pages#cron"
