@@ -1,31 +1,23 @@
 <% if @trains == [] %>
 	<p>Sorry, no train information for that journey</p>
 	<p>Please note, this service works with direct journeys and trains scheduled in the next few hours</p>
-
-	<% if @stations[:from].count > 0 or @stations[:to].count > 0 %>
-		<h3>Did you mean...?</h3>
-		<% @stations[:from].each do |station| %>
-			<p><%= link_to station, "?from=#{u(station.crs)}&to=#{u(@to)}" %></p>
-		<% end %>
-		<% @stations[:to].each do |station| %>
-			<p><%= link_to station, "?to=#{u(station.crs)}&from=#{u(@from)}" %></p>
-		<% end %>
-	</ul>
-	<% end %>
-
 <% end %>
-
 
 <% if @trains and @trains != [] %>
 	<table>
   <% if @departing %>
 		<tr><th>Time</th><th>Destination</th><th>Status</th><th>Platform</th></tr>
+		<% @trains['trainServices'].each do |train| %>
+	    <% alert = ' style="color:#990000;font-weight:bold;"' if ((train['etd'] != 'On time') and (train['etd'] != 'Starts here')) %>
+	    <%= "<tr#{alert}><td>#{train['std']}</td><td>#{train['destination'].last['locationName']}</td><td><a href=\"/service?service=#{train['serviceID']}\">#{train['etd']}</a></td><td>#{train['platform']}</td></tr>".html_safe %>
+	  <% end %>
   <% else %>
 		<tr><th>Time</th><th>Origin</th><th>Status</th><th>Platform</th></tr>
+		<% @trains['trainServices'].each do |train| %>
+	    <% alert = ' style="color:#990000;font-weight:bold;"' if (train['eta'] != 'On time') %>
+	    <%= "<tr#{alert}><td>#{train['sta']}</td><td>#{train['origin'].last['locationName']}</td><td><a href=\"/service?service=#{train['serviceID']}\">#{train['eta']}</a></td><td>#{train['platform']}</td></tr>".html_safe %>
+	  <% end %>
   <% end %>
-  <% @trains.each do |train| %>
-    <% alert = ' style="color:#990000;font-weight:bold;"' if ((train[3] != 'On time') and (train[3] != 'Starts here')) %>
-    <%= "<tr#{alert}><td>#{train[1]}</td><td>#{train[2]}</td><td><a href=\"/service?service=#{train[5].gsub('/service/ldbdetails/','').partition('?').first}\">#{train[3].gsub('&lt;br/&gt;',' - ')}</a></td><td>#{train[4]}</td></tr>".html_safe %>
-  <% end %>
+
 	</table>
 <% end %>
