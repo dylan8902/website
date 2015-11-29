@@ -10,12 +10,11 @@ class IsMyTrainDelayedController < ApplicationController
     @departing = true
     @from = params[:from]
     @to = params[:to]
-    
+
     unless @from.nil? and @to.nil?
       @trains = get_trains(@from, @to, @departing)
-      @stations = did_you_mean @from, @to if @trains == []
     end
- 
+
     respond_to do |format|
       format.html
       format.json { render json: @trains, callback: params[:callback] }
@@ -35,11 +34,10 @@ class IsMyTrainDelayedController < ApplicationController
 
     unless @from.nil? and @to.nil?
       @trains = get_trains(@from, @to, @departing)
-      @stations = did_you_mean @from, @to if @trains == []
     end
 
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @trains, callback: params[:callback] }
       format.xml { render xml: @trains }
     end
@@ -52,10 +50,10 @@ class IsMyTrainDelayedController < ApplicationController
   def service
     Project.hit 35
 
-    @trains = get_service params[:service]
+    @train = get_service params[:service]
 
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @trains, callback: params[:callback] }
       format.xml { render xml: @trains }
     end
@@ -67,13 +65,11 @@ class IsMyTrainDelayedController < ApplicationController
   # GET /stations.xml
   def stations
     if params['lat'] and params['lng']
-      @order = params[:order] || "distance ASC"
-      distance = "7912*ASIN(SQRT(POWER(SIN((lat-#{params['lat']})*pi()/180/2),2)+COS(lat*pi()/180)*COS(#{params['lat']}*pi()/180)*POWER(SIN((lng-#{params['lng']})*pi()/180/2),2)))"
-      @stations =  Trains::Location.select("train_locations.*, #{distance} AS distance").where("lat IS NOT NULL AND lng IS NOT NULL").order(@order).paginate(@page)
+      @stations =  []
     end
 
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @stations, callback: params[:callback] }
       format.xml { render xml: @stations }
     end
@@ -81,23 +77,18 @@ class IsMyTrainDelayedController < ApplicationController
 
 
   private
-    def did_you_mean(from, to)
-      stations = { from: [], to: [] }
-      stations[:from] = Trains::Location.where("station = 1 AND name LIKE ?", "%#{from}%").limit(5) unless from.empty?
-      stations[:to] = Trains::Location.where("station = 1 AND name LIKE ?", "%#{to}%").limit(5) unless to.empty?
-      return stations
-    end
-
 
     def get_trains(from, to, departing)
-      if from
-        url = "http://ojp.nationalrail.co.uk/service/ldb/liveTrainsJson?departing="
-        if departing
-          url << "true"
+      if departing
+        url = "https://huxley.apphb.com/departures/#{Rack::Utils.escape(from)}"
+        if to and !to.empty?
+          url << "/to/#{Rack::Utils.escape(to)}"
         end
-        url << "&liveTrainsFrom=#{URI::escape(from)}&liveTrainsTo=#{URI::escape(to)}&from=#{URI::escape(from)}&to=#{URI::escape(to)}"
       else
-        return []
+        url = "https://huxley.apphb.com/arrivals/#{Rack::Utils.escape(from)}"
+        if to and !to.empty?
+          url << "/from/#{Rack::Utils.escape(to)}"
+        end
       end
       api_call url
     end
@@ -105,14 +96,14 @@ class IsMyTrainDelayedController < ApplicationController
 
     def get_service service
       return unless service
-      api_call "http://ojp.nationalrail.co.uk/service/ldbdetailsJson?serviceId=#{Rack::Utils.escape(service)}"
+      api_call "https://huxley.apphb.com/service/#{Rack::Utils.escape(service)}"
     end
 
 
     def api_call url
 
       begin
-        response = RestClient.get url
+        response = RestClient.get url + "?expand=true&accessToken=DA1C7740-9DA0-11E4-80E6-A920340000B1"
       rescue Exception => e
         logger.error "#{Time.now} Could not get service details: #{e.message}"
         return []
@@ -122,7 +113,7 @@ class IsMyTrainDelayedController < ApplicationController
 
       begin
         json = JSON.parse(response.body)
-        return json['trains']
+        return json
       rescue Exception => e
         logger.error "#{Time.now} Could not get trains: #{e.message}"
         return []
