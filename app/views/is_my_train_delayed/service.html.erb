@@ -8,19 +8,29 @@
 <% if @train.nil? %>
 	<p>Sorry, no further information for that train</p>
 <% else %>
-  <p><%= @train['disruptionReason'] %></p>
+  <p style="color:red"><%= @train['disruptionReason'] %></p>
 	<table>
 		<tr><th>Departs</th><th>Station</th><th>Status</th></tr>
     <% if @train['previousCallingPoints'] %>
       <% @train['previousCallingPoints'].first['callingPoint'].each do |point| %>
-        <%= "<tr><td>#{point['st']}</td><td>#{point['locationName']}</td><td>#{point['et']}</td></tr>".html_safe %>
+        <% style = '' %>
+        <% style = ' style="color:red"' if (point['et'] != 'On time') && (point['st'] != point['et']) %>
+        <% style = ' style="color:#888"' if point['at'] %>
+        <%= "<tr#{style}><td>#{point['st']}</td><td>#{point['locationName']}</td><td>#{point['et'] || point['at'] }</td></tr>".html_safe %>
       <% end %>
     <% end %>
-    <%= "<tr><td>#{@train['std']}</td><td>#{@train['locationName']}</td><td>#{@train['etd']}</td></tr>".html_safe %>
+    <% style = '' %>
+    <% style = ' style="color:red"' if (@train['etd'] != 'On time') && (@train['std'] != @train['etd']) %>
+    <% style = ' style="color:#888"' if @train['atd'] %>
+    <%= "<tr#{style}><td>#{@train['std']}</td><td>#{@train['locationName']}</td><td>#{@train['etd']}</td></tr>".html_safe %>
     <% if @train['subsequentCallingPoints'] %>
       <% @train['subsequentCallingPoints'].first['callingPoint'].each do |point| %>
-        <%= "<tr><td>#{point['st']}</td><td>#{point['locationName']}</td><td>#{point['et']}</td></tr>".html_safe %>
+      <% style = '' %>
+      <% style = ' style="color:red"' if (point['et'] != 'On time') && (point['st'] != point['et']) %>
+      <% style = ' style="color:#888"' if point['at'] %>
+      <%= "<tr#{style}><td>#{point['st']}</td><td>#{point['locationName']}</td><td>#{point['et']}</td></tr>".html_safe %>
       <% end %>
     <% end %>
 	</table>
+  <img src="/images/nre.png" alt="Powered by National Rail Enquiries">
 <% end %>

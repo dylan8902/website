@@ -65,7 +65,7 @@
 		font-size:100%;
 	}
 	input[type=text] {
-		width:200px;	
+		width:200px;
 	}
 	input[type=submit] {
 		margin-left:auto;
@@ -133,6 +133,9 @@
 	#results span:hover {
 		background:#aaddff;
 	}
+	img {
+		max-width:320px;
+	}
 	@media only screen and (max-width:850px) {
 		html {
 			font-size:9pt;
@@ -145,7 +148,7 @@
 			display:block;
 		}
 		input[type=text] {
-			width:190px;	
+			width:190px;
 		}
 		input[type=submit] {
 			width:220px;
@@ -158,7 +161,10 @@
 		.geo {
 			height:15px;
 			margin-right:0px;
-		}		
+		}
+		img {
+			max-width:240px;
+		}
 	}
 	</style>
 	<!--if lt IE 9>
@@ -173,10 +179,10 @@
 					dataType : 'jsonp',
 					url      : 'stations.json',
 					data     : 'lat='+position.coords.latitude+'&lng='+position.coords.longitude,
-					success  : 
+					success  :
 						function(data){
 							$('#'+type).val(data[0].name);
-						} 
+						}
 				});
 			});
 		}
@@ -198,7 +204,7 @@
 					dataType : 'jsonp',
 					url      : 'stations.php',
 					data     : 'q='+$(this).val(),
-					success  : 
+					success  :
 						function(data) {
 							$('#results').remove();
 							$('#'+id).after('<div id="results"></div>');
@@ -211,8 +217,8 @@
 						}
 
 				});
-			});	
-			*/		
+			});
+			*/
 		});
 	</script>
 	</head>
