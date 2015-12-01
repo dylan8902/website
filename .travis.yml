@@ -3,3 +3,4 @@ rvm:
   - "2.1.2"
 before_script: mv config/secrets.yml.example config/secrets.yml
 script: rake db:create RAILS_ENV=test; rake db:migrate RAILS_ENV=test; bundle exec rspec spec
+sudo: false
