@@ -288,6 +288,9 @@ Website::Application.routes.draw do
     get  "running/stats"  => "running_events#stats",   as: "running_events_stats"
     resources :running_events,  path: "running"
 
+    get  "security/all"    => "security_vulnerabilities#all",     as: "all_security_vulnerabilities"
+    resources :security_vulnerabilities,  path: "security"
+
     get  "speak"          => "speak#index"
     get  "samaritans"     => "samaritans#index"
 
