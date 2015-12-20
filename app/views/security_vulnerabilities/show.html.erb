@@ -1,0 +1,22 @@
+<% provide(:title, "Security Vulnerability Reported:: #{@vulnerability}") %>
+<% provide(:description, "I reported a security vulnerability on #{@vulnerability}") %>
+
+<h1>Security Vulnerabilities Reported</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Security Vulnerabilities Reported', security_vulnerabilities_path %></li>
+	<li class="active"><%= @vulnerability %></li>
+</ol>
+
+<h2>
+	<span class="label label-<%= @vulnerability.fixed_label %>"><%= @vulnerability.fixed_label_text %></span>
+	<%= @vulnerability %></h2>
+</h2>
+
+<p><%= link_to @vulnerability, @vulnerability.url %> <%= icon('external-link-sign') %>
+
+<%= @vulnerability.summary.html_safe %>
+
+<%= @vulnerability.description.html_safe %>
+
+<%= link_to 'Edit', edit_security_vulnerability_path(@vulnerability), class: "btn btn-primary" if current_user and current_user.admin %>
+<%= link_to 'Back', security_vulnerabilities_path %>
