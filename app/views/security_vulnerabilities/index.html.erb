@@ -4,12 +4,28 @@
 
 <p>Working in cyber security, I have an interest in web security. Here is a list of security vulnerabilities I have reported.</p>
 
-<% @vulnerabilities.each do |vulnerability| %>
-	<h3>
-		<span class="label label-<%= vulnerability.fixed_label %>"><%= vulnerability.fixed_label_text %></span>
-		<%= link_to vulnerability, vulnerability %>
-	</h3>
-	<%= vulnerability.summary.html_safe %>
-<% end %>
+<section class="row">
+
+	<article class="col-md-10 col-sm-9">
+		<% @vulnerabilities.each do |vulnerability| %>
+			<h3>
+				<span class="label label-<%= vulnerability.fixed_label %>"><%= vulnerability.fixed_label_text %></span>
+				<%= link_to vulnerability, vulnerability %>
+			</h3>
+			<%= vulnerability.summary.html_safe %>
+		<% end %>
+	</article>
+
+	<article class="col-md-2 col-sm-3">
+		<div class="well text-center">
+			<p>Reported</p>
+			<p style="font-size:300%"><%= icon("bullhorn") %> <%= number_with_delimiter SecurityVulnerability.count %></p>
+		</div>
+		<div class="well text-center">
+			<p>Fixed</p>
+			<p style="font-size:300%"><%= icon("thumbs-up") %> <%= number_with_delimiter SecurityVulnerability.where(fixed: true).count %></p>
+		</div>
+	</article>
+</section>
 
 <p><%= link_to 'New', new_security_vulnerability_path, class: "btn btn-primary" if current_user and current_user.admin %></p>
