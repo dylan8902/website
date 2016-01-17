@@ -4,10 +4,11 @@ class SecurityVulnerabilitiesController < ApplicationController
   before_filter :authenticate_admin!, except: [:index, :show, :all]
 
 
-  # GET /security
-  # GET /security.json
-  # GET /security.xml
+  # GET /security-vulnerabilities
+  # GET /security-vulnerabilities.json
+  # GET /security-vulnerabilities.xml
   def index
+    Project.hit 58
     @vulnerabilities = SecurityVulnerability.order(@order).paginate(@page)
 
     respond_to do |format|
@@ -19,10 +20,11 @@ class SecurityVulnerabilitiesController < ApplicationController
   end
 
 
-  # GET /security/all
-  # GET /security/all.json
-  # GET /security/all.xml
+  # GET /security-vulnerabilities/all
+  # GET /security-vulnerabilities/all.json
+  # GET /security-vulnerabilities/all.xml
   def all
+    Project.hit 58
     @page[:per_page] = SecurityVulnerability.count
     @vulnerabilities = SecurityVulnerability.order(@order).paginate(@page)
 
@@ -34,10 +36,11 @@ class SecurityVulnerabilitiesController < ApplicationController
     end
   end
 
-  # GET /securty/1
-  # GET /securty/1.json
-  # GET /securty/1.xml
+  # GET /securty-vulnerabilities/1
+  # GET /securty-vulnerabilities/1.json
+  # GET /securty-vulnerabilities/1.xml
   def show
+    Project.hit 58
     @vulnerability = SecurityVulnerability.find(params[:id])
 
     respond_to do |format|
@@ -48,9 +51,9 @@ class SecurityVulnerabilitiesController < ApplicationController
   end
 
 
-  # GET /securty/new
-  # GET /securty/new.json
-  # GET /securty/new.xml
+  # GET /securty-vulnerabilities/new
+  # GET /securty-vulnerabilities/new.json
+  # GET /securty-vulnerabilities/new.xml
   def new
     @vulnerability = SecurityVulnerability.new
 
@@ -62,20 +65,20 @@ class SecurityVulnerabilitiesController < ApplicationController
   end
 
 
-  # GET /securty/1/edit
+  # GET /securty-vulnerabilities/1/edit
   def edit
     @vulnerability = SecurityVulnerability.find(params[:id])
   end
 
 
-  # POST /securty
-  # POST /securty.json
+  # POST /securty-vulnerabilities
+  # POST /securty-vulnerabilities.json
   def create
     @vulnerability = SecurityVulnerability.new(vulnerability_params)
 
     respond_to do |format|
       if @vulnerability.save
-        format.html { redirect_to security_vulnerabilities_path, notice: 'vulnerability was successfully created.' }
+        format.html { redirect_to @vulnerability, notice: 'vulnerability was successfully created.' }
         format.json { render json: @vulnerability, status: :created, location: @vulnerability }
       else
         format.html { render action: "new" }
@@ -85,14 +88,14 @@ class SecurityVulnerabilitiesController < ApplicationController
   end
 
 
-  # PUT /securty/1
-  # PUT /securty/1.json
+  # PUT /securty-vulnerabilities/1
+  # PUT /securty-vulnerabilities/1.json
   def update
     @vulnerability = SecurityVulnerability.find(params[:id])
 
     respond_to do |format|
       if @vulnerability.update_attributes(vulnerability_params)
-        format.html { redirect_to security_vulnerabilities_path, notice: 'vulnerability was successfully updated.' }
+        format.html { redirect_to @vulnerability, notice: 'vulnerability was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -102,9 +105,9 @@ class SecurityVulnerabilitiesController < ApplicationController
   end
 
 
-  # DELETE /securty/1
-  # DELETE /securty/1.json
-  # DELETE /securty/1.xml
+  # DELETE /securty-vulnerabilities/1
+  # DELETE /securty-vulnerabilities/1.json
+  # DELETE /securty-vulnerabilities/1.xml
   def destroy
     @vulnerability = SecurityVulnerability.find(params[:id])
     @vulnerability.destroy
@@ -119,7 +122,7 @@ class SecurityVulnerabilitiesController < ApplicationController
 
   private
     def vulnerability_params
-      params.require(:security_vulnerability).permit(:domain, :url, :fixed, :summary, :description)
+      params.require(:security_vulnerability).permit(:domain, :url, :fixed, :summary, :description, :reported_at, :fixed_at)
     end
 
 end
