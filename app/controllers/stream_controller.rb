@@ -1,6 +1,6 @@
 require 'will_paginate/array'
 class StreamController < ApplicationController
-  
+
   # GET /stream
   def index
     Project.hit 16
@@ -45,7 +45,7 @@ class StreamController < ApplicationController
         link: facebook_post_path(post)
       }
     end
-    
+
     Listen.all.each do |listen|
       @stream << {
         title: "Listen",
@@ -55,7 +55,7 @@ class StreamController < ApplicationController
         link: music_listen_path(listen)
       }
     end
-    
+
     Photo.all.each do |photo|
       @stream << {
         title: "Photo",
@@ -65,7 +65,7 @@ class StreamController < ApplicationController
         link: photo_path(photo)
       }
     end
-    
+
     Gig.all.each do |gig|
       @stream << {
         title: "Gig",
@@ -86,9 +86,9 @@ class StreamController < ApplicationController
       }
     end
 
-    @stream.sort_by! { |post| post[:created_at] }
+    @stream.sort_by! { |post| post[@order] }
     @stream.reverse!
-    @stream = @stream.order(@order).paginate(@page)
+    @stream = @stream.paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -96,5 +96,5 @@ class StreamController < ApplicationController
       format.xml { render xml: @stream }
     end
   end
- 
+
 end
