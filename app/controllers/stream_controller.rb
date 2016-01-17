@@ -47,9 +47,12 @@ class StreamController < ApplicationController
     end
 
     Listen.all.each do |listen|
+      text = ""
+      text += listen.track if listen.track
+      text += " - " + listen.artist if listen.artist
       @stream << {
         title: "Listen",
-        description: listen.track + " - " + listen.artist,
+        description: text,
         icon: "music",
         created_at: listen.created_at,
         link: music_listen_path(listen)
