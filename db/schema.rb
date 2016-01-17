@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151220112010) do
+ActiveRecord::Schema.define(version: 20160117091155) do
 
   create_table "accounts", force: true do |t|
     t.string   "number"
@@ -43,10 +43,10 @@ ActiveRecord::Schema.define(version: 20151220112010) do
     t.datetime "updated_at"
   end
 
-  add_index "analytics", ["created_at"], name: "index_analytics_on_created_at", using: :btree
-  add_index "analytics", ["ip"], name: "index_analytics_on_ip", using: :btree
-  add_index "analytics", ["referer"], name: "index_analytics_on_referer", using: :btree
-  add_index "analytics", ["user_agent"], name: "index_analytics_on_user_agent", using: :btree
+  add_index "analytics", ["created_at"], name: "index_analytics_on_created_at"
+  add_index "analytics", ["ip"], name: "index_analytics_on_ip"
+  add_index "analytics", ["referer"], name: "index_analytics_on_referer"
+  add_index "analytics", ["user_agent"], name: "index_analytics_on_user_agent"
 
   create_table "bank_transactions", force: true do |t|
     t.string   "description",            null: false
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20151220112010) do
     t.datetime "updated_at"
   end
 
-  add_index "bus_stops", ["naptan_code"], name: "index_bus_stops_on_naptan_code", using: :btree
+  add_index "bus_stops", ["naptan_code"], name: "index_bus_stops_on_naptan_code"
 
   create_table "dj_events", force: true do |t|
     t.string   "title"
@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(version: 20151220112010) do
     t.integer  "user_id"
   end
 
-  add_index "episodes", ["user_id"], name: "index_episodes_on_user_id", using: :btree
+  add_index "episodes", ["user_id"], name: "index_episodes_on_user_id"
 
   create_table "facebook_posts", force: true do |t|
     t.string   "text"
@@ -215,8 +215,8 @@ ActiveRecord::Schema.define(version: 20151220112010) do
     t.datetime "updated_at"
   end
 
-  add_index "locations", ["lat"], name: "index_locations_on_lat", using: :btree
-  add_index "locations", ["lng"], name: "index_locations_on_lng", using: :btree
+  add_index "locations", ["lat"], name: "index_locations_on_lat"
+  add_index "locations", ["lng"], name: "index_locations_on_lng"
 
   create_table "mole_addons", force: true do |t|
     t.string  "name",                            null: false
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 20151220112010) do
     t.datetime "updated_at"
   end
 
-  add_index "phonecalls", ["contact"], name: "index_phonecalls_on_number", using: :btree
+  add_index "phonecalls", ["contact"], name: "index_phonecalls_on_number"
 
   create_table "photos", force: true do |t|
     t.string   "title"
@@ -310,6 +310,8 @@ ActiveRecord::Schema.define(version: 20151220112010) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "reported_at"
+    t.datetime "fixed_at"
   end
 
   create_table "text_messages", force: true do |t|
@@ -354,8 +356,8 @@ ActiveRecord::Schema.define(version: 20151220112010) do
     t.string  "access_token"
   end
 
-  add_index "user_twitter_accounts", ["screen_name"], name: "index_user_twitter_accounts_on_screen_name", using: :btree
-  add_index "user_twitter_accounts", ["user_id"], name: "index_user_twitter_accounts_on_user_id", using: :btree
+  add_index "user_twitter_accounts", ["screen_name"], name: "index_user_twitter_accounts_on_screen_name"
+  add_index "user_twitter_accounts", ["user_id"], name: "index_user_twitter_accounts_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -374,8 +376,8 @@ ActiveRecord::Schema.define(version: 20151220112010) do
     t.boolean  "admin"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
   create_table "wall_scores", force: true do |t|
     t.integer  "facebook_id", limit: 8

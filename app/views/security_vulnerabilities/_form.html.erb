@@ -12,10 +12,20 @@
 				<%= f.text_field :url, class: "form-control" %>
 				<span class="help-block"><%= errors_for @vulnerability, :url %></span>
 			</div>
+			<div class="form-group<%= " has-error" if errors_for @vulnerability, :reported_at %>">
+				<%= f.label :reported_at, class: "control-label" %>
+				<%= f.text_field :reported_at, class: "form-control" %>
+				<span class="help-block"><%= errors_for @vulnerability, :reported_at %></span>
+			</div>
 			<div class="form-group<%= " has-error" if errors_for @vulnerability, :fixed %>">
 				<%= f.label :fixed, class: "control-label" %>
 				<%= f.check_box :fixed, class: "form-control" %>
 				<span class="help-block"><%= errors_for @vulnerability, :fixed %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @vulnerability, :fixed_at %>">
+				<%= f.label :fixed_at, class: "control-label" %>
+				<%= f.text_field :fixed_at, class: "form-control" %>
+				<span class="help-block"><%= errors_for @vulnerability, :fixed_at %></span>
 			</div>
 		</article>
 		<article class="col-md-8">
@@ -26,7 +36,7 @@
 			</div>
 			<div class="form-group<%= " has-error" if errors_for @vulnerability, :description %>">
 				<%= f.label :description, class: "control-label" %>
-				<%= f.text_area :description, class: "form-control" %>
+				<%= f.text_area :description, class: "form-control", rows: 13 %>
 				<span class="help-block"><%= errors_for @vulnerability, :description %></span>
 			</div>
 		</article>

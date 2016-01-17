@@ -1,4 +1,7 @@
 <% provide(:title, "Security Vulnerabilities Reported") %>
+<% provide(:description, "Security vulnerabilities I have reported and some metrics on when they are fixed") %>
+<% provide(:image, root_path + "images/project58.png") %>
+<% provide(:extrahead, "<style>.obfuscate {color: transparent;text-shadow:0 0 5px rgba(0,0,0,0.5)}</style>".html_safe) %>
 
 <h1>Security Vulnerabilities Reported</h1>
 
@@ -10,7 +13,7 @@
 		<% @vulnerabilities.each do |vulnerability| %>
 			<h3>
 				<span class="label label-<%= vulnerability.fixed_label %>"><%= vulnerability.fixed_label_text %></span>
-				<%= link_to vulnerability, vulnerability %>
+				<%= link_to vulnerability, vulnerability, class: vulnerability.link_class %>
 			</h3>
 			<%= vulnerability.summary.html_safe %>
 		<% end %>
