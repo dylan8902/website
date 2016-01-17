@@ -21,7 +21,7 @@
 
 <p>
 	<%= icon('time') %> Reported <%= timestamp @vulnerability.reported_at %>
-  <%= icon('thumbs-up') %> Fixed <%= timestamp @vulnerability.fixed_at %>
+	<%= icon('thumbs-up') %> Fixed <%= timestamp @vulnerability.fixed_at %>
 </p>
 
 <%= link_to 'Edit', edit_security_vulnerability_path(@vulnerability), class: "btn btn-primary" if current_user and current_user.admin %>
