@@ -279,6 +279,8 @@ Website::Application.routes.draw do
     get  "pdfy"           => "pdfy#index"
     post "pdfy"           => "pdfy#pdf"
     get  "pringles"       => "pringles_prices#index"
+    get  "pubthursday"    => "pub_thursday#challenge"
+    post "pubthursday"    => "pub_thursday#webhook"
     get  "qr"             => "qr#index"
     get  "reading"        => "reading#index"
     get  "realtime"       => "realtime#index"
