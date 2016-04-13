@@ -20,6 +20,7 @@ class PubThursdayController < ApplicationController
   # POST /pubthursday
   def webhook
 
+    logger.info params
 
     respond_to do |format|
       format.json { render json: @response, callback: params[:callback] }
