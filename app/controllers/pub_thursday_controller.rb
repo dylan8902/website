@@ -21,12 +21,15 @@ class PubThursdayController < ApplicationController
 
   # POST /pubthursday
   def webhook
-
-    params['entry'].each do |entry|
-      entry['messaging'].each do |message|
-        sender_id = message['sender']['id']
-        text = message['message']['text']
-          send_message(sender_id, text)
+    if params['entry'] != nil
+      params['entry'].each do |entry|
+        if entry['messaging'] != nil
+          entry['messaging'].each do |message|
+            sender_id = message['sender']['id']
+            text = message['message']['text']
+              send_message(sender_id, text)
+          end
+        end
       end
     end
 
