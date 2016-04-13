@@ -1,3 +1,4 @@
+require 'digest/md5'
 class PubThursdayController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -48,6 +49,7 @@ class PubThursdayController < ApplicationController
     end
   end
 
+
   private
 
   def send_message sender_id, text
@@ -61,6 +63,21 @@ class PubThursdayController < ApplicationController
       }
     }
 
+    message = {
+      "recipient" => {
+        "id" => sender_id
+      },
+      "message" => {
+        "attachment" => {
+          "type" => "template",
+          "payload" => {
+            "template_type" => "generic",
+            "elements" => get_leaderboard().take(10),
+          }
+        }
+      }
+    }
+
     begin
       response = RestClient.post MESSAGE_URL, message.to_json, { :content_type => :json }
       return response
@@ -68,6 +85,27 @@ class PubThursdayController < ApplicationController
       logger.error "#{Time.now} Could not send facebook message: #{e.message}"
       logger.error message.to_json
     end
+  end
+
+
+  def get_leaderboard
+    leaderboard = []
+    begin
+      response = RestClient.get 'http://52.49.119.75:8080/api/people'
+      people = JSON.parse response.body
+      people.each do |person|
+        hash = Digest::MD5.hexdigest(person['email'].downcase)
+        leaderboard << {
+          "title" => person['name'],
+          "subtitle" => person['status'],
+          "image_url" => "http://www.gravatar.com/avatar/#{hash}"
+        }
+      end
+      return leaderboard
+    rescue Exception => e
+      logger.error "#{Time.now} Could not pub thursday leaderboard: #{e.message}"
+    end
+    return []
   end
 
 end
