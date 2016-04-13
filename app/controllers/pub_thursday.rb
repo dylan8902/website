@@ -21,11 +21,11 @@ class PubThursdayController < ApplicationController
   def webhook
 
     @response = {
-      "recipient": {
-        "id": 512982904
+      "recipient" => {
+        "id" => 512982904
       },
-      "message": {
-        "text": "Hello!"
+      "message" => {
+        "text" => "Hello!"
       }
     }
 
