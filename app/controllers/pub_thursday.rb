@@ -1,4 +1,4 @@
-class ApiController < ApplicationController
+class PubThursdayController < ApplicationController
 
   PAGE_TOKEN = 'EAAOvR8M5Y5QBAKb1rzAZBZAnp0DocPBEgSYrSbGrrIGrddfAvwetYKJYbwrBbdK9slOBqvZBIuflzWu7fklIVwDO9UuqNa8vg6TNfIyFNEFHZBVIBhWIgb7WZB6DEcuVojEqbiadNlYOEd0SNOdVh8YZCqDB4ALvnt14rHifdXvAZDZD'
   VERIFY_TOKEN = 'bobisyouruncle'
