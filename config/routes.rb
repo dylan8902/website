@@ -239,7 +239,7 @@ Rails.application.routes.draw do
     get  "musicwall"      => "musicwall#index"
 
     namespace :music do
-      root to: "music#index"
+      root to: "music#index", as: "root"
 
       get  "artists/:id/:title" => "artists#show"
       resources :artists, only: [:index, :show] do
