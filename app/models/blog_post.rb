@@ -1,4 +1,4 @@
-class BlogPost < ActiveRecord::Base
+class BlogPost < ApplicationRecord
   validates :title, presence: true
   validates :text, presence: true
   has_many :blog_tags

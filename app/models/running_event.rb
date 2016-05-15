@@ -1,4 +1,4 @@
-class RunningEvent < ActiveRecord::Base
+class RunningEvent < ApplicationRecord
 
 
   def timing

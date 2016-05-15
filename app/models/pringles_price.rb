@@ -1,10 +1,10 @@
-class PringlesPrice < ActiveRecord::Base
+class PringlesPrice < ApplicationRecord
   default_scope { order('created_at DESC') }
 
 
   def css_style
     return "background-color:#00539f;border-color:#00539f" if supermarket == "Tesco"
-    return "background-color:#78be20;border-color:#78be20" if supermarket == "Asda"    
+    return "background-color:#78be20;border-color:#78be20" if supermarket == "Asda"
   end
 
 

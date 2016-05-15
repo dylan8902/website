@@ -1,4 +1,4 @@
-class Mole::HighScore < ActiveRecord::Base
+class Mole::HighScore < ApplicationRecord
   self.table_name = 'mole_high_scores'
   validates :name, presence: true
   default_scope { order('score DESC') }

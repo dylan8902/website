@@ -1,4 +1,4 @@
-class DjTrack < ActiveRecord::Base
+class DjTrack < ApplicationRecord
   default_scope { order('created_at ASC') }
   belongs_to :dj_event
 

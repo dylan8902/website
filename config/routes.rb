@@ -7,7 +7,7 @@ class Domain
   end
 end
 
-Website::Application.routes.draw do
+Rails.application.routes.draw do
 
   #armyarmyarmyarmyarmyarmyarmy.com
   constraints Domain.new("www.armyarmyarmyarmyarmyarmyarmy.com") do

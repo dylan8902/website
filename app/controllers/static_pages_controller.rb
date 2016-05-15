@@ -11,7 +11,7 @@ class StaticPagesController < ApplicationController
     @episodes = Episode.limit(5)
     @blog_posts = BlogPost.limit(6)
     @location = Location.first
-    @listens = Listen.limit(6)
+    @listens = Track.limit(6)
 
     data = { stuff: @stuff, tweets: @tweets, photos: @photos, episodes: @episodes, blog: @blog_posts, location: @location, listens: @listens }
     respond_to do |format|

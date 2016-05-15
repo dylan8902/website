@@ -1,4 +1,4 @@
-class Tweet < ActiveRecord::Base
+class Tweet < ApplicationRecord
   default_scope { order('created_at DESC') }
 
   def self.update

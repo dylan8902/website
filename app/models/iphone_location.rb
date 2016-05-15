@@ -1,2 +1,2 @@
-class IphoneLocation < ActiveRecord::Base
+class IphoneLocation < ApplicationRecord
 end

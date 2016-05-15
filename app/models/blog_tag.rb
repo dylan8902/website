@@ -1,4 +1,4 @@
-class BlogTag < ActiveRecord::Base
+class BlogTag < ApplicationRecord
   validates :tag, presence: true
   belongs_to :blog_post
 
@@ -18,5 +18,5 @@ class BlogTag < ActiveRecord::Base
     BlogPost.where(id: ids)
   end
 
-  
+
 end
