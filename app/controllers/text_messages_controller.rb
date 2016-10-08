@@ -2,8 +2,8 @@ require 'will_paginate/array'
 class TextMessagesController < ApplicationController
   include Statistics
   include ErrorHelper
-  before_filter :authenticate_user!, except: [:stats, :cloud]
-  before_filter :authenticate_admin!, except: [:stats, :cloud]
+  before_action :authenticate_user!, except: [:stats, :cloud]
+  before_action :authenticate_admin!, except: [:stats, :cloud]
 
 
   # GET /sms
@@ -40,7 +40,7 @@ class TextMessagesController < ApplicationController
   def contact
     @text_messages = TextMessage.find_all_by_contact(params[:contact]).order(@order).paginate(@page)
     @contact = params[:contact]
-    
+
     respond_to do |format|
       format.html # contact.html.erb
       format.json { render json: @text_messages, callback: params[:callback] }
@@ -57,7 +57,7 @@ class TextMessagesController < ApplicationController
     Project.hit 32
     @stats = time_data TextMessage.all
     @cloud = word_cloud TextMessage.pluck(:text)
-    
+
     respond_to do |format|
       format.html # stats.html.erb
       format.json { render json: time_data(TextMessage.all, :hash), callback: params[:callback] }
@@ -65,5 +65,5 @@ class TextMessagesController < ApplicationController
     end
   end
 
-  
+
 end

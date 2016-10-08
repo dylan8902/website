@@ -1,8 +1,8 @@
 require 'will_paginate/array'
 class BlogTagsController < ApplicationController
   include ErrorHelper
-  before_filter :authenticate_user!, only: [:delete]
-  before_filter :authenticate_admin!, only: [:delete]
+  before_action :authenticate_user!, only: [:delete]
+  before_action :authenticate_admin!, only: [:delete]
 
 
   # GET /blog/tags
@@ -69,7 +69,7 @@ class BlogTagsController < ApplicationController
       format.json { head :no_content }
       format.xml { head :no_content }
     end
-  end  
+  end
 
 
   private

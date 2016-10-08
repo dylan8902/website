@@ -1,7 +1,7 @@
 class BankTransactionsController < ApplicationController
   include ErrorHelper
-  before_filter :authenticate_user!
-  before_filter :authenticate_admin!
+  before_action :authenticate_user!
+  before_action :authenticate_admin!
 
 
   # GET /bank
@@ -35,7 +35,7 @@ class BankTransactionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: @bank_transactions, callback: params[:callback] }
       format.xml { render xml: @bank_transactions }
     end

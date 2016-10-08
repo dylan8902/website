@@ -1,8 +1,8 @@
 class RunningEventsController < ApplicationController
   include ErrorHelper
-  before_filter :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
-  before_filter :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy]
-  after_filter :analytics
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  before_action :authenticate_admin!, only: [:new, :create, :edit, :update, :destroy]
+  after_action :analytics
 
 
   # GET /running

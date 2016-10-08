@@ -1,8 +1,8 @@
 class PhonecallsController < ApplicationController
   include Statistics
   include ErrorHelper
-  before_filter :authenticate_user!, except: :stats
-  before_filter :authenticate_admin!, except: :stats
+  before_action :authenticate_user!, except: :stats
+  before_action :authenticate_admin!, except: :stats
 
 
   # GET /phonecalls
@@ -75,7 +75,7 @@ class PhonecallsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html 
+      format.html
       format.json { render json: true, callback: params[:callback] }
       format.xml { render xml: @phonecalls }
     end
@@ -88,7 +88,7 @@ class PhonecallsController < ApplicationController
   def contact
     @phonecalls = Phonecall.where(contact: params[:contact]).order(@order).paginate(@page)
     @contact = params[:contact]
-    
+
     respond_to do |format|
       format.html # contact.html.erb
       format.json { render json: @phonecalls, callback: params[:callback] }

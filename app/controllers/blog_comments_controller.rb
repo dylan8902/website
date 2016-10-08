@@ -1,6 +1,6 @@
 class BlogCommentsController < ApplicationController
   include ErrorHelper
-  before_filter :authenticate_user!, except: [:show, :create]
+  before_action :authenticate_user!, except: [:show, :create]
 
 
   # GET /blog/1/comments/1/edit

@@ -1,7 +1,7 @@
 class SecurityVulnerabilitiesController < ApplicationController
   include ErrorHelper
-  before_filter :authenticate_user!, except: [:index, :show, :all]
-  before_filter :authenticate_admin!, except: [:index, :show, :all]
+  before_action :authenticate_user!, except: [:index, :show, :all]
+  before_action :authenticate_admin!, except: [:index, :show, :all]
 
 
   # GET /security-vulnerabilities
