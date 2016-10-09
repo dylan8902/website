@@ -199,7 +199,7 @@ Rails.application.routes.draw do
     get  "foebook"        => "application#error_410"
 
     namespace :hybrid_radio, path: "hybrid" do
-       root to: "static_pages#index"
+       root to: "static_pages#index", as: "root"
        get  "radiodns"    => "radio_dns#index"
        get  "vis"         => "radio_vis#index"
        get  "vis/comet"   => "radio_vis#comet"
@@ -210,7 +210,7 @@ Rails.application.routes.draw do
     get  "IbeforeE"       => "i_before_e#index"
 
     namespace :into_the_woods, path: "intothewoods" do
-       root to: "static_pages#index"
+       root to: "static_pages#index", as: "root"
        get "synopsis"     => "static_pages#synopsis"
        get "events"       => "static_pages#events"
        get "contact"      => "static_pages#contact"
@@ -225,7 +225,7 @@ Rails.application.routes.draw do
     resources :local_tags,        path: "localtags",  except: [:new]
     get  "md5"            => "md5#index"
     namespace :mole do
-      root to: "static_pages#index"
+      root to: "static_pages#index", as: "root"
       get  "highscores/all"    => "high_scores#all"
       resources :high_scores,     path: "highscores", only: [:index, :create]
       resources :donations,       path: "purchase",   only: [:create]
@@ -355,7 +355,7 @@ Rails.application.routes.draw do
     post "wall/highscores"=> "wall#submit_score"
 
     namespace :west_side_story, path: "westsidestory" do
-       root to: "static_pages#index"
+       root to: "static_pages#index", as: "root"
        get "synopsis"     => "static_pages#synopsis"
        get "team"         => "static_pages#team"
        get "cast"         => "static_pages#cast"
