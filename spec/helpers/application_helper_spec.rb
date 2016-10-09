@@ -1,7 +1,7 @@
 require 'rails_helper.rb'
 
 RSpec.describe ApplicationHelper do
-  
+
   describe "full title" do
 
     it "has the just my name when no extra title" do
@@ -85,7 +85,7 @@ RSpec.describe ApplicationHelper do
   describe "get_age" do
 
     it "returns my age today" do
-      expect(get_age).to eq(26)
+      expect(get_age).to eq(27)
     end
 
   end
@@ -107,7 +107,7 @@ RSpec.describe ApplicationHelper do
   describe "gravatar" do
 
     it "returns the image html tag to display the gravatar" do
-      html = "<img alt=\"Gravatar\" class=\"img-circle\" height=\"30\" src=\"https://secure.gravatar.com/avatar/3184f60ba2d0eca8d4a55a8e2bbedac9.jpg?s=30&amp;d=identicon\" width=\"30\" />"
+      html = "<img alt=\"Gravatar\" width=\"30\" height=\"30\" class=\"img-circle\" src=\"https://secure.gravatar.com/avatar/3184f60ba2d0eca8d4a55a8e2bbedac9.jpg?s=30&amp;d=identicon\" />"
       expect(gravatar("dyl@anjon.es")).to eq(html)
     end
 
