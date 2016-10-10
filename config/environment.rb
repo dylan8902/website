@@ -1,8 +1,5 @@
 # Load the Rails application.
-require File.expand_path('../application', __FILE__)
-
-Mime::Type.register "application/rss+xml", :rss
+require_relative 'application'
 
 # Initialize the Rails application.
-Website::Application.initialize!
-
+Rails.application.initialize!

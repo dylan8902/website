@@ -1,9 +1,9 @@
 class EpisodesController < ApplicationController
   include Statistics
   include ErrorHelper
-  before_filter :authenticate_user!, only: [:add]
-  after_filter :episode_project_hit, only: [:index, :user, :all]
-  after_filter :episode_stats_project_hit, only: [:stats, :user_stats]
+  before_action :authenticate_user!, only: [:add]
+  after_action :episode_project_hit, only: [:index, :user, :all]
+  after_action :episode_stats_project_hit, only: [:stats, :user_stats]
 
 
   # GET /episodes

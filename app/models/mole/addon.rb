@@ -1,4 +1,4 @@
-class Mole::Addon < ActiveRecord::Base
+class Mole::Addon < ApplicationRecord
   self.table_name = 'mole_addons'
   validates :name, presence: true
   validates :code, presence: true

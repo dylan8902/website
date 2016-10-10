@@ -1,4 +1,5 @@
-class Listen < ActiveRecord::Base
+class Track < ApplicationRecord
+  self.table_name = "listens"
   default_scope { order('created_at DESC') }
 
 

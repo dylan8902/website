@@ -1,4 +1,4 @@
-class Phonecall < ActiveRecord::Base
+class Phonecall < ApplicationRecord
 
   default_scope { order('created_at DESC') }
 

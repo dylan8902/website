@@ -1,4 +1,4 @@
-class GigArtist < ActiveRecord::Base
+class GigArtist < ApplicationRecord
   belongs_to :gig
 
 
@@ -9,8 +9,8 @@ class GigArtist < ActiveRecord::Base
       return "/images/no_mbzid_544x306.png"
     end
   end
-  
-  
+
+
   def link
     if self.mbid
       return  "/music/artists/" + self.mbid

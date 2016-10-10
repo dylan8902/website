@@ -1,4 +1,4 @@
-class Train < ActiveRecord::Base
+class Train < ApplicationRecord
   default_scope { order('created_at DESC') }
 
   def self.update

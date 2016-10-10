@@ -1,4 +1,4 @@
-class Analytic < ActiveRecord::Base
+class Analytic < ApplicationRecord
 
   def self.hit request
   	referer = nil

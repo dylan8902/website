@@ -1,4 +1,4 @@
-class Photo < ActiveRecord::Base
+class Photo < ApplicationRecord
   default_scope { order('created_at DESC') }
 
   def self.update page = 1
@@ -14,10 +14,10 @@ class Photo < ActiveRecord::Base
       return
     end
     return if response.code != 200
-    
+
     string = response.body.gsub('jsonFlickrApi(', '')
     string = string[0...-1]
-    json = JSON.parse string   
+    json = JSON.parse string
     json['photos']['photo'].each do |photo|
       photo['latitude'] = nil if photo['latitude'] == 0
       photo['longitude'] = nil if photo['longitude'] == 0
@@ -30,7 +30,7 @@ class Photo < ActiveRecord::Base
         lng: photo['longitude'],
         created_at: Time.at(photo['dateupload'].to_i),
         updated_at: Time.now
-      )  
+      )
     end
   end
 

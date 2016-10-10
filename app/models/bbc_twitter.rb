@@ -1,8 +1,8 @@
 require 'nokogiri'
 require 'open-uri'
-class BbcTwitter < ActiveRecord::Base
-  self.table_name = "bbc_twitter"  
-  
+class BbcTwitter < ApplicationRecord
+  self.table_name = "bbc_twitter"
+
   def self.update
 
     return if BbcTwitter.where("created_at > ?", Date.today).count > 0
@@ -26,7 +26,7 @@ class BbcTwitter < ActiveRecord::Base
     ]
 
     urls.each do |url|
-      xml = Nokogiri::XML(open(url))    
+      xml = Nokogiri::XML(open(url))
       xml.css('entry').each do |entry|
         title = entry.css('title').text
         link = entry.css('link').first[:href]

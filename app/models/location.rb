@@ -1,4 +1,4 @@
-class Location < ActiveRecord::Base
+class Location < ApplicationRecord
   default_scope { order('created_at DESC') }
 
 
@@ -36,11 +36,11 @@ class Location < ActiveRecord::Base
     else
       start_time = 1275350400
     end
-    
+
     end_time = start_time + 2628000
     response = Location.get_kml(start_time, end_time)
     return if response.nil?
-    
+
     kml = Nokogiri::XML(response)
     when_elements = kml.css('when')
     coord_elements = kml.css('gx|coord')

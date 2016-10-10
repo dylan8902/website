@@ -14,8 +14,10 @@ To Deploy:
     rm -rf /home/rails
     git clone git@github.com:dylan8902/website.git /home/rails
     cd /home/rails
+    rvm install 2.1.2
+    rvm use 2.1.2 --default
     bundle install
-    
+
 - Create the database user:
 
     mysql
@@ -40,7 +42,7 @@ To Deploy:
     service unicorn restart
 
 - Set up SSL
-  
+
   cp config/server/default /etc/nginx/sites-enabled/default
   openssl dhparam -out /root/dhparams.pem 2048
   vi dyl.anjon.es.crt

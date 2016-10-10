@@ -5,10 +5,10 @@ class Music::MusicController < ApplicationController
   # GET /music.json
   def index
     Project.hit 33
-    @listens = Listen.limit(12)
+    @listens = Track.limit(12)
     @dj_events = DjEvent.limit(5)
     @gigs = Gig.limit(3)
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: { listens: @listens, dj_events: @dj_events, gigs: @gigs }, :callback => params[:callback] }

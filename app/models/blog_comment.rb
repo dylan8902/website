@@ -1,4 +1,4 @@
-class BlogComment < ActiveRecord::Base
+class BlogComment < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true
   validates :comment, presence: true

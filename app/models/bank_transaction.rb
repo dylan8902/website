@@ -1,4 +1,4 @@
-class BankTransaction < ActiveRecord::Base
+class BankTransaction < ApplicationRecord
   validates :description, presence: true
   validates :amount, presence: true
 
@@ -6,7 +6,7 @@ class BankTransaction < ActiveRecord::Base
 
   def balance
     balance = BankTransaction.where("created_at <= ?", created_at).sum(:amount).round(2)
-    ActionController::Base.helpers.number_to_currency(balance, unit: "&pound;") 
+    ActionController::Base.helpers.number_to_currency(balance, unit: "&pound;")
   end
 
 end

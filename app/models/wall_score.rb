@@ -1,4 +1,4 @@
-class WallScore < ActiveRecord::Base
+class WallScore < ApplicationRecord
   default_scope { order('score DESC') }
 
 

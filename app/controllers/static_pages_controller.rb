@@ -11,7 +11,7 @@ class StaticPagesController < ApplicationController
     @episodes = Episode.limit(5)
     @blog_posts = BlogPost.limit(6)
     @location = Location.first
-    @listens = Listen.limit(6)
+    @listens = Track.limit(6)
 
     data = { stuff: @stuff, tweets: @tweets, photos: @photos, episodes: @episodes, blog: @blog_posts, location: @location, listens: @listens }
     respond_to do |format|
@@ -45,7 +45,7 @@ class StaticPagesController < ApplicationController
     @contact << { name: 'facebook', link: 'https://www.facebook.com/dylan8902', text: 'facebook.com/dylan8902', icon: "facebook-sign" }
     @contact << { name: 'google', link: 'https://www.google.com/+DylanJones8902', text: 'google.com/+DylanJones8902', icon: "google-plus-sign" }
     @contact << { name: 'skype', link: 'skype://dylanjamesvernonjones?userinfo', text: 'dylanjamesvernonjones', icon: "skype" }
-    @contact << { name: 'linkedin', link: 'http://uk.linkedin.com/in/dylanjamesvernonjones', text: 'linkedin.com/in/dylanjamesvernonjones', icon: "linkedin-sign" }
+    @contact << { name: 'linkedin', link: 'http://uk.linkedin.com/in/dylan8902', text: 'linkedin.com/in/dylan8902', icon: "linkedin-sign" }
 
     respond_to do |format|
       format.html # contact.html.erb

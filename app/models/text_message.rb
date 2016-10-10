@@ -1,5 +1,5 @@
 require 'open-uri'
-class TextMessage < ActiveRecord::Base
+class TextMessage < ApplicationRecord
   default_scope { order('created_at DESC') }
 
 

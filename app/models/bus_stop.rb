@@ -1,4 +1,4 @@
-class BusStop < ActiveRecord::Base
+class BusStop < ApplicationRecord
 
   #http://www.dft.gov.uk/NaPTAN/snapshot/NaPTANcsv.zip
 

@@ -1,4 +1,4 @@
-class Airport < ActiveRecord::Base
+class Airport < ApplicationRecord
 
   #http://openflights.org/data.html#airport
 

@@ -1,4 +1,4 @@
-class Gig < ActiveRecord::Base
+class Gig < ApplicationRecord
   default_scope { order('created_at DESC') }
   has_many :gig_artists
 
@@ -17,7 +17,7 @@ class Gig < ActiveRecord::Base
     json['resultsPage']['results']['event'].each do |event|
 
       gig = Gig.where(id: event['id']).first_or_create(url: event['uri'], name: event['displayName'])
-      
+
       if event['venue']['displayName'] != "Unknown venue"
         gig.venue = event['venue']['displayName']
       else
@@ -41,7 +41,7 @@ class Gig < ActiveRecord::Base
       else
         gig.created_at = event['start']['date']
       end
-          
+
       gig.save
 
       event['performance'].each do |performer|

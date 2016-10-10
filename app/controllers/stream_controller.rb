@@ -46,7 +46,7 @@ class StreamController < ApplicationController
       }
     end
 
-    Listen.all.each do |listen|
+    Track.all.each do |listen|
       text = ""
       text += listen.track if listen.track
       text += " - " + listen.artist if listen.artist
