@@ -34,7 +34,7 @@ class Track < ApplicationRecord
     json = JSON.parse response.body
     json['recenttracks']['track'].reverse.each do |track|
       if track['date']
-        Listen.where(created_at: Time.at(track['date']['uts'].to_i), track: track['name']).first_or_create(
+        Track.where(created_at: Time.at(track['date']['uts'].to_i), track: track['name']).first_or_create(
           artist: track['artist']['#text'],
           artist_mbid: track['artist']['mbid'],
           track_mbid: track['mbid'],
