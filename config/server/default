@@ -39,6 +39,8 @@ server {
   ssl_dhparam /root/dhparams.pem;
   index index.htm index.html;
 
+  add_header Strict-Transport-Security "max-age=31536000;" always;
+
   location / {
     try_files $uri/index.html $uri.html $uri @app;
   }
