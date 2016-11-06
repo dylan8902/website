@@ -4,12 +4,12 @@
 		<article class="col-md-4">
 			<div class="form-group<%= " has-error" if errors_for @vulnerability, :domain %>">
 				<%= f.label :domain, class: "control-label" %>
-				<%= f.text_field :domain, class: "form-control" %>
+				<%= f.text_field :domain, class: "form-control", value: @vulnerability[:domain] %>
 				<span class="help-block"><%= errors_for @vulnerability, :domain %></span>
 			</div>
 			<div class="form-group<%= " has-error" if errors_for @vulnerability, :url %>">
 				<%= f.label :url, class: "control-label" %>
-				<%= f.text_field :url, class: "form-control" %>
+				<%= f.text_field :url, class: "form-control", value: @vulnerability[:url] %>
 				<span class="help-block"><%= errors_for @vulnerability, :url %></span>
 			</div>
 			<div class="form-group<%= " has-error" if errors_for @vulnerability, :reported_at %>">
@@ -31,12 +31,12 @@
 		<article class="col-md-8">
 			<div class="form-group<%= " has-error" if errors_for @vulnerability, :summary %>">
 				<%= f.label :summary, class: "control-label" %>
-				<%= f.text_area :summary, class: "form-control" %>
+				<%= f.text_area :summary, class: "form-control", value: @vulnerability[:summary] %>
 				<span class="help-block"><%= errors_for @vulnerability, :summary %></span>
 			</div>
 			<div class="form-group<%= " has-error" if errors_for @vulnerability, :description %>">
 				<%= f.label :description, class: "control-label" %>
-				<%= f.text_area :description, class: "form-control", rows: 13 %>
+				<%= f.text_area :description, class: "form-control", rows: 13, value: @vulnerability[:description] %>
 				<span class="help-block"><%= errors_for @vulnerability, :description %></span>
 			</div>
 		</article>
