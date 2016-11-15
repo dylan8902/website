@@ -11,9 +11,8 @@
 <meta name="twitter:site" content="@dylan8902">
 <meta name="twitter:title" content="<%= full_title(yield(:title)) %>">
 <meta name="twitter:description" content="<%= yield(:description) %>">
-<meta name="twitter:creator" content="@dylan8902">
 <% if yield(:image) != "" %>
-<meta name="twitter:image:src" content="<%= yield(:image) %>">
+<meta name="twitter:image" content="<%= yield(:image) %>">
 <% end %>
 
 <% if @og then %>
@@ -30,7 +29,7 @@
 
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 
-<!--[if lt IE 9]>  
+<!--[if lt IE 9]>
 	<script src="/scripts/html5shiv.js"></script>
 	<script src="/scripts/respond.js"></script>
 <![endif]-->
