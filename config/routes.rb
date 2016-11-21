@@ -364,10 +364,17 @@ Rails.application.routes.draw do
     end
 
     get  "who"            => "static_pages#who"
+
+    get  "xss-workshop"   => "xss_workshop#index"
+    get  "xss-workshop/1" => "xss_workshop#example1"
+    get  "xss-workshop/2" => "xss_workshop#example2"
+    get  "xss-workshop/3" => "xss_workshop#example3"
+
     match '*url'          => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
   root to: "static_pages#error_404", as: "error_404"
   match '*url'   => 'static_pages#error_404', via: [:get, :post, :patch, :delete]
+
 
 end

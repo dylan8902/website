@@ -1,0 +1,30 @@
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-pills pull-right">
+      <li role="presentation"><a href="/xss-workshop/1">Example 1</a></li>
+      <li role="presentation" class="active"><a href="/xss-workshop/2">Example 2</a></li>
+      <li role="presentation"><a href="/xss-workshop/3">Example 3</a></li>
+    </ul>
+  </nav>
+  <h3 class="text-muted">XSS Workshop</h3>
+</div>
+
+<div class="jumbotron">
+  <h2>Example 2</h2>
+  <form method="get">
+    <div class="form-group">
+      <input class="form-control" name="q" placeholder="Search query">
+    </div>
+    <button class="btn btn-default">Search</button></p>
+  </form>
+</div>
+
+<% if params[:q] %>
+<div class="row">
+  <div class="col-lg-12">
+    <h3>You searched for <%= params[:q].html_safe %></h3>
+    <h4>Results</h4>
+    <p>No results</p>
+  </div>
+</div>
+<% end %>
