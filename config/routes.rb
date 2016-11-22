@@ -368,7 +368,6 @@ Rails.application.routes.draw do
     get  "xss-workshop"   => "xss_workshop#index"
     get  "xss-workshop/1" => "xss_workshop#example1"
     get  "xss-workshop/2" => "xss_workshop#example2"
-    get  "xss-workshop/3" => "xss_workshop#example3"
 
     match '*url'          => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
