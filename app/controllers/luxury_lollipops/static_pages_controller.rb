@@ -7,7 +7,7 @@ class LuxuryLollipops::StaticPagesController < ApplicationController
   end
 
   # GET /make-a-request
-  def request
+  def contact
   end
 
   # GET /take-a-look

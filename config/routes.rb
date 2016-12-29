@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     scope module: 'luxury_lollipops' do
       get ""               => 'static_pages#index'
       get "take-a-look"    => 'static_pages#photos'
-      get "make-a-request" => 'static_pages#request'
+      get "make-a-request" => 'static_pages#contact'
     end
   end
 
