@@ -15,7 +15,9 @@ Rails.application.routes.draw do
   end
   constraints Domain.new("luxurylollipops.com") do
     scope module: 'luxury_lollipops' do
-      get ""         => 'static_pages#index'
+      get ""               => 'static_pages#index'
+      get "take-a-look"    => 'static_pages#photos'
+      get "make-a-request" => 'static_pages#request'
     end
   end
 
