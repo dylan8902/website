@@ -3,29 +3,172 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Luxury Lollipops</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<style>
-		html {
-			width:100%;
-			height:100%;
-			font-family:sans-serif;
-			text-align:center;
+		/*
+		 * Globals
+		 */
+
+		/* Links */
+		a,
+		a:focus,
+		a:hover {
+		  color: #fff;
 		}
-		h1 {
-			font-size:72pt;
-			margin:20px;
-			padding:0px;
+
+		/* Custom default button */
+		.btn-default,
+		.btn-default:hover,
+		.btn-default:focus {
+		  color: #333;
+		  text-shadow: none; /* Prevent inheritance from `body` */
+		  background-color: #fff;
+		  border: 1px solid #fff;
 		}
-		h2 {
-			font-size:30pt;
-			margin:20px;
-			padding:0px;
+
+
+		/*
+		 * Base structure
+		 */
+
+		html,
+		body {
+		  height: 100%;
+		  background-color: #333;
 		}
-		p {
-			font-size:12pt;
-			margin:100px;
-			padding:20px;
-			border-top:1px solid #eee;
-			color:#555;
+		body {
+		  color: #fff;
+		  text-align: center;
+		  text-shadow: 0 1px 3px rgba(0,0,0,.5);
+		}
+
+		/* Extra markup and styles for table-esque vertical and horizontal centering */
+		.site-wrapper {
+		  display: table;
+		  width: 100%;
+		  height: 100%; /* For at least Firefox */
+		  min-height: 100%;
+		  -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+		          box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+		}
+		.site-wrapper-inner {
+		  display: table-cell;
+		  vertical-align: top;
+		}
+		.cover-container {
+		  margin-right: auto;
+		  margin-left: auto;
+		}
+
+		/* Padding for spacing */
+		.inner {
+		  padding: 30px;
+		}
+
+
+		/*
+		 * Header
+		 */
+		.masthead-brand {
+		  margin-top: 10px;
+		  margin-bottom: 10px;
+		}
+
+		.masthead-nav > li {
+		  display: inline-block;
+		}
+		.masthead-nav > li + li {
+		  margin-left: 20px;
+		}
+		.masthead-nav > li > a {
+		  padding-right: 0;
+		  padding-left: 0;
+		  font-size: 16px;
+		  font-weight: bold;
+		  color: #fff; /* IE8 proofing */
+		  color: rgba(255,255,255,.75);
+		  border-bottom: 2px solid transparent;
+		}
+		.masthead-nav > li > a:hover,
+		.masthead-nav > li > a:focus {
+		  background-color: transparent;
+		  border-bottom-color: #a9a9a9;
+		  border-bottom-color: rgba(255,255,255,.25);
+		}
+		.masthead-nav > .active > a,
+		.masthead-nav > .active > a:hover,
+		.masthead-nav > .active > a:focus {
+		  color: #fff;
+		  border-bottom-color: #fff;
+		}
+
+		@media (min-width: 768px) {
+		  .masthead-brand {
+		    float: left;
+		  }
+		  .masthead-nav {
+		    float: right;
+		  }
+		}
+
+
+		/*
+		 * Cover
+		 */
+
+		.cover {
+		  padding: 0 20px;
+		}
+		.cover .btn-lg {
+		  padding: 10px 20px;
+		  font-weight: bold;
+		}
+
+
+		/*
+		 * Footer
+		 */
+
+		.mastfoot {
+		  color: #999; /* IE8 proofing */
+		  color: rgba(255,255,255,.5);
+		}
+
+
+		/*
+		 * Affix and center
+		 */
+
+		@media (min-width: 768px) {
+		  /* Pull out the header and footer */
+		  .masthead {
+		    position: fixed;
+		    top: 0;
+		  }
+		  .mastfoot {
+		    position: fixed;
+		    bottom: 0;
+		  }
+		  /* Start the vertical centering */
+		  .site-wrapper-inner {
+		    vertical-align: middle;
+		  }
+		  /* Handle the widths */
+		  .masthead,
+		  .mastfoot,
+		  .cover-container {
+		    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+		  }
+		}
+
+		@media (min-width: 992px) {
+		  .masthead,
+		  .mastfoot,
+		  .cover-container {
+		    width: 700px;
+		  }
 		}
 		</style>
 	</head>
