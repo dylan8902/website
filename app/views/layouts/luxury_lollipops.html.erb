@@ -38,6 +38,10 @@
 		  margin-bottom: 0;
 		  line-height: 40px;
 		}
+		/* Make the link the same color */
+		.header h3 a {
+			color: inherit;
+		}
 
 		/* Custom page footer */
 		.footer {
@@ -98,12 +102,12 @@
     <div class="container">
       <div class="header clearfix">
         <nav>
+					<h3 class="font"><a href="/">Luxury Lollipops</a></h3>
           <ul class="nav nav-pills pull-right">
 						<li><a href="/take-a-look">Take A Look</a></li>
 						<li><a href="/make-a-request">Make A Request</a></li>
           </ul>
         </nav>
-        <h3 class="font"><a href="/">Luxury Lollipops</a></h3>
       </div>
 			<%= yield %>
 			<footer class="footer">
