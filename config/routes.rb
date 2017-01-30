@@ -9,6 +9,16 @@ end
 
 Rails.application.routes.draw do
 
+  #unexpectedgems.com
+  constraints Domain.new("www.unexpectedgems.com") do
+    match "/(*path)" => redirect {|params, req| "http://unexpectedgems.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
+  constraints Domain.new("unexpectedgems.com") do
+    scope module: 'unexpected_gems' do
+      get "" => 'static_pages#index'
+    end
+  end
+
   #luxurylollipops.com
   constraints Domain.new("www.luxurylollipops.com") do
     match "/(*path)" => redirect {|params, req| "http://luxurylollipops.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
