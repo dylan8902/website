@@ -38,8 +38,10 @@
       <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
+          <% if current_user and current_user.admin? %>
             <li role="presentation"><%= link_to "Questions", quiz_questions_path %></li>
             <li role="presentation"><%= link_to "Users", quiz_users_path %></li>
+          <% end %>
           </ul>
         </nav>
         <h3 class="text-muted"><%= yield(:title) %></h3>
