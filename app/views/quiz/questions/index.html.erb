@@ -1,0 +1,18 @@
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-pills pull-right">
+      <li role="presentation" class="active"><%= link_to "Questions", quiz_questions_path %></li>
+    </ul>
+  </nav>
+  <h3 class="text-muted">Team Quiz: Questions</h3>
+</div>
+
+<nav class="list-group">
+	<% @questions.each do |question| %>
+	  <%= link_to question.title, edit_quiz_question_path(question), class: "list-group-item" %>
+	<% end %>
+</nav>
+
+<%= paginate @questions %>
+
+<p><%= link_to "New Question", new_quiz_question_path, class: "btn btn-default" %></p>
