@@ -1,8 +1,7 @@
-<div class="header clearfix">
-  <h3 class="text-muted">Team Quiz: Question <%= @question.id %></h3>
-</div>
+<% provide(:title, "Team Quiz: Question " + @question.id) %>
 
 <h1 class="text-center"><%= @question.title %></h1>
+
 <nav class="list-group">
 	<% @question.possible_answers.each do |answer| %>
 		<a href="#" class="list-group-item"><%= answer %></a>

@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="A quiz">
+    <meta name="author" content="Dylan Jones">
     <link rel="icon" href="https://getbootstrap.com/favicon.ico">
 
-    <title>Team Quiz</title>
+    <title><%= yield(:title) %></title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -34,6 +34,16 @@
   <body>
 
     <div class="container">
+
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation"><%= link_to "Questions", quiz_questions_path %></li>
+            <li role="presentation"><%= link_to "Users", quiz_users_path %></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted"><%= yield(:title) %></h3>
+      </div>
 
       <%= yield %>
 
