@@ -47,12 +47,9 @@ class Quiz::UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        #TODO create a session cookie and redirect to start
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        session[:quiz_user_id] = @user.id
+        format.html { redirect_to quiz_start_path, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
