@@ -4,6 +4,7 @@ class Quiz::StaticPagesController < ApplicationController
 
   # GET /team-quiz
   def index
+    @user = Quiz::User.new
 
     respond_to do |format|
       format.html

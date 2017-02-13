@@ -1,0 +1,19 @@
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-pills pull-right">
+      <li role="presentation"><%= link_to "Questions", quiz_questions_path %></li>
+      <li role="presentation" class="active"><%= link_to "Users", quiz_users_path %></li>
+    </ul>
+  </nav>
+  <h3 class="text-muted">Team Quiz: Users</h3>
+</div>
+
+<nav class="list-group">
+	<% @users.each do |user| %>
+	  <%= link_to user.nickname, edit_quiz_user_path(user), class: "list-group-item" %>
+	<% end %>
+</nav>
+
+<%= paginate @users %>
+
+<p><%= link_to "New User", quiz_root_path, class: "btn btn-default" %></p>

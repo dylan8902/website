@@ -5,10 +5,14 @@
 <div class="jumbotron">
   <h1>Welcome</h1>
   <p class="lead">Time to test your knowledge</p>
-  <form method="post" action="/team-quiz/start">
-    <div class="form-group">
-      <input type="text" placeholder="Nickname" class="form-control input-lg" required>
-    </div>
-    <button class="btn btn-success" type="submit">Start Quiz</button>
-  </form>
+
+  <%= form_for(@user) do |f| %>
+  	<div class="form-group<%= " has-error" if errors_for @user, :nickname %>">
+      <%= f.text_field :nickname, autofocus: true, class: "form-control input-lg", required: true, placeholder: "Nickname" %>
+      <span class="help-block"><%= errors_for @user, :nickname %></span>
+  	</div>
+
+  	<%= f.submit "Start Quiz", class: "btn btn-success" %>
+  <% end %>
+
 </div>

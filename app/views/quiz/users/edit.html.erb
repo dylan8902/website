@@ -5,7 +5,7 @@
       <li role="presentation"><%= link_to "Users", quiz_users_path %></li>
     </ul>
   </nav>
-  <h3 class="text-muted">Team Quiz: Editing Question</h3>
+  <h3 class="text-muted">Team Quiz: Editing User</h3>
 </div>
 
 <%= render 'form' %>
@@ -13,6 +13,5 @@
 <hr>
 
 <p>
-  <%= link_to 'Preview', @question, class: 'btn btn-default' %>
-  <%= link_to 'Back', quiz_questions_path, class: 'btn btn-default' %>
+  <%= link_to 'Back', quiz_users_path, class: 'btn btn-default' %>
 </p>

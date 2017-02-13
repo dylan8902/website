@@ -336,6 +336,7 @@ Rails.application.routes.draw do
       root to: "static_pages#index", as: "root"
       get  "scores" => "static_pages#scores"
       resources :questions
+      resources :users, except: [:new]
     end
 
     get  "timestables"    => "times_tables#index"

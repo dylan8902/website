@@ -20,22 +20,6 @@ class Quiz::QuestionsController < ApplicationController
   end
 
 
-  # GET /team-quiz/questions/all
-  # GET /team-quiz/questions/all.json
-  # GET /team-quiz/questions/all.xml
-  def all
-    @page[:per_page] = Quiz::Question.count
-    @questions = Quiz::Question.order(@order).paginate(@page)
-
-    respond_to do |format|
-      format.html { render 'index.html.erb' }
-      format.json { render json: @questions, callback: params[:callback] }
-      format.xml { render xml: @questions }
-      format.rss { render 'feed' }
-    end
-  end
-
-
   # GET /team-quiz/questions/1
   # GET /team-quiz/questions/1.json
   # GET /team-quiz/questions/1.xml
