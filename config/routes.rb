@@ -335,6 +335,7 @@ Rails.application.routes.draw do
     namespace :quiz, path: "team-quiz" do
       root to: "static_pages#index", as: "root"
       get  "scores" => "static_pages#scores"
+      get  "start" => "static_pages#start"
       resources :questions
       resources :users, except: [:new]
     end
