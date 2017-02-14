@@ -332,6 +332,15 @@ Rails.application.routes.draw do
     resources :projects,  path: "stuff",         as: "stuff",        except: [:create]
     resources :projects,  path: "stuff",         as: "new_stuff",    only:   [:create]
 
+    namespace :quiz, path: "team-quiz" do
+      root to: "static_pages#index", as: "root"
+      get  "scores" => "static_pages#scores"
+      get  "start" => "static_pages#start"
+      resources :questions
+      post "questions/:question_id/answer" => "questions#answer", as: "question_answer"
+      resources :users, except: [:new]
+    end
+
     get  "timestables"    => "times_tables#index"
     post "timestables"    => "times_tables#new"
 

@@ -1,0 +1,10 @@
+<% provide(:title, "Team Quiz: Edit Question") %>
+
+<%= render 'form' %>
+
+<hr>
+
+<p>
+  <%= link_to 'Preview', @question, class: 'btn btn-default' %>
+  <%= link_to 'Back', quiz_questions_path, class: 'btn btn-default' %>
+</p>

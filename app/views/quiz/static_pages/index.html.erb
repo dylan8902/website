@@ -1,0 +1,16 @@
+<% provide(:title, "Team Quiz") %>
+
+<div class="jumbotron">
+  <h1>Welcome</h1>
+  <p class="lead">Time to test your knowledge</p>
+
+  <%= form_for(@user) do |f| %>
+  	<div class="form-group<%= " has-error" if errors_for @user, :nickname %>">
+      <%= f.text_field :nickname, autofocus: true, class: "form-control input-lg", required: true, placeholder: "Nickname" %>
+      <span class="help-block"><%= errors_for @user, :nickname %></span>
+  	</div>
+
+  	<%= f.submit "Start Quiz", class: "btn btn-success" %>
+  <% end %>
+
+</div>

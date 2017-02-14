@@ -1,0 +1,11 @@
+<% provide(:title, "Team Quiz: Users") %>
+
+<nav class="list-group">
+	<% @users.each do |user| %>
+	  <%= link_to user.nickname, edit_quiz_user_path(user), class: "list-group-item" %>
+	<% end %>
+</nav>
+
+<%= paginate @users %>
+
+<p><%= link_to "New User", quiz_root_path, class: "btn btn-default" %></p>

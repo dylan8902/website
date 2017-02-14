@@ -1,0 +1,19 @@
+<% provide(:title, "Team Quiz") %>
+
+<div id="content" class="jumbotron">
+  <h1>Ready, Steady, Go!</h1>
+</div>
+
+<script>
+function getQuestions() {
+  $.getJSON("/team-quiz/questions", function(data) {
+    if(data.length > 0) {
+      window.location = "/team-quiz/questions/" + data[0].id;
+    }
+  });
+}
+
+$(document).ready(function() {
+  setInterval(getQuestions, 2000);
+});
+</script>
