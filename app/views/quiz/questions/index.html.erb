@@ -2,10 +2,16 @@
 
 <nav class="list-group">
 	<% @questions.each do |question| %>
-	  <%= link_to question.title, edit_quiz_question_path(question), class: "list-group-item" %>
-	<% end %>
+    <% if current_user and current_user.admin? %>
+	   <%= link_to question.title, edit_quiz_question_path(question), class: "list-group-item" %>
+    <% else %>
+    <%= link_to question.title, "#", class: "list-group-item" %>
+    <% end %>
+  <% end %>
 </nav>
 
 <%= paginate @questions %>
 
-<p><%= link_to "New Question", new_quiz_question_path, class: "btn btn-default" %></p>
+<% if current_user and current_user.admin? %>
+  <p><%= link_to "New Question", new_quiz_question_path, class: "btn btn-default" %></p>
+<% end %>

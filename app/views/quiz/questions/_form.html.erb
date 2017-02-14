@@ -30,5 +30,11 @@
 		<span class="help-block"><%= errors_for @question, :answer_4 %></span>
 	</div>
 
+	<div class="form-group<%= " has-error" if errors_for @question, :visible %>">
+		<%= f.label :visible, class: "control-label" %>
+		<%= f.check_box :visible, class: "form-control" %>
+		<span class="help-block"><%= errors_for @question, :visible %></span>
+	</div>
+
 	<%= f.submit "Save", class: "btn btn-primary" %>
 <% end %>

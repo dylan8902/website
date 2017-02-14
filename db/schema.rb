@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213233012) do
+ActiveRecord::Schema.define(version: 20170214000037) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "number"
@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(version: 20170213233012) do
     t.text     "answer_4",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "visible",                      default: false
   end
 
   create_table "quiz_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|

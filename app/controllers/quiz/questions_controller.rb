@@ -1,8 +1,8 @@
 class Quiz::QuestionsController < ApplicationController
   layout "team_quiz"
   include ErrorHelper
-  before_action :authenticate_user!, except: [:show]
-  before_action :authenticate_admin!, except: [:show]
+  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_admin!, except: [:index]
 
 
   # GET /team-quiz/questions
@@ -13,9 +13,8 @@ class Quiz::QuestionsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @questions, callback: params[:callback] }
-      format.xml { render xml: @questions }
-      format.rss { render 'feed' }
+      format.json { render json: @questions.visible, only: [:id, :title], methods: [:possible_answers], callback: params[:callback] }
+      format.xml { render xml: @questions.visible, only: [:id, :title], methods: [:possible_answers] }
     end
   end
 
@@ -88,6 +87,28 @@ class Quiz::QuestionsController < ApplicationController
   end
 
 
+  # PUT /team-quiz/questions/1/answer
+  # PUT /team-quiz/questions/1/answer.json
+  def answer
+    @user = Quiz::User.find(session['quiz_user_id'])
+    @question = Quiz::Question.visible.find(params[:id])
+
+    if params[:answer] == @question.correct_answer
+      @user.update_attributes(points: @user.points + 1)
+    end
+
+    respond_to do |format|
+      if @question.update_attributes(question_params)
+        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
+        format.json { render json: @user }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @question.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+
   # DELETE /team-quiz/questions/1
   # DELETE /team-quiz/questions/1.json
   # DELETE /team-quiz/questions/1.xml
@@ -96,7 +117,7 @@ class Quiz::QuestionsController < ApplicationController
     @question.destroy
 
     respond_to do |format|
-      format.html { redirect_to securty_vulnerabilities_url }
+      format.html { redirect_to quiz_questions_path_url }
       format.json { head :no_content }
       format.xml { head :no_content }
     end
@@ -105,7 +126,7 @@ class Quiz::QuestionsController < ApplicationController
 
   private
     def question_params
-      params.require(:quiz_question).permit(:title, :correct_answer, :answer_2, :answer_3, :answer_4)
+      params.require(:quiz_question).permit(:title, :correct_answer, :answer_2, :answer_3, :answer_4, :visible)
     end
 
 end

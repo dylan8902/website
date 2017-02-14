@@ -1,6 +1,7 @@
 class Quiz::Question < ApplicationRecord
   self.table_name = "quiz_questions"
   validates :title, presence: true
+  scope :visible, -> { where(visible: true) }
 
   def possible_answers
     answers = [
