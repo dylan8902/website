@@ -1,15 +1,19 @@
 class Quiz::QuestionsController < ApplicationController
   layout "team_quiz"
   include ErrorHelper
-  before_action :authenticate_user!, except: [:index]
-  before_action :authenticate_admin!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show, :answer]
+  before_action :authenticate_admin!, except: [:index, :show, :answer]
 
 
   # GET /team-quiz/questions
   # GET /team-quiz/questions.json
   # GET /team-quiz/questions.xml
   def index
-    @questions = Quiz::Question.order(@order).paginate(@page)
+    if current_user and current_user.admin?
+      @questions = Quiz::Question.order(@order).paginate(@page)
+    else
+      @questions = Quiz::Question.visible.order(@order).paginate(@page)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,12 +27,16 @@ class Quiz::QuestionsController < ApplicationController
   # GET /team-quiz/questions/1.json
   # GET /team-quiz/questions/1.xml
   def show
-    @question = Quiz::Question.find(params[:id])
+    if current_user and current_user.admin?
+      @question = Quiz::Question.find(params[:id])
+    else
+      @question = Quiz::Question.visible.find(params[:id])
+    end
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @question, callback: params[:callback] }
-      format.xml { render xml: @question }
+      format.json { render json: @question, only: [:id, :title], methods: [:possible_answers], callback: params[:callback] }
+      format.xml { render xml: @question, only: [:id, :title], methods: [:possible_answers] }
     end
   end
 
@@ -91,20 +99,15 @@ class Quiz::QuestionsController < ApplicationController
   # PUT /team-quiz/questions/1/answer.json
   def answer
     @user = Quiz::User.find(session['quiz_user_id'])
-    @question = Quiz::Question.visible.find(params[:id])
+    @question = Quiz::Question.visible.find(params[:question_id])
 
     if params[:answer] == @question.correct_answer
       @user.update_attributes(points: @user.points + 1)
     end
 
     respond_to do |format|
-      if @question.update_attributes(question_params)
-        format.html { redirect_to @question, notice: 'Question was successfully updated.' }
-        format.json { render json: @user }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+      format.html { render action: "show", notice: 'Question was successfully updated.' }
+      format.json { render json: @user }
     end
   end
 

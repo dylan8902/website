@@ -1,1 +1,18 @@
 <% provide(:title, "Team Quiz: Scores") %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Points</th>
+      <th>Nickname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.points %></td>
+      <td><%= user.nickname %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

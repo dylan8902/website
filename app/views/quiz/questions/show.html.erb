@@ -2,8 +2,56 @@
 
 <h1 class="text-center"><%= @question.title %></h1>
 
-<nav class="list-group">
+<% if params[:answer] == @question.correct_answer %>
+	<div class="alert alert-success alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Nice one!</strong> That is correct.
+	</div>
+<% elsif params[:answer] %>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Sorry!</strong> That is not right. The correct answer is <%= @question.correct_answer %>.
+	</div>
+<% end %>
+
+<%= form_tag(quiz_question_answer_path(@question)) do %>
+	<fieldset <%= "disabled" if params[:answer] %>>
 	<% @question.possible_answers.each do |answer| %>
-		<a href="#" class="list-group-item"><%= answer %></a>
+		<div class="radio">
+			<label>
+				<input type="radio" name="answer" value="<%= answer %>" <%= "checked" if params[:answer] ==  answer %>>
+				<%= answer %>
+			</label>
+		</div>
 	<% end %>
-</nav>
+	</fieldset>
+
+	<% if params[:answer] %>
+		<p id="next"></p>
+	<% else %>
+		<p><input class="btn btn-primary" type="submit" value="Submit Answer"></p>
+	<% end %>
+<% end %>
+
+<% if current_user and current_user.admin? %>
+  <p><%= link_to "Edit Question", edit_quiz_question_path(@question), class: "btn btn-default" %></p>
+<% end %>
+
+<% if params[:answer] %>
+<script>
+function getNextQuestion() {
+  $.getJSON("/team-quiz/questions", function(data) {
+		if (<%= @question.id %> == 10) {
+			$('#next').html('<a href="/team-quiz/scores" class="btn btn-danger">Scores</a>');
+		}
+		else if (data.length > <%= @question.id %>) {
+			$('#next').html('<a href="/team-quiz/questions/<%= @question.id + 1 %>" class="btn btn-success">Next Question</a>');
+    }
+  });
+}
+
+$(document).ready(function() {
+  setInterval(getNextQuestion, 2000);
+});
+</script>
+<% end %>

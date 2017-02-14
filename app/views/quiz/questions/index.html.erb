@@ -5,7 +5,7 @@
     <% if current_user and current_user.admin? %>
 	   <%= link_to question.title, edit_quiz_question_path(question), class: "list-group-item" %>
     <% else %>
-    <%= link_to question.title, "#", class: "list-group-item" %>
+    <%= link_to question.title, question, class: "list-group-item" %>
     <% end %>
   <% end %>
 </nav>

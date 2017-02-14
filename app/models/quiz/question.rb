@@ -2,6 +2,7 @@ class Quiz::Question < ApplicationRecord
   self.table_name = "quiz_questions"
   validates :title, presence: true
   scope :visible, -> { where(visible: true) }
+  default_scope { order('id ASC') }
 
   def possible_answers
     answers = [

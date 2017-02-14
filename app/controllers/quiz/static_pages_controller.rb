@@ -13,6 +13,7 @@ class Quiz::StaticPagesController < ApplicationController
 
   # GET /team-quiz/scores
   def scores
+    @users = Quiz::User.all
 
     respond_to do |format|
       format.html

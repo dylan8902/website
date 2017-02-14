@@ -337,6 +337,7 @@ Rails.application.routes.draw do
       get  "scores" => "static_pages#scores"
       get  "start" => "static_pages#start"
       resources :questions
+      post "questions/:question_id/answer" => "questions#answer", as: "question_answer"
       resources :users, except: [:new]
     end
 
