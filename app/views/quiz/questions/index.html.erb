@@ -3,7 +3,8 @@
 <nav class="list-group">
 	<% @questions.each do |question| %>
     <% if current_user and current_user.admin? %>
-	   <%= link_to question.title, edit_quiz_question_path(question), class: "list-group-item" %>
+		<% css_class = "active" if question.visible %>
+	   <%= link_to question.title, edit_quiz_question_path(question), class: "list-group-item #{css_class}" %>
     <% else %>
     <%= link_to question.title, question, class: "list-group-item" %>
     <% end %>
