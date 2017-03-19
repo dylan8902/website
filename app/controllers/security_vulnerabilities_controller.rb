@@ -122,7 +122,7 @@ class SecurityVulnerabilitiesController < ApplicationController
 
   private
     def vulnerability_params
-      params.require(:security_vulnerability).permit(:domain, :url, :fixed, :summary, :description, :reported_at, :fixed_at)
+      params.require(:security_vulnerability).permit(:domain, :url, :fixed, :summary, :description, :reported_at, :fixed_at, :wont_fix)
     end
 
 end
