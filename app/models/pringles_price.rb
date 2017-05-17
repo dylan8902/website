@@ -46,31 +46,11 @@ class PringlesPrice < ApplicationRecord
   end
 
 
-  def self.get_tesco_session
-    url =  "https://secure.techfortesco.com/tescolabsapi/restservice.aspx?command=LOGIN&email=" +
-            Rails.application.secrets.tesco_email + "&password=" + Rails.application.secrets.tesco_password + "&developerkey=" +
-            Rails.application.secrets.tesco_dev_key + "&applicationkey=" + Rails.application.secrets.tesco_app_key
-    begin
-      response = RestClient.get url
-    rescue => e
-      logger.info "Tesco pringles login problem: " + e.message
-      return
-    end
-    return if response.code != 200
-    json = JSON.parse response.body
-    return json['SessionKey']
-  end
-
-
   def self.get_tesco_pringles
-    key = get_tesco_session
-    return if key.nil?
 
-    ean = "5410076462285"
-    url = "https://secure.techfortesco.com/tescolabsapi/restservice.aspx?command=PRODUCTSEARCH&searchtext=" +
-          ean + "&page=1&sessionkey=" + key
+    url = "https://dev.tescolabs.com/grocery/products/?query=pringles%20vinegar&offset=0&limit=5"
     begin
-      response = RestClient.get url
+      response = RestClient.get url, { "Ocp-Apim-Subscription-Key": Rails.application.secrets.tesco_api_key }
     rescue => e
       logger.info "Tesco pringles search problem: " + e.message
       return
@@ -78,12 +58,12 @@ class PringlesPrice < ApplicationRecord
     return if response.code != 200
 
     json = JSON.parse response.body
-    if json["Products"].size > 0
-      p = json["Products"][0]
+    if json["uk"]["ghs"]["products"]["results"].size > 0
+      p = json["uk"]["ghs"]["products"]["results"][0]
       price = PringlesPrice.new
       price.supermarket = "Tesco"
-      price.price = p["Price"]
-      price.offer = p["OfferPromotion"]
+      price.price = p["price"]
+      price.offer = p["PromotionDescription"]
       price.price_inc_offer = parse_tesco_offer p
       return price
     else
@@ -120,12 +100,12 @@ class PringlesPrice < ApplicationRecord
 
 
   def self.parse_tesco_offer p
-    if p["OfferPromotion"] == "Any 2 for £3.00"
+    if p["PromotionDescription"] == "Any 2 for £3.00"
       return 1.50
-    elsif p["OfferPromotion"] == "Buy 1 Get 1 FREE Cheapest Product..."
-      return p["Price"] / 2
+    elsif p["PromotionDescription"] == "Buy 1 Get 1 FREE Cheapest Product..."
+      return p["price"] / 2
     end
-    return p["Price"]
+    return p["price"]
   end
 
 
