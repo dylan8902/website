@@ -18,7 +18,7 @@ class BrowserWarsController < ApplicationController
         config.access_token        = Rails.application.secrets.twitter_oauth_token
         config.access_token_secret = Rails.application.secrets.twitter_oauth_token_secret
       end
-      browsers = client.users('opera', 'firefox', 'ie_uk', 'googlechrome', 'AppleSafari')
+      browsers = client.users('opera', 'firefox', 'ie_uk', 'googlechrome', 'AppleSafari', 'MicrosoftEdge')
       File.open(filename, "w") do |f|
         f.write(browsers.to_json)
       end
