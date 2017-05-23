@@ -317,6 +317,8 @@ Rails.application.routes.draw do
 
     get  "speak"          => "speak#index"
     get  "samaritans"     => "samaritans#index"
+    get  "strawb"         => "strawb#index"
+    post "strawb"         => "strawb#index"
 
     get  "sms/all"        => "text_messages#all",      as: "all_text_messages"
     get  "sms/stats"      => "text_messages#stats",    as: "text_message_stats"
