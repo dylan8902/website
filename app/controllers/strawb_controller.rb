@@ -19,6 +19,8 @@ class StrawbController < ApplicationController
       response = get_random()
     elsif params[:text].downcase.include?("pub thursday")
       response = get_pub_thursday()
+    elsif params[:text].downcase.include?("test image")
+      response = get_test_image()
     elsif params[:text].downcase.include?("help")
       response = get_help()
     else
@@ -129,5 +131,27 @@ class StrawbController < ApplicationController
     }
   end
 
+
+  def get_test_image
+    time = Time.now.to_i
+    return {
+      "type": "message",
+      "text": "Test Image at #{time}",
+      "attachments": [
+        {
+          "contentType": "application/vnd.microsoft.card.hero",
+          "content": {
+            "title": "Test Image",
+            "subtitle": "Does the client get the image?",
+            "images": [
+              {
+                "url": "http://dev.dyl.anjon.es:3000/images/project57.png?#{time}"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  end
 
 end
