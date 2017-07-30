@@ -19,7 +19,7 @@
 				<%= number_to_currency(price.price, unit: "£", separator: ".") %> per can
 			</p>
 			<p style="font-size:200%">
-				<%= "No offer" if price.offer.empty? %>
+				<%= "No offer" if price.offer.nil? or price.offer.empty? %>
 				<%= price.offer %>
 			</p>
 			<p style="font-size:400%;text-decoration:underline">
