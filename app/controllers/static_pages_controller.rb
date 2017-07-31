@@ -128,11 +128,11 @@ class StaticPagesController < ApplicationController
     BbcTwitter.update
     PringlesPrice.update
     Gig.update
+    RunningEvent.update
     TextMessage.update
-    Tweet.update
     Photo.update
     Location.update
-    RunningEvent.update
+    Tweet.update
 
     respond_to do |format|
       format.html # cron.html.erb
