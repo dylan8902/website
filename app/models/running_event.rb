@@ -32,7 +32,7 @@ class RunningEvent < ApplicationRecord
   end
 
 
-  def self.update
+  def self.update_from_kml
     # get kml if there are events missing kml
     return if RunningEvent.where(kml: nil).count == 0
     urls = [
@@ -73,6 +73,61 @@ class RunningEvent < ApplicationRecord
       points << Point.new([xy["lng"], xy["lat"]])
     end
     return points
+  end
+
+
+  def self.update
+    url = "https://www.strava.com/api/v3/athlete/activities?access_token=30182c04d9559207d040240cc80f4d3cf28419ce"
+    response = RestClient.get url
+    if response.code != 200
+      return
+    end
+
+    json = JSON.parse response.body
+    if json.nil? or json.empty?
+      return
+    end
+
+    json.each do |activity|
+      run = RunningEvent.where(strava_id: activity['id']).first
+      if run.nil?
+        # Add the new run
+        params = {
+          strava_id: activity['id'],
+          name: activity['name'],
+          distance: activity['distance'],
+          created_at: Time.parse(activity['start_date']),
+          finish_time: activity['elapsed_time'],
+          training: true,
+          link: "https://www.strava.com/activities/#{activity['id']}"
+        }
+        if activity['start_latlng'] and activity['start_latlng'].length == 2
+          params[:lat] = activity['start_latlng'][0]
+          params[:lng] = activity['start_latlng'][1]
+        end
+        run = RunningEvent.create(params)
+
+        # Get route and add KML
+        url = "https://www.strava.com/api/v3/activities/#{activity['id']}?access_token=30182c04d9559207d040240cc80f4d3cf28419ce"
+        response = RestClient.get url
+        if response.code != 200
+          return
+        end
+
+        details = JSON.parse response.body
+        if details.nil? or details.empty?
+          return
+        end
+
+        latlngs = Polylines::Decoder.decode_polyline(details['map']['polyline'])
+        kml = []
+        latlngs.each do |latlng|
+          kml << { lat: latlng[0], lng: latlng[1] }
+        end
+        run.update(kml: kml.to_json)
+      end
+
+    end
   end
 
 
