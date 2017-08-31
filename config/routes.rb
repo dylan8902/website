@@ -387,6 +387,12 @@ Rails.application.routes.draw do
     get  "wall/highscores"=> "wall#high_scores",        as: "wall_high_scores"
     post "wall/highscores"=> "wall#submit_score"
 
+    namespace :wedding do
+     root to: "static_pages#index",        as: "root"
+     resources :rsvps, path: "rsvp",       as: "rsvp",            excepty: [:show]
+     get  "gifts" => "static_pages#gifts", as: "gifts"
+    end
+
     namespace :west_side_story, path: "westsidestory" do
        root to: "static_pages#index", as: "root"
        get "synopsis"     => "static_pages#synopsis"
