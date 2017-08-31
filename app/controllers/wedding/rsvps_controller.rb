@@ -14,13 +14,12 @@ class Wedding::RsvpsController < ApplicationController
     @page = { page: params[:page], per_page: limit.to_i }
     @order = params[:order] || "name"
 
-    @rsvps = Wedding::Rsvp.order(@order).paginate(@page)
+    @rsvps = Wedding::Rsvp.order(@order).paginate(@page) if current_user and current_user.admin?
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @rsvps, callback: params[:callback] }
       format.xml { render xml: @rsvps }
-      format.rss { render 'feed' }
     end
   end
 
@@ -73,7 +72,7 @@ class Wedding::RsvpsController < ApplicationController
     @rsvp.destroy
 
     respond_to do |format|
-      format.html { redirect_to accounts_url }
+      format.html { redirect_to wedding_rsvp_index_path }
       format.json { head :no_content }
       format.xml { head :no_content }
     end

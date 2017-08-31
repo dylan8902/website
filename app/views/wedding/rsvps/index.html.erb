@@ -3,3 +3,35 @@
 <div class="mdl-layout__tab-panel is-active" id="rsvp">
 	<%= render 'form' %>
 </div>
+
+<% if current_user and current_user.admin? %>
+<div class="mdl-layout__tab-panel is-active">
+	<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+			<div class="mdl-card__supporting-text">
+				<h4>RSVP List</h4>
+				<p><%= Wedding::Rsvp.count %> RSVPS</p>
+				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+				  <thead>
+				    <tr>
+				      <th class="mdl-data-table__cell--non-numeric">Name(s)</th>
+				      <th>RSVP</th>
+				      <th>Notes<th>
+				    </tr>
+				  </thead>
+				  <tbody>
+					<% @rsvps.each do |rsvp| %>
+				    <tr>
+				      <td class="mdl-data-table__cell--non-numeric"><%= rsvp.name %></td>
+				      <td><%= rsvp.rsvp %></td>
+				      <td><%= rsvp.notes %></td>
+							<td><%=link_to 'Delete',  wedding_rsvp_path(rsvp), data: { confirm: 'Are you sure?' }, class: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent", method: :delete %></td>
+				    </tr>
+				    <% end %>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>
+<% end %>
