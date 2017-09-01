@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="The wedding of Dylan JOnes and Alice TImms.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>Dylan &amp; Alice's Wedding</title>
+    <title><%= yield(:title) %></title>
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="icon" sizes="192x192" href="/images/android-desktop.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -247,14 +247,14 @@
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
-          <h3>Dylan &amp; Alice's Wedding</h3>
+          <h3>Alice &amp; Dylan's Wedding</h3>
         </div>
         <div class="mdl-layout--large-screen-only mdl-layout__header-row">
         </div>
         <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
           <a href="/wedding" class="mdl-layout__tab <%= "is-active" if request.path.ends_with? wedding_root_path %>">Information</a>
           <a href="/wedding/rsvp" class="mdl-layout__tab <%= "is-active" if request.path.starts_with? wedding_rsvp_index_path %>">RSVP</a>
-          <a href="/wedding/gifts" class="mdl-layout__tab <%= "is-active" if request.path.starts_with? wedding_gifts_path %>">Gift List</a>
+          <a href="/wedding/gifts" class="mdl-layout__tab <%= "is-active" if request.path.starts_with? wedding_gifts_path %>">Gifts</a>
         </div>
       </header>
       <main class="mdl-layout__content">
@@ -267,7 +267,7 @@
               <ul class="mdl-mega-footer--link-list">
                 <li><a href="/wedding">Information</a></li>
                 <li><a href="/wedding/rsvp">RSVP</a></li>
-                <li><a href="/wedding/gifts">Gift List</a></li>
+                <li><a href="/wedding/gifts">Gifts</a></li>
               </ul>
             </div>
             <div class="mdl-mega-footer--drop-down-section">
