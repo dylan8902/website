@@ -41,8 +41,12 @@
               </label>
             </div>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <%= f.text_field :dietary_requirements, class: "mdl-textfield__input" %>
+              <label class="mdl-textfield__label" for="notes">Dietary Requirements</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <%= f.text_field :notes, class: "mdl-textfield__input" %>
-              <label class="mdl-textfield__label" for="notes">Notes/Dietary Requirements</label>
+              <label class="mdl-textfield__label" for="notes">Notes</label>
             </div>
           </div>
           <div class="mdl-card__actions">

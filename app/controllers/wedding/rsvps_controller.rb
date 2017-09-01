@@ -53,7 +53,7 @@ class Wedding::RsvpsController < ApplicationController
     @rsvp = Wedding::Rsvp.find(params[:id])
 
     respond_to do |format|
-      if @rsvp.update_attributes(account_params)
+      if @rsvp.update_attributes(rsvp_params)
         format.html { redirect_to wedding_rsvp_index_path, notice: 'RSVP was successfully updated.' }
         format.json { head :no_content }
       else
@@ -81,7 +81,7 @@ class Wedding::RsvpsController < ApplicationController
 
   private
     def rsvp_params
-      params.require(:wedding_rsvp).permit(:name, :rsvp, :notes)
+      params.require(:wedding_rsvp).permit(:name, :rsvp, :dietary_requirements, :notes)
     end
 
 end
