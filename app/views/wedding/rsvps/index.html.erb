@@ -21,12 +21,14 @@
 			<div class="mdl-card__supporting-text">
 				<h4>RSVP List</h4>
 				<p><%= Wedding::Rsvp.count %> RSVPS</p>
-				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="white-space:normal;">
 				  <thead>
 				    <tr>
 				      <th class="mdl-data-table__cell--non-numeric">Name(s)</th>
 				      <th>RSVP</th>
-				      <th>Notes<th>
+							<th>Dietary Requirements</th>
+				      <th>Notes</th>
+							<th></th>
 				    </tr>
 				  </thead>
 				  <tbody>
@@ -34,10 +36,11 @@
 				    <tr>
 				      <td class="mdl-data-table__cell--non-numeric"><%= rsvp.name %></td>
 				      <td><%= rsvp.rsvp %></td>
+							<td><%= rsvp.dietary_requirements %></td>
 				      <td><%= rsvp.notes %></td>
 							<td><%=link_to 'Delete',  wedding_rsvp_path(rsvp), data: { confirm: 'Are you sure?' }, class: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent", method: :delete %></td>
 				    </tr>
-				    <% end %>
+				  <% end %>
 				  </tbody>
 				</table>
 			</div>
