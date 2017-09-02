@@ -1,0 +1,50 @@
+<% provide(:title, "Wedding: RSVP") %>
+
+<div class="mdl-layout__tab-panel is-active" id="rsvp">
+	<%= render 'form' %>
+
+	<section>
+		<div class="wedding-card-image mdl-card mdl-shadow--2dp" style="background-image:url('/images/wedding/2016.jpg')">
+			<div class="mdl-card__title mdl-card--expand"></div>
+			<div class="mdl-card__actions">
+				<span class="wedding-card-image__filename">2016</span>
+			</div>
+		</div>
+	</section>
+
+</div>
+
+<% if current_user and current_user.admin? %>
+<div class="mdl-layout__tab-panel is-active">
+	<section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+			<div class="mdl-card__supporting-text">
+				<h4>RSVP List</h4>
+				<p><%= Wedding::Rsvp.count %> RSVPS</p>
+				<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" style="white-space:normal;">
+				  <thead>
+				    <tr>
+				      <th class="mdl-data-table__cell--non-numeric">Name(s)</th>
+				      <th>RSVP</th>
+							<th>Dietary Requirements</th>
+				      <th>Notes</th>
+							<th></th>
+				    </tr>
+				  </thead>
+				  <tbody>
+					<% @rsvps.each do |rsvp| %>
+				    <tr>
+				      <td class="mdl-data-table__cell--non-numeric"><%= rsvp.name %></td>
+				      <td><%= rsvp.rsvp %></td>
+							<td><%= rsvp.dietary_requirements %></td>
+				      <td><%= rsvp.notes %></td>
+							<td><%=link_to 'Delete',  wedding_rsvp_path(rsvp), data: { confirm: 'Are you sure?' }, class: "mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent", method: :delete %></td>
+				    </tr>
+				  <% end %>
+				  </tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+</div>
+<% end %>

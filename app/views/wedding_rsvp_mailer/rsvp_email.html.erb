@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+
+    <h1>Wedding RSVP for: <%= @rsvp.name %></h1>
+
+    <p>
+    <% if  @rsvp.rsvp %>
+      They have accepted
+    <% else %>
+      They have decliend
+    <% end %>
+    </p>
+
+    <h4>Dietary Requirements</h4>
+    <p><%= @rsvp.dietary_requirements %></p>
+
+    <h4>Notes</h4>
+    <p><%= @rsvp.notes %></p>
+
+  </body>
+</html>

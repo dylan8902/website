@@ -1,0 +1,59 @@
+<div class="mdl-layout__tab-panel is-active" id="rsvp">
+  <%= form_for(@rsvp, url: wedding_rsvp_index_path) do |f| %>
+    <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+      <% if notice %>
+        <% if notice["rsvp"]%>
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__supporting-text">
+              <h4>RSVP</h4>
+              Yey! Glad you can join us. Let us know if you need any more <a href="/wedding">information</a>.
+            </div>
+          </div>
+        <% else %>
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__supporting-text">
+              <h4>RSVP</h4>
+              Sorry you can't join us!
+            </div>
+          </div>
+          <% end %>
+      <% else %>
+        <div class="mdl-card mdl-cell mdl-cell--12-col">
+          <div class="mdl-card__supporting-text">
+            <h4>RSVP</h4>
+            Please let us know if you can come to our wedding
+            <div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <%= f.text_field :name, class: "mdl-textfield__input" %>
+                <label class="mdl-textfield__label" for="name">Name(s)</label>
+              </div>
+            </div>
+            <div>
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+                <input type="radio" id="option-1" class="mdl-radio__button" name="wedding_rsvp[rsvp]" value="1" checked>
+                <span class="mdl-radio__label">Accept</span>
+              </label>
+            </div>
+            <div>
+              <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+                <input type="radio" id="option-2" class="mdl-radio__button" name="wedding_rsvp[rsvp]" value="0">
+                <span class="mdl-radio__label">Decline</span>
+              </label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <%= f.text_field :dietary_requirements, class: "mdl-textfield__input" %>
+              <label class="mdl-textfield__label" for="notes">Dietary Requirements</label>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <%= f.text_field :notes, class: "mdl-textfield__input" %>
+              <label class="mdl-textfield__label" for="notes">Notes</label>
+            </div>
+          </div>
+          <div class="mdl-card__actions">
+            <input type="submit" class="mdl-button" value="Submit">
+          </div>
+        </div>
+      <% end %>
+    </section>
+  <% end %>
+</div>

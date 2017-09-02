@@ -1,0 +1,67 @@
+<% provide(:title, "Wedding") %>
+
+<div class="mdl-layout__tab-panel is-active">
+
+  <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="mdl-card mdl-cell mdl-cell--12-col">
+      <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+        <h4 class="mdl-cell mdl-cell--12-col">Time &amp; Place</h4>
+        <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+          <div class="section__circle-container__circle mdl-color--primary">
+            <img src="/images/wedding/church.jpg" height="64">
+          </div>
+        </div>
+        <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+          <h5>Ceremony</h5>
+          <strong>1pm</strong> on <strong>Saturday, 7th April 2018</strong><br>
+          at <a href="https://www.google.co.uk/maps/place/St+Marys+Church/@51.4707221,-3.1772467,15z">St Mary's Church, Cardiff, CF10 5HB</a>
+        </div>
+        <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+          <div class="section__circle-container__circle mdl-color--primary">
+            <img src="/images/wedding/hotel.jpg" height="64">
+          </div>
+        </div>
+        <div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+          <h5>Reception</h5>
+          The ceremony will be followed by a reception<br>
+          at <a href="https://www.google.co.uk/maps/place/The+St.+David's+Hotel/@51.46055,-3.1692467,15z">The St. David's Hotel, Cardiff, CF10 5SD</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%= render 'wedding/rsvps/form' %>
+
+  <section>
+    <div class="wedding-card-image mdl-card mdl-shadow--2dp" style="background-image:url('/images/wedding/2017.jpg')">
+      <div class="mdl-card__title mdl-card--expand"></div>
+      <div class="mdl-card__actions">
+        <span class="wedding-card-image__filename">2017</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+    <div class="mdl-card mdl-cell mdl-cell--12-col">
+      <div class="mdl-card__supporting-text">
+        <h4>Accommodation</h4>
+        If you are looking for somewhere to stay in Cardiff, then the following hotels are nearby the venues:
+        <ul>
+          <li><a href="https://www.travelodge.co.uk/hotels/380/Cardiff-Atlantic-Wharf-hotel?checkIn=07%2F04%2F18&checkOut=08%2F04%2F18&rooms%5B0%5D%5Badults%5D=1&rooms%5B0%5D%5Bchildren%5D=0&rooms%5B0%5D%5Bextras%5D%5B0%5D=">Travelodge</a></li>
+          <li><a href="https://www.futureinns.co.uk/cardiff/">Future Inn</a></li>
+          <li><a href="https://www.thestdavidshotel.com/">St David's Hotel</a> (Discount Code: WED20)</li>
+        </ul>
+      </div>
+      <div class="mdl-card__actions">
+        <a href="https://www.google.co.uk/search?hl=en&q=cardiff+hotels&npsic=0&rflfq=1&rlha=1&rlla=0&rllag=51492210,-3162684,2070&tbm=lcl&ved=0ahUKEwj2t5yq_v_VAhWhDcAKHQHnAj4QtgMITg&hotel_dates=2018-04-07,2018-04-08&tbs=lf_hd:-1,lf_ho:2,lrf:!1m4!1u13!2m2!13m1!1b1!1m4!1u10!2m2!11m1!1e4!1m4!1u10!2m2!11m1!1e10!1m4!1u10!2m2!11m1!1e2!1m4!1u10!2m2!11m1!1e1!1m4!1u10!2m2!11m1!1e3!1m4!1u10!2m2!11m1!1e7!2m1!1e13!2m10!1e17!4m2!17m1!1e3!4m2!17m1!1e8!4m2!17m1!1e2!2m21!1e7!4m4!7m3!1m1!1u100!3sGBP!4m4!7m3!1m1!1u125!3sGBP!4m4!7m3!1m1!1u150!3sGBP!4m4!7m3!1m1!1u175!3sGBP!2m1!1e2!2m1!1e4!2m19!1e10!4m2!11m1!1e4!4m2!11m1!1e10!4m2!11m1!1e2!4m2!11m1!1e1!4m2!11m1!1e3!4m2!11m1!1e7!3sIAE,lf:1,lf_ui:6&rldoc=1#rlfi=hd:2018-04-07,2018-04-08;si:;mv:!1m3!1d40162.18154783683!2d-3.20328575!3d51.49011949999999!2m3!1f0!2f0!3f0!3m2!1i112!2i97!4f13.1" class="mdl-button">Find others</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--footer mdl-color--white mdl-grid">
+    <div class="section__text mdl-cell " style="text-align:center">
+      <h3><%= TimeDifference.between(DateTime.now, DateTime.new(2018,4,7,13,0,0,'+1')).humanize %></h3>
+    </div>
+  </section>
+
+</div>
