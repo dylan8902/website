@@ -28,6 +28,7 @@ mysql
 CREATE USER ''@'localhost' IDENTIFIED BY '';
 GRANT ALL PRIVILEGES ON *.* TO ''@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
+ALTER DATABASE dylan8902_website CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
 exit
 ```
 - Set the secrets in config/secrets.yml.example and rename:
@@ -68,6 +69,32 @@ rake db:migrate RAILS_ENV=production
 rake assets:precompile RAILS_ENV=production
 service unicorn restart
 ```
+
+
+## MySQL support for emojis
+
+/etc/mysql/my.cnf
+```
+[client]
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
+[mysqld]
+character-set-client-handshake = FALSE
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+```
+
+``` sql
+mysql
+ALTER DATABASE dylan8902_website CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+ALTER TABLE tweets CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+ALTER TABLE monzo_transactions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+```
+
+
 
 ## Contribute
 
