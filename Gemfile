@@ -45,6 +45,7 @@ gem 'nokogiri'
 gem 'blue_geo'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'polylines'
+gem 'time_difference'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
