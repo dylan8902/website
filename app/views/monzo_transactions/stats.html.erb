@@ -1,0 +1,14 @@
+<% provide(:title, "Monzo Transactions: Statistics") %>
+<% provide(:description, "Statistics of my Monzo Transactions.") %>
+
+<h1>Monzo Transactions</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Monzo Transactions', monzo_transactions_path %></li>
+	<li class="active">Statistics</li>
+	<li><%= link_to 'Map', monzo_transactions_map_path %></li>
+</ol>
+
+<h2>Statistics</h2>
+<%= render 'common/time_stats' %>
+
+<%= link_to 'Back', monzo_transactions_path %>

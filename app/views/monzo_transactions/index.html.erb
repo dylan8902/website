@@ -2,6 +2,11 @@
 <% provide(:description, "A list of my Monzo Transactions.") %>
 
 <h1>Monzo Transactions</h1>
+<ol class="breadcrumb">
+	<li class="active">Monzo Transactions</li>
+	<li><%= link_to 'Statistics', monzo_transactions_stats_path %></li>
+	<li><%= link_to 'Map', monzo_transactions_map_path %></li>
+</ol>
 
 <section class="row">
 	<article class="col-md-8">
@@ -27,7 +32,9 @@
 		<%= paginate @transactions %>
 	</article>
 	<article class="col-md-4">
-		<h3>Balance</h3>
-		<p><%= @balance %></p>
+		<div class="well">
+			<h4>Balance</h4>
+			<h2><%= @balance %></h2>
+		</div>
 	</article>
 </section>

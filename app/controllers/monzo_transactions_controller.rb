@@ -1,5 +1,6 @@
 class MonzoTransactionsController < ApplicationController
   include ErrorHelper
+  include Statistics
   before_action :authenticate_user!
   before_action :authenticate_admin!
 
@@ -53,5 +54,32 @@ class MonzoTransactionsController < ApplicationController
     end
   end
 
+
+  # GET /monzo/stats
+  # GET /monzo/stats.json
+  # GET /monzo/stats.xml
+  def stats
+    @stats = time_data MonzoTransaction.all
+
+    respond_to do |format|
+      format.html # stats.html.erb
+      format.json { render json: time_data(MonzoTransaction.all, :hash), callback: params[:callback] }
+      format.xml { render xml: time_data(MonzoTransaction.all, :hash) }
+    end
+  end
+
+
+  # GET /monzo/map
+  # GET /monzo/map.json
+  # GET /monzo/map.xml
+  def map
+    @locations = MonzoTransaction.where("lat IS NOT NULL AND lng IS NOT NULL")
+
+    respond_to do |format|
+      format.html # map.html.erb
+      format.json { render json: @locations, callback: params[:callback] }
+      format.xml { render xml: @locations }
+    end
+  end
 
 end
