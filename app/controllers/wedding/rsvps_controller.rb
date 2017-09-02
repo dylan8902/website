@@ -37,6 +37,7 @@ class Wedding::RsvpsController < ApplicationController
 
     respond_to do |format|
       if @rsvp.save
+        WeddingRsvpMailer.rsvp_email(@rsvp).deliver_later
         format.html { redirect_to wedding_rsvp_index_path, notice: @rsvp }
         format.json { render json: @rsvp, status: :created, location: @rsvp }
       else
