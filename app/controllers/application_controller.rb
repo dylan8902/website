@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
       "name", "name DESC", "name ASC",
       "title", "title DESC", "title ASC",
       "distance", "distance DESC", "distance ASC",
+      "hits", "hits DESC", "hits ASC",
     ]
     @order = params[:order] || "created_at DESC"
     error_404 unless permitted.include? @order
