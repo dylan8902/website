@@ -10,7 +10,7 @@ class MonzoTransaction < ApplicationRecord
   end
 
 
-  def self.get_transactions
+  def self.update
     url = "https://api.monzo.com/transactions?expand[]=merchant&account_id=#{Rails.application.secrets.monzo_account_id}"
     begin
       response = RestClient.get url, { "Authorization": "Bearer #{Rails.application.secrets.monzo_access_token}" }

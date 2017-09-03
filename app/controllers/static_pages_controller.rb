@@ -129,6 +129,7 @@ class StaticPagesController < ApplicationController
     PringlesPrice.update
     Gig.update
     RunningEvent.update
+    MonzoTransaction.update
     TextMessage.update
     Photo.update
     Location.update
