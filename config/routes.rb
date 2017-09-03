@@ -258,6 +258,12 @@ Rails.application.routes.draw do
       get  "facebook" => "static_pages#facebook"
     end
     get  "molly"          => "molly#index"
+
+    get  "monzo/all"   => "monzo_transactions#all",   as: "all_monzo_transactions"
+    get  "monzo/map"   => "monzo_transactions#map",   as: "monzo_transactions_map"
+    get  "monzo/stats" => "monzo_transactions#stats", as: "monzo_transactions_stats"
+    resources :monzo_transactions, path: "monzo",     only: [:index, :show]
+
     get  "musicwall"      => "musicwall#index"
 
     namespace :music do

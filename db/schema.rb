@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901195054) do
+ActiveRecord::Schema.define(version: 20170902223048) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "number"
@@ -236,6 +236,19 @@ ActiveRecord::Schema.define(version: 20170901195054) do
     t.integer  "score"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "monzo_transactions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
+    t.string   "monzo_id"
+    t.text     "description", limit: 16777215
+    t.integer  "amount"
+    t.string   "currency"
+    t.text     "merchant",    limit: 16777215
+    t.datetime "created_at",                                            null: false
+    t.datetime "updated_at",                                            null: false
+    t.text     "json",        limit: 65535
+    t.decimal  "lat",                          precision: 10, scale: 7
+    t.decimal  "lng",                          precision: 10, scale: 7
   end
 
   create_table "phonecalls", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

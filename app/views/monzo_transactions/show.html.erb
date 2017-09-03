@@ -1,0 +1,12 @@
+<% provide(:title, "Monzo Transaction") %>
+<% provide(:description, @transaction.description) %>
+
+<h1>Monzo Transaction</h1>
+<ol class="breadcrumb">
+  <li><%= link_to "Monzo Transactions", monzo_transactions_path %></li>
+  <li class="active"><%= @transaction.description %></li>
+</ol>
+
+<h3><%= @transaction.description %></h3>
+<h5><%= @transaction.amount_in_pounds %></h5>
+<pre><%= JSON.parse(@transaction.json) unless @transaction.json == "null" %></pre>

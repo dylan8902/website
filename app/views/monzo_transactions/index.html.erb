@@ -1,0 +1,40 @@
+<% provide(:title, "Monzo Transactions") %>
+<% provide(:description, "A list of my Monzo Transactions.") %>
+
+<h1>Monzo Transactions</h1>
+<ol class="breadcrumb">
+	<li class="active">Monzo Transactions</li>
+	<li><%= link_to 'Statistics', monzo_transactions_stats_path %></li>
+	<li><%= link_to 'Map', monzo_transactions_map_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-8">
+
+		<nav class="btn-group">
+
+			<% css = "btn" %>
+			<% css += " btn-primary" if params[:order].nil? %>
+			<%= link_to "Chronological", request.path, class: css %>
+			<% css = "btn" %>
+			<% css += " btn-primary" if params[:order] == "created_at DESC" %>
+			<%= link_to "Most Recent", request.path + "?order=created_at%20DESC", class: css %>
+		</nav>
+
+		<table class="table table-striped">
+			<% @transactions.each do |transaction| %>
+			<tr>
+				<td><%= link_to transaction.description, monzo_transaction_path(transaction) %></td>
+				<td><%= transaction.amount_in_pounds %></td>
+			</tr>
+			<% end %>
+		</table>
+		<%= paginate @transactions %>
+	</article>
+	<article class="col-md-4">
+		<div class="well">
+			<h4>Balance</h4>
+			<h2><%= @balance %></h2>
+		</div>
+	</article>
+</section>
