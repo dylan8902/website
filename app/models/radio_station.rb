@@ -12,38 +12,42 @@ class RadioStation
     @colour = station[:colour]
     @show = nil
     @recent_tracks = []
-    
-    self.load_schedule  
+
+    self.load_schedule
     self.load_recent_tracks
-    
+
     puts self.inspect
   end
-  
-  
+
+
   def load_schedule yesterday = ""
     url = "http://www.bbc.co.uk/#{self.id}/programmes/schedules#{self.country}#{yesterday}.json"
-    response = RestClient.get url
-    return nil if response.code != 200
-    
+    begin
+      response = RestClient.get url
+    rescue => e
+      puts e.message
+      return nil
+    end
+
     json = JSON.parse response.body
     json['schedule']['day']['broadcasts'].each do |show|
       if (Time.parse(show['start']) <= Time.now) and (Time.parse(show['end']) > Time.now)
         self.show = show
       end
     end
-    
+
     if self.show.nil?
       load_schedule "/yesterday"
     end
-    
+
   end
-  
-  
+
+
   def load_recent_tracks
     if (self.id == 'radio1') or (self.id == '1xtra') or (self.id == 'radio2') or (self.id == '6music')
-      
+
       url = "http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=bbc#{self.id}&api_key=ea5099237517b2b08252aed02e06a3ea&format=json&limit=14";
-      
+
       response = RestClient.get url
       return nil if response.code != 200
       json = JSON.parse response.body
@@ -54,8 +58,8 @@ class RadioStation
       #TODO: Get the canonical episode to get the segments
     end
   end
-  
-  
+
+
   class Track
     attr_reader :title, :artist, :artist_mbzid, :timestamp
     attr_writer :title, :artist, :artist_mbzid, :timestamp
@@ -78,9 +82,9 @@ class RadioStation
       if self.artist_mbzid.empty?
         src = "/images/no_mbzid_112x63.png"
       else
-        src = "https://www.bbc.co.uk/music/images/artists/112x63/#{self.artist_mbzid}.jpg" 
+        src = "https://www.bbc.co.uk/music/images/artists/112x63/#{self.artist_mbzid}.jpg"
       end
-      return "<img src=\"#{src}\" alt=\"#{self.artist}\">".html_safe 
+      return "<img src=\"#{src}\" alt=\"#{self.artist}\">".html_safe
     end
 
   end
