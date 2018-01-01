@@ -1,6 +1,6 @@
 <% provide(:title, "On Radio: #{@radio_station.title}") %>
 <% provide(:description, "Now playing on #{@radio_station.title} - track listing and artist information in real-time.") %>
-<% provide(:image, "https://www.bbc.co.uk/iplayer/images/episode/#{@radio_station.show['programme']['pid']}_640_360.jpg") %>
+<% provide(:image, "https://www.bbc.co.uk/iplayer/images/episode/#{@radio_station.show['programme']['pid']}_640_360.jpg") if @radio_station.show %>
 
 <h1>On Radio: <%= @radio_station.title %></h1>
 
@@ -14,15 +14,17 @@
 
 <section class="row">
 	<section class="col-md-6">
-		
+
+	<% if @radio_station.show %>
 		<img id="show-image" class="listen thumbnail" src="http://ichef.bbci.co.uk/images/ic/480x270/<%= @radio_station.show['programme']['image']['pid'] %>.jpg" alt="Show Image" style="margin-top:15px">
 		<h2><a id="show-title" href="http://www.bbc.co.uk/programmes/<%= @radio_station.show['pid'] %>"><%= @radio_station.show['programme']['display_titles']['title'] %></a></h2>
 		<p id="show-info"><%= @radio_station.show['programme']['display_titles']['subtitle'] %>: <%= @radio_station.show['programme']['short_synopsis'] %></p>
+	<% end %>
 
 		<div style="width:100%;height:5px;background:#DBDBDB;margin-bottom:10px;">
 			<div id="done" style="height:100%;background:<%= @radio_station.colour %>;width:1%;"></div>
 		</div>
-		
+
 		<button id="listen" class="btn btn-primary">Listen</button>
 		<button id="scrobble" class="btn btn-danger">Scrobble</button>
 		<button id="facebook" class="btn btn-secondary">Connect to Facebook</button>
@@ -39,10 +41,10 @@
 			</tr>
 			<% end %>
 		</table>
-	
+
 	</section>
 	<section id="information" class="col-md-6">
-		
+
 	</section>
 </section>
 
@@ -61,8 +63,11 @@
 	var session = {};
 	var facebook = false;
 	var lastfm = false;
+
+<% if @radio_station.show %>
 	var b = <%= Time.parse(@radio_station.show['end']).to_i - Time.now.to_i %>;
 	var a = <%= Time.parse(@radio_station.show['end']).to_i - Time.parse(@radio_station.show['start']).to_i %>;
+<% end %>
 
 	function addTrackToTable(title, artist, mbid, start, stop) {
 		var str = '<tr id="track-'+id+'" style="display:none;">';
@@ -97,14 +102,14 @@
 			dataType : 'json',
 			url      : '/md5.json',
 			data     : 'q='+md5,
-			success  : 
+			success  :
 				function(reply) {
 					$.ajax({
 						type     : 'POST',
 						dataType : 'json',
 						url      : 'https://ws.audioscrobbler.com/2.0/',
 						data     : data+'&api_sig='+reply,
-						success  : 
+						success  :
 							function(reply) {
 								console.log(reply);
 							}
@@ -119,7 +124,7 @@
 			dataType : 'json',
 			url      : 'https://graph.facebook.com/me/bbc_radio:listen_to',
 			data     : 'radio_station='+encodeURIComponent('http://www.bbc.co.uk/<%= @radio_station.id %>')+'&song='+encodeURIComponent('http://dyl.anjon.es/music/artists/'+mbid+'/'+title.replace('.',''))+'&start_time='+start+'&end_time='+end+'&'+session,
-			success  : 
+			success  :
 				function(reply) {
 					console.log(reply);
 				}
@@ -151,7 +156,7 @@
 			dataType : 'jsonp',
 			url      : 'https://ws.audioscrobbler.com/2.0/',
 			data     : 'method=user.getrecenttracks&user=bbc<%= @radio_station.id %>&api_key=ea5099237517b2b08252aed02e06a3ea&format=json&limit=5',
-			success  : 
+			success  :
 				function(reply) {
 					if (typeof(reply.recenttracks) != 'undefined') {
 						var track = reply.recenttracks.track[0];
@@ -181,7 +186,7 @@
 			type     : 'GET',
 			dataType : 'jsonp',
 			url      : '<%= request.original_fullpath %>.json',
-			success  : 
+			success  :
 				function(reply) {
 					$('#show-info').html(''+reply.show.programme.title+': '+reply.show.programme.short_synopsis);
 					$('#show-image').attr('src','http://ichef.bbci.co.uk/images/ic/480x270/'+reply.show.programme.image.pid+'.jpg');
@@ -202,10 +207,10 @@
 		var refreshTracks = setInterval(function() {
 			updateTracks();
 		}, 20000);
-		
+
 		var refreshShow = setTimeout(function() {
 			updateShow();
-		}, <%= Time.parse(@radio_station.show['end']).to_i - Time.now.to_i + 5 %>000);
+		}, <%= Time.parse(@radio_station.show['end']).to_i - Time.now.to_i + 5 if @radio_station.show %>000);
 		function updateProgress() {
 			progress++;
 			var width = ((a-b+progress)/a)*100;
@@ -230,8 +235,8 @@
 				type     : 'GET',
 				dataType : 'json',
 				url      : '/music/artists/'+mbzid+'.json',
-				success  : 
-					function(reply) { 
+				success  :
+					function(reply) {
 						$('#loading').fadeOut(200);
 						if(typeof(reply.type) != 'undefined')
 							$('#information').append('<section><p><i class="icon-group"></i> '+reply.type+'</p></section>');
@@ -280,8 +285,8 @@
 							dataType : 'json',
 							url      : 'https://ws.audioscrobbler.com/2.0/',
 							data     : 'method=artist.getinfo&mbid='+mbzid+'&api_key=ea5099237517b2b08252aed02e06a3ea&format=json',
-							success  : 
-								function(reply) { 
+							success  :
+								function(reply) {
 									$('#loading').fadeOut(200);
 									if(typeof(reply.artist.bio)!='undefined')
 										$('#information').append('<section><h5>Biography</h5><p id="biography">'+reply.artist.bio.content+'</p></section>');
