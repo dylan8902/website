@@ -1,0 +1,19 @@
+<% provide(:title, "Reminder Bot") %>
+<% provide(:description, "Schedule reminders to be sent out on Microsoft Teams") %>
+<% provide(:image, root_path + "images/project58.png") %>
+
+<h1>Reminder Bot</h1>
+
+<p>Schedule reminders to be sent out to Channels on Microsoft Teams</p>
+
+<section class="row">
+
+	<article class="col-md-10 col-sm-9">
+		<% @reminders.each do |reminder| %>
+			<h3><%= link_to reminder, reminder %></h3>
+		<% end %>
+	</article>
+
+</section>
+
+<p><%= link_to 'New', new_reminder_path, class: "btn btn-primary" %></p>
