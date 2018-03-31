@@ -274,6 +274,7 @@
           <a href="/wedding" class="mdl-layout__tab <%= "is-active" if request.path.ends_with? wedding_root_path %>">Information</a>
           <a href="/wedding/rsvp" class="mdl-layout__tab <%= "is-active" if request.path.starts_with? wedding_rsvp_index_path %>">RSVP</a>
           <a href="/wedding/gifts" class="mdl-layout__tab <%= "is-active" if request.path.starts_with? wedding_gifts_path %>">Gifts</a>
+          <a href="/wedding/app" class="mdl-layout__tab <%= "is-active" if request.path.starts_with? wedding_app_path %>">App</a>
         </div>
       </header>
       <main class="mdl-layout__content">

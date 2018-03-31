@@ -403,6 +403,7 @@ Rails.application.routes.draw do
      root to: "static_pages#index",        as: "root"
      resources :rsvps, path: "rsvp",       as: "rsvp",            excepty: [:show]
      get  "gifts" => "static_pages#gifts", as: "gifts"
+     get  "app"   => "static_pages#app",   as: "app"
     end
 
     namespace :west_side_story, path: "westsidestory" do
