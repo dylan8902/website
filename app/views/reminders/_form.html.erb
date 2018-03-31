@@ -1,0 +1,41 @@
+<%= form_for(@reminder) do |f| %>
+	<section class="row">
+		<article class="col-md-4">
+			<div class="form-group<%= " has-error" if errors_for @reminder, :name %>">
+				<%= f.label :name, class: "control-label" %>
+				<%= f.text_field :name, class: "form-control", value: @reminder[:name], required: true, placeholder: "2:30pm Tea Reminder" %>
+				<span class="help-block"><%= errors_for @reminder, :name %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @reminder, :time %>">
+				<%= f.label :time, class: "control-label" %>
+				<%= f.text_field :time, class: "form-control", value: @reminder[:time], required: true, placeholder: "14:30 (24-hour)" %>
+				<span class="help-block"><%= errors_for @reminder, :time %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @reminder, :title %>">
+				<%= f.label :title, class: "control-label" %>
+				<%= f.text_field :title, class: "form-control", value: @reminder[:title], required: true, placeholder: "Time for Tea" %>
+				<span class="help-block"><%= errors_for @reminder, :title %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @reminder, :summary %>">
+				<%= f.label :summary, class: "control-label" %>
+				<%= f.text_area :summary, class: "form-control", value: @reminder[:summary], placeholder: "Hey everyone, it's time for tea!" %>
+				<span class="help-block"><%= errors_for @reminder, :summary %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @reminder, :url %>">
+				<%= f.label :url, class: "control-label" %>
+				<%= f.text_field :url, class: "form-control", value: @reminder[:url], required: true, placeholder: "Teams Webhook URL" %>
+				<span class="help-block"><%= errors_for @reminder, :url %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @reminder, :image %>">
+				<%= f.label :image, class: "control-label" %>
+				<%= f.text_field :image, class: "form-control", value: @reminder[:image], placeholder: "Image URL" %>
+				<span class="help-block"><%= errors_for @reminder, :image %></span>
+			</div>
+		</article>
+		<article class="col-md-8">
+			<h5>Coming soon!</h5>
+			<p>A preview of the reminder, along with the next time it will trigger shows here</p>
+		</article>
+	</section>
+	<div class="actions"><%= f.submit "Submit", class: "btn btn-primary" %></div>
+<% end %>

@@ -1,0 +1,26 @@
+<% provide(:title, "Reminder:: #{@reminder}") %>
+<% provide(:description, "#{@reminder}") %>
+<% provide(:image, root_path + "images/project58.png")%>
+
+<h1>Reminder Bot</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Reminders', reminders_path %></li>
+	<li class="active"><%= @reminder %></li>
+</ol>
+
+<h2><%= @reminder.name %></h2>
+<h3><%= @reminder.time %></h3>
+<p><%= @reminder.summary %></p>
+<p><img src="<%= @reminder.image %>" style="max-width:90%;max-height:90%"></p>
+<p><%= link_to @reminder.url, @reminder.url %> <%= icon('external-link-sign') %></p>
+
+<pre><%= @reminder.reminder %></pre>
+
+<p>
+<%= form_for @reminder, url: test_reminder_path(@reminder), method: "post" do |f| %>
+	<%= f.submit "Send a test reminder now", class: "btn btn-secondary" %>
+<% end %>
+</p>
+
+<%= link_to 'Edit', edit_reminder_path(@reminder), class: "btn btn-primary" %>
+<%= link_to 'Back', reminders_path %>

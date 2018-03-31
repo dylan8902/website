@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170902223048) do
+ActiveRecord::Schema.define(version: 20180304063731) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "number"
@@ -310,6 +310,17 @@ ActiveRecord::Schema.define(version: 20170902223048) do
     t.integer  "points",                   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "reminders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.string   "name"
+    t.string   "time"
+    t.text     "title",      limit: 65535
+    t.text     "summary",    limit: 65535
+    t.text     "url",        limit: 65535
+    t.text     "image",      limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "running_events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

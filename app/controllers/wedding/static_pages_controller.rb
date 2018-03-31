@@ -20,4 +20,13 @@ class Wedding::StaticPagesController < ApplicationController
     end
   end
 
+
+  # GET /wedding/app
+  def app
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
 end

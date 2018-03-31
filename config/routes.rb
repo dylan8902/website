@@ -313,6 +313,12 @@ Rails.application.routes.draw do
     get  "reading"        => "reading#index"
     get  "realtime"       => "realtime#index"
 
+    resources :reminders,  path: "reminder-bot" do
+      member do
+        post "test"
+      end
+    end
+
     get  "running/all"    => "running_events#all",     as: "all_running_events"
     get  "running/map"    => "running_events#map",     as: "running_events_map"
     get  "running/stats"  => "running_events#stats",   as: "running_events_stats"
@@ -397,6 +403,7 @@ Rails.application.routes.draw do
      root to: "static_pages#index",        as: "root"
      resources :rsvps, path: "rsvp",       as: "rsvp",            excepty: [:show]
      get  "gifts" => "static_pages#gifts", as: "gifts"
+     get  "app"   => "static_pages#app",   as: "app"
     end
 
     namespace :west_side_story, path: "westsidestory" do
