@@ -74,7 +74,7 @@ class PringlesPrice < ApplicationRecord
 
 
   def self.get_asda_pringles
-    url = "https://api-groceries.asda.com/api/items/view?itemid=910001592613"
+    url = "https://api-groceries.asda.com/api/items/view?itemid=910003061998"
 
     begin
       response = RestClient.get url
