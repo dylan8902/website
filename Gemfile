@@ -43,7 +43,7 @@ gem 'coderay'
 gem 'rest-client'
 gem 'nokogiri'
 gem 'blue_geo'
-gem 'recaptcha', require: 'recaptcha/rails'
+gem 'recaptcha', require: 'recaptcha/rails', '3.3.0'
 gem 'polylines'
 gem 'time_difference'
 
