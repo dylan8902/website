@@ -60,6 +60,7 @@ vi dyl.anjon.es.key
 service nginx restart
 ```
 
+
 ## Update Application
 
 ``` bash
@@ -68,6 +69,20 @@ git pull
 rake db:migrate RAILS_ENV=production
 rake assets:precompile RAILS_ENV=production
 service unicorn restart
+```
+
+
+## Update Let's Encrypt SSL
+
+``` bash
+rm dyl.anjon.es.key.old
+rm dyl.anjon.es.crt.old
+./certbot-auto --text --agree-tos --email dyl@anjon.es -d dyl.anjon.es --manual --preferred-challenges dns --expand --renew-by-default  --manual-public-ip-logging-ok certonly
+cp dyl.anjon.es.crt dyl.anjon.es.crt.old
+cp dyl.anjon.es.key dyl.anjon.es.key.old
+cp /etc/letsencrypt/live/dyl.anjon.es/fullchain.pem dyl.anjon.es.crt
+cp /etc/letsencrypt/live/dyl.anjon.es/privkey.pem dyl.anjon.es.key
+service nginx restart
 ```
 
 
@@ -93,7 +108,6 @@ ALTER DATABASE dylan8902_website CHARACTER SET = utf8mb4 COLLATE = utf8mb4_gener
 ALTER TABLE tweets CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 ALTER TABLE monzo_transactions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 ```
-
 
 
 ## Contribute
