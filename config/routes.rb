@@ -9,6 +9,14 @@ end
 
 Rails.application.routes.draw do
 
+  #isitaproxyproblem.com
+  constraints Domain.new("www.isitaproxyproblem.com") do
+    match "/(*path)" => redirect {|params, req| "http://isitaproxyproblem.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
+  constraints Domain.new("isitaproxyproblem.com") do
+    get "" => 'is_it_a_proxy_problem#index'
+  end
+
   #unexpectedgems.com
   constraints Domain.new("www.unexpectedgems.com") do
     match "/(*path)" => redirect {|params, req| "http://unexpectedgems.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
