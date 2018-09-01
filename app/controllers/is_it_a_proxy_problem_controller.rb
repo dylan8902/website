@@ -6,7 +6,7 @@ class IsItAProxyProblemController < ApplicationController
   # GET /.json
   # GET /.xml
   def index
-    #Project.hit 35
+    Project.hit 60
 
     respond_to do |format|
       format.html
