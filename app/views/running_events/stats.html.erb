@@ -18,7 +18,7 @@
 	<article class="col-md-4 col-sm-6">
 		<div class="well">
 			<p>Total Time</p>
-			<p style="font-size:300%"><%= icon("time") %> <%= Time.at(@stats[:total_time]).gmtime.strftime('%R:%S') %></p>
+			<p style="font-size:300%"><%= icon("time") %> <%= Time.at(@stats[:total_time]).gmtime.strftime('%-dd %kh %-Mm %-Ss') %></p>
 		</div>
 	</article>
 	<article class="col-md-4 col-sm-6">
