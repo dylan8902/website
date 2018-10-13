@@ -1,4 +1,5 @@
 class RunningEvent < ApplicationRecord
+  default_scope { order('created_at DESC') }
 
 
   def timing
@@ -116,6 +117,10 @@ class RunningEvent < ApplicationRecord
 
         details = JSON.parse response.body
         if details.nil? or details.empty?
+          return
+        end
+
+        if details['map'].nil? or details['map']['polyline'].nil?
           return
         end
 
