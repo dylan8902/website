@@ -11,7 +11,7 @@ class RunningEvent < ApplicationRecord
   def map_image
     return nil unless self.lat and self.lng
 
-    url = "https://maps.googleapis.com/maps/api/staticmap?center=#{self.lat},#{self.lng}&zoom=12&size=120x120&sensor=false"
+    url = "https://maps.googleapis.com/maps/api/staticmap?center=#{self.lat},#{self.lng}&zoom=12&size=120x120&sensor=false&key=AIzaSyAqRDkk_iuLRFmt5t9iWCLf6v61J4lvIkQ"
     link = "<p><a data-toggle=\"modal\" href=\"#map-modal\"><img src=\"#{url}\" alt=\"Map of #{self.name}\" class=\"img-circle\"></a></p>"
     src = "https://maps.google.com/maps?ll=#{self.lat},#{self.lng}&amp;z=15&amp;output=embed"
     modal = "
