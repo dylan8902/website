@@ -22,13 +22,14 @@
 	<article class="col-md-4">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title"><%= link_to raw(project.title), project.url %></h3>
+				<h3 class="panel-title"><%= link_to raw(project.title), project.link %></h3>
 			</div>
 			<div class="panel-body">
-				<a class="thumbnail" href="<%= project.url %>"><img src="<%= project.image %>" alt="<%= project.title %>"></a>
+				<a class="thumbnail" href="<%= project.link %>"><img src="<%= project.image %>" alt="<%= project.title %>"></a>
 				<p>
 					<%= raw project.description %>
 				</p>
+				<%= link_to "Edit", edit_stuff_path(project), class: "btn btn-primary" if current_user and current_user.admin? %>
 			</div>
 			<div class="panel-footer">
 				<%= link_to timestamp(project.created_at), stuff_path(project) %>

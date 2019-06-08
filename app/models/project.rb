@@ -1,4 +1,4 @@
-class Project < ApplicationRecord 
+class Project < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :url, presence: true
@@ -14,6 +14,15 @@ class Project < ApplicationRecord
 
   def image
     return "/images/project#{self.id}.png"
+  end
+
+
+  def link
+    if self.online
+      return url
+    else
+      return "/stuff/#{self.id}"
+    end
   end
 
 
