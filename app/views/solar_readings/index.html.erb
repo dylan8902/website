@@ -7,22 +7,15 @@
 	<li><%= link_to "Statistics", solar_readings_stats_path %></li>
 </ol>
 
+<p>We have <a href="https://www.sma.de/en/products/solarinverters/sunny-boy-4500tl-jp-5400tl-jp.html">
+	photovoltaic solar panels</a> on our home generating electricity that we use and feed back to the National Grid</p>
+
 <section class="row">
-	<article class="col-md-8">
-		<table class="table table-striped">
-			<% @readings.each do |reading| %>
-			<tr>
-				<td><%= link_to reading.date, solar_reading_path(reading) %></td>
-				<td><%= reading.kwh %></td>
-			</tr>
-			<% end %>
-		</table>
-		<%= paginate @readings %>
-	</article>
-	<article class="col-md-4">
+	<article class="col-md-6">
 		<div class="well">
 			<h4>Total Generated</h4>
-			<h2><%= @total %></h2>
+			<h2 style="font-size:300%"><%= icon("sun") %> <%= @total %></h2>
+			<p>since <%= SolarReading.last.date %>
 		</div>
 	<% if current_user and current_user.admin %>
 		<section id="drop">Upload solar CSV</section>
@@ -53,5 +46,20 @@
 			//]]!>
 		</script>
 	<% end %>
+	</article>
+	<article class="col-md-6">
+		<table class="table table-striped">
+			<tr>
+				<th>Date</th>
+				<th><abbr title="Kilowatt Hours">kWh</abbr></th>
+			</tr>
+			<% @readings.each do |reading| %>
+			<tr>
+				<td><%= link_to reading.date, solar_reading_path(reading) %></td>
+				<td><%= reading.kwh %></td>
+			</tr>
+			<% end %>
+		</table>
+		<%= paginate @readings %>
 	</article>
 </section>
