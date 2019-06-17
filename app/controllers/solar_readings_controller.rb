@@ -2,7 +2,7 @@ class SolarReadingsController < ApplicationController
   include ErrorHelper
   before_action :authenticate_user!, only: [:create]
   before_action :authenticate_admin!, only: [:create]
-
+  after_action :analytics
 
   # GET /solar
   # GET /solar.json
@@ -93,28 +93,35 @@ class SolarReadingsController < ApplicationController
   end
 
 
-  def time_data data, type = :array
-    months = Array.new(13).fill(0)
-    days = Array.new(7).fill(0)
-    data.each do |item|
-      months[item.date.month-1] += item.kwh
-      days[item.date.wday] += item.kwh
+  private
+
+    def time_data data, type = :array
+      months = Array.new(13).fill(0)
+      days = Array.new(7).fill(0)
+      data.each do |item|
+        months[item.date.month-1] += item.kwh
+        days[item.date.wday] += item.kwh
+      end
+
+      if type == :array
+        time = {
+          month_in_year: months,
+          days_of_week: days
+        }
+        return time
+      elsif type == :hash
+        time = {
+          month_in_year: Hash[Date::MONTHNAMES.zip months],
+          days_of_week: Hash[Date::DAYNAMES.zip days]
+        }
+        return time
+      end
     end
 
-    if type == :array
-      time = {
-        month_in_year: months,
-        days_of_week: days
-      }
-      return time
-    elsif type == :hash
-      time = {
-        month_in_year: Hash[Date::MONTHNAMES.zip months],
-        days_of_week: Hash[Date::DAYNAMES.zip days]
-      }
-      return time
+
+    def analytics
+      Project.hit 62
     end
-  end
 
 
 end
