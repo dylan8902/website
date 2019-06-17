@@ -1,4 +1,6 @@
 <section class="row">
+
+	<% if @stats.key?(:hours) %>
 	<article class="col-md-4 col-sm-6">
 		<h4>Time of Day</h4>
 		<%= jqplot 200, 320, [@stats[:hours]],
@@ -18,6 +20,9 @@
         }
         %>
 	</article>
+	<% end %>
+
+	<% if @stats.key?(:days_of_week) %>
 	<article class="col-md-4 col-sm-6">
 		<h4>Days of Week</h4>
 		<%= jqplot 200, 320, [@stats[:days_of_week]],
@@ -37,6 +42,9 @@
         }
         %>
 	</article>
+	<% end %>
+
+	<% if @stats.key?(:month_in_year) %>
 	<article class="col-md-4 col-sm-6">
 		<h4>Month in Year</h4>
 		<%= jqplot 200, 320, [@stats[:month_in_year]],
@@ -56,4 +64,6 @@
         }
         %>
 	</article>
+	<% end %>
+
 </section>
