@@ -335,6 +335,10 @@ Rails.application.routes.draw do
     get  "security-vulnerabilities/all"    => "security_vulnerabilities#all",     as: "all_security_vulnerabilities"
     resources :security_vulnerabilities,  path: "security-vulnerabilities"
 
+    get  "solar/all"      => "solar_readings#all",     as: "all_solar_readings"
+    get  "solar/stats"    => "solar_readings#stats",   as: "solar_readings_stats"
+    resources :solar_readings,  path: "solar",         only: [:index, :show, :create]
+
     get  "speak"          => "speak#index"
     get  "samaritans"     => "samaritans#index"
     get  "strawb"         => "strawb#index"
