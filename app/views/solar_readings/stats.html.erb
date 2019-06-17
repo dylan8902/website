@@ -1,0 +1,13 @@
+<% provide(:title, "Solar Readings:: Stats") %>
+<% provide(:description, "Statistics on solar readings") %>
+
+<h1>Solar Readings</h1>
+<ol class="breadcrumb">
+	<li><%= link_to "Solar Readings", solar_readings_path %></li>
+	<li class="active">Statistics</li>
+</ol>
+
+<h2>Statistics</h2>
+<%= render 'common/time_stats' %>
+
+<%= link_to 'Back', solar_readings_path %>

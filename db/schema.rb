@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304063731) do
+ActiveRecord::Schema.define(version: 20190616123354) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "number"
@@ -350,6 +350,13 @@ ActiveRecord::Schema.define(version: 20180304063731) do
     t.datetime "reported_at"
     t.datetime "fixed_at"
     t.boolean  "wont_fix",                  default: false
+  end
+
+  create_table "solar_readings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+    t.date     "date"
+    t.float    "kwh",        limit: 24
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "text_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
