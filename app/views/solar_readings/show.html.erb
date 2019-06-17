@@ -7,5 +7,5 @@
   <li class="active"><%= @reading.date %></li>
 </ol>
 
-<h3><%= @reading.date %></h3>
-<h5><%= @reading.kwh %></h5>
+<h3><%= @reading.date.strftime("%A, %-d %B %Y") %></h3>
+<h1><%= @reading.kwh %> kWh</h1>
