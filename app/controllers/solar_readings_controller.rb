@@ -1,7 +1,7 @@
 class SolarReadingsController < ApplicationController
   include ErrorHelper
-  before_action :authenticate_user!, except: [:index, :show, :all]
-  before_action :authenticate_admin!, except: [:index, :show, :all]
+  before_action :authenticate_user!, only: [:create]
+  before_action :authenticate_admin!, only: [:create]
 
 
   # GET /solar
