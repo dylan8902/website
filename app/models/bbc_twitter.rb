@@ -26,12 +26,16 @@ class BbcTwitter < ApplicationRecord
     ]
 
     urls.each do |url|
-      xml = Nokogiri::XML(open(url))
-      xml.css('entry').each do |entry|
-        title = entry.css('title').text
-        link = entry.css('link').first[:href]
-        count = entry.css('content').to_s.scan(/twitter|tweet/i).size
-        BbcTwitter.where(title: title, link: link, count: count).first_or_create if count > 0
+      begin
+        xml = Nokogiri::XML(open(url))
+        xml.css('entry').each do |entry|
+          title = entry.css('title').text
+          link = entry.css('link').first[:href]
+          count = entry.css('content').to_s.scan(/twitter|tweet/i).size
+          BbcTwitter.where(title: title, link: link, count: count).first_or_create if count > 0
+        end
+      rescue Exception => e
+        puts e.message
       end
     end
 
