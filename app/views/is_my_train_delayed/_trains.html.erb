@@ -1,9 +1,9 @@
-<% if @trains == [] %>
+<% if @trains and @trains['trainServices'].nil? %>
 	<p>Sorry, no train information for that journey</p>
 	<p>Please note, this service works with direct journeys and trains scheduled in the next few hours</p>
 <% end %>
 
-<% if @trains and @trains != [] %>
+<% if @trains and @trains != [] and @trains['trainServices'] %>
 	<table>
   <% if @departing %>
 		<tr><th>Time</th><th>Destination</th><th>Status</th><th>Platform</th></tr>
