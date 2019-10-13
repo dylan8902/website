@@ -44,7 +44,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = false
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -61,6 +61,15 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "testy_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :sendmail
+  # Defaults to:
+  # config.action_mailer.sendmail_settings = {
+  #   location: '/usr/sbin/sendmail',
+  #   arguments: '-i'
+  # }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = { from: 'root@dyl.anjon.es' }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -109,4 +118,32 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  config.hosts << "isitaproxyproblem.com"
+  config.hosts << "www.isitaproxyproblem.com"
+  config.hosts << "unexpectedgems.com"
+  config.hosts << "www.unexpectedgems.com"
+  config.hosts << "luxurylollipops.com"
+  config.hosts << "www.luxurylollipops.com"
+  config.hosts << "armyarmyarmyarmyaryarmyarmy.com"
+  config.hosts << "www.armyarmyarmyarmyaryarmyarmy.com"
+  config.hosts << "keepintouchabroad.com"
+  config.hosts << "www.keepintouchabroad.com"
+  config.hosts << "hiddengifts.co.uk"
+  config.hosts << "www.hiddengifts.co.uk"
+  config.hosts << "stjohn.dyl.anjon.es"
+  config.hosts << "www.stjohn.dyl.anjon.es"
+  config.hosts << "intothewoodsyork.dyl.anjon.es"
+  config.hosts << "westsidestory2013.dyl.anjon.es"
+  config.hosts << "westsidestory.dyl.anjon.es"
+  config.hosts << "ismytraindelayed.com"
+  config.hosts << "www.ismytraindelayed.com"
+  config.hosts << "ismybusdelayed.com"
+  config.hosts << "www.ismybusdelayed.com"
+  config.hosts << "ismyplanedelayed.com"
+  config.hosts << "www.ismyplanedelayed.com"
+  config.hosts << "dylanjones.info"
+  config.hosts << "www.dylanjones.info"
+  config.hosts << "dyl.anjon.es"
+  config.hosts << "www.dyl.anjon.es"
 end
