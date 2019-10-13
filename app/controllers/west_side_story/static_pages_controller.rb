@@ -1,6 +1,6 @@
 class WestSideStory::StaticPagesController < ApplicationController
   layout "west_side_story"
-  after_filter :analytics
+  after_action :analytics
 
 
   # GET /westsidestory
