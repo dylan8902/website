@@ -1,4 +1,4 @@
-class CreateTrainScheduleLocations < ActiveRecord::Migration
+class CreateTrainScheduleLocations < ActiveRecord::Migration[4.2]
   def change
     create_table :train_schedule_locations do |t|
       t.integer :schedule_id

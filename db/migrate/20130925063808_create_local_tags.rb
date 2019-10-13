@@ -1,4 +1,4 @@
-class CreateLocalTags < ActiveRecord::Migration
+class CreateLocalTags < ActiveRecord::Migration[4.2]
   def change
     create_table :local_tags do |t|
       t.string :title

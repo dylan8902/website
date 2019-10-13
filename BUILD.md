@@ -1,3 +1,10 @@
+## Develop
+
+``` bash
+brew install yarn
+```
+
+
 ## Deploy
 
 - Create a droplet on Digital Ocean using the Ruby on Rails application image
@@ -16,8 +23,8 @@ ssh-keygen -t rsa -C "your_email@example.com"
 rm -rf /home/rails
 git clone git@github.com:dylan8902/website.git /home/rails
 cd /home/rails
-rvm install 2.3.1
-rvm use 2.3.1 --default
+rvm install 2.6.5
+rvm use 2.6.5 --default
 bundle install
 ```
 

@@ -1,4 +1,4 @@
-class DropTrainTables < ActiveRecord::Migration
+class DropTrainTables < ActiveRecord::Migration[4.2]
   def change
     drop_table :train_categories
     drop_table :train_catering

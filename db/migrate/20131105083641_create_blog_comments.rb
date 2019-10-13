@@ -1,4 +1,4 @@
-class CreateBlogComments < ActiveRecord::Migration
+class CreateBlogComments < ActiveRecord::Migration[4.2]
   def change
     create_table :blog_comments do |t|
       t.integer :user_id
@@ -6,7 +6,7 @@ class CreateBlogComments < ActiveRecord::Migration
       t.string :name
       t.string :email
       t.text :comment
-      
+
       t.timestamps
     end
   end

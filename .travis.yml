@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - "2.3.1"
+  - "2.6.5"
 before_script: mv config/secrets.yml.example config/secrets.yml
 script: rake db:create RAILS_ENV=test; rake db:migrate RAILS_ENV=test; bundle exec rspec
 sudo: false

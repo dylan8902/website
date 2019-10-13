@@ -1,4 +1,4 @@
-class CreateTrainClass < ActiveRecord::Migration
+class CreateTrainClass < ActiveRecord::Migration[4.2]
   def change
     create_table :train_classes do |t|
       t.string :code
