@@ -46,6 +46,7 @@ gem 'polylines'
 gem 'time_difference'
 gem 'bootsnap'
 gem 'webpacker'
+gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

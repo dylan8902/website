@@ -1,6 +1,6 @@
 class LuxuryLollipops::StaticPagesController < ApplicationController
   layout "luxury_lollipops"
-  after_filter :analytics
+  after_action :analytics
 
   # GET /
   def index

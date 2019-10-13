@@ -1,6 +1,6 @@
 class UnexpectedGems::StaticPagesController < ApplicationController
   layout "unexpected_gems"
-  after_filter :analytics
+  after_action :analytics
 
   # GET /
   def index
