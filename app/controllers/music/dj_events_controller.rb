@@ -1,7 +1,7 @@
 class Music::DjEventsController < ApplicationController
   include ErrorHelper
-  before_filter :authenticate_user!, except: [:index, :show]
-  before_filter :authenticate_admin!, except: [:index, :show]
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_admin!, except: [:index, :show]
 
 
   # GET /music/dj
