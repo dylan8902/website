@@ -1,4 +1,4 @@
-class CreateMoleDonations < ActiveRecord::Migration
+class CreateMoleDonations < ActiveRecord::Migration[4.2]
   def change
     create_table :mole_donations do |t|
       t.integer :donation_id,   null: false

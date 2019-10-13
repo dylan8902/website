@@ -1,4 +1,4 @@
-class CreateUserTwitterAccounts < ActiveRecord::Migration
+class CreateUserTwitterAccounts < ActiveRecord::Migration[4.2]
   def change
     create_table :user_twitter_accounts do |t|
       t.integer :user_id

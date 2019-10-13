@@ -1,4 +1,4 @@
-class CreateMoleHighScores < ActiveRecord::Migration
+class CreateMoleHighScores < ActiveRecord::Migration[4.2]
   def change
     create_table :mole_high_scores do |t|
       t.string :name

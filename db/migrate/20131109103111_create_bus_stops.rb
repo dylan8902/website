@@ -1,4 +1,4 @@
-class CreateBusStops < ActiveRecord::Migration
+class CreateBusStops < ActiveRecord::Migration[4.2]
   def change
     create_table :bus_stops do |t|
       t.string :atco_code

@@ -1,4 +1,4 @@
-class CreateTrainOperatingCharacteristics < ActiveRecord::Migration
+class CreateTrainOperatingCharacteristics < ActiveRecord::Migration[4.2]
   def change
     create_table :train_operating_characteristics do |t|
       t.string :code

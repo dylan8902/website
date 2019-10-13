@@ -4,8 +4,6 @@ RSpec.describe "routing to speak" do
 
   it "routes http://dyl.anjon.es/speak to speak" do
     expect(get: "http://dyl.anjon.es/speak").to route_to(
-      url: "speak",
-      path: "speak",
       controller: "speak",
       action: "index")
   end

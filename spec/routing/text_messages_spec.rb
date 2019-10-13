@@ -4,8 +4,6 @@ RSpec.describe "routing to text_messages" do
 
   it "routes http://dyl.anjon.es/sms to text_messages" do
     expect(get: "http://dyl.anjon.es/sms").to route_to(
-      url: "sms",
-      path: "sms",
       controller: "text_messages",
       action: "index")
   end

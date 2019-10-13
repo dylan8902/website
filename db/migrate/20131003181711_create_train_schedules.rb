@@ -1,4 +1,4 @@
-class CreateTrainSchedules < ActiveRecord::Migration
+class CreateTrainSchedules < ActiveRecord::Migration[4.2]
   def change
     create_table :train_schedules do |t|
       t.date :schedule_start_date

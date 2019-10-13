@@ -1,4 +1,4 @@
-class AddLatAndLngToLocations < ActiveRecord::Migration
+class AddLatAndLngToLocations < ActiveRecord::Migration[4.2]
   def change
     rename_column :locations, :latE7, :lat
     rename_column :locations, :lngE7, :lng

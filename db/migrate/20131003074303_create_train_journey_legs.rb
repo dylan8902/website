@@ -1,4 +1,4 @@
-class CreateTrainJourneyLegs < ActiveRecord::Migration
+class CreateTrainJourneyLegs < ActiveRecord::Migration[4.2]
   def change
     create_table :train_journey_legs do |t|
       t.integer :journey_id
@@ -11,7 +11,7 @@ class CreateTrainJourneyLegs < ActiveRecord::Migration
       t.datetime :arrival_time
       t.integer :arrival_delay
       t.string :arrival_platform
-      
+
       t.timestamps
     end
     add_index :train_journey_legs, :journey_id

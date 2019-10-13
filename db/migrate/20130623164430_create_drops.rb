@@ -1,4 +1,4 @@
-class CreateDrops < ActiveRecord::Migration
+class CreateDrops < ActiveRecord::Migration[4.2]
   def change
     create_table :drops do |t|
       t.string :uri
