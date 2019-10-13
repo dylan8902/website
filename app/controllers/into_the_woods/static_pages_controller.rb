@@ -1,5 +1,5 @@
 class IntoTheWoods::StaticPagesController < ApplicationController
-  after_filter :analytics
+  after_action :analytics
   layout "into_the_woods"
 
 
