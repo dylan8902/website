@@ -1,4 +1,4 @@
-class CreateTrainCatering < ActiveRecord::Migration
+class CreateTrainCatering < ActiveRecord::Migration[4.2]
   def change
     create_table :train_catering do |t|
       t.string :code

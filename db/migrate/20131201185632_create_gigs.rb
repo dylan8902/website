@@ -1,4 +1,4 @@
-class CreateGigs < ActiveRecord::Migration
+class CreateGigs < ActiveRecord::Migration[4.2]
   def change
     create_table :gigs do |t|
       t.string :name
@@ -6,7 +6,7 @@ class CreateGigs < ActiveRecord::Migration
       t.string :venue
       t.decimal :lat, :precision => 10, :scale => 7
       t.decimal :lng, :precision => 10, :scale => 7
-      
+
       t.timestamps
     end
   end

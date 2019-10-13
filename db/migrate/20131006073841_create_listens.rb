@@ -1,4 +1,4 @@
-class CreateListens < ActiveRecord::Migration
+class CreateListens < ActiveRecord::Migration[4.2]
   def change
     create_table :listens do |t|
       t.string :artist
@@ -8,7 +8,7 @@ class CreateListens < ActiveRecord::Migration
       t.string :album
       t.string :album_mbid
       t.string :image
-      
+
       t.timestamps
     end
   end

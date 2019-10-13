@@ -1,4 +1,4 @@
-class CreateTrains < ActiveRecord::Migration
+class CreateTrains < ActiveRecord::Migration[4.2]
   def change
     create_table :trains do |t|
       t.string :origin

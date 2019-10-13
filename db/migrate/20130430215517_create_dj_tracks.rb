@@ -1,4 +1,4 @@
-class CreateDjTracks < ActiveRecord::Migration
+class CreateDjTracks < ActiveRecord::Migration[4.2]
   def change
     create_table :dj_tracks do |t|
       t.references :dj_event

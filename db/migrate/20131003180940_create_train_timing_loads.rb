@@ -1,4 +1,4 @@
-class CreateTrainTimingLoads < ActiveRecord::Migration
+class CreateTrainTimingLoads < ActiveRecord::Migration[4.2]
   def change
     create_table :train_timing_loads do |t|
       t.string :code

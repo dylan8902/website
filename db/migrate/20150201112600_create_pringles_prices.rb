@@ -1,4 +1,4 @@
-class CreatePringlesPrices < ActiveRecord::Migration
+class CreatePringlesPrices < ActiveRecord::Migration[4.2]
   def change
     create_table :pringles_prices do |t|
       t.string :supermarket
