@@ -1,7 +1,14 @@
 <h1>Bingo - Call Sheet</h1>
 
-<% @game.numbers.each do |number| %>
-
-    <h2><%= number %> - <%= number.phrase %></h2>
-
-<% end %>
+<section class="row">
+    <article class="col-sm-3">
+    <% @numbers.each do |number| %>
+        <h2><%= number %> - <%= number.instruction %></h2>
+    <% end %>
+    </article>
+    <article class="col-sm-9">
+        <%= form_tag method: :post do %>
+            <input type="submit" value="Next" class="btn btn-primary">
+        <% end %>
+    </article>
+</section>

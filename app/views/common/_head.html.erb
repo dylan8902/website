@@ -3,10 +3,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Dylan Jones">
 <meta name="description" content="<%= yield(:description) %>">
-<%= stylesheet_link_tag    "application", media: "all" %>
-<%= javascript_include_tag "application" %>
+<%= stylesheet_link_tag 'application', media: 'all' %>
+<%= javascript_pack_tag 'application' %>
 <%= csrf_meta_tags %>
-
+<%= csp_meta_tag %>
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@dylan8902">
 <meta name="twitter:title" content="<%= full_title(yield(:title)) %>">

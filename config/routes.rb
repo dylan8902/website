@@ -190,6 +190,7 @@ Rails.application.routes.draw do
     get  "bbc-twitter"    => "bbc_twitter#index"
     get  "bingo"          => "bingo#index"
     get  "bingo/call"     => "bingo#call"
+    post "bingo/call"     => "bingo#next"
     get  "bingo/ticket"   => "bingo#ticket"
 
     get  "blog/all"       => "blog_posts#all",             as: "all_blog_posts"
