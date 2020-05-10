@@ -1,6 +1,4 @@
-class BingoGame
-    attr_reader :numbers, :current_number
-    attr_writer :numbers, :current_number
+class BingoGame < ApplicationRecord
 
     class Number
         attr_reader :number, :instruction, :songs
@@ -111,16 +109,27 @@ class BingoGame
         Number.new(90, "", "")
     ]
 
-    def initialize
-        @numbers = NUMBERS.shuffle
-        @index = -1
-        @current_number = nil
+    def next
+        return nil if self.index > self.numbers.size
+        new_index = self.index + 1
+        self.update({
+            index: new_index,
+            current_number: numbers[new_index].to_json
+        })
+        return self.current_number
     end
 
-    def next
-        return nil if @index > @numbers.size
-        @index = @index + 1
-        @current_number = @numbers[@index]
+    def numbers
+        JSON.parse read_attribute(:numbers)
+    end
+
+    def current_number
+        return nil if read_attribute(:current_number).nil?
+        JSON.parse read_attribute(:current_number)
+    end
+
+    def self.prepare
+        BingoGame.create(numbers: NUMBERS.shuffle.to_json, index: -1, current_number: nil)
     end
 
 end

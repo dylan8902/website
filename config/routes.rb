@@ -191,6 +191,8 @@ Rails.application.routes.draw do
     get  "bingo"          => "bingo#index"
     get  "bingo/call"     => "bingo#call"
     post "bingo/call"     => "bingo#next"
+    post "bingo/command"  => "bingo#command"
+    post "bingo/start"    => "bingo#start"
     get  "bingo/ticket"   => "bingo#ticket"
 
     get  "blog/all"       => "blog_posts#all",             as: "all_blog_posts"

@@ -1,14 +1,34 @@
 <h1>Bingo - Call Sheet</h1>
 
 <section class="row">
-    <article class="col-sm-3">
-    <% @numbers.each do |number| %>
-        <h2><%= number %> - <%= number.instruction %></h2>
-    <% end %>
-    </article>
-    <article class="col-sm-9">
-        <%= form_tag method: :post do %>
+    <article class="col-sm-6">
+        <%= form_tag bingo_start_path method: :post do %>
+            <input type="submit" value="Start" class="btn btn-primary">
+        <% end %>
+        <%= form_tag bingo_call_path method: :post do %>
             <input type="submit" value="Next" class="btn btn-primary">
         <% end %>
+        <%= form_tag bingo_command_path method: :post do %>
+            <input type="hidden" name="number" value="<span class='flash'>Bingo</span>">
+            <input type="hidden" name="instruction" value="">
+            <input type="submit" value="Bingo" class="btn btn-secondary">
+        <% end %>
     </article>
+    <article class="col-sm-3">
+        <h1>Current:</h1>
+        <%= "<h2>#{@game.current_number['number']} - #{@game.current_number['instruction']}</h2>".html_safe if @game.current_number %>
+    </article>
+    <article class="col-sm-3">
+        <h1>Previous:</h1>
+    <% @game.numbers.each_with_index do |number, index| %>
+        <%= "<h2>#{number['number']} - #{number['instruction']}</h2>".html_safe if index < @game.index %>
+    <% end %>
+    </article>
+    <article class="col-sm-3">
+        <h1>Future:</h1>
+    <% @game.numbers.each_with_index do |number, index| %>
+        <%= "<h2>#{number['number']} - #{number['instruction']}</h2>".html_safe if index > @game.index %>
+    <% end %>
+    </article>
+
 </section>

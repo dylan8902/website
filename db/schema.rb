@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_12_122945) do
+ActiveRecord::Schema.define(version: 2020_05_10_123300) do
 
-  create_table "accounts", force: :cascade do |t|
+  create_table "accounts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "number"
     t.string "name"
     t.string "credential"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "airports", force: :cascade do |t|
+  create_table "airports", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "city"
     t.string "country"
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.string "dst"
   end
 
-  create_table "analytics", force: :cascade do |t|
+  create_table "analytics", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "uri"
     t.string "ip"
     t.string "user_agent"
@@ -46,14 +46,14 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.index ["user_agent"], name: "index_analytics_on_user_agent"
   end
 
-  create_table "bank_transactions", force: :cascade do |t|
+  create_table "bank_transactions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "description", null: false
     t.float "amount", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "bbc_twitter", force: :cascade do |t|
+  create_table "bbc_twitter", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.string "link"
     t.integer "count"
@@ -61,7 +61,15 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "blog_comments", force: :cascade do |t|
+  create_table "bingo_games", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.text "numbers"
+    t.integer "index"
+    t.text "current_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "blog_comments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id"
     t.integer "blog_post_id"
     t.string "name"
@@ -71,19 +79,19 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "blog_posts", force: :cascade do |t|
+  create_table "blog_posts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
     t.text "text", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "blog_tags", force: :cascade do |t|
+  create_table "blog_tags", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "tag", null: false
     t.integer "blog_post_id", null: false
   end
 
-  create_table "bus_stops", force: :cascade do |t|
+  create_table "bus_stops", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "atco_code"
     t.string "naptan_code"
     t.string "common_name"
@@ -111,7 +119,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.index ["naptan_code"], name: "index_bus_stops_on_naptan_code"
   end
 
-  create_table "dj_events", force: :cascade do |t|
+  create_table "dj_events", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.string "location"
@@ -120,7 +128,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "dj_tracks", force: :cascade do |t|
+  create_table "dj_tracks", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "dj_event_id"
     t.string "title"
     t.string "artist"
@@ -129,7 +137,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "drops", force: :cascade do |t|
+  create_table "drops", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "uri"
     t.string "content_type"
     t.binary "base64"
@@ -138,7 +146,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "episodes", force: :cascade do |t|
+  create_table "episodes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "pid", null: false
     t.string "title", null: false
     t.string "description", null: false
@@ -148,7 +156,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.index ["user_id"], name: "index_episodes_on_user_id"
   end
 
-  create_table "facebook_posts", force: :cascade do |t|
+  create_table "facebook_posts", id: :bigint, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "text"
     t.string "location"
     t.float "lat"
@@ -157,14 +165,14 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "gig_artists", force: :cascade do |t|
+  create_table "gig_artists", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "gig_id"
     t.string "name"
     t.string "url"
     t.string "mbid"
   end
 
-  create_table "gigs", force: :cascade do |t|
+  create_table "gigs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.string "venue"
@@ -174,7 +182,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "iphone_locations", force: :cascade do |t|
+  create_table "iphone_locations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.float "lat"
     t.float "lng"
     t.integer "accuracy"
@@ -182,7 +190,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "listens", force: :cascade do |t|
+  create_table "listens", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "artist"
     t.string "artist_mbid"
     t.string "track"
@@ -194,7 +202,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "local_tags", force: :cascade do |t|
+  create_table "local_tags", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.integer "user_id"
@@ -204,7 +212,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "locations", force: :cascade do |t|
+  create_table "locations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.decimal "lat", precision: 10, scale: 7, null: false
     t.decimal "lng", precision: 10, scale: 7, null: false
     t.datetime "created_at"
@@ -213,13 +221,13 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.index ["lng"], name: "index_locations_on_lng"
   end
 
-  create_table "mole_addons", force: :cascade do |t|
+  create_table "mole_addons", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
     t.string "code", null: false
     t.decimal "amount", precision: 10, scale: 7, null: false
   end
 
-  create_table "mole_donations", force: :cascade do |t|
+  create_table "mole_donations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "donation_id", null: false
     t.integer "facebook_id"
     t.integer "mole_addon_id"
@@ -230,20 +238,20 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "mole_high_scores", force: :cascade do |t|
+  create_table "mole_high_scores", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
-    t.integer "facebook_id", limit: 8
+    t.bigint "facebook_id"
     t.integer "score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "monzo_transactions", force: :cascade do |t|
+  create_table "monzo_transactions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "monzo_id"
-    t.text "description"
+    t.text "description", size: :medium
     t.integer "amount"
     t.string "currency"
-    t.text "merchant"
+    t.text "merchant", size: :medium
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "json"
@@ -251,7 +259,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.decimal "lng", precision: 10, scale: 7
   end
 
-  create_table "phonecalls", force: :cascade do |t|
+  create_table "phonecalls", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "date"
     t.string "time"
     t.string "contact"
@@ -264,7 +272,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.index ["contact"], name: "index_phonecalls_on_contact"
   end
 
-  create_table "photos", force: :cascade do |t|
+  create_table "photos", id: :bigint, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title"
     t.string "thumbnail"
     t.string "original"
@@ -275,7 +283,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.text "description"
   end
 
-  create_table "pringles_prices", force: :cascade do |t|
+  create_table "pringles_prices", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "supermarket"
     t.string "offer"
     t.float "price"
@@ -284,7 +292,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "projects", force: :cascade do |t|
+  create_table "projects", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
     t.text "description", null: false
     t.string "url", null: false
@@ -294,7 +302,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "quiz_questions", force: :cascade do |t|
+  create_table "quiz_questions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.text "title"
     t.text "correct_answer"
     t.text "answer_2"
@@ -305,14 +313,14 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.boolean "visible", default: false
   end
 
-  create_table "quiz_users", force: :cascade do |t|
+  create_table "quiz_users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.text "nickname"
     t.integer "points", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "reminders", force: :cascade do |t|
+  create_table "reminders", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "time"
     t.text "title"
@@ -323,7 +331,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "running_events", force: :cascade do |t|
+  create_table "running_events", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "location"
     t.decimal "lat", precision: 10, scale: 7
@@ -336,10 +344,10 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.string "link"
     t.integer "distance"
     t.text "kml"
-    t.string "strava_id", limit: 8
+    t.string "strava_id"
   end
 
-  create_table "security_vulnerabilities", force: :cascade do |t|
+  create_table "security_vulnerabilities", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "domain"
     t.string "url"
     t.boolean "fixed"
@@ -352,14 +360,14 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.boolean "wont_fix", default: false
   end
 
-  create_table "solar_readings", force: :cascade do |t|
+  create_table "solar_readings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.date "date"
     t.float "kwh"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "text_messages", force: :cascade do |t|
+  create_table "text_messages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "contact", null: false
     t.text "text"
     t.boolean "sent"
@@ -367,14 +375,14 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "times_tables", force: :cascade do |t|
+  create_table "times_tables", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "group"
     t.string "tables"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "trains", force: :cascade do |t|
+  create_table "trains", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "origin"
     t.string "destination"
     t.string "operator"
@@ -384,7 +392,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "tweets", force: :cascade do |t|
+  create_table "tweets", id: :bigint, default: nil, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin", force: :cascade do |t|
     t.string "text"
     t.string "location"
     t.float "lat"
@@ -393,7 +401,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.datetime "updated_at"
   end
 
-  create_table "user_twitter_accounts", force: :cascade do |t|
+  create_table "user_twitter_accounts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "user_id"
     t.string "screen_name"
     t.string "oauth_token"
@@ -403,7 +411,7 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.index ["user_id"], name: "index_user_twitter_accounts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.datetime "created_at"
@@ -422,15 +430,15 @@ ActiveRecord::Schema.define(version: 2019_10_12_122945) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "wall_scores", force: :cascade do |t|
-    t.integer "facebook_id", limit: 8
+  create_table "wall_scores", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "facebook_id"
     t.string "name"
     t.integer "score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "wedding_rsvps", force: :cascade do |t|
+  create_table "wedding_rsvps", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.boolean "rsvp"
     t.text "notes"

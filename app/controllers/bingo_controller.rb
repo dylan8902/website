@@ -1,31 +1,41 @@
 class BingoController < ApplicationController
   layout "bingo"
 
-  GAME = BingoGame.new
-
   # GET /bingo
   def index
-    @number = GAME.current_number
+    BingoGame.prepare if BingoGame.last.nil?
+    @number = BingoGame.last.current_number
   end
 
   # GET /bingo/call
   def call
-    @numbers = GAME.numbers
-    @number = GAME.current_number
+    @game = BingoGame.last
+  end
+
+  # POST /bingo/start
+  def start
+    @game = BingoGame.prepare
+    ActionCable.server.broadcast 'bingo', content: { 'number': '', 'instruction': 'Waiting to start'}
+
+    respond_to do |format|
+      format.html { render :call }
+    end
   end
 
   # POST /bingo/call
   def next
-    @numbers = GAME.numbers
-    @number = GAME.next
-    ActionCable.server.broadcast 'bingo', content: @number
+    @game = BingoGame.last
+    ActionCable.server.broadcast 'bingo', content: @game.next
 
     respond_to do |format|
       format.html { render :call }
-      format.json { render json: @number, callback: params[:callback] }
-      format.xml { render xml: @number }
-      format.rss { render 'feed' }
     end
+  end
+
+  # POST /bingo/command
+  def command
+    content = { number: params[:number], instruction: params[:instruction] }
+    ActionCable.server.broadcast 'bingo', content: content
   end
 
   # GET /bingo/ticket
@@ -38,6 +48,11 @@ class BingoController < ApplicationController
       format.xml { render xml: @ticket }
       format.rss { render 'feed' }
     end
+  end
+
+  private
+  def create_new_game
+
   end
 
 

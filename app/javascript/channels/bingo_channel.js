@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create("BingoChannel", {
+const bingoChannel = consumer.subscriptions.create("BingoChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
   },
