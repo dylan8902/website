@@ -1,5 +1,9 @@
 {
+  "name": "website",
+  "private": true,
   "dependencies": {
+    "@rails/actioncable": "^6.0.0",
+    "@rails/activestorage": "^6.0.2",
     "@rails/webpacker": "^4.0.7"
   },
   "devDependencies": {

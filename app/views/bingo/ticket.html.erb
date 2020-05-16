@@ -1,0 +1,28 @@
+<h1>Bingo - Ticket</h1>
+
+<style>
+table {
+    border: 30px solid cyan;
+}
+td {
+    border: 3px solid black;
+    text-align: center;
+    font-size: 40px;
+    font-family: sans-serif;
+    min-width: 75px;
+    min-height: 75px;
+    padding: 15px;
+    vertical-align: middle;
+    background: white;
+}
+</style>
+
+<table >
+<% @ticket.rows.each do |row| %>
+    <tr>
+    <% row.each do |cell| %>
+        <td><%= cell %></td>
+    <% end %>
+    </tr>
+<% end %>
+</table>

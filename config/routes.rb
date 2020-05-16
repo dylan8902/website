@@ -188,6 +188,12 @@ Rails.application.routes.draw do
     get  "api"            => "api#index"
     resources :bank_transactions, path: "bank",       only: [:index, :create]
     get  "bbc-twitter"    => "bbc_twitter#index"
+    get  "bingo"          => "bingo#index"
+    get  "bingo/call"     => "bingo#call"
+    post "bingo/call"     => "bingo#next"
+    post "bingo/command"  => "bingo#command"
+    post "bingo/start"    => "bingo#start"
+    get  "bingo/ticket"   => "bingo#ticket"
 
     get  "blog/all"       => "blog_posts#all",             as: "all_blog_posts"
     get  "blog/map"       => "blog_posts#map",             as: "blog_posts_map"
