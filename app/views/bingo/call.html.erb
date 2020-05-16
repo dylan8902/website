@@ -1,0 +1,73 @@
+<h1>Bingo - Call Sheet</h1>
+<style>
+.btn {
+    padding: 18px;
+    font-size: 14pt;
+}
+#number {
+    font-size: 62px;
+}
+</style>
+<script>
+function fadeOut(audio) {
+    var fadeAudio = setInterval(function() {
+        if (audio.volume > 0.0) {
+            audio.volume -= 0.1;
+        }
+        if (audio.volume < 0.1) {
+            clearInterval(fadeAudio);
+            audio.pause();
+            audio.volume = 1.0;
+        }
+    }, 200);
+}
+</script>
+
+<section class="row">
+    <article class="col-sm-3">
+        <div class="alert alert-info">
+            <%= form_tag bingo_start_path method: :post do %>
+                <input type="submit" value="Restart" class="btn btn-success btn-block">
+            <% end %>
+            <%= form_tag bingo_call_path method: :post do %>
+                <input type="submit" value="Next" class="btn btn-primary btn-block">
+            <% end %>
+            <%= form_tag bingo_command_path method: :post do %>
+                <input type="hidden" name="number" value="<span class='flash'>Bingo</span>">
+                <input type="hidden" name="instruction" value="">
+                <input type="submit" value="Bingo" class="btn btn-danger btn-block">
+            <% end %>
+        </div>
+    </article>
+    <article class="col-sm-6">
+        <div class="alert alert-success">
+            <audio id="audio1" src="<%= @game.current_number['songs'] if @game.current_number %>" controls preload="auto"></audio>
+            <div class="btn-group">
+                <button onclick="audio1.play()" class="btn btn-primary">Play</button>
+                <button onclick="audio1.pause()" class="btn btn-secondary">Pause</button>
+                <button onclick="fadeOut(audio1)" class="btn btn-warning">Fade</button>
+            </div>
+        </div>
+    </article>
+    <article class="col-sm-3">
+        <div class="alert alert-info text-center">
+            <h1 id="number"><%= @game.current_number['number'] if @game.current_number %></h1>
+            <p id="instruction"><%= @game.current_number['instruction'] if @game.current_number %></p>
+        </div>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-6">
+        <h3>Previous</h3>
+    <% @game.numbers.each_with_index do |number, index| %>
+        <%= "<h2>#{number['number']} - #{number['instruction']}</h2>".html_safe if index < @game.index %>
+    <% end %>
+    </article>
+    <article class="col-sm-6">
+        <h3>Future</h3>
+    <% @game.numbers.each_with_index do |number, index| %>
+        <%= "<h2>#{number['number']} - #{number['instruction']}</h2>".html_safe if index > @game.index %>
+    <% end %>
+    </article>
+
+</section>

@@ -1,0 +1,35 @@
+<style>
+    html, body, .container {
+        background: black;
+        color: white;
+        height: 100%;
+        max-width: 100%;
+        width: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: sans-serif;
+        text-transform: uppercase;
+        font-size: 300pt;
+    }
+    .navbar {
+        display: none;
+    }
+    #number {
+    }
+    #instruction {
+        font-size: 40%;
+    }
+    .flash {
+        animation: flashy 1.5s ease infinite;
+        animation-delay: 1s;
+    }
+    @keyframes flashy {
+    50% {
+        opacity: 5%;
+    }
+}
+</style>
+<section id="number"><%= @number if @number %></section>
+<section id="instruction"><%= @number.nil? ? "Waiting to start" : @number.instruction %></section>
