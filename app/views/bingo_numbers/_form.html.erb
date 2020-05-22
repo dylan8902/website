@@ -1,0 +1,25 @@
+<%= form_for(@bingo_number) do |f| %>
+
+	<div class="form-group<%= " has-error" if errors_for @bingo_number, :id %>">
+		<%= f.label :id, class: "control-label" %>
+		<%= f.text_field :id, class: "form-control", disabled: true %>
+		<span class="help-block"><%= errors_for @bingo_number, :id %></span>
+	</div>
+	<div class="form-group<%= " has-error" if errors_for @bingo_number, :instruction %>">
+		<%= f.label :instruction, class: "control-label" %>
+		<%= f.text_field :instruction, class: "form-control" %>
+		<span class="help-block"><%= errors_for @bingo_number, :instruction %></span>
+	</div>
+	<div class="form-group<%= " has-error" if errors_for @bingo_number, :song_name %>">
+		<%= f.label :song_name, class: "control-label" %>
+		<%= f.text_field :song_name, class: "form-control" %>
+		<span class="help-block"><%= errors_for @bingo_number, :song_name %></span>
+	</div>
+	<div class="form-group<%= " has-error" if errors_for @bingo_number, :song_url %>">
+		<%= f.label :song_url, class: "control-label" %>
+		<%= f.text_field :song_url, class: "form-control" %>
+		<span class="help-block"><%= errors_for @bingo_number, :song_url %></span>
+	</div>
+	<div class="actions"><%= f.submit "Submit", class: "btn btn-primary" %></div>
+
+<% end %>

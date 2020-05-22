@@ -14,7 +14,21 @@ const bingoChannel = consumer.subscriptions.create("BingoChannel", {
     if (!window.location.pathname.startsWith('/bingo')) {
       return;
     }
-    document.getElementById('number').innerHTML = data.content.number;
-    document.getElementById('instruction').innerHTML = data.content.instruction;
+    var number = document.getElementById('number');
+    if (number !== undefined) {
+      number.innerHTML = data.content.id;
+    }
+    var instruction = document.getElementById('instruction');
+    if (instruction !== undefined) {
+      instruction.innerHTML = data.content.instruction;
+    }
+    var songName = document.getElementById('song-name');
+    if (songName !== undefined && data.content.song_name !== undefined) {
+      songName.innerHTML = data.content.song_name;
+    }
+    var song = document.getElementById('song');
+    if (song !== undefined && data.content.song_url !== undefined) {
+      song.src = data.content.song_url;
+    }
   }
 });
