@@ -1,0 +1,17 @@
+<% provide(:title, "Bingo Number :: Edit") %>
+<% provide(:description, "Edit #{@bingo_number}.") %>
+
+<h1>Bingo Numbers</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Bingo', bingo_path %></li>
+	<li><%= link_to 'Games', bingo_games_path %></li>
+	<li><%= link_to 'Numbers', bingo_numbers_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-5">
+		<%= render 'form' %>
+	</article>
+</section>
+
+<%= link_to 'Back', bingo_numbers_path %>

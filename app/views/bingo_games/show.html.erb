@@ -1,0 +1,115 @@
+<h1>Bingo - Call Sheet</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Bingo', bingo_path %></li>
+	<li><%= link_to 'Games', bingo_games_path %></li>
+	<li><%= link_to 'Numbers', bingo_numbers_path %></li>
+</ol>
+
+<style>
+.btn {
+    padding: 18px;
+    font-size: 14pt;
+}
+#number {
+    font-size: 62px;
+}
+</style>
+<script>
+function fadeOut(audio) {
+    var fadeAudio = setInterval(function() {
+        if (audio.volume > 0.0) {
+            audio.volume -= 0.1;
+        }
+        if (audio.volume < 0.1) {
+            clearInterval(fadeAudio);
+            audio.pause();
+            audio.volume = 1.0;
+        }
+    }, 200);
+}
+$(document).ready(function () {
+    $('form').submit(function(e){
+        e.preventDefault();
+        $.post({
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            headers: {
+                'Accept': 'application/json'
+            },
+            success: function(data) {
+                console.log('Form return:');
+                console.log(data);
+                if (data.future_numbers) {
+                    $('#future').html('');
+                    for (var i in data.future_numbers) {
+                        var number = data.future_numbers[i];
+                        $('#future').append('<h2>' + number.id + ' - ' + number.instruction + '</h2>');
+                        $('#future').append('<h4>' + number.song_name + '</h4>');
+                    }
+                }
+                if (data.past_numbers) {
+                    $('#past').html('');
+                    for (var i in data.past_numbers) {
+                        var number = data.past_numbers[i];
+                        $('#past').append('<h2>' + number.id + ' - ' + number.instruction + '</h2>');
+                        $('#past').append('<h4>' + number.song_name + '</h4>');
+                    }
+                }
+            }
+        });
+    });
+});
+</script>
+
+<section class="row">
+    <article class="col-sm-3">
+        <div class="alert alert-info">
+            <%= form_tag bingo_call_path method: :post do %>
+                <input type="submit" value="Next" class="btn btn-primary btn-block">
+            <% end %>
+            <%= form_tag bingo_command_path method: :post do %>
+                <input type="hidden" name="id" value="<span class='flash'>Bingo</span>">
+                <input type="hidden" name="instruction" value="">
+                <input type="submit" value="Bingo" class="btn btn-danger btn-block">
+            <% end %>
+        </div>
+    </article>
+    <article class="col-sm-6">
+        <div class="alert alert-success">
+            <h3 id="song-name"><%= @bingo_game.current_number['song_name'] if @bingo_game.current_number %></h3>
+            <audio id="song" src="<%= @bingo_game.current_number['song_url'] if @bingo_game.current_number %>" controls preload="auto"></audio>
+            <div class="btn-group">
+                <button onclick="song.play()" class="btn btn-primary">Play</button>
+                <button onclick="song.pause()" class="btn btn-secondary">Pause</button>
+                <button onclick="fadeOut(song)" class="btn btn-warning">Fade</button>
+            </div>
+        </div>
+    </article>
+    <article class="col-sm-3">
+        <div class="alert alert-info text-center">
+            <h1 id="number"><%= @bingo_game.current_number['id'] if @bingo_game.current_number %></h1>
+            <p id="instruction"><%= @bingo_game.current_number['id'] if @bingo_game.current_number %></p>
+        </div>
+    </article>
+</section>
+<section class="row">
+    <article class="col-sm-6">
+        <h3>Past</h3>
+        <article id="past">
+        <% @bingo_game.past_numbers.each do |number| %>
+            <h2><%= "#{number['id']} - #{number['instruction']}" %></h2>
+            <h4><%= number['song_name'] %></h4>
+        <% end %>
+        </article>
+    </article>
+    <article class="col-sm-6">
+        <h3>Future</h3>
+        <article id="future">
+        <% @bingo_game.future_numbers.each do |number| %>
+            <h2><%= "#{number['id']} - #{number['instruction']}" %></h2>
+            <h4><%= number['song_name'] %></h4>
+        <% end %>
+        </article>
+    </article>
+
+</section>
