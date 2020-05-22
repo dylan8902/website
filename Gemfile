@@ -47,6 +47,7 @@ gem 'time_difference'
 gem 'bootsnap'
 gem 'webpacker'
 gem 'unicorn'
+gem 'redis'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
