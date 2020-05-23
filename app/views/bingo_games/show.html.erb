@@ -72,6 +72,11 @@ $(document).ready(function () {
                 <input type="hidden" name="instruction" value="">
                 <input type="submit" value="Bingo" class="btn btn-danger btn-block">
             <% end %>
+            <%= form_tag bingo_command_path method: :post do %>
+                <input type="text" name="id" value="">
+                <input type="hidden" name="instruction" value="">
+                <input type="submit" value="Send" class="btn btn-warning btn-block">
+            <% end %>
         </div>
     </article>
     <article class="col-sm-6">
