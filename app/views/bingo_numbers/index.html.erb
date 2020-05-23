@@ -1,0 +1,40 @@
+<% provide(:title, "Bingo Numbers") %>
+<% provide(:description, "A list of Bingo Numbers.") %>
+
+<h1>Bingo Numbers</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Bingo', bingo_path %></li>
+	<li><%= link_to 'Games', bingo_games_path %></li>
+	<li><%= link_to 'Numbers', bingo_numbers_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-12">
+
+		<% if @bingo_numbers.empty? %>
+			<%= form_tag bingo_numbers_setup_path method: :post do %>
+				<input type="submit" value="Setup" class="btn btn-primary btn-block">
+			<% end %>
+		<% end %>
+
+		<table class="table table-striped">
+			<thead>
+				<th>ID</th>
+				<th>Instruction</th>
+				<th>Song Name</th>
+				<th>Song URL</th>
+			</thead>
+			<tbody>
+				<% @bingo_numbers.each do |bingo_number| %>
+				<tr>
+					<td><%= link_to bingo_number.id, edit_bingo_number_path(bingo_number) %></td>
+					<td><%= bingo_number.instruction %></td>
+					<td><%= bingo_number.song_name %></td>
+					<td><%= bingo_number.song_url %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= paginate @bingo_numbers %>
+	</article>
+</section>

@@ -5,4 +5,5 @@ test:
   adapter: test
 
 production:
-  adapter: async
+  adapter: redis
+  url: rediss://default:<%= Rails.application.secrets.redis_password %>@redis-do-user-244497-0.a.db.ondigitalocean.com:25061

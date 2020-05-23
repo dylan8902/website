@@ -1,0 +1,38 @@
+<% provide(:title, "Bingo Games") %>
+<% provide(:description, "A list of Bingo Games.") %>
+
+<h1>Bingo Games</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Bingo', bingo_path %></li>
+	<li><%= link_to 'Games', bingo_games_path %></li>
+	<li><%= link_to 'Numbers', bingo_numbers_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-8">
+		<table class="table table-striped">
+			<thead>
+				<th>ID</th>
+				<th>Index</th>
+				<th>Current Number</th>
+				<th>Created At</th>
+			</thead>
+			<tbody>
+				<% @bingo_games.each do |bingo_game| %>
+				<tr>
+					<td><%= link_to bingo_game.id, bingo_game %></td>
+					<td><%= bingo_game.index %></td>
+					<td><%= bingo_game.current_number %></td>
+					<td><%= bingo_game.created_at %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<%= paginate @bingo_games %>
+	</article>
+	<article class="col-md-4">
+	<%= form_tag bingo_games_path method: :post do %>
+		<input type="submit" value="Start New Game" class="btn btn-success btn-block">
+	<% end %>
+	</article>
+</section>

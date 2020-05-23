@@ -31,5 +31,5 @@
     }
 }
 </style>
-<section id="number"><%= @number if @number %></section>
-<section id="instruction"><%= @number.nil? ? "Waiting to start" : @number.instruction %></section>
+<section id="number"><%= @number['id'] if @number %></section>
+<section id="instruction"><%= @number.nil? ? "Waiting to start" : @number['instruction'] %></section>
