@@ -16,7 +16,7 @@ CONFIG_RB=/home/unicorn/unicorn.conf
 PID=/home/unicorn/pids/unicorn.pid
 UNICORN_OPTS="-D -c $CONFIG_RB -E production"
 
-PATH=/usr/local/rvm/rubies/ruby-2.6.5/bin:/usr/local/rvm/rubies/ruby-2.6.5/bin:/usr/local/rvm/gems/ruby-2.6.5/bin:/home/unicorn/.rvm/bin:/usr/local/sbin:/usr/bin:/bin:/sbin:$
-export GEM_HOME=/usr/local/rvm/gems/ruby-2.6.5
-export GEM_PATH=/usr/local/rvm/gems/ruby-2.6.5:/usr/local/rvm/gems/ruby-2.6.5
-DAEMON=/usr/local/rvm/gems/ruby-2.6.5/bin/unicorn
+PATH=/usr/local/rvm/rubies/ruby-2.7.2/bin:/usr/local/rvm/rubies/ruby-2.7.2/bin:/usr/local/rvm/gems/ruby-2.7.2/bin:/home/unicorn/.rvm/bin:/usr/local/sbin:/usr/bin:/bin:/sbin:$
+export GEM_HOME=/usr/local/rvm/gems/ruby-2.7.2
+export GEM_PATH=/usr/local/rvm/gems/ruby-2.7.2:/usr/local/rvm/gems/ruby-2.7.2
+DAEMON=/usr/local/rvm/gems/ruby-2.7.2/bin/unicorn
