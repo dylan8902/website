@@ -1,5 +1,4 @@
 class PringlesPricesController < ApplicationController
-  include Statistics
 
 
   # GET /pringles
@@ -9,7 +8,6 @@ class PringlesPricesController < ApplicationController
     Project.hit 57
     @prices = [PringlesPrice.tesco.first, PringlesPrice.asda.first]
     @winner = PringlesPrice.winner
-    @stats = PringlesPrice.stats
 
     respond_to do |format|
       format.html # index.html.erb

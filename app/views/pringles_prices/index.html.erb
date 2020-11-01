@@ -48,70 +48,50 @@
 
 <section class="visible-lg">
 	<h2>Cost Over Time</h2>
-	<%= jqplot 300, 1000, @stats,
-		seriesColors: ['#00539f', '#78be20'],
-		axes: {
-			xaxis: {
-				renderer: '$.jqplot.DateAxisRenderer'
-			},
-			yaxis: {
-				tickOptions: {
-					formatString: '&pound;%.03P'
-				}
-			}
+	<style>
+		.ct-series-a .ct-line, .ct-series-a .ct-point {
+			stroke: #00539f;
 		}
-	%>
-</section>
-
-<section class="visible-md">
-	<h2>Cost Over Time</h2>
-	<%= jqplot 300, 900, @stats,
-		seriesColors: ['#00539f', '#78be20'],
-		axes: {
-			xaxis: {
-				renderer: '$.jqplot.DateAxisRenderer'
-			},
-			yaxis: {
-				tickOptions: {
-					formatString: '&pound;%.03P'
-				}
-			}
+		.ct-series-b .ct-line, .ct-series-b .ct-point {
+			stroke: #78be20;
 		}
-	%>
-</section>
-
-<section class="visible-sm">
-	<h2>Cost Over Time</h2>
-	<%= jqplot 300, 730, @stats,
-		seriesColors: ['#00539f', '#78be20'],
-		axes: {
-			xaxis: {
-				renderer: '$.jqplot.DateAxisRenderer'
-			},
-			yaxis: {
-				tickOptions: {
-					formatString: '&pound;%.03P'
+	</style>
+	<div id="ct-chart"></div>
+	<script>
+		var data = {
+			series: [
+				{
+					name: 'Tesco',
+					data: [
+						<%- PringlesPrice.tesco.each do |tesco| -%>
+						{ x: new Date(<%= tesco.created_at.to_i%>), y: <%= tesco.price_inc_offer %> },
+						<%- end -%>
+					]
+				},
+					{
+					name: 'Asda',
+					data: [
+						<%- PringlesPrice.asda.each do |asda| -%>
+						{ x: new Date(<%= asda.created_at.to_i%>), y: <%= asda.price_inc_offer %> },
+						<%- end -%>
+					]
 				}
-			}
-		}
-	%>
-</section>
-
-<section class="visible-xs">
-	<h2>Cost Over Time</h2>
-	<%= jqplot 300, 320, @stats,
-		seriesColors: ['#00539f', '#78be20'],
-		axes: {
-			xaxis: {
-				renderer: '$.jqplot.DateAxisRenderer'
+			],
+		};
+		new Chartist.Line('#ct-chart', data, {
+			low: 0,
+			height: '400px',
+			axisY: {
+				labelInterpolationFnc: function(value) {
+					return '£' + value;
+				},
+				showGrid: true,
 			},
-			yaxis: {
-				tickOptions: {
-					formatString: '&pound;%.03P'
-				}
+			axisX: {
+				showGrid: false,
 			}
-		}
-	%>
+		});
+	</script>
 </section>
 
 <hr>

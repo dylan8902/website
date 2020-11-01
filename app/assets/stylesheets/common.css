@@ -115,3 +115,6 @@ footer {
 	border-top: 1px solid #F4F0FF;
 	padding-top: 20px;
 }
+.ct-series-a .ct-bar {
+	stroke: #3d288e;
+}

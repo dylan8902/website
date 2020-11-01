@@ -29,7 +29,6 @@ gem 'jbuilder', '~> 2.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'jqplot-rails'
 gem 'devise'
 gem 'mysql2'
 gem 'will_paginate'
