@@ -18,19 +18,6 @@ class PringlesPrice < ApplicationRecord
   end
 
 
-  def self.stats
-    tesco = Array.new
-    PringlesPrice.tesco.each do |pringles_price|
-      tesco << [pringles_price.created_at.strftime("%F"), pringles_price.price]
-    end
-    asda = Array.new
-    PringlesPrice.asda.each do |pringles_price|
-      asda << [pringles_price.created_at.strftime("%F"), pringles_price.price]
-    end
-    return [tesco, asda]
-  end
-
-
   def self.winner
     tesco = PringlesPrice.tesco.first
     asda = PringlesPrice.asda.first

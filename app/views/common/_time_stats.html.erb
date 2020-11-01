@@ -3,66 +3,42 @@
 	<% if @stats.key?(:hours) %>
 	<article class="col-md-4 col-sm-6">
 		<h4>Time of Day</h4>
-		<%= jqplot 200, 320, [@stats[:hours]],
-		seriesColors:['#3D288E'],
-		seriesDefaults:{
-            renderer:"$.jqplot.BarRenderer"
-        },
-        axes: {
-            xaxis: {
-                renderer: "$.jqplot.CategoryAxisRenderer",
-                ticks: ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23']
-            },
-            yaxis:{
-              tickOptions:{ formatString:'%d'},
-              min: 0
-           }
-        }
-        %>
+		<div id="ct-chart-hours"></div>
+		<script>
+			var data = {
+				labels: ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'],
+				series: [<%= @stats[:hours].to_json %>]
+			};
+			new Chartist.Bar('#ct-chart-hours', data);
+		</script>
 	</article>
 	<% end %>
 
 	<% if @stats.key?(:days_of_week) %>
 	<article class="col-md-4 col-sm-6">
 		<h4>Days of Week</h4>
-		<%= jqplot 200, 320, [@stats[:days_of_week]],
-		seriesColors:['#3D288E'],
-		seriesDefaults:{
-            renderer:"$.jqplot.BarRenderer"
-        },
-        axes: {
-            xaxis: {
-                renderer: "$.jqplot.CategoryAxisRenderer",
-                ticks: ['Su','M','Tu','W','Th','F','Sa']
-            },
-            yaxis:{
-              tickOptions:{ formatString:'%d'},
-              min: 0
-           }
-        }
-        %>
+		<div id="ct-chart-days"></div>
+		<script>
+			var data = {
+				labels: ['Su','M','Tu','W','Th','F','Sa'],
+				series: [<%= @stats[:days_of_week].to_json %>]
+			};
+			new Chartist.Bar('#ct-chart-days', data);
+		</script>
 	</article>
 	<% end %>
 
 	<% if @stats.key?(:month_in_year) %>
 	<article class="col-md-4 col-sm-6">
 		<h4>Month in Year</h4>
-		<%= jqplot 200, 320, [@stats[:month_in_year]],
-		seriesColors:['#3D288E'],
-		seriesDefaults:{
-            renderer:"$.jqplot.BarRenderer"
-        },
-        axes: {
-            xaxis: {
-                renderer: "$.jqplot.CategoryAxisRenderer",
-                ticks: ['J','F','M','A','M','J','J','A','S','O','N','D']
-            },
-            yaxis:{
-              tickOptions:{ formatString:'%d'},
-              min: 0
-           }
-        }
-        %>
+		<div id="ct-chart-months"></div>
+		<script>
+			var data = {
+				labels: ['J','F','M','A','M','J','J','A','S','O','N','D'],
+				series: [<%= @stats[:month_in_year].to_json %>]
+			};
+			new Chartist.Bar('#ct-chart-months', data);
+		</script>
 	</article>
 	<% end %>
 
