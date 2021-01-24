@@ -124,12 +124,13 @@ class OauthClientsController < ApplicationController
         :name,
         :client_id,
         :client_secret,
-        :access_token,
-        :refresh_token,
-        :expires_at,
+        :token_url,
+        :authorise_url,
         :scope,
         :response_type,
-        :redirect_uri
+        :refresh_token,
+        :access_token,
+        :expires_at
       )
     end
 
