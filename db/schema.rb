@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_23_212500) do
+ActiveRecord::Schema.define(version: 2021_01_24_170402) do
 
   create_table "accounts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "number"
@@ -365,7 +365,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_212500) do
     t.integer "position"
     t.string "link"
     t.integer "distance"
-    t.text "kml"
+    t.text "kml", size: :medium
     t.string "strava_id"
   end
 

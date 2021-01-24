@@ -9,7 +9,7 @@ class OauthClient < ApplicationRecord
 
   # Authorisation URL
   def authorise_url(request)
-    "#{redirect_uri}?client_id=#{client_id}&response_type=#{response_type}&redirect_uri=#{full_redirect_uri(request)}"
+    "#{redirect_uri}?client_id=#{client_id}&scope=#{scope}&response_type=#{response_type}&redirect_uri=#{full_redirect_uri(request)}"
   end
 
   # Excahnge code for token
