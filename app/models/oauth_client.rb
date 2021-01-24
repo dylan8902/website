@@ -3,18 +3,17 @@ class OauthClient < ApplicationRecord
   default_scope { order('created_at DESC') }
 
   # Redirect URL
-  def full_redirect_uri(request)
+  def redirect_uri(request)
     CGI.escape("#{request.base_url}/oauth/authorise/#{id}")
   end
 
   # Authorisation URL
-  def authorise_url(request)
-    "#{redirect_uri}?client_id=#{client_id}&scope=#{scope}&response_type=#{response_type}&redirect_uri=#{full_redirect_uri(request)}"
+  def full_authorise_uri(request)
+    "#{authorise_url}?client_id=#{client_id}&scope=#{scope}&response_type=#{response_type}&redirect_uri=#{redirect_uri(request)}"
   end
 
-  # Excahnge code for token
+  # Exchange code for token
   def exchange(code)
-    url = "https://www.strava.com/api/v3/oauth/token"
     params = {
       client_id: client_id,
       client_secret: client_secret,
@@ -22,7 +21,7 @@ class OauthClient < ApplicationRecord
       grant_type: "authorization_code"
     }
     begin
-      response = RestClient.post url, params
+      response = RestClient.post token_url, params
     rescue => e
       logger.info "Code exchange problem: " + e.message
       return

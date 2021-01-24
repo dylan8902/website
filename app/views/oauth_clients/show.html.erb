@@ -17,7 +17,7 @@
 	</article>
 	<article class="col-md-3 well">
 		<h4>Actions</h4>
-		<%= link_to "Authorise", @oauth_client.authorise_url(request), class: "btn btn-info btn-block" %>
+		<%= link_to "Authorise", @oauth_client.full_authorise_uri(request), class: "btn btn-info btn-block" %>
 	</article>
 </section>
 
