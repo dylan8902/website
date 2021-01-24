@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_24_170402) do
+ActiveRecord::Schema.define(version: 2021_01_24_194437) do
 
   create_table "accounts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "number"
@@ -276,9 +276,10 @@ ActiveRecord::Schema.define(version: 2021_01_24_170402) do
     t.text "expires_at"
     t.text "scope"
     t.text "response_type"
-    t.text "redirect_uri"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "authorise_url"
+    t.text "token_url"
   end
 
   create_table "phonecalls", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
