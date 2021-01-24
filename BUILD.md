@@ -45,6 +45,12 @@ vi config/secrets.yml.example
 mv config/secrets.yml.example config/secrets.yml
 ```
 
+- Setup the web server configuration:
+
+``` bash
+cp config/server/unicorn /etc/default/unicorn
+```
+
 - Set up the database and asset pipeline and restart
 
 ``` bash

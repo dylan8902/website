@@ -46,6 +46,7 @@ gem 'time_difference'
 gem 'bootsnap'
 gem 'webpacker'
 gem 'unicorn'
+gem 'rake'
 gem 'redis'
 
 group :development, :test do

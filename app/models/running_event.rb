@@ -78,9 +78,11 @@ class RunningEvent < ApplicationRecord
 
 
   def self.update
-    url = "https://www.strava.com/api/v3/athlete/activities?access_token=30182c04d9559207d040240cc80f4d3cf28419ce"
-    response = RestClient.get url
+    oauth_client = OauthClient.find_by_name("Strava")
+    url = "https://www.strava.com/api/v3/athlete/activities"
+    response = RestClient.get url, { "Authorization": "Bearer #{oauth_client.access_token}" }
     if response.code != 200
+      logger.info response.body
       return
     end
 
@@ -109,8 +111,8 @@ class RunningEvent < ApplicationRecord
         run = RunningEvent.create(params)
 
         # Get route and add KML
-        url = "https://www.strava.com/api/v3/activities/#{activity['id']}?access_token=30182c04d9559207d040240cc80f4d3cf28419ce"
-        response = RestClient.get url
+        url = "https://www.strava.com/api/v3/activities/#{activity['id']}"
+        response = RestClient.get url, { "Authorization": "Bearer #{oauth_client.access_token}" }
         if response.code != 200
           return
         end

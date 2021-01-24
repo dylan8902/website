@@ -1,0 +1,26 @@
+<%= form_for(@oauth_client) do |f| %>
+<%
+attributes = [
+	:name,
+	:client_id,
+	:client_secret,
+	:access_token,
+	:refresh_token,
+	:expires_at,
+	:scope,
+	:response_type,
+	:redirect_uri
+]
+%>
+
+<% attributes.each do |attribue| %>
+	<div class="form-group<%= " has-error" if errors_for @oauth_client, attribue %>">
+		<%= f.label attribue, class: "control-label" %>
+		<%= f.text_field attribue, class: "form-control" %>
+		<span class="help-block"><%= errors_for @oauth_client, attribue %></span>
+	</div>
+<% end %>
+
+	<div class="actions"><%= f.submit "Submit", class: "btn btn-primary" %></div>
+
+<% end %>

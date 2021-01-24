@@ -302,6 +302,10 @@ Rails.application.routes.draw do
     end
 
     get  "nhtg11"         => "convicts#index"
+
+    get  "oauth/authorise/:id" => "oauth_clients#authorise"
+    resources :oauth_clients, path: "oauth", except: [:new]
+
     get  "onradio/1"      => "on_radio#one"
     get  "onradio/1xtra"  => "on_radio#one_xtra"
     get  "onradio/2"      => "on_radio#two"

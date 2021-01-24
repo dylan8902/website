@@ -1,0 +1,24 @@
+<% provide(:title, "OAuth Client:: #{@oauth_client.name}") %>
+<% provide(:description, "OAuth client details for #{@oauth_client.name}.") %>
+
+<h1>OAuth Client</h1>
+<ol class="breadcrumb">
+  <li><%= link_to "OAuth Clients", oauth_clients_path %></li>
+  <li class="active"><%= @oauth_client.name %></li>
+</ol>
+
+<h3><%= @oauth_client.name %></h3>
+
+<section class="row">
+	<article class="col-md-5">
+		<%= render 'form' %>
+	</article>
+	<article class="col-md-4">
+	</article>
+	<article class="col-md-3 well">
+		<h4>Actions</h4>
+		<%= link_to "Authorise", @oauth_client.authorise_url(request), class: "btn btn-info btn-block" %>
+	</article>
+</section>
+
+<%= link_to 'Back', oauth_clients_path %>
