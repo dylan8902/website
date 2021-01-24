@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_22_182200) do
+ActiveRecord::Schema.define(version: 2021_01_24_170402) do
 
   create_table "accounts", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "number"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_182200) do
     t.datetime "updated_at"
   end
 
-  create_table "bingo_games", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "bingo_games", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.text "numbers"
     t.integer "index"
     t.text "current_number"
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_182200) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "bingo_numbers", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "bingo_numbers", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.text "instruction"
     t.text "song_name"
     t.text "song_url"
@@ -267,6 +267,20 @@ ActiveRecord::Schema.define(version: 2020_05_22_182200) do
     t.decimal "lng", precision: 10, scale: 7
   end
 
+  create_table "oauth_clients", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+    t.text "name"
+    t.text "client_id"
+    t.text "client_secret"
+    t.text "access_token"
+    t.text "refresh_token"
+    t.text "expires_at"
+    t.text "scope"
+    t.text "response_type"
+    t.text "redirect_uri"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "phonecalls", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "date"
     t.string "time"
@@ -328,7 +342,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_182200) do
     t.datetime "updated_at"
   end
 
-  create_table "reminders", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "reminders", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "time"
     t.text "title"
@@ -351,7 +365,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_182200) do
     t.integer "position"
     t.string "link"
     t.integer "distance"
-    t.text "kml"
+    t.text "kml", size: :medium
     t.string "strava_id"
   end
 
@@ -368,7 +382,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_182200) do
     t.boolean "wont_fix", default: false
   end
 
-  create_table "solar_readings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "solar_readings", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.date "date"
     t.float "kwh"
     t.datetime "created_at", null: false
