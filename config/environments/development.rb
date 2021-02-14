@@ -64,7 +64,7 @@ Rails.application.configure do
   config.hosts << "dev.unexpectedgems.com"
   config.hosts << "dev.luxurylollipops.com"
   config.hosts << "dev.armyarmyarmyarmyaryarmyarmy.com"
-  config.hosts << "ådev.keepintouchabroad.com"
+  config.hosts << "dev.keepintouchabroad.com"
   config.hosts << "dev.hiddengifts.co.uk"
   config.hosts << "dev.stjohn.dyl.anjon.es"
   config.hosts << "dev.intothewoodsyork.dyl.anjon.es"
