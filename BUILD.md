@@ -11,7 +11,7 @@ brew install yarn
 - Login with the root password e-mailed to you
 
 ``` bash
-apt-get install git
+apt-get install git make nodejs libmysqlclient-dev
 git config --global user.name "Your Name"
 git config --global user.email "your_email@example.com"
 ssh-keygen -t rsa -C "your_email@example.com"
