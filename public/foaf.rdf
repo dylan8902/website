@@ -12,7 +12,5 @@
 		<foaf:homepage>https://dyl.anjon.es/</foaf:homepage>
 		<foaf:homepage rdf:resource="https://dyl.anjon.es" />
 		<foaf:depiction rdf:resource="https://dyl.anjon.es/images/head.jpg" />
-		<foaf:age>24</foaf:age>
-		<foaf:skypeID>dylanjamesvernonjones</foaf:skypeID>
 	</foaf:Person>
 </rdf:RDF>

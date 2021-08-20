@@ -90,7 +90,7 @@ service unicorn restart
 ``` bash
 rm dyl.anjon.es.key.old
 rm dyl.anjon.es.crt.old
-./certbot-auto --text --agree-tos --email dyl@anjon.es -d dyl.anjon.es --manual --preferred-challenges dns --expand --renew-by-default  --manual-public-ip-logging-ok certonly
+certbot --text --agree-tos --email dyl@anjon.es -d dyl.anjon.es -d ismytraindelayed.com -d isitaproxyproblem.com --manual --preferred-challenges dns --expand --renew-by-default  --manual-public-ip-logging-ok certonly
 cp dyl.anjon.es.crt dyl.anjon.es.crt.old
 cp dyl.anjon.es.key dyl.anjon.es.key.old
 cp /etc/letsencrypt/live/dyl.anjon.es/fullchain.pem dyl.anjon.es.crt
