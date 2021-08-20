@@ -9,7 +9,7 @@ class BlogTagsController < ApplicationController
   # GET /blog/tags.json
   # GET /blog/tags.xml
   def index
-    @tags = BlogTag.uniq.pluck(:tag).paginate(@page)
+    @tags = BlogTag.distinct.pluck(:tag).paginate(@page)
 
     respond_to do |format|
       format.html # index.html.erb
