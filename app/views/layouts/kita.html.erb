@@ -5,17 +5,17 @@
 		<title>Keep in Touch Abroad</title>
 		<meta name="description" content="Keep in Touch Abroad - Coming Soon!">
 		<meta name="author" content="Dylan Jones">
-		<link href="http://www.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
+		<link href="https://www.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet" media="screen">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function(){
 			   $window = $(window);
 			   $('section[data-type="background"]').each(function(){
 			     var $scroll = $(this);
-			      $(window).scroll(function() {                 
+			      $(window).scroll(function() {
 			        var yPos = -($window.scrollTop() / $scroll.data('speed'));
 			        var coords = '50% '+ yPos + 'px';
-			        $scroll.css({ backgroundPosition: coords });   
+			        $scroll.css({ backgroundPosition: coords });
 			      });
 			   });
 			});
@@ -25,7 +25,7 @@
 		html {
 			text-align: center;
 		}
-		#intro { 
+		#intro {
 			background: #0079C1;
 			height: auto;
 			margin: 0 auto;
@@ -43,7 +43,7 @@
 		    box-shadow: 0 0 50px rgba(0,0,0,0.8);
 		    padding: 50px 0;
 		}
-		#about { 
+		#about {
 			background: url(/images/about.png) 50% 0 fixed;
 			height: auto;
 			margin: 0 auto;

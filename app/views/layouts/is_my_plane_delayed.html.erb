@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta property="og:title" content="Is My Plane Delayed?">
 	<meta property="og:type" content="product">
-	<meta property="og:url" content="http://ismyplanedelayed.com">
-	<meta property="og:image" content="http://ismyplanedelayed.com/images/logo_train_200.png">
+	<meta property="og:url" content="https://ismyplanedelayed.com">
+	<meta property="og:image" content="https://ismyplanedelayed.com/images/logo_train_200.png">
 	<meta property="og:site_name" content="Is My Plane Delayed">
 	<meta property="fb:admins" content="512982904">
 	<link rel="shortcut icon" href="/images/train-favicon.ico" type="image/x-icon">
@@ -65,7 +65,7 @@
 		font-size:100%;
 	}
 	input[type=text] {
-		width:200px;	
+		width:200px;
 	}
 	input[type=submit] {
 		margin-left:auto;
@@ -145,7 +145,7 @@
 			display:block;
 		}
 		input[type=text] {
-			width:190px;	
+			width:190px;
 		}
 		input[type=submit] {
 			width:220px;
@@ -158,13 +158,9 @@
 		.geo {
 			height:15px;
 			margin-right:0px;
-		}		
+		}
 	}
 	</style>
-	<!--if lt IE 9>
-	<script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js\"></script>
-	<!endif-->
-
 <% if yield(:map) == "map" then %>
 	<link rel="stylesheet" href="/scripts/leaflet.css">
 	<!--[if lte IE 8]>
@@ -177,21 +173,21 @@
 		.marker-cluster-small div {
 			background-color: rgba(110, 204, 57, 0.6);
 		}
-		
+
 		.marker-cluster-medium {
 			background-color: rgba(241, 211, 87, 0.6);
 		}
 		.marker-cluster-medium div {
 			background-color: rgba(240, 194, 12, 0.6);
 		}
-		
+
 		.marker-cluster-large {
 			background-color: rgba(253, 156, 115, 0.6);
 		}
 		.marker-cluster-large div {
 			background-color: rgba(241, 128, 23, 0.6);
 		}
-		
+
 		.marker-cluster {
 			background-clip: padding-box;
 			border-radius: 20px;
@@ -208,7 +204,7 @@
 		.marker-cluster span {
 			line-height: 30px;
 		}
-		
+
 		.leaflet-cluster-anim .leaflet-marker-icon, .leaflet-cluster-anim .leaflet-marker-shadow {
 			-webkit-transition: -webkit-transform 0.2s ease-out, opacity 0.2s ease-in;
 			-moz-transition: -moz-transform 0.2s ease-out, opacity 0.2s ease-in;
@@ -220,7 +216,7 @@
 	<script type="text/javascript" src="/scripts/leaflet.markercluster.js"></script>
 <% end %>
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script type="text/javascript">
 		function nearestAirport(type) {
 			navigator.geolocation.getCurrentPosition(function(position) {
@@ -229,10 +225,10 @@
 					dataType : 'jsonp',
 					url      : 'airports.json',
 					data     : 'lat='+position.coords.latitude+'&lng='+position.coords.longitude,
-					success  : 
+					success  :
 						function(data){
 							$('#'+type).val(data[0].iata);
-						} 
+						}
 				});
 			});
 		}
@@ -254,7 +250,7 @@
 					dataType : 'jsonp',
 					url      : 'stations.php',
 					data     : 'q='+$(this).val(),
-					success  : 
+					success  :
 						function(data) {
 							$('#results').remove();
 							$('#'+id).after('<div id="results"></div>');
@@ -267,8 +263,8 @@
 						}
 
 				});
-			});	
-			*/		
+			});
+			*/
 		});
 	</script>
 	</head>

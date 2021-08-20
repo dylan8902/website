@@ -7,8 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta property="og:title" content="Is My Bus Delayed?">
 	<meta property="og:type" content="product">
-	<meta property="og:url" content="http://ismybusdelayed.com">
-	<meta property="og:image" content="http://ismybusdelayed.com/images/logo_bus_200.png">
+	<meta property="og:url" content="https://ismybusdelayed.com">
+	<meta property="og:image" content="https://ismybusdelayed.com/images/logo_bus_200.png">
 	<meta property="og:site_name" content="Is My Bus Delayed">
 	<meta property="fb:admins" content="512982904">
 	<link rel="shortcut icon" href="/images/bus-favicon.ico" type="image/x-icon">
@@ -65,7 +65,7 @@
 		font-size:100%;
 	}
 	input[type=text] {
-		width:200px;	
+		width:200px;
 	}
 	input[type=submit] {
 		margin-left:auto;
@@ -128,7 +128,7 @@
 			display:block;
 		}
 		input[type=text] {
-			width:190px;	
+			width:190px;
 		}
 		input[type=submit] {
 			width:220px;
@@ -147,10 +147,7 @@
 		}
 	}
 	</style>
-	<!--if lt IE 9>
-	<script type="text/javascript" src="http://html5shim.googlecode.com/svn/trunk/html5.js\"></script>
-	<!endif-->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type="text/javascript">
 		function nearestStop() {
 			navigator.geolocation.getCurrentPosition(function(position) {
@@ -159,13 +156,13 @@
 					dataType : 'jsonp',
 					url      : '/stops.json',
 					data     : 'lat='+position.coords.latitude+'&lng='+position.coords.longitude,
-					success  : 
+					success  :
 						function(data){
 							$('#bus').val(data[0].naptan_code);
 							for(var i in data) {
 								$('#stop-info').append('<span class="result" id="'+data[i].naptan_code+'">'+data[i].indicator +' '+data[i].common_name +', '+data[i].locality_name+' ('+data[i].distance+'mi away)</span>');
 							}
-						} 
+						}
 				});
 			});
 		}
