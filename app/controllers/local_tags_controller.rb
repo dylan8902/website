@@ -70,7 +70,7 @@ class LocalTagsController < ApplicationController
     @local_tag = LocalTag.find(params[:id])
 
     respond_to do |format|
-      if @local_tag.update_attributes(local_tag_params)
+      if @local_tag.update(local_tag_params)
         format.html { redirect_to @local_tag, notice: 'Local tag was successfully updated.' }
         format.json { head :no_content }
         format.xml { head :no_content }

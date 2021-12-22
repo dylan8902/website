@@ -94,7 +94,7 @@ class SecurityVulnerabilitiesController < ApplicationController
     @vulnerability = SecurityVulnerability.find(params[:id])
 
     respond_to do |format|
-      if @vulnerability.update_attributes(vulnerability_params)
+      if @vulnerability.update(vulnerability_params)
         format.html { redirect_to @vulnerability, notice: 'vulnerability was successfully updated.' }
         format.json { head :no_content }
       else

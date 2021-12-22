@@ -70,7 +70,7 @@ class OauthClientsController < ApplicationController
     @oauth_client = OauthClient.find(params[:id])
 
     respond_to do |format|
-      if @oauth_client.update_attributes(oauth_client_params)
+      if @oauth_client.update(oauth_client_params)
         format.html { redirect_to oauth_clients_path, notice: 'OAuth client was successfully updated.' }
         format.json { head :no_content }
       else

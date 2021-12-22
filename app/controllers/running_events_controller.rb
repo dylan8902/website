@@ -126,7 +126,7 @@ class RunningEventsController < ApplicationController
     @running_event = RunningEvent.find(params[:id])
 
     respond_to do |format|
-      if @running_event.update_attributes(running_event_params)
+      if @running_event.update(running_event_params)
         format.html { redirect_to running_event_path(@running_event), notice: 'Running event was successfully updated.' }
         format.json { head :no_content }
       else

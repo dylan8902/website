@@ -90,7 +90,7 @@ class RemindersController < ApplicationController
     @reminder = Reminder.find(params[:id])
 
     respond_to do |format|
-      if @reminder.update_attributes(reminder_params)
+      if @reminder.update(reminder_params)
         format.html { redirect_to @reminder, notice: 'reminder was successfully updated.' }
         format.json { head :no_content }
       else
