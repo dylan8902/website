@@ -43,7 +43,7 @@ class BlogCommentsController < ApplicationController
     render_403 and return if @comment.user_id != current_user.id
 
     respond_to do |format|
-      if verify_recaptcha(params) && @comment.update_attributes(blog_comment_params)
+      if verify_recaptcha(params) && @comment.update(blog_comment_params)
         format.html { redirect_to @blog_post, notice: 'Your comment was successfully updated.' }
         format.json { head :no_content }
         format.xml { head :no_content }

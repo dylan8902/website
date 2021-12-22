@@ -77,7 +77,7 @@ class Music::DjEventsController < ApplicationController
     @dj_event = DjEvent.find(params[:id])
 
     respond_to do |format|
-      if @dj_event.update_attributes(params[:dj_event])
+      if @dj_event.update(params[:dj_event])
         format.html { redirect_to @dj_event, notice: 'Event post was successfully updated.' }
         format.json { head :no_content }
       else
