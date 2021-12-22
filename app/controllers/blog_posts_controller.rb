@@ -99,7 +99,7 @@ class BlogPostsController < ApplicationController
     @blog_post = BlogPost.find(params[:id])
 
     respond_to do |format|
-      if @blog_post.update_attributes(blog_post_params)
+      if @blog_post.update(blog_post_params)
         format.html { redirect_to @blog_post, notice: 'Blog post was successfully updated.' }
         format.json { head :no_content }
         format.xml { head :no_content }

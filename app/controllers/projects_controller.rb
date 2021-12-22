@@ -96,7 +96,7 @@ class ProjectsController < ApplicationController
     @project = Project.find(params[:id])
 
     respond_to do |format|
-      if @project.update_attributes(project_params)
+      if @project.update(project_params)
         format.html { redirect_to projects_url, notice: 'Project was successfully updated.' }
         format.json { head :no_content }
         format.xml { head :no_content }

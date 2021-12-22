@@ -36,7 +36,7 @@ class BingoNumbersController < ApplicationController
     @bingo_number = BingoNumber.find(params[:id])
 
     respond_to do |format|
-      if @bingo_number.update_attributes(bingo_number_params)
+      if @bingo_number.update(bingo_number_params)
         format.html { redirect_to bingo_numbers_path, notice: 'Bingo number was successfully updated.' }
         format.json { head :no_content }
       else

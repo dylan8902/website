@@ -84,7 +84,7 @@ class Quiz::QuestionsController < ApplicationController
     @question = Quiz::Question.find(params[:id])
 
     respond_to do |format|
-      if @question.update_attributes(question_params)
+      if @question.update(question_params)
         format.html { redirect_to @question, notice: 'Question was successfully updated.' }
         format.json { head :no_content }
       else
@@ -102,7 +102,7 @@ class Quiz::QuestionsController < ApplicationController
     @question = Quiz::Question.visible.find(params[:question_id])
 
     if params[:answer] == @question.correct_answer
-      @user.update_attributes(points: @user.points + 1)
+      @user.update(points: @user.points + 1)
     end
 
     respond_to do |format|
