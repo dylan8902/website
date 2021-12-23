@@ -36,7 +36,7 @@
 	<article class="col-md-4">
 		<h4>Total</h4>
 		<aside class="well">
-			<span style="font-size:300%"><%= icon("twitter") %> <%= @count %> @mentions</span>
+			<span style="font-size:300%"><%= brand_icon("twitter") %> <%= @count %> @mentions</span>
 			<p>since <%= BbcTwitter.first.created_at.strftime("%d-%M-%Y") unless BbcTwitter.first.nil? %></p>
 		</aside>
 	</article>

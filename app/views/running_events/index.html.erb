@@ -21,7 +21,7 @@
 			<tbody>
 			<% @running_events.each do |running_event| %>
 				<tr>
-					<td><%= icon("flag-checkered") unless running_event.training %></td>
+					<td><%= solid_icon("flag-checkered") unless running_event.training %></td>
 					<td><%= timestamp running_event.created_at %></td>
 					<td><%= link_to running_event.name, running_event %></td>
 					<td><%= running_event.timing %></td>
@@ -35,7 +35,7 @@
 	<article class="col-md-5">
 		<article class="well">
 			<h2>Total Distance</h2>
-			<p style="font-size:300%"><%= icon("road") %> <%= number_with_delimiter RunningEvent.sum(:distance) %>m</p>
+			<p style="font-size:300%"><%= solid_icon("road") %> <%= number_with_delimiter RunningEvent.sum(:distance) %>m</p>
 		</article>
 	</article>
 </section>
