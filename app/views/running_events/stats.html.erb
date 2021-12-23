@@ -12,19 +12,19 @@
 	<article class="col-md-4 col-sm-6">
 		<div class="well">
 			<p>Total Distance</p>
-			<p style="font-size:300%"><%= icon("road") %> <%= number_with_delimiter @stats[:total_distance] %>m</p>
+			<p style="font-size:300%"><%= solid_icon("road") %> <%= number_with_delimiter @stats[:total_distance] %>m</p>
 		</div>
 	</article>
 	<article class="col-md-4 col-sm-6">
 		<div class="well">
 			<p>Total Time</p>
-			<p style="font-size:300%"><%= icon("time") %> <%= Time.at(@stats[:total_time]).gmtime.strftime('%-dd %kh %-Mm %-Ss') %></p>
+			<p style="font-size:300%"><%= solid_icon("stopwatch") %> <%= Time.at(@stats[:total_time]).gmtime.strftime('%-dd %kh %-Mm %-Ss') %></p>
 		</div>
 	</article>
 	<article class="col-md-4 col-sm-6">
 		<div class="well">
 			<p>Average Speed</p>
-			<p style="font-size:300%"><%= icon("rocket") %> <%= number_with_precision(@stats[:average_speed], precision: 3, delimiter: '.') %>m/s</p>
+			<p style="font-size:300%"><%= solid_icon("rocket") %> <%= number_with_precision(@stats[:average_speed], precision: 3, delimiter: '.') %>m/s</p>
 		</div>
 	</article>
 </section>

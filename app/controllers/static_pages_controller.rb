@@ -40,12 +40,10 @@ class StaticPagesController < ApplicationController
   # GET /contact.xml
   def contact
     @contact = Array.new
-    @contact << { name: 'email', link: 'mailto:dyl@anjon.es', text: 'dyl@anjon.es', icon: "envelope" }
-    @contact << { name: 'twitter', link: 'https://twitter.com/dylan8902', text: 'twitter.com/dylan8902', icon: "twitter-sign" }
-    @contact << { name: 'facebook', link: 'https://www.facebook.com/dylan8902', text: 'facebook.com/dylan8902', icon: "facebook-sign" }
-    @contact << { name: 'google', link: 'https://www.google.com/+DylanJones8902', text: 'google.com/+DylanJones8902', icon: "google-plus-sign" }
-    @contact << { name: 'skype', link: 'skype://dylanjamesvernonjones?userinfo', text: 'dylanjamesvernonjones', icon: "skype" }
-    @contact << { name: 'linkedin', link: 'http://uk.linkedin.com/in/dylan8902', text: 'linkedin.com/in/dylan8902', icon: "linkedin-sign" }
+    @contact << { name: 'email', link: 'mailto:dyl@anjon.es', text: 'dyl@anjon.es', icon: "telegram-plane" }
+    @contact << { name: 'twitter', link: 'https://twitter.com/dylan8902', text: 'twitter.com/dylan8902', icon: "twitter-square" }
+    @contact << { name: 'facebook', link: 'https://www.facebook.com/dylan8902', text: 'facebook.com/dylan8902', icon: "facebook-square" }
+    @contact << { name: 'linkedin', link: 'http://uk.linkedin.com/in/dylan8902', text: 'linkedin.com/in/dylan8902', icon: "linkedin" }
 
     respond_to do |format|
       format.html # contact.html.erb

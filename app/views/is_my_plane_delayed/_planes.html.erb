@@ -8,7 +8,7 @@
 			<p><%= link_to airport, "?from=#{u(airport.iata)}&to=#{u(@to)}" %></p>
 		<% end %>
 		<% @airports[:to].each do |airport| %>
-			<p><%= link_to station, "?to=#{u(airport.iata)}&from=#{u(@from)}" %></p>
+			<p><%= link_to airport, "?to=#{u(airport.iata)}&from=#{u(@from)}" %></p>
 		<% end %>
 	</ul>
 	<% end %>
