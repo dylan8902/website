@@ -25,24 +25,24 @@
 
 <% if @running_event.distance %>
 	<article class="col-md-4 col-sm-6">
-		<p class="well" style="font-size:300%"><%= icon("road") %> <%= number_with_delimiter @running_event.distance %>m</p>
+		<p class="well" style="font-size:300%"><%= solid_icon("road") %> <%= number_with_delimiter @running_event.distance %>m</p>
 	</article>
 <% end %>
 
 <% if @running_event.timing %>
 	<article class="col-md-4 col-sm-6">
-		<p class="well" style="font-size:300%"><%= icon("time") %> <%= @running_event.timing %></p>
+		<p class="well" style="font-size:300%"><%= solid_icon("stopwatch") %> <%= @running_event.timing %></p>
 	</article>
 <% end %>
 
 <% if @running_event.position %>
 	<article class="col-md-4 col-sm-6">
-		<p class="well" style="font-size:300%"><%= icon("trophy") %> <%= @running_event.position.ordinalize %></p>
+		<p class="well" style="font-size:300%"><%= solid_icon("trophy") %> <%= @running_event.position.ordinalize %></p>
 	</article>
 <% end %>
 
 	<article class="col-md-4 col-sm-6">
-		<p class="well" style="font-size:300%"><%= icon("rocket") %> <%= number_with_precision(@pace, precision: 3, delimiter: '.') %>m/s</p>
+		<p class="well" style="font-size:300%"><%= solid_icon("rocket") %> <%= number_with_precision(@pace, precision: 3, delimiter: '.') %>m/s</p>
 	</article>
 
 </section>

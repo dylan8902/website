@@ -21,7 +21,7 @@
 							<%= link_to icon("user") + " About Me", who_path %>
 						</li>
 						<li<%= " class=\"active\"".html_safe if request.path.starts_with? stuff_index_path %>>
-							<%= link_to icon("code") + " Stuff I've Made", stuff_index_path %>
+							<%= link_to icon("file-code") + " Stuff I've Made", stuff_index_path %>
 						</li>
 						<li<%= " class=\"active\"".html_safe if request.path.starts_with? blog_posts_path %>>
 							<%= link_to icon("edit") + " Blog", blog_posts_path %>
@@ -40,10 +40,10 @@
 								<b class="caret"></b>
 							</a>
 					        <ul class="dropdown-menu">
-								<li><%= link_to icon("user") + " Profile", current_user %></li>
-								<li><%= link_to icon("gears") + " Settings", "#" %></li>
+								<li><%= link_to solid_icon("user") + " Profile", current_user %></li>
+								<li><%= link_to solid_icon("cog") + " Settings", "#" %></li>
 								<li class="divider"></li>
-								<li><%= link_to icon("power-off") + " Logout", logout_path %></li>
+								<li><%= link_to solid_icon("power-off") + " Logout", logout_path %></li>
 					        </ul>
 					      </li>
 						</li>

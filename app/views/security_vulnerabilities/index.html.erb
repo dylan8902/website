@@ -13,7 +13,7 @@
 		<% @vulnerabilities.each do |vulnerability| %>
 			<h3>
 				<span class="label label-<%= vulnerability.fixed_label %>"><%= vulnerability.fixed_label_text %></span>
-				<%= link_to vulnerability, vulnerability, class: vulnerability.link_class %>
+				<%= link_to vulnerability.to_s, vulnerability, class: vulnerability.link_class %>
 			</h3>
 			<%= vulnerability.summary.html_safe %>
 		<% end %>
@@ -22,7 +22,7 @@
 	<article class="col-md-2 col-sm-3">
 		<div class="well text-center">
 			<p>Reported</p>
-			<p style="font-size:300%"><%= icon("bullhorn") %> <%= number_with_delimiter SecurityVulnerability.count %></p>
+			<p style="font-size:300%"><%= solid_icon("bullhorn") %> <%= number_with_delimiter SecurityVulnerability.count %></p>
 		</div>
 		<div class="well text-center">
 			<p>Fixed</p>

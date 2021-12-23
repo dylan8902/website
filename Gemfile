@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.7.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '>= 6.1.2.1', '< 6.2'
+gem 'rails', '>= 7.0.0', '< 7.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use Puma as the app server
@@ -23,6 +23,8 @@ gem 'turbolinks', '~> 5.x'
 gem 'jbuilder', '~> 2.0'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
+
+gem 'sprockets-rails', :require => 'sprockets/railtie'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

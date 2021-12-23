@@ -1,16 +1,16 @@
 <article id="post-<%= blog_post.id %>" class="post">
 	<h2><%= link_to blog_post.title, blog_post %></h2>
 
-	<%= link_to "Edit", edit_blog_post_path(blog_post), class: "btn btn-primary btn-xs" if current_user and current_user.admin %>	
-	<%= icon("time") %> <%= link_to timestamp(blog_post.created_at), blog_post %> 
+	<%= link_to "Edit", edit_blog_post_path(blog_post), class: "btn btn-primary btn-xs" if current_user and current_user.admin %>
+	<%= solid_icon("clock") %> <%= link_to timestamp(blog_post.created_at), blog_post %>
 	<% if blog_post.updated? %>
 		<%= " - edited "%>
 		<%= timestamp(blog_post.updated_at) %>
 	<% end %>
-	| 
-	<%= icon("comments") %> <%= link_to pluralize(blog_post.blog_comments.count, 'comment'), blog_post_path(blog_post) + "#comments" %>
 	|
-	<%= icon("tags") %> <%= blog_post.tag_links %>
+	<%= solid_icon("comments") %> <%= link_to pluralize(blog_post.blog_comments.count, 'comment'), blog_post_path(blog_post) + "#comments" %>
+	|
+	<%= solid_icon("tags") %> <%= blog_post.tag_links %>
 	<article>
 		<%= blog_post.text.html_safe %>
 	</article>

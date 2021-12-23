@@ -1,7 +1,7 @@
 <article class="col-md-4 col-lg-3">
 	<nav class="list-group">
-		<%= link_to icon("calendar") + " Recent Posts".html_safe, blog_posts_path, class: "list-group-item" unless request.path == blog_posts_path %>
-		<%= link_to icon("plus-sign") + " All Posts", all_blog_posts_path, class: "list-group-item" unless request.path == all_blog_posts_path %>
-		<%= link_to icon("tags") + " View All Tags", blog_tags_path, class: "list-group-item" unless request.path == blog_tags_path %>
+		<%= link_to solid_icon("calendar") + " Recent Posts".html_safe, blog_posts_path, class: "list-group-item" unless request.path == blog_posts_path %>
+		<%= link_to solid_icon("plus") + " All Posts", all_blog_posts_path, class: "list-group-item" unless request.path == all_blog_posts_path %>
+		<%= link_to solid_icon("tags") + " View All Tags", blog_tags_path, class: "list-group-item" unless request.path == blog_tags_path %>
 	</nav>
 </article>

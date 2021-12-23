@@ -44,7 +44,15 @@ module ApplicationHelper
 
   #awesome icons
   def icon icon
-    "<i class=\"icon-#{icon}\"></i>".html_safe
+    "<i class=\"far fa-#{icon}\"></i>".html_safe
+  end
+
+  def solid_icon icon
+    "<i class=\"fas fa-#{icon}\"></i>".html_safe
+  end
+
+  def brand_icon icon
+    "<i class=\"fab fa-#{icon}\"></i>".html_safe
   end
 
   #do they want detailed train view

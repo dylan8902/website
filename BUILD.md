@@ -23,8 +23,8 @@ ssh-keygen -t rsa -C "your_email@example.com"
 rm -rf /home/rails
 git clone git@github.com:dylan8902/website.git /home/rails
 cd /home/rails
-rvm install 2.7.2
-rvm use 2.7.2 --default
+rvm install 2.7.4
+rvm use 2.7.4 --default
 bundle install
 ```
 
@@ -120,6 +120,14 @@ mysql
 ALTER DATABASE dylan8902_website CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
 ALTER TABLE tweets CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 ALTER TABLE monzo_transactions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+```
+
+
+## Upgrade to Rails 7.0
+``` bash
+bundle update
+yarn install
+rake db:migrate
 ```
 
 
