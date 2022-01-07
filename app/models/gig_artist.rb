@@ -3,11 +3,7 @@ class GigArtist < ApplicationRecord
 
 
   def image_url
-    if self.mbid
-      return "https://www.bbc.co.uk/music/images/artists/542x305/#{self.mbid}.jpg"
-    else
-      return "/images/no_mbzid_544x306.png"
-    end
+    "/images/no_mbzid_544x306.png"
   end
 
 

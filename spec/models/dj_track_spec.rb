@@ -16,9 +16,9 @@ RSpec.describe DjTrack do
       before { @dj_track.artist_mbid = "" }
       it { expect(@dj_track.image_url).to eq("/images/no_mbzid_544x306.png") }
     end
-    
+
     describe "where there is an artist mbid" do
-      it { expect(@dj_track.image_url).to eq("https://www.bbc.co.uk/music/images/artists/542x305/123-abc-456-def-789-ghi.jpg") }
+      it { expect(@dj_track.image_url).to eq("/images/no_mbzid_544x306.png") }
     end
 
   end
@@ -30,7 +30,7 @@ RSpec.describe DjTrack do
       before { @dj_track.artist_mbid = "" }
       it { expect(@dj_track.artist_url).to eq("/music/artists?q=test%20artist") }
     end
-    
+
     describe "where there is an artist mbid" do
       it { expect(@dj_track.artist_url).to eq("/music/artists/123-abc-456-def-789-ghi") }
     end
