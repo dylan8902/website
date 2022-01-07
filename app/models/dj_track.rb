@@ -4,11 +4,7 @@ class DjTrack < ApplicationRecord
 
 
   def image_url
-    if self.artist_mbid != ""
-      return "https://www.bbc.co.uk/music/images/artists/542x305/#{self.artist_mbid}.jpg"
-    else
-      return "/images/no_mbzid_544x306.png"
-    end
+    "/images/no_mbzid_544x306.png"
   end
 
 

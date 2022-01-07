@@ -79,12 +79,7 @@ class RadioStation
 
 
     def image
-      if self.artist_mbzid.empty?
-        src = "/images/no_mbzid_112x63.png"
-      else
-        src = "https://www.bbc.co.uk/music/images/artists/112x63/#{self.artist_mbzid}.jpg"
-      end
-      return "<img src=\"#{src}\" alt=\"#{self.artist}\">".html_safe
+      "<img src=\"/images/no_mbzid_112x63.png\" alt=\"#{self.artist}\">".html_safe
     end
 
   end
