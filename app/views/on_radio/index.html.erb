@@ -72,7 +72,7 @@
 	function addTrackToTable(title, artist, mbid, start, stop) {
 		var str = '<tr id="track-'+id+'" style="display:none;">';
 		if(mbid != '') {
-			str = str+'<td><img src="https://www.bbc.co.uk/music/images/artists/112x63/'+mbid+'.jpg"></td>';
+			str = str+'<td><img src="/images/no_mbzid_544x306.png"></td>';
 			str = str+'<td><a href="/music/artists/'+mbid+'" id="'+mbid+'" target="_blank" title="Artist Information" class="artist">'+artist+'</a> - '+title+'<p>'+timestamp(start)+'</p></td></tr>';
 		}
 		else {
@@ -229,7 +229,7 @@
 			var name = $(this).html();
 			var mbzid = $(this).attr('id');
 			$('#information').html('');
-			$('#information').append('<img src="https://www.bbc.co.uk/music/images/artists/542x305/'+mbzid+'.jpg" title="'+name+'" style="margin-top:15px" alt="Artist Image" class="thumbnail"></article><section><h3>'+name+'</h3></section>');
+			$('#information').append('<img src="/images/no_mbzid_544x306.png" title="'+name+'" style="margin-top:15px" alt="Artist Image" class="thumbnail"></article><section><h3>'+name+'</h3></section>');
 			$('#information').append('<section id="loading">Loading Artist Data...</section>');
 			$.ajax({
 				type     : 'GET',

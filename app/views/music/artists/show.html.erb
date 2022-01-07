@@ -1,6 +1,6 @@
 <% provide(:title, "Music:: Artist:: #{@artist['name']}") %>
 <% provide(:description, "A page about the music artist #{@artist['name']}") %>
-<% provide(:image, "https://www.bbc.co.uk/music/images/artists/542x305/#{@artist['gid']}.jpg") %>
+<% provide(:image, "/images/no_mbzid_544x306.png") %>
 <% provide(:og, @og) %>
 
 <h1><%= @artist['name'] %></h1>
@@ -18,7 +18,7 @@
 <% elsif @artist['life-span']['begin'] %>
 <p><%= icon "time" %> Since <%= @artist['life-span']['begin'] %></p>
 <% end %>
-<img src="https://www.bbc.co.uk/music/images/artists/542x305/<%= @artist['id'] %>.jpg" title="<%= @artist['name'] %>" alt="<%= @artist['name'] %>" class="thumbnail">
+<img src="/images/no_mbzid_544x306.png" title="<%= @artist['name'] %>" alt="<%= @artist['name'] %>" class="thumbnail">
 
 <% if @artist['wikipedia_article'] %>
 <h2>Biography</h2>

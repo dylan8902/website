@@ -52,12 +52,16 @@ class Music::ArtistsController < ApplicationController
         @artist['artist'] = nil
       end
 
-
-      response = RestClient.get "http://developer.echonest.com/api/v4/artist/profile?api_key=XACSR313AVJ9RJHE1&id=musicbrainz:artist:#{URI::escape(params[:id])}&format=json&bucket=id:7digital-UK&bucket=images&bucket=songs"
-      if response.code == 200
-        json = JSON.parse response.body
-        @artist['echonest'] = json
-      end
+      # The echonest API has gone
+      #begin
+      #  response = RestClient.get "http://developer.echonest.com/api/v4/artist/profile?api_key=XACSR313AVJ9RJHE1&id=musicbrainz:artist:#{URI::escape(params[:id])}&format=json&bucket=id:7digital-UK&bucket=images&bucket=songs"
+      #  if response.code == 200
+      #    json = JSON.parse response.body
+      #    @artist['echonest'] = json
+      #  end
+      #rescue
+      #  @artist['echonest'] = nil
+      #end
 
       begin
         seven = @artist['echonest']['response']['artist']['foreign_ids'][0]['foreign_id'].gsub('7digital-UK:artist:','')
@@ -92,7 +96,6 @@ class Music::ArtistsController < ApplicationController
         "og:title" => "#{params[:title]} by #{@artist['name']}",
         "og:type" => "bbc_radio:song",
         "og:url" => request.original_url,
-        "og:image" => "https://www.bbc.co.uk/music/images/artists/542x305/#{params[:id]}.jpg",
         "og:site_name" => "dyl.anjon.es",
         "fb:app_id" => "149865365127990",
         "bbc_radio:artist" => @artist['name'],
