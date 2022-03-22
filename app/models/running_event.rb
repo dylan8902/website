@@ -61,7 +61,7 @@ class RunningEvent < ApplicationRecord
         end
       end
     rescue => e
-      logger.info "Location update problem: " + e.message
+      logger.info "Location update problem: #{e.message}"
     end
   end
 
@@ -78,11 +78,16 @@ class RunningEvent < ApplicationRecord
 
 
   def self.update
-    oauth_client = OauthClient.find_by_name("Strava")
-    url = "https://www.strava.com/api/v3/athlete/activities"
-    response = RestClient.get url, { "Authorization": "Bearer #{oauth_client.access_token}" }
-    if response.code != 200
-      logger.info response.body
+    begin
+      oauth_client = OauthClient.find_by_name("Strava")
+      url = "https://www.strava.com/api/v3/athlete/activities"
+      response = RestClient.get url, { "Authorization": "Bearer #{oauth_client.access_token}" }
+      if response.code != 200
+        logger.info response.body
+        return
+      end
+    rescue => e
+      logger.info "Strava update problem: #{e.message}"
       return
     end
 
@@ -111,9 +116,15 @@ class RunningEvent < ApplicationRecord
         run = RunningEvent.create(params)
 
         # Get route and add KML
-        url = "https://www.strava.com/api/v3/activities/#{activity['id']}"
-        response = RestClient.get url, { "Authorization": "Bearer #{oauth_client.access_token}" }
-        if response.code != 200
+        begin
+          url = "https://www.strava.com/api/v3/activities/#{activity['id']}"
+          response = RestClient.get url, { "Authorization": "Bearer #{oauth_client.access_token}" }
+          if response.code != 200
+            logger.info "Strava update problem: #{response.code}"
+            return
+          end
+        rescue => e
+          logger.info "Strava update problem: #{e.message}"
           return
         end
 

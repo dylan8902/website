@@ -67,6 +67,7 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :sendmail
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -116,6 +117,7 @@ Rails.application.configure do
   config.hosts << "www.ismyplanedelayed.com"
   config.hosts << "dylanjones.info"
   config.hosts << "www.dylanjones.info"
+  config.hosts << "api.dylanjones.info"
   config.hosts << "dyl.anjon.es"
   config.hosts << "www.dyl.anjon.es"
 end
