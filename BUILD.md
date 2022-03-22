@@ -81,6 +81,9 @@ cd /home/rails
 git pull
 rake db:migrate RAILS_ENV=production
 rake assets:precompile RAILS_ENV=production
+cd ..
+chown -R rails rails/
+chgrp -R www-data rails/
 service unicorn restart
 ```
 
