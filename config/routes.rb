@@ -139,6 +139,9 @@ Rails.application.routes.draw do
   constraints Domain.new("www.dylanjones.info") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
   end
+  constraints Domain.new("api.dylanjones.info") do
+    match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es/api"}, via: [:get, :post, :patch, :delete]
+  end
   constraints Domain.new("dylanjones.info") do
     match "/(*path)" => redirect {|params, req| "https://dyl.anjon.es#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
   end
