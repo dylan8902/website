@@ -29,6 +29,13 @@
 			<p style="font-size:300%"><%= icon("thumbs-up") %> <%= number_with_delimiter SecurityVulnerability.where(fixed: true).count %></p>
 		</div>
 	</article>
+	<article>
+		<h3>Profiles</h3>
+		<ul>
+			<li><a href="https://bughunters.google.com/profile/465828c4-176a-4083-bdaf-60cb162daccf">Google Bug Hunters</a></li>
+			<li><a href="https://hackerone.com/dylan8902">Hacker One</a></li>
+		</ul>
+	</article>
 </section>
 
 <p><%= link_to 'New', new_security_vulnerability_path, class: "btn btn-primary" if current_user and current_user.admin %></p>
