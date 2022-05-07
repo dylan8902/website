@@ -33,7 +33,7 @@ class OauthClientsController < ApplicationController
     @oauth_clients = OauthClient.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @oauth_clients, callback: params[:callback] }
       format.xml { render xml: @oauth_clients }
       format.rss { render 'feed' }
@@ -101,7 +101,7 @@ class OauthClientsController < ApplicationController
   def authorise
     @oauth_client = OauthClient.find(params[:id])
 
-    response = @oauth_client.exchange(params[:code]) if params[:code]
+    response = @oauth_client.exchange(params[:code], request.original_url) if params[:code]
     @oauth_client.access_token = response["access_token"]
     @oauth_client.refresh_token = response["refresh_token"]
     @oauth_client.expires_at = response["expires_at"]

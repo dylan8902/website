@@ -13,7 +13,7 @@ class MonzoTransaction < ApplicationRecord
   def self.update
     url = "https://api.monzo.com/transactions?expand[]=merchant&account_id=#{Rails.application.secrets.monzo_account_id}"
     begin
-      response = RestClient.get url, { "Authorization": "Bearer #{Rails.application.secrets.monzo_access_token}" }
+      response = RestClient.get url, { "Authorization": "Bearer #{oauth_client.access_token}" }
     rescue => e
       logger.info "Monzo API error: " + e.message
       return
@@ -42,8 +42,6 @@ class MonzoTransaction < ApplicationRecord
         updated_at: Time.now
       )
     end
-
-    return json
   end
 
 end
