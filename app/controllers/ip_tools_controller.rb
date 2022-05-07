@@ -15,11 +15,11 @@ class IpToolsController < ApplicationController
         @results << ["Integer", ip.to_i]
         @results << ["Start Range", ip.to_range.first, ip.to_range.first.to_i]
         @results << ["End Range", ip.to_range.last, ip.to_range.last.to_i]
-        @results << ["Hosts", ip.to_range.last.to_i - ip.to_range.first.to_i + 1]
+        @results << ["Addresses", ip.to_range.last.to_i - ip.to_range.first.to_i + 1]
         if ip.ipv4?
-          @results << ["ipv4_mapped", ip.ipv4_mapped]
+          @results << ["Mapped", ip.ipv4_mapped]
         elsif ip.ipv6?
-          @results << ["ipv6_mapped", ip.ipv6_mapped]
+          @results << ["Mapped", ip.ipv6_mapped]
         end
        # @results << ["Methods", ip.methods]
       rescue
