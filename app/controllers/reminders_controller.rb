@@ -25,7 +25,7 @@ class RemindersController < ApplicationController
     @reminders = Reminder.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @reminders, callback: params[:callback] }
       format.xml { render xml: @reminders }
       format.rss { render 'feed' }

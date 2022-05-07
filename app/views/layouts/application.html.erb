@@ -39,13 +39,13 @@
 								<%= gravatar current_user.email, 20 %>
 								<b class="caret"></b>
 							</a>
-					        <ul class="dropdown-menu">
+					    <ul class="dropdown-menu">
 								<li><%= link_to solid_icon("user") + " Profile", current_user %></li>
 								<li><%= link_to solid_icon("cog") + " Settings", "#" %></li>
 								<li class="divider"></li>
 								<li><%= link_to solid_icon("power-off") + " Logout", logout_path %></li>
-					        </ul>
-					      </li>
+							</ul>
+						</li>
 						</li>
 					<% end %>
 					</ul>

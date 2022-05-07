@@ -9,16 +9,17 @@ class OauthClient < ApplicationRecord
 
   # Authorisation URL
   def full_authorise_uri(request)
-    "#{authorise_url}?client_id=#{client_id}&scope=#{scope}&response_type=#{response_type}&redirect_uri=#{redirect_uri(request)}"
+    "#{authorise_url}?client_id=#{client_id}&scope=#{scope}&response_type=#{response_type}&redirect_uri=#{redirect_uri(request)}&state=#{SecureRandom.uuid}"
   end
 
   # Exchange code for token
-  def exchange(code)
+  def exchange(code, redirect_url=nil)
     params = {
       client_id: client_id,
       client_secret: client_secret,
       code: code,
-      grant_type: "authorization_code"
+      grant_type: "authorization_code",
+      redirect_uri: redirect_uri
     }
     begin
       response = RestClient.post token_url, params

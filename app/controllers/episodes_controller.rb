@@ -49,7 +49,7 @@ class EpisodesController < ApplicationController
     @episodes = Episode.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @episodes, callback: params[:callback] }
       format.xml { render xml: @episodes }
       format.rss { render 'feed' }

@@ -33,7 +33,7 @@ class AccountsController < ApplicationController
     @accounts = Account.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @accounts, callback: params[:callback] }
       format.xml { render xml: @accounts }
       format.rss { render 'feed' }
