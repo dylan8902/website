@@ -5,9 +5,11 @@
 
 <div class="well">
 	<form>
-		<input class="form-control" name="q" placeholder="Enter an IP or Integer" value="<%= params[:q] %>" autofocus>
+		<input class="form-control" name="q" placeholder="Enter an IP, subnet or integer" value="<%= params[:q] %>" autofocus>
 	</form>
 </div>
+
+<p>Your IP is: <a href="?q=<%= request.remote_ip %>"><%= request.remote_ip %></a></p>
 
 <% if @results %>
 	<table class="table table-striped">
