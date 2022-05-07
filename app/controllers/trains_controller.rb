@@ -25,7 +25,7 @@ class TrainsController < ApplicationController
     @trains = Train.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @trains, callback: params[:callback] }
       format.xml { render xml: @trains }
       format.rss { render 'feed' }
@@ -53,7 +53,7 @@ class TrainsController < ApplicationController
   def stats
    @stats = time_data Train.all
    @cloud = word_cloud Train.pluck(:origin)
- 
+
     respond_to do |format|
       format.html # stats.html.erb
       format.json { render json: time_data(Train.all, :hash), callback: params[:callback] }
@@ -67,7 +67,7 @@ class TrainsController < ApplicationController
   # GET /tweets/map.xml
   def map
     @locations = Train.where("lat IS NOT NULL AND lng IS NOT NULL")
-    
+
     respond_to do |format|
       format.html # map.html.erb
       format.json { render json: @locations, callback: params[:callback] }

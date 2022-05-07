@@ -28,7 +28,7 @@ class BlogPostsController < ApplicationController
     @blog_posts = BlogPost.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'blog_posts/index' }
       format.json { render json: @blog_posts, callback: params[:callback] }
       format.xml { render xml: @blog_posts }
       format.rss { render 'feed' }

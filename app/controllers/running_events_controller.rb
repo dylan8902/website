@@ -27,7 +27,7 @@ class RunningEventsController < ApplicationController
     @running_events = RunningEvent.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @running_events, callback: params[:callback] }
       format.xml { render xml: @running_events }
     end
