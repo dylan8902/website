@@ -32,7 +32,7 @@ class SolarReadingsController < ApplicationController
     @readings = SolarReading.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @readings, callback: params[:callback] }
       format.xml { render xml: @readings }
       format.rss { render 'feed' }

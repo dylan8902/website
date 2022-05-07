@@ -25,7 +25,7 @@ class TweetsController < ApplicationController
     @tweets = Tweet.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @tweets, callback: params[:callback] }
       format.xml { render xml: @tweets }
       format.rss { render 'feed' }
@@ -53,7 +53,7 @@ class TweetsController < ApplicationController
   def stats
    @stats = time_data Tweet.all
    @cloud = word_cloud Tweet.pluck(:text)
- 
+
     respond_to do |format|
       format.html # stats.html.erb
       format.json { render json: time_data(Tweet.all, :hash), callback: params[:callback] }
@@ -68,7 +68,7 @@ class TweetsController < ApplicationController
   def map
     Project.hit 9
     @locations = Tweet.where("lat IS NOT NULL AND lng IS NOT NULL")
-    
+
     respond_to do |format|
       format.html # map.html.erb
       format.json { render json: @locations, callback: params[:callback] }

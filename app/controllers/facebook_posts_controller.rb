@@ -1,7 +1,7 @@
 class FacebookPostsController < ApplicationController
   include Statistics
-  
-  
+
+
   # GET /facebook
   # GET /facebook.json
   # GET /facebook.xml
@@ -25,7 +25,7 @@ class FacebookPostsController < ApplicationController
     @facebook_posts = FacebookPost.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @facebook_posts, callback: params[:callback] }
       format.xml { render xml: @facebook_posts }
       format.rss { render 'feed' }
@@ -46,14 +46,14 @@ class FacebookPostsController < ApplicationController
     end
   end
 
-  
+
   # GET /facebook/stats
   # GET /facebook/stats.json
   # GET /facebook/stats.xml
   def stats
    @stats = time_data FacebookPost.all
    @cloud = word_cloud FacebookPost.pluck(:text)
-    
+
     respond_to do |format|
       format.html # stats.html.erb
       format.json { render json: time_data(FacebookPost.all, :hash), callback: params[:callback] }
@@ -68,7 +68,7 @@ class FacebookPostsController < ApplicationController
   def map
     #Project.find(9).hit
     @locations = FacebookPost.where("lat IS NOT NULL AND lng IS NOT NULL")
-    
+
     respond_to do |format|
       format.html # map.html.erb
       format.json { render json: @locations, callback: params[:callback] }

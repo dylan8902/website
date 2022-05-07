@@ -26,7 +26,7 @@ class Mole::HighScoresController < ApplicationController
     @high_scores = Mole::HighScore.order("score DESC").paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @high_scores, callback: params[:callback] }
       format.xml { render xml: @high_scores }
     end

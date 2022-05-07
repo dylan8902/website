@@ -27,7 +27,7 @@ class ProjectsController < ApplicationController
     @projects = Project.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @projects, callback: params[:callback] }
       format.xml { render xml: @projects }
       format.rss { render 'feed' }

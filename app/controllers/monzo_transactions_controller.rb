@@ -33,7 +33,7 @@ class MonzoTransactionsController < ApplicationController
     @transactions = MonzoTransaction.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @transactions, callback: params[:callback] }
       format.xml { render xml: @transactions }
       format.rss { render 'feed' }

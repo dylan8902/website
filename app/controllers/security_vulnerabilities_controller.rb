@@ -29,7 +29,7 @@ class SecurityVulnerabilitiesController < ApplicationController
     @vulnerabilities = SecurityVulnerability.order(@order).paginate(@page)
 
     respond_to do |format|
-      format.html { render 'index.html.erb' }
+      format.html { render 'index' }
       format.json { render json: @vulnerabilities, callback: params[:callback] }
       format.xml { render xml: @vulnerabilities }
       format.rss { render 'feed' }
