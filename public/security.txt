@@ -1,0 +1,10 @@
+# Reporting security vulnerabilities
+
+# Please report any security vulnerabilities to me via the contact method below.
+
+Contact: mailto:dyl@anjon.es
+Expires: 2030-01-01T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://dyl.anjon.es/security.txt
+
+# Please see https://securitytxt.org/ for details of the specification of this file
