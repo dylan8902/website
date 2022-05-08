@@ -13,6 +13,7 @@ class MonzoTransaction < ApplicationRecord
   def self.update
     url = "https://api.monzo.com/transactions?expand[]=merchant&account_id=#{Rails.application.secrets.monzo_account_id}"
     begin
+      oauth_client = OauthClient.find_by_name("Monzo")
       response = RestClient.get url, { "Authorization": "Bearer #{oauth_client.access_token}" }
     rescue => e
       logger.info "Monzo API error: " + e.message
