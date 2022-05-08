@@ -11,7 +11,7 @@
 
 <p>Your IP is: <a href="?q=<%= request.remote_ip %>"><%= request.remote_ip %></a></p>
 
-<% if @results %>
+<% if @results.length > 1 %>
 	<table class="table table-striped">
 	<% @results.each do |result| %>
 		<tr>

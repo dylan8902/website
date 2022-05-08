@@ -21,10 +21,11 @@ class IpToolsController < ApplicationController
         elsif ip.ipv6?
           @results << ["Mapped", ip.ipv6_mapped]
         end
-       # @results << ["Methods", ip.methods]
       rescue
         params[:q].to_i
       end
+    else
+      @results = [request.remote_ip]
     end
 
     respond_to do |format|
