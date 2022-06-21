@@ -120,4 +120,6 @@ Rails.application.configure do
   config.hosts << "api.dylanjones.info"
   config.hosts << "dyl.anjon.es"
   config.hosts << "www.dyl.anjon.es"
+
+  config.base_url = "https://dyl.anjon.es"
 end

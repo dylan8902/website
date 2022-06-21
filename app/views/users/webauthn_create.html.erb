@@ -1,0 +1,96 @@
+<% provide(:title, "User:: Webauthn Setup") %>
+<% provide(:description, "Setup alternative authentication.") %>
+
+<h1>Webauthn Setup</h1>
+
+<section class="row">
+	<article class="col-md-6">
+		<h4>User</h4>
+		<pre id="user"><%= JSON.pretty_generate current_user.as_json %></pre>
+	</article>
+	<article class="col-md-6">
+		<h4>User Credentials</h4>
+		<pre id="exisiting-credentials"><%= JSON.pretty_generate current_user.credentials.as_json %></pre>
+	</article>
+	<article class="col-md-6">
+		<h4>WebAuthn Gem Options</h4>
+		<pre id="options"><%= JSON.pretty_generate @options.as_json %></pre>
+	</article>
+  <article class="col-md-6">
+		<h4>PublicKeyCredentialCreationOptions</h4>
+		<pre id="creation-options"></pre>
+	</article>
+    <article class="col-md-6">
+		<h4>Credential</h4>
+		<pre id="credential"></pre>
+	</article>
+</section>
+
+<script>
+  function base64EncodedUrlToBytes(encoded) {
+    return Uint8Array.from(window.atob(encoded.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0))
+  }
+
+  function sendCredential(credentialJSONString) {
+    fetch('', {
+      method: "POST",
+      body: credentialJSONString,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": csrfToken,
+      },
+      credentials: 'same-origin'
+    }).then(function(response) {
+      console.log(response);
+    });
+  }
+
+  const csrfToken = document.querySelector("[name='csrf-token']").getAttribute("content")
+  const options = <%= JSON.pretty_generate(@options.as_json).html_safe %>;
+  const opts = {
+    challenge: base64EncodedUrlToBytes(options.challenge),
+    rp: {
+      name: options.rp.name,
+      id: document.domain,
+    },
+    user: {
+      id: base64EncodedUrlToBytes(options.user.id),
+      displayName: options.user.displayName,
+      name: options.user.name
+    },
+    pubKeyCredParams: options.pubKeyCredParams,
+    excludeCredentials: options.excludeCredentials,
+    authenticatorSelection: {
+      authenticatorAttachment: "platform",
+      userVerification: "discouraged",
+    },
+    timeout: options.timeout,
+    attestation: "direct"
+  };
+  var cred;
+
+  document.getElementById('creation-options').innerHTML = JSON.stringify(opts, null, '  ');
+
+  navigator.credentials
+    .create({
+      publicKey: opts
+    })
+    .then(function (credential) {
+      console.log(credential);
+      cred = credential;
+      credentialJSONString = JSON.stringify({
+        "type": credential.type,
+        "id": credential.id,
+        "rawId": credential.rawId,
+        "response": credential.response,
+        "clientExtensionResults":credential.getClientExtensionResults()
+        }, null, '  ')
+      document.getElementById('credential').innerHTML = credentialJSONString;
+      sendCredential(credentialJSONString);
+    })
+    .catch(function (err) {
+      console.error(err);
+    });
+</script>
+

@@ -1,7 +1,9 @@
 ## Develop
 
 ``` bash
-brew install yarn
+brew install yarn certbot
+certbot --text --agree-tos --email dyl@anjon.es -d dev.dyl.anjon.es --manual --preferred-challenges dns --expand --renew-by-default --manual-public-ip-logging-ok certonly
+rails s -b 'ssl://dev.dyl.anjon.es:3000?key=/etc/letsencrypt/live/dev.dyl.anjon.es/privkey.pem&cert=/etc/letsencrypt/live/dev.dyl.anjon.es/fullchain.pem'
 ```
 
 
@@ -93,7 +95,7 @@ service unicorn restart
 ``` bash
 rm dyl.anjon.es.key.old
 rm dyl.anjon.es.crt.old
-certbot --text --agree-tos --email dyl@anjon.es -d dyl.anjon.es -d ismytraindelayed.com -d isitaproxyproblem.com --manual --preferred-challenges dns --expand --renew-by-default  --manual-public-ip-logging-ok certonly
+certbot --text --agree-tos --email dyl@anjon.es -d dyl.anjon.es -d ismytraindelayed.com -d isitaproxyproblem.com --manual --preferred-challenges dns --expand --renew-by-default --manual-public-ip-logging-ok certonly
 cp dyl.anjon.es.crt dyl.anjon.es.crt.old
 cp dyl.anjon.es.key dyl.anjon.es.key.old
 cp /etc/letsencrypt/live/dyl.anjon.es/fullchain.pem dyl.anjon.es.crt

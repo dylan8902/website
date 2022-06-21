@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :train_journeys
   has_many :user_twitter_accounts
   has_many :episodes
+  has_many :credentials
 
 
   def twitter

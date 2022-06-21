@@ -1,0 +1,19 @@
+<% provide(:title, "User:: Webauthn Setup") %>
+<% provide(:description, "Setup alternative authentication.") %>
+
+<h1>Webauthn Setup</h1>
+
+<section class="row">
+	<article class="col-md-6">
+		<h4>User</h4>
+		<pre><%= JSON.pretty_generate current_user.as_json %></pre>
+	</article>
+	<article class="col-md-6">
+		<h4>Credentials</h4>
+		<pre><%= JSON.pretty_generate current_user.credentials.as_json %></pre>
+	</article>
+	<article class="col-md-6">
+		<h4>WebAuthn Credential</h4>
+		<pre><%= JSON.pretty_generate @webauthn_credential.as_json %></pre>
+	</article>
+</section>

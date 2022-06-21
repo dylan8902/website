@@ -81,4 +81,6 @@ Rails.application.configure do
   config.hosts << "dev.ismyplanedelayed.com"
   config.hosts << "dev.dylanjones.info"
   config.hosts << "dev.dyl.anjon.es"
+
+  config.base_url = "https://dev.dyl.anjon.es:3000"
 end

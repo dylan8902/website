@@ -420,6 +420,8 @@ Rails.application.routes.draw do
       get "logout"        => "devise/sessions#destroy", as: "logout"
     end
     resources :users,                                              only: [:show]
+    get   "users/webauthn/setup" => "users#webauthn_create", as: "webauthn_create"
+    post  "users/webauthn/setup" => "users#webauthn_verify", as: "webauthn_verify"
 
     get  "video"          => "video#index"
     get  "wall"           => "wall#index"
@@ -428,7 +430,7 @@ Rails.application.routes.draw do
 
     namespace :wedding do
      root to: "static_pages#index",        as: "root"
-     resources :rsvps, path: "rsvp",       as: "rsvp",            excepty: [:show]
+     resources :rsvps, path: "rsvp",       as: "rsvp",            except: [:show]
      get  "gifts" => "static_pages#gifts", as: "gifts"
      get  "app"   => "static_pages#app",   as: "app"
     end
