@@ -75,6 +75,14 @@ class IsMyTrainDelayedController < ApplicationController
     end
   end
 
+  # GET /privacy
+  def privacy
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
 
   private
 

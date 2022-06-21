@@ -110,6 +110,7 @@ Rails.application.routes.draw do
     get "arrivals" => "is_my_train_delayed#arrivals"
     get "service"  => "is_my_train_delayed#service"
     get "stations" => "is_my_train_delayed#stations"
+    get "privacy"  => "is_my_train_delayed#privacy"
     match '*url'   => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
