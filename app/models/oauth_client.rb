@@ -19,7 +19,7 @@ class OauthClient < ApplicationRecord
       client_secret: client_secret,
       code: code,
       grant_type: "authorization_code",
-      redirect_uri: redirect_uri
+      redirect_uri: redirect_url
     }
     begin
       response = RestClient.post token_url, params
