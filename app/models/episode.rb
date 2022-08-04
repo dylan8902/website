@@ -16,8 +16,13 @@ class Episode < ApplicationRecord
   def self.add url, user
     params = url.split('/')
 
-    response = RestClient.get "http://www.bbc.co.uk/programmes/#{params[5]}.json"
-    if response.code != 200
+    begin
+      response = RestClient.get "http://www.bbc.co.uk/programmes/#{params[5]}.json"
+      if response.code != 200
+        return
+      end
+    rescue => e
+      logger.error e.message
       return
     end
 

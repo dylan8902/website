@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_23_000620) do
-
+ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
   create_table "accounts", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "number"
     t.string "name"
     t.string "credential"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
@@ -25,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "record_type", null: false
     t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
-    t.datetime "created_at", precision: 6, null: false
+    t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -38,7 +37,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.string "checksum"
-    t.datetime "created_at", precision: 6, null: false
+    t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
@@ -66,8 +65,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "ip"
     t.string "user_agent"
     t.string "referer"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["created_at"], name: "index_analytics_on_created_at"
     t.index ["ip"], name: "index_analytics_on_ip"
     t.index ["referer"], name: "index_analytics_on_referer"
@@ -77,32 +76,32 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
   create_table "bank_transactions", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "description", null: false
     t.float "amount", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "bbc_twitter", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "title"
     t.string "link"
     t.integer "count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "bingo_games", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "numbers"
     t.integer "index"
     t.text "current_number"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "bingo_numbers", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "instruction"
     t.text "song_name"
     t.text "song_url"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "blog_comments", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -111,15 +110,15 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "name"
     t.string "email"
     t.text "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "blog_posts", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "title", null: false
     t.text "text", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "blog_tags", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -150,9 +149,19 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "timing_status"
     t.string "default_wait_time"
     t.string "administrative_area_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["naptan_code"], name: "index_bus_stops_on_naptan_code"
+  end
+
+  create_table "credentials", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "external_id"
+    t.string "public_key"
+    t.string "nickname"
+    t.bigint "sign_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dj_events", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -160,8 +169,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.text "description"
     t.string "location"
     t.string "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "dj_tracks", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -169,8 +178,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "title"
     t.string "artist"
     t.string "artist_mbid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "drops", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -178,16 +187,16 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "content_type"
     t.binary "base64"
     t.integer "hits"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "episodes", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "pid", null: false
     t.string "title", null: false
     t.string "description", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "user_id"
     t.index ["user_id"], name: "index_episodes_on_user_id"
   end
@@ -197,8 +206,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "location"
     t.float "lat"
     t.float "lng"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "gig_artists", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -214,16 +223,16 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "venue"
     t.decimal "lat", precision: 10, scale: 7
     t.decimal "lng", precision: 10, scale: 7
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "iphone_locations", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.float "lat"
     t.float "lng"
     t.integer "accuracy"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "listens", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -234,8 +243,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "album"
     t.string "album_mbid"
     t.string "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "local_tags", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -244,15 +253,15 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.integer "user_id"
     t.float "lat"
     t.float "lng"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "locations", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.decimal "lat", precision: 10, scale: 7, null: false
     t.decimal "lng", precision: 10, scale: 7, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["lat"], name: "index_locations_on_lat"
     t.index ["lng"], name: "index_locations_on_lng"
   end
@@ -270,16 +279,16 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.decimal "amount", precision: 10, scale: 7, null: false
     t.string "source"
     t.string "environment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "mole_high_scores", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.bigint "facebook_id"
     t.integer "score"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "monzo_transactions", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -288,8 +297,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.integer "amount"
     t.string "currency"
     t.text "merchant"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "json"
     t.decimal "lat", precision: 10, scale: 7
     t.decimal "lng", precision: 10, scale: 7
@@ -304,8 +313,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.text "expires_at"
     t.text "scope"
     t.text "response_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "authorise_url"
     t.text "token_url"
   end
@@ -318,8 +327,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "duration"
     t.string "price"
     t.string "included"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.index ["contact"], name: "index_phonecalls_on_contact"
   end
 
@@ -327,8 +336,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "title"
     t.string "thumbnail"
     t.string "original"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.float "lat"
     t.float "lng"
     t.text "description"
@@ -339,8 +348,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "offer"
     t.float "price"
     t.float "price_inc_offer"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "projects", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -349,8 +358,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "url", null: false
     t.integer "hits", default: 0
     t.boolean "online"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "quiz_questions", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
@@ -359,16 +368,16 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.text "answer_2"
     t.text "answer_3"
     t.text "answer_4"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.boolean "visible", default: false
   end
 
   create_table "quiz_users", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
     t.text "nickname"
     t.integer "points", default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "reminders", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -378,8 +387,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.text "summary"
     t.text "url"
     t.text "image"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "running_events", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -389,8 +398,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.decimal "lng", precision: 10, scale: 7
     t.integer "finish_time"
     t.boolean "training"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.integer "position"
     t.string "link"
     t.integer "distance"
@@ -404,33 +413,33 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.boolean "fixed"
     t.text "summary"
     t.text "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.datetime "reported_at"
-    t.datetime "fixed_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.datetime "reported_at", precision: nil
+    t.datetime "fixed_at", precision: nil
     t.boolean "wont_fix", default: false
   end
 
   create_table "solar_readings", id: :integer, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "date"
     t.float "kwh"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "text_messages", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "contact", null: false
     t.text "text"
     t.boolean "sent"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "times_tables", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "group"
     t.string "tables"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "trains", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
@@ -439,8 +448,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "operator"
     t.decimal "lat", precision: 10, scale: 7
     t.decimal "lng", precision: 10, scale: 7
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "tweets", id: :bigint, default: nil, charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
@@ -448,8 +457,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.string "location"
     t.float "lat"
     t.float "lng"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "user_twitter_accounts", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -465,18 +474,19 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
   create_table "users", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
     t.boolean "admin"
+    t.string "webauthn_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -485,16 +495,16 @@ ActiveRecord::Schema.define(version: 2021_12_23_000620) do
     t.bigint "facebook_id"
     t.string "name"
     t.integer "score"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
   end
 
   create_table "wedding_rsvps", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.boolean "rsvp"
     t.text "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.text "dietary_requirements"
   end
 
