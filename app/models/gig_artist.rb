@@ -11,7 +11,7 @@ class GigArtist < ApplicationRecord
     if self.mbid
       return  "/music/artists/" + self.mbid
     else
-      return  "/music/artists?q=" + URI::escape(self.name)
+      return  "/music/artists?q=" + CGI::escape(self.name)
     end
   end
 

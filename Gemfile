@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.7.4'
+ruby '3.1.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 7.0.1', '< 7.1'
@@ -52,7 +52,7 @@ gem 'redis'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails', '~> 6.0.0.rc1'
 end
 
 group :development do

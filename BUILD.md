@@ -1,9 +1,43 @@
 ## Develop
 
+- Set up database
 ``` bash
-brew install yarn
+brew install mysql
 ```
 
+- Setup Ruby and Rails
+
+``` bash
+rvm install 3.1.2
+rvm use 3.1.2 --default
+bundle install
+```
+
+- Set up SSL
+
+``` bash
+sudo certbot --text --agree-tos --email dyl@anjon.es -d dev.dyl.anjon.es --manual --preferred-challenges dns --expand --renew-by-default --manual-public-ip-logging-ok certonly
+sudo chown dylan8902 /etc/letsencrypt/live/dev.dyl.anjon.es/../../archive/dev.dyl.anjon.es/*
+```
+
+- Set the secrets in config/secrets.yml:
+
+``` bash
+cp config/secrets.yml.example config/secrets.yml
+vi config/secrets.yml
+```
+
+- Set up yarn
+
+``` bash
+brew install yarn
+yarn install
+```
+
+- Run in development mode
+``` bash
+rails s -b 'ssl://dev.dyl.anjon.es:3000?key=/etc/letsencrypt/live/dev.dyl.anjon.es/privkey.pem&cert=/etc/letsencrypt/live/dev.dyl.anjon.es/fullchain.pem'
+```
 
 ## Deploy
 
@@ -23,8 +57,8 @@ ssh-keygen -t rsa -C "your_email@example.com"
 rm -rf /home/rails
 git clone git@github.com:dylan8902/website.git /home/rails
 cd /home/rails
-rvm install 2.7.4
-rvm use 2.7.4 --default
+rvm install 3.1.2
+rvm use 3.1.2 --default
 bundle install
 ```
 

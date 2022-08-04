@@ -12,7 +12,7 @@ class DjTrack < ApplicationRecord
     if self.artist_mbid != ""
       return  "/music/artists/" + self.artist_mbid
     else
-      return  "/music/artists?q=" + URI::escape(self.artist)
+      return  "/music/artists?q=" + CGI::escape(self.artist)
     end
   end
 

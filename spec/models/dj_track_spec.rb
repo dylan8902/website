@@ -28,7 +28,7 @@ RSpec.describe DjTrack do
 
     describe "where there is no artist mbid" do
       before { @dj_track.artist_mbid = "" }
-      it { expect(@dj_track.artist_url).to eq("/music/artists?q=test%20artist") }
+      it { expect(@dj_track.artist_url).to eq("/music/artists?q=test+artist") }
     end
 
     describe "where there is an artist mbid" do
