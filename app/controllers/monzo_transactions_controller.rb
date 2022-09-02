@@ -1,8 +1,9 @@
 class MonzoTransactionsController < ApplicationController
   include ErrorHelper
   include Statistics
-  before_action :authenticate_user!
-  before_action :authenticate_admin!
+  before_action :authenticate_user!, :except => [:webhook]
+  before_action :authenticate_admin!, :except => [:webhook]
+  skip_before_action :verify_authenticity_token, :only => [:webhook]
 
 
   # GET /monzo
@@ -79,6 +80,20 @@ class MonzoTransactionsController < ApplicationController
       format.html # map.html.erb
       format.json { render json: @locations, callback: params[:callback] }
       format.xml { render xml: @locations }
+    end
+  end
+
+  # POST /monzo/webhook
+  # POST /monzo/webhook.json
+  # POST /monzo/webhook.xml
+  def webhook
+    @webhook = params
+    logger.info("Webhook recieved, data: #{@webhook}")
+
+    respond_to do |format|
+      format.html # webook.html.erb
+      format.json { render json: @webhook, callback: params[:callback] }
+      format.xml { render xml: @webhook }
     end
   end
 
