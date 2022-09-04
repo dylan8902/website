@@ -83,12 +83,74 @@ class MonzoTransactionsController < ApplicationController
     end
   end
 
+
   # POST /monzo/webhook
   # POST /monzo/webhook.json
   # POST /monzo/webhook.xml
   def webhook
     @webhook = params
-    logger.info("Webhook recieved, data: #{@webhook}")
+    logger.info "Webhook recieved, data: #{@webhook}"
+
+    begin
+      if @webhook["type"] == "transaction.created" and @webhook["data"]["notes"] == "⚽" and @webhook["data"]["amount"] == 200
+        logger.info "This is a ⚽ World Cup 2022 Sweepstake payment"
+        payee = @webhook["data"]["counterparty"]["name"]
+        logger.info "from #{payee}"
+
+        project = "pub-tracker-test"
+        base_url = "https://firestore.googleapis.com/v1/projects/#{project}/databases/(default)/documents"
+        response = JSON.parse(RestClient.get("#{base_url}/sweepstakes/worldcup").body)
+        current_pot = response["fields"]["pot"].values[0].to_f
+        match = nil
+        response = JSON.parse(RestClient.get("#{base_url}/users?pageSize=100&mask.fieldPaths=displayName&mask.fieldPaths=photoURL").body)
+        response["documents"].each do |user|
+          account = {
+            user: user["fields"]["displayName"]["stringValue"],
+            userPhotoURL: user["fields"]["photoURL"]["stringValue"]
+          }
+          if account[:user].strip.downcase.eql? payee.strip.downcase
+            logger.info("who is #{account}")
+            match = account
+          end
+        end
+        if match
+          data = {
+            "fields": {
+              "user": { "stringValue": match[:user] },
+              "userPhotoURL": { "stringValue": match[:userPhotoURL] }
+            }
+          }
+        else
+          data = {
+            "fields": {
+              "user": { "stringValue": payee },
+              "userPhotoURL": { "stringValue": "/flags/Monzo.png" }
+            }
+          }
+        end
+        available_teams = []
+        response = JSON.parse(RestClient.get("#{base_url}/sweepstakes/worldcup/teams?pageSize=100").body)
+        response["documents"].each do |team|
+          available_teams << team["name"] if team["fields"]["user"]["stringValue"] == "TBC"
+        end
+        if available_teams.length > 0
+          url = "https://firestore.googleapis.com/v1/#{available_teams.sample.gsub(" ", "%20")}?updateMask.fieldPaths=user&updateMask.fieldPaths=userPhotoURL"
+          response = RestClient.patch(url, data.to_json, content_type: :json)
+          logger.info response.body
+          data = {
+            "fields": {
+              "pot": { "doubleValue": current_pot + 2 },
+            }
+          }
+          response = RestClient.patch("#{base_url}/sweepstakes/worldcup?updateMask.fieldPaths=pot", data.to_json, content_type: :json)
+          logger.info response.body
+        else
+          logger.info "No teams left for #{payee}, they will need a refund"
+        end
+      end
+    rescue => e
+      logger.info "Error: #{e.message}"
+    end
 
     respond_to do |format|
       format.html # webook.html.erb
