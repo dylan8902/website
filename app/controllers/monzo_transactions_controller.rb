@@ -97,7 +97,7 @@ class MonzoTransactionsController < ApplicationController
         payee = @webhook["data"]["counterparty"]["name"]
         logger.info "from #{payee}"
 
-        project = "pub-tracker-test"
+        project = "pub-tracker-live"
         base_url = "https://firestore.googleapis.com/v1/projects/#{project}/databases/(default)/documents"
         response = JSON.parse(RestClient.get("#{base_url}/sweepstakes/worldcup").body)
         current_pot = response["fields"]["pot"].values[0].to_f
