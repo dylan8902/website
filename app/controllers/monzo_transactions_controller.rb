@@ -147,6 +147,11 @@ class MonzoTransactionsController < ApplicationController
         else
           logger.info "No teams left for #{payee}, they will need a refund"
         end
+      else
+        logger.info "This is not a ⚽ World Cup 2022 Sweepstake payment"
+        logger.info "#{@webhook["type"]} (#{@webhook["type"] == "transaction.created"})"
+        logger.info "#{@webhook["data"]["notes"].strip.downcase} (#{["⚽", "football"].include? @webhook["data"]["notes"].strip.downcase})"
+        logger.info "#{@webhook["data"]["amount"]} (#{@webhook["data"]["amount"] == 200})"
       end
     rescue => e
       logger.info "Error: #{e.message}"
