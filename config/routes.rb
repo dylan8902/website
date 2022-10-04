@@ -421,7 +421,7 @@ Rails.application.routes.draw do
       get "login"         => "devise/sessions#new",     as: "new_session"
       get "logout"        => "devise/sessions#destroy", as: "logout"
     end
-    resources :users,                                              only: [:show]
+    resources :users,                                              only: [:index, :show]
 
     get  "video"          => "video#index"
     get  "wall"           => "wall#index"
