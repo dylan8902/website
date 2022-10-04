@@ -168,6 +168,15 @@ rake db:migrate
 ```
 
 
+## Backup Database
+``` bash
+# Create backup on web server
+mysqldump dylan8902_production --ignore-table=dylan8902_production.analytics > /tmp/dylan8902_production.sql
+# Download backup from local machine
+scp root@dyl.anjon.es:/tmp/dylan8902_production.sql ~/Downloads/dylan8902_production.sql
+```
+
+
 ## Contribute
 
 Please feel free to make pull requests!
