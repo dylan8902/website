@@ -6,6 +6,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: Production
+      url: https://dyl.anjon.es/
     steps:
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
