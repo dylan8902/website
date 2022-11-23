@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source ~/.bashrc
+source ~/.bash_profile
 cd /home/rails
 git pull
 rake db:migrate RAILS_ENV=production
