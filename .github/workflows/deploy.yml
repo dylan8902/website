@@ -1,10 +1,11 @@
 name: Deploy
 on:
   push:
-    branches: [master]
-runs-on: ubuntu-latest
+    branches:
+      - master
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     steps:
       - name: Install SSH key
         uses: shimataro/ssh-key-action@v2
