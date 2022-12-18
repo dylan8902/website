@@ -450,6 +450,8 @@ Rails.application.routes.draw do
     get  "xss-workshop/1" => "xss_workshop#example1"
     get  "xss-workshop/2" => "xss_workshop#example2"
 
+    get  ".well-known/webfinger" => "static_pages#webfinger"
+
     match '*url'          => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
