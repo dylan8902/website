@@ -43,7 +43,7 @@ class Music::ArtistsController < ApplicationController
     @artist = Hash.new
 
     filename = Rails.root.join("json", "#{params[:id]}.json")
-    if File.exists?(filename) and File.mtime(filename) > Time.now - 2.weeks
+    if File.exist?(filename) and File.mtime(filename) > Time.now - 2.weeks
       @artist = JSON.load filename
     else
 

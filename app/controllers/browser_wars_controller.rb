@@ -8,7 +8,7 @@ class BrowserWarsController < ApplicationController
     Project.hit 27
 
     filename = Rails.root.join("json", "browser_wars.json")
-    if File.exists?(filename) and File.mtime(filename) > Time.now - 1.day
+    if File.exist?(filename) and File.mtime(filename) > Time.now - 1.day
       @browsers = JSON.load filename
     else
 
