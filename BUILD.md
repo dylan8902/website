@@ -91,9 +91,9 @@ cp config/server/unicorn /etc/default/unicorn
 rake db:create RAILS_ENV=production
 rake db:migrate RAILS_ENV=production
 rake assets:precompile RAILS_ENV=production
-cd ..
-chown -R rails rails/
-chgrp -R www-data rails/
+bin/webpack
+chown -R rails /home/rails/
+chgrp -R www-data /home/rails/
 service unicorn restart
 ```
 
