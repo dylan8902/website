@@ -91,15 +91,18 @@ class MonzoTransactionsController < ApplicationController
     @webhook = params
     logger.info "Webhook recieved, data: #{@webhook}"
 
+    sweepstake = "grand-national-2023"
+    emojis = ["🐎", "🐴", "🏇", "horse"]
+
     begin
-      if @webhook["type"] == "transaction.created" and ["⚽", "⚽️", "⚽︎", "football"].include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == 200
-        logger.info "This is a ⚽ World Cup 2022 Sweepstake payment"
+      if @webhook["type"] == "transaction.created" and emojis.include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == 200
+        logger.info "This is a #{sweepstake} payment"
         payee = @webhook["data"]["counterparty"]["name"]
         logger.info "from #{payee}"
 
         project = "pub-tracker-live"
         base_url = "https://firestore.googleapis.com/v1/projects/#{project}/databases/(default)/documents"
-        response = JSON.parse(RestClient.get("#{base_url}/sweepstakes/worldcup").body)
+        response = JSON.parse(RestClient.get("#{base_url}/sweepstakes/#{sweepstake}").body)
         current_pot = response["fields"]["pot"].values[0].to_f
         match = nil
         response = JSON.parse(RestClient.get("#{base_url}/users?pageSize=100&mask.fieldPaths=displayName&mask.fieldPaths=photoURL").body)
@@ -129,7 +132,7 @@ class MonzoTransactionsController < ApplicationController
           }
         end
         available_teams = []
-        response = JSON.parse(RestClient.get("#{base_url}/sweepstakes/worldcup/teams?pageSize=100").body)
+        response = JSON.parse(RestClient.get("#{base_url}/sweepstakes/#{sweepstake}/teams?pageSize=100").body)
         response["documents"].each do |team|
           available_teams << team["name"] if team["fields"]["user"]["stringValue"] == "TBC"
         end
@@ -142,15 +145,15 @@ class MonzoTransactionsController < ApplicationController
               "pot": { "doubleValue": current_pot + 2 },
             }
           }
-          response = RestClient.patch("#{base_url}/sweepstakes/worldcup?updateMask.fieldPaths=pot", data.to_json, content_type: :json)
+          response = RestClient.patch("#{base_url}/sweepstakes/#{sweepstake}?updateMask.fieldPaths=pot", data.to_json, content_type: :json)
           logger.info response.body
         else
           logger.info "No teams left for #{payee}, they will need a refund"
         end
       else
-        logger.info "This is not a ⚽ World Cup 2022 Sweepstake payment"
+        logger.info "This is not a #{sweepstake} payment"
         logger.info "#{@webhook["type"]} (#{@webhook["type"] == "transaction.created"})"
-        logger.info "#{@webhook["data"]["notes"].strip.downcase} (#{["⚽", "⚽️", "⚽︎", "football"].include? @webhook["data"]["notes"].strip.downcase})"
+        logger.info "#{@webhook["data"]["notes"].strip.downcase} (#{emojis.include? @webhook["data"]["notes"].strip.downcase})"
         logger.info "#{@webhook["data"]["amount"]} (#{@webhook["data"]["amount"] == 200})"
       end
     rescue => e
