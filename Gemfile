@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.2.0'
+ruby '3.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '>= 7.0.1', '< 7.1'
@@ -48,6 +48,7 @@ gem 'webpacker'
 gem 'unicorn'
 gem 'rake'
 gem 'redis'
+gem 'acme-client'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
