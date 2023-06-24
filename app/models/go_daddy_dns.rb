@@ -1,9 +1,9 @@
 class GoDaddyDns
 
-  def self.update_anjones_txt subdomain, value
+  def self.update_txt domain, subdomain, value
     auth = "sso-key #{Rails.application.secrets.go_daddy_key}:#{Rails.application.secrets.go_daddy_secret}"
     headers = { authorization: auth, content_type: :json, accept: :json }
-    url = "https://api.godaddy.com/v1/domains/anjon.es/records/TXT/#{subdomain}"
+    url = "https://api.godaddy.com/v1/domains/#{domain}/records/TXT/#{subdomain}"
     payload = [
       {
         "data" => value,
@@ -16,11 +16,11 @@ class GoDaddyDns
   end
 
   def self.update_dev_dylanjones_acme value
-    return update_anjones_txt "_acme-challenge.dev.dyl", value
+    return update_txt "amjon.es", "_acme-challenge.dev.dyl", value
   end
 
   def self.update_dylanjones_acme value
-    return update_anjones_txt "_acme-challenge.dyl", value
+    return update_txt "amjon.es", "_acme-challenge.dyl", value
   end
 
 end
