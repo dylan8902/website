@@ -30,7 +30,9 @@ vi config/secrets.yml
 - Set up yarn
 
 ``` bash
-brew install yarn
+brew install nvm yarn
+nvm use
+export NODE_OPTIONS=--openssl-legacy-provider
 yarn install
 ```
 
@@ -91,9 +93,10 @@ cp config/server/unicorn /etc/default/unicorn
 rake db:create RAILS_ENV=production
 rake db:migrate RAILS_ENV=production
 rake assets:precompile RAILS_ENV=production
+export NODE_OPTIONS=--openssl-legacy-provider
 bin/webpack
-chown -R rails /home/rails/
-chgrp -R www-data /home/rails/
+chown -R rails /home/rails
+chgrp -R www-data /home/rails
 service unicorn restart
 ```
 
@@ -111,14 +114,7 @@ service nginx restart
 ## Update Application
 
 ``` bash
-cd /home/rails
-git pull
-rake db:migrate RAILS_ENV=production
-rake assets:precompile RAILS_ENV=production
-cd ..
-chown -R rails rails/
-chgrp -R www-data rails/
-service unicorn restart
+/home/rails/bin/deploy
 ```
 
 
@@ -157,14 +153,6 @@ mysql
 ALTER DATABASE dylan8902_website CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
 ALTER TABLE tweets CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 ALTER TABLE monzo_transactions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
-```
-
-
-## Upgrade to Rails 7.0
-``` bash
-bundle update
-yarn install
-rake db:migrate
 ```
 
 
