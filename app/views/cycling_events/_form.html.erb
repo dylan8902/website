@@ -1,0 +1,73 @@
+<%= form_for(@cycling_event) do |f| %>
+
+	<section class="row">
+		<article class="col-md-4">
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :name %>">
+				<%= f.label :name, class: "control-label" %>
+				<%= f.text_field :name, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :name %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :location %>">
+				<%= f.label :location, class: "control-label" %>
+				<%= f.text_field :location, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :location %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :created_at %>">
+				<%= f.label :created_at, class: "control-label" %>
+				<%= f.text_field :created_at, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :created_at %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :link %>">
+				<%= f.label :link, class: "control-label" %>
+				<%= f.text_field :link, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :link %></span>
+			</div>
+		</article>
+		<article class="col-md-2">
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :sport %>">
+				<%= f.label :sport, class: "control-label" %>
+				<%= f.select :sport, ["Ride", "Run"], {}, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :sport %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :distance %>">
+				<%= f.label :distance, class: "control-label" %>
+				<div class="input-group">
+					<%= f.text_field :distance, class: "form-control" %>
+					<span class="input-group-addon">m</span>
+				</div>
+				<span class="help-block"><%= errors_for @cycling_event, :distance %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :lat %>">
+				<%= f.label :lat, class: "control-label" %>
+				<%= f.text_field :lat, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :lat %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :lng %>">
+				<%= f.label :lng, class: "control-label" %>
+				<%= f.text_field :lng, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :lng %></span>
+			</div>
+		</article>
+		<article class="col-md-2">
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :finish_time %>">
+				<%= f.label :finish_time, class: "control-label" %>
+				<div class="input-group">
+					<%= f.text_field :finish_time, class: "form-control" %>
+					<span class="input-group-addon">s</span>
+				</div>
+				<span class="help-block"><%= errors_for @cycling_event, :finish_time %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :position %>">
+				<%= f.label :position, class: "control-label" %>
+				<%= f.text_field :position, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :position %></span>
+			</div>
+			<div class="form-group<%= " has-error" if errors_for @cycling_event, :training %>">
+				<%= f.label :training, class: "control-label" %>
+				<%= f.check_box :training, class: "form-control" %>
+				<span class="help-block"><%= errors_for @cycling_event, :training %></span>
+			</div>
+		</article>
+	</section>
+	<div class="actions"><%= f.submit "Submit", class: "btn btn-primary" %></div>
+<% end %>

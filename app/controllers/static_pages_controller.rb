@@ -158,7 +158,7 @@ class StaticPagesController < ApplicationController
     BbcTwitter.update
     PringlesPrice.update
     Gig.update
-    RunningEvent.update
+    StravaEvent.update
     MonzoTransaction.update
     TextMessage.update
     Photo.update

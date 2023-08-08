@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_07_225945) do
   create_table "accounts", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "number"
     t.string "name"
@@ -362,7 +362,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "quiz_questions", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
+  create_table "quiz_questions", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.text "title"
     t.text "correct_answer"
     t.text "answer_2"
@@ -373,7 +373,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
     t.boolean "visible", default: false
   end
 
-  create_table "quiz_users", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
+  create_table "quiz_users", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.text "nickname"
     t.integer "points", default: 0
     t.datetime "created_at", precision: nil
@@ -391,23 +391,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "running_events", id: :integer, charset: "utf8mb3", force: :cascade do |t|
-    t.string "name"
-    t.string "location"
-    t.decimal "lat", precision: 10, scale: 7
-    t.decimal "lng", precision: 10, scale: 7
-    t.integer "finish_time"
-    t.boolean "training"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.integer "position"
-    t.string "link"
-    t.integer "distance"
-    t.text "kml", size: :medium
-    t.string "strava_id"
-  end
-
-  create_table "security_vulnerabilities", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
+  create_table "security_vulnerabilities", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "domain"
     t.string "url"
     t.boolean "fixed"
@@ -427,6 +411,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
+  create_table "strava_events", id: :integer, charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.decimal "lat", precision: 10, scale: 7
+    t.decimal "lng", precision: 10, scale: 7
+    t.integer "finish_time"
+    t.boolean "training"
+    t.datetime "created_at", precision: nil
+    t.datetime "updated_at", precision: nil
+    t.integer "position"
+    t.string "link"
+    t.integer "distance"
+    t.text "kml", size: :medium
+    t.string "strava_id"
+    t.string "sport", default: "Run"
+    t.index ["sport"], name: "index_strava_events_on_sport"
+  end
+
   create_table "text_messages", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "contact", null: false
     t.text "text"
@@ -442,7 +444,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "trains", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
+  create_table "trains", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "origin"
     t.string "destination"
     t.string "operator"
@@ -499,7 +501,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
     t.datetime "updated_at", precision: nil
   end
 
-  create_table "wedding_rsvps", id: :integer, charset: "utf8mb3", collation: "utf8_unicode_ci", force: :cascade do |t|
+  create_table "wedding_rsvps", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.boolean "rsvp"
     t.text "notes"

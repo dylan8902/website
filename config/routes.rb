@@ -216,6 +216,12 @@ Rails.application.routes.draw do
     get  "cleversounds"   => "cleversounds#index"
     get  "clock"          => "clock#index"
     get  "cron"           => "static_pages#cron"
+
+    get  "cycling/all"    => "cycling_events#all",     as: "all_cycling_events"
+    get  "cycling/map"    => "cycling_events#map",     as: "cycling_events_map"
+    get  "cycling/stats"  => "cycling_events#stats",   as: "cycling_events_stats"
+    resources :cycling_events,  path: "cycling"
+
     get  "deepdive"       => "deep_dive#index"
 
     get  "drop/:uri" => "drops#show", as: "drop"

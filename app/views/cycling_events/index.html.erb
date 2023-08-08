@@ -1,0 +1,43 @@
+<% provide(:title, "Cycling") %>
+<% provide(:description, "All my official cycling timings for events and traing times.") %>
+
+<h1>Cycling</h1>
+<ol class="breadcrumb">
+	<li class="active">Cycling</li>
+	<li><%= link_to 'Statistics', cycling_events_stats_path %></li>
+	<li><%= link_to 'Map', cycling_events_map_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-7">
+		<table class="table table-striped">
+			<thead>
+				<th></th>
+				<th>Date</th>
+				<th>Event</th>
+				<th>Time</th>
+				<th>Position</th>
+			</thead>
+			<tbody>
+			<% @cycling_events.each do |cycling_event| %>
+				<tr>
+					<td><%= solid_icon("flag-checkered") unless cycling_event.training %></td>
+					<td><%= timestamp cycling_event.created_at %></td>
+					<td><%= link_to cycling_event.name, cycling_event %></td>
+					<td><%= cycling_event.timing %></td>
+					<td><%= cycling_event.position.ordinalize if cycling_event.position %></td>
+				</tr>
+			<% end %>
+			</tbody>
+		</table>
+		<%= paginate @cycling_events %>
+	</article>
+	<article class="col-md-5">
+		<article class="well">
+			<h2>Total Distance</h2>
+			<p style="font-size:300%"><%= solid_icon("road") %> <%= number_with_delimiter CyclingEvent.sum(:distance) %>m</p>
+		</article>
+	</article>
+</section>
+
+<%= link_to "New", new_cycling_event_path, class: "btn btn-primary" if current_user and current_user.admin %>
