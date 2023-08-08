@@ -41,7 +41,7 @@ class RunningEventsController < ApplicationController
     @running_event = RunningEvent.find(params[:id])
     @locations = @running_event.points
     @zoom = "15"
-    @pace = @running_event.distance.to_f / @running_event.finish_time.to_f
+    @pace = (@running_event.finish_time.to_f / 60) / (@running_event.distance.to_f / 1000)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -58,7 +58,7 @@ class RunningEventsController < ApplicationController
     @stats = {
       total_distance: RunningEvent.sum(:distance),
       total_time: RunningEvent.sum(:finish_time),
-      average_speed: RunningEvent.sum(:distance).to_f / RunningEvent.sum(:finish_time).to_f
+      average_speed: (RunningEvent.sum(:finish_time).to_f / 60) / (RunningEvent.sum(:distance).to_f / 1000)
     }
 
     respond_to do |format|
