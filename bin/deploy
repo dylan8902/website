@@ -6,6 +6,7 @@ cd /home/rails
 git pull
 rake db:migrate RAILS_ENV=production
 export NODE_OPTIONS=--openssl-legacy-provider
+yarn install
 rake assets:precompile RAILS_ENV=production
 bin/webpack
 chown -R rails /home/rails

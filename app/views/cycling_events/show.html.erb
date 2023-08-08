@@ -1,0 +1,63 @@
+<% provide(:title, "Cycling:: #{@cycling_event.name}") %>
+<% provide(:description, "I took part in #{@cycling_event.name}") %>
+<% provide(:map, "map") %>
+
+<h1>Cycling</h1>
+<ol class="breadcrumb">
+	<li><%= link_to 'Cycling', cycling_events_path %></li>
+	<li class="active"><%= @cycling_event.name %></li>
+	<li><%= link_to 'Statistics', cycling_events_stats_path %></li>
+	<li><%= link_to 'Map', cycling_events_map_path %></li>
+</ol>
+
+<section class="row">
+	<article class="col-md-2 col-sm-2 col-xs-4">
+		<%= @cycling_event.map_image %>
+	</article>
+	<article class="col-md-10 col-sm-10 col-xs-8">
+		<h2><%= @cycling_event.name %></h2>
+		<p><%= @cycling_event.location %></p>
+		<p><%= timestamp @cycling_event.created_at %></p>
+	</article>
+</section>
+
+<section class="row">
+
+<% if @cycling_event.distance %>
+	<article class="col-md-4 col-sm-6">
+		<p class="well" style="font-size:300%"><%= solid_icon("road") %> <%= number_with_delimiter @cycling_event.distance %>m</p>
+	</article>
+<% end %>
+
+<% if @cycling_event.timing %>
+	<article class="col-md-4 col-sm-6">
+		<p class="well" style="font-size:300%"><%= solid_icon("stopwatch") %> <%= @cycling_event.timing %></p>
+	</article>
+<% end %>
+
+<% if @cycling_event.position %>
+	<article class="col-md-4 col-sm-6">
+		<p class="well" style="font-size:300%"><%= solid_icon("trophy") %> <%= @cycling_event.position.ordinalize %></p>
+	</article>
+<% end %>
+
+	<article class="col-md-4 col-sm-6">
+		<p class="well" style="font-size:300%"><%= solid_icon("rocket") %> <%= number_with_precision(@pace, precision: 3, delimiter: '.') %>m/s</p>
+	</article>
+
+</section>
+
+<% if @cycling_event.kml %>
+
+<section class="row">
+	<article class="col-md-12">
+		<h2>Route</h2>
+		<div id="map" style="width:100%;height:600px"></div>
+		<%= render 'common/map_polygon' %>
+	</article>
+</section>
+
+<% end %>
+
+<%= link_to "Edit", edit_cycling_event_path(@cycling_event), class: "btn btn-primary" if current_user and current_user.admin %>
+<%= link_to 'Back', cycling_events_path %>

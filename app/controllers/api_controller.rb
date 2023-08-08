@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
-  
+
   # GET /api
   # GET /api.json
   # GET /api.xml
@@ -21,9 +21,10 @@ class ApiController < ApplicationController
       { url: "/iphone", description: "Returns location information stored in iPhone" },
       { url: "/browserwars", description: "Returns twitter information for major browsers" },
       { url: "/bbc-twitter", description: "Returns today's BBC headlines that @metion Twitter or Tweets" },
-      { url: "/running", description: "Returns running event information for events I run in" }
+      { url: "/running", description: "Returns running event information for events I run in" },
+      { url: "/cycling", description: "Returns cycling event information for events I cycle in" }
     ]
-    
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @methods, callback: params[:callback] }

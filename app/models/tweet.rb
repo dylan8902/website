@@ -10,7 +10,12 @@ class Tweet < ApplicationRecord
       config.access_token_secret = Rails.application.secrets.twitter_oauth_token_secret
     end
 
-    tweets = client.user_timeline("dylan8902")
+    begin
+      tweets = client.user_timeline("dylan8902")
+    rescue => e
+      logger.info "Twitter update problem: #{e.message}"
+      return
+    end
     tweets.each do |tweet|
       unless tweet.geo.nil?
         lat = tweet.geo.coordinates[0]

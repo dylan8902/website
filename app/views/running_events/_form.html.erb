@@ -24,6 +24,11 @@
 			</div>
 		</article>
 		<article class="col-md-2">
+			<div class="form-group<%= " has-error" if errors_for @running_event, :sport %>">
+				<%= f.label :sport, class: "control-label" %>
+				<%= f.select :sport, ["Ride", "Run"], {}, class: "form-control" %>
+				<span class="help-block"><%= errors_for @running_event, :sport %></span>
+			</div>
 			<div class="form-group<%= " has-error" if errors_for @running_event, :distance %>">
 				<%= f.label :distance, class: "control-label" %>
 				<div class="input-group">

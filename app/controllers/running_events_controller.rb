@@ -127,7 +127,11 @@ class RunningEventsController < ApplicationController
 
     respond_to do |format|
       if @running_event.update(running_event_params)
-        format.html { redirect_to running_event_path(@running_event), notice: 'Running event was successfully updated.' }
+        if @running_event.sport == "Run"
+          format.html { redirect_to running_event_path(@running_event), notice: 'Running event was successfully updated.' }
+        elsif @running_event.sport == "Ride"
+          format.html { redirect_to cycling_event_path(@running_event), notice: 'Cycling event was successfully updated.' }
+        end
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -154,7 +158,7 @@ class RunningEventsController < ApplicationController
 
   private
     def running_event_params
-      params.require(:running_event).permit(:name, :location, :lat, :lng, :training, :link, :distance, :finish_time, :position, :created_at)
+      params.require(:running_event).permit(:name, :location, :lat, :lng, :training, :link, :distance, :finish_time, :position, :created_at, :sport)
     end
 
     def analytics
