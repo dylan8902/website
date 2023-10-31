@@ -229,6 +229,9 @@ Rails.application.routes.draw do
 
     get  "dudewheresmycar"=> "dude_wheres_my_car#index"
 
+    get  "duo-leaderboards/all" => "duo_leaderboards#all", as: "all_duo_leaderboards"
+    resources :duo_leaderboards, path: "duo-leaderboards"
+
     get  "episodes/add"   => "episodes#add"
     get  "episodes/all"   => "episodes#all"
     get  "episodes/stats" => "episodes#stats",        as: "episodes_stats"

@@ -1,0 +1,12 @@
+<% provide(:title, "Duo Leaderboard:: Edit") %>
+<% provide(:description, "Edit the #{@leaderboard.name} leaderboard.") %>
+
+<h1>Editing Leaderboard</h1>
+
+<section class="row">
+	<article class="col-md-5">
+		<%= render 'form' %>
+	</article>
+</section>
+
+<%= link_to 'Back', duo_leaderboards_path %>

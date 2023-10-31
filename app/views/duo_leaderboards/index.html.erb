@@ -1,0 +1,23 @@
+<% provide(:title, "Duo Leaderboards") %>
+<% provide(:description, "Custom Duolingo Leaderboards.") %>
+
+<h1>Duo Leaderboards</h1>
+
+<section class="row">
+	<article class="col-md-8">
+
+		<table class="table table-striped">
+			<% @leaderboards.each do |leaderboard| %>
+			<tr>
+				<td><%= leaderboard.name %></td>
+				<td><%= link_to leaderboard.name, duo_leaderboard_path(leaderboard) %></td>
+			</tr>
+			<% end %>
+		</table>
+		<%= paginate @leaderboards %>
+	</article>
+	<article class="col-md-4">
+		<h3>New Leaderboard</h3>
+		<%= render 'form' %>
+	</article>
+</section>

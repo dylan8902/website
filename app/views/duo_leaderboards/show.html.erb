@@ -1,0 +1,16 @@
+<% provide(:title, "Duo Leaderboard") %>
+<% provide(:description, "Edit the #{@leaderboard.name} leaderboard.") %>
+
+<h1>Leaderboard: <%= @leaderboard.name %></h1>
+
+<section class="row">
+	<article class="col-md-8">
+		<ol style="font-size:400%">
+		<% @leaderboard.ranked.each do |r| %>
+			<li><%= r[:user].name %> <%= r[:total] %></li>
+		<% end %>
+		</ol>
+	</article>
+</section>
+
+<%= link_to 'Back', duo_leaderboards_path %>
