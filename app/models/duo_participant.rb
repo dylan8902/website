@@ -15,7 +15,7 @@ class DuoParticipant < ApplicationRecord
       id: json["id"]
     ).first_or_initialize
 
-    participant.name = json["name"]
+    participant.name = json["name"] || json["username"]
     participant.photo =  "https:#{json["picture"]}/xlarge"
     participant.save
 
