@@ -1,5 +1,7 @@
 class DuoParticipant < ApplicationRecord
   has_and_belongs_to_many :duo_leaderboards
+  validates :id, presence: true, uniqueness: true
+  validates :name, presence: true
 
   def xp
     self.class.api_call "/users/#{self.id}/xp_summaries"
@@ -7,13 +9,17 @@ class DuoParticipant < ApplicationRecord
 
   def self.get id
     json = api_call "/users/#{id}?fields=username,name,totalXp,picture,id"
-    DuoParticipant.where(
+    return nil if json.nil?
+
+    participant = DuoParticipant.where(
       id: json["id"]
-    ).first_or_create.update(
-      id: json["id"],
-      name: json["name"],
-      photo: "https:#{json["picture"]}/xlarge"
-    )
+    ).first_or_initialize
+
+    participant.name = json["name"]
+    participant.photo =  "https:#{json["picture"]}/xlarge"
+    participant.save
+
+    return participant
   end
 
   def self.api_call url

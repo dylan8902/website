@@ -7,6 +7,18 @@
 	<article class="col-md-5">
 		<%= render 'form' %>
 	</article>
+
+	<article class="col-md-5">
+		<%= form_tag add_duo_participant_path method: :post do %>
+			<div class="form-group">
+				<label for="participant" class="control-label">Participant</label>
+				<input id="participant" type="number" name="participant" placeholder="Duolingo User ID" class="form-control">
+			</div>
+			<div class="actions">
+				<input type="submit" value="Add Participant" class="btn btn-danger btn-block">
+			</div>
+		<% end %>
+	</article>
 </section>
 
 <%= link_to 'Back', duo_leaderboards_path %>

@@ -1,5 +1,7 @@
 class DuoLeaderboard < ApplicationRecord
   has_and_belongs_to_many :duo_participants
+  validates :name, presence: true, uniqueness: true
+  validates :url, presence: true, uniqueness: true
 
   def ranked
     ranked = []

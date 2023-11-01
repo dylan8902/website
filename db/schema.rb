@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_185509) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_31_130837) do
   create_table "accounts", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "number"
     t.string "name"
@@ -196,6 +196,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_185509) do
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["url"], name: "index_duo_leaderboards_on_url", unique: true
   end
 
   create_table "duo_leaderboards_participants", id: false, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
