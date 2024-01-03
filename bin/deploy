@@ -4,6 +4,7 @@ source ~/.bashrc
 source ~/.bash_profile
 cd /home/rails
 git pull
+bundle install
 rake db:migrate RAILS_ENV=production
 export NODE_OPTIONS=--openssl-legacy-provider
 yarn install
