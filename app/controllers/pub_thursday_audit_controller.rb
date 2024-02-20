@@ -26,17 +26,11 @@ class PubThursdayAuditController < ApplicationController
     response = JSON.parse(RestClient.get(url).body)
     documents.concat response["documents"]
 
-    next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
-    response = JSON.parse(RestClient.get(next_page).body)
-    documents.concat response["documents"]
-
-    next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
-    response = JSON.parse(RestClient.get(next_page).body)
-    documents.concat response["documents"]
-
-    next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
-    response = JSON.parse(RestClient.get(next_page).body)
-    documents.concat response["documents"]
+    4.times do
+      next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
+      response = JSON.parse(RestClient.get(next_page).body)
+      documents.concat response["documents"]
+    end
 
     documents.each do |session|
       ref = session["fields"]["userRef"]["referenceValue"]
@@ -82,6 +76,14 @@ class PubThursdayAuditController < ApplicationController
     @users.delete_if do |k,v|
       v[:illegal].nil?
     end
+
+    @worst_offenders = []
+    @users.each do |key, user|
+      hours = user[:sessions].map { |session| session[:end].to_i - session[:start].to_i }.sum.to_f / 60 / 60
+      @worst_offenders << { user: user.except(:sessions), number: user[:sessions].length, hours: hours.round(2)  }
+    end
+
+    @worst_offenders.sort! { |a, b| b[:hours] <=> a[:hours] }
 
     respond_to do |format|
       format.html # index.html.erb
