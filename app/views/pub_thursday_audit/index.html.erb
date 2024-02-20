@@ -1,0 +1,36 @@
+<% provide(:title, "Pub Thursday Audit") %>
+<% provide(:description, "Due to a small bug of allowing users to have more than one active session, an audit needs to occur") %>
+
+<h1>Pub Thursday Audit</h1>
+
+<p class="well">
+	Due to a severe security vulnerability on the Pub Tursday backed, clients have been able to trigger multiple check-in sessions inflating their time spent in pub.
+	Here is an audit of sessions where they overlap another.
+</p>
+
+<section class="row">
+  <% @users.each do |key, user| %>
+	<article class="col-md-4">
+		<h2>
+			<img alt="Gravatar" width="50" height="50" class="img-circle" src="<%= user[:photo] %>">
+			<%= user[:name] %>
+		</h2>
+		<% user[:sessions].each do |session| %>
+		<div style="margin-bottom:24px">
+			<h4>
+				<a href="<%= session[:url] %>" target="_blank">
+					<%= session[:start].strftime('%d/%m/%Y') %>
+					<%= session[:start].strftime('%H:%M:%S') %> - <%= session[:end].strftime('%H:%M:%S') %>
+				</a>
+			</h4>
+			<h5><%= session[:location] %></h6>
+			<p>
+				Overlaps with <a href="<%= session[:within][:url] %>" target="_blank">another session</a>
+				<%= session[:within][:start].strftime('%H:%M:%S') %> -
+				<%= session[:within][:end].strftime('%H:%M:%S') %>
+			</p>
+		</div>
+		<% end %>
+	</article>
+	<% end %>
+</section>
