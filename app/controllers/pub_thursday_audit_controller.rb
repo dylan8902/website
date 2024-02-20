@@ -1,7 +1,5 @@
 class PubThursdayAuditController < ApplicationController
   include ErrorHelper
-  before_action :authenticate_user!, except: [:index, :show, :all]
-  before_action :authenticate_admin!, except: [:index, :show, :all]
 
 
   # GET /pub-thursday-audit
