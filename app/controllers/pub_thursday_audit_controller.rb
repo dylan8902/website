@@ -26,8 +26,16 @@ class PubThursdayAuditController < ApplicationController
     response = JSON.parse(RestClient.get(url).body)
     documents.concat response["documents"]
 
-    url = "#{url}&pageToken=#{response["nextPageToken"]}"
-    response = JSON.parse(RestClient.get(url).body)
+    next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
+    response = JSON.parse(RestClient.get(next_page).body)
+    documents.concat response["documents"]
+
+    next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
+    response = JSON.parse(RestClient.get(next_page).body)
+    documents.concat response["documents"]
+
+    next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
+    response = JSON.parse(RestClient.get(next_page).body)
     documents.concat response["documents"]
 
     documents.each do |session|
