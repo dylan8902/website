@@ -8,11 +8,24 @@
 	Here is an audit of sessions where they overlap another.
 </p>
 
+<h3>Worst Offenders</h2>
+<table class="table">
+	<% @worst_offenders.each do |offender| %>
+	<tr>
+		<td><img width="25" height="25" class="img-circle" src="<%= offender[:user][:photo] %>"></td>
+		<td><%= offender[:user][:name] %></td>
+		<td><%= offender[:number] %> dodgy sessions</td>
+		<td><%= offender[:hours] %> dodgy hours</td>
+	</tr>
+	<% end %>
+</table>
+
+<h3>Raw Data</h3>
 <section class="row">
   <% @users.each do |key, user| %>
 	<article class="col-md-4">
 		<h2>
-			<img alt="Gravatar" width="50" height="50" class="img-circle" src="<%= user[:photo] %>">
+			<img width="50" height="50" class="img-circle" src="<%= user[:photo] %>">
 			<%= user[:name] %>
 		</h2>
 		<% user[:sessions].each do |session| %>
