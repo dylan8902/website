@@ -1,84 +1,100 @@
 class PubThursdayAuditController < ApplicationController
   include ErrorHelper
 
+  FILENAME = Rails.root.join("json", "pub-thursday-audit.json")
+
 
   # GET /pub-thursday-audit
   # GET /pub-thursday-audit.json
   # GET /pub-thursday-audit.xml
   def index
+    if File.exist?(FILENAME) and params[:refresh].nil?
+      @users = load_users
+    else
+      project = "pub-tracker-live"
+      api_url = "https://firestore.googleapis.com/v1/"
+      base_url = "#{api_url}projects/#{project}/databases/(default)/documents"
 
-    project = "pub-tracker-live"
-    api_url = "https://firestore.googleapis.com/v1/"
-    base_url = "#{api_url}projects/#{project}/databases/(default)/documents"
+      @users = {}
 
-    @users = {}
+      response = JSON.parse(RestClient.get("#{base_url}/users?mask.fieldPaths=displayName&mask.fieldPaths=photoURL&pageSize=300").body)
+      response["documents"].each do |user|
+        display_name = user["fields"]["displayName"]["stringValue"]
+        photo_url = user["fields"]["photoURL"]["stringValue"]
+        @users[user["name"]] = { name: display_name, photo: photo_url, sessions: [] }
+      end
 
-    response = JSON.parse(RestClient.get("#{base_url}/users?mask.fieldPaths=displayName&mask.fieldPaths=photoURL&pageSize=300").body)
-    response["documents"].each do |user|
-      display_name = user["fields"]["displayName"]["stringValue"]
-      photo_url = user["fields"]["photoURL"]["stringValue"]
-      @users[user["name"]] = { name: display_name, photo: photo_url, sessions: [] }
-    end
+      documents = []
 
-    documents = []
-
-    url = "#{base_url}/sessions?orderBy=startTime%20desc&mask.fieldPaths=startTime&mask.fieldPaths=endTime&mask.fieldPaths=userRef&mask.fieldPaths=locationName&pageSize=300"
-    response = JSON.parse(RestClient.get(url).body)
-    documents.concat response["documents"]
-
-    4.times do
-      next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
-      response = JSON.parse(RestClient.get(next_page).body)
+      url = "#{base_url}/sessions?orderBy=startTime%20desc&mask.fieldPaths=startTime&mask.fieldPaths=endTime&mask.fieldPaths=userRef&mask.fieldPaths=locationName&pageSize=300"
+      response = JSON.parse(RestClient.get(url).body)
       documents.concat response["documents"]
-    end
 
-    documents.each do |session|
-      ref = session["fields"]["userRef"]["referenceValue"]
-      start_time = session["fields"]["startTime"]["timestampValue"]
-      end_time = session["fields"]["endTime"]["timestampValue"]
-      location = session["fields"]["locationName"]["stringValue"]
-      @users[ref][:sessions] << {
-        id: session["name"],
-        url: "#{api_url}#{session["name"]}",
-        start: DateTime.parse(start_time),
-        end: DateTime.parse(end_time),
-        location: location
-      }
-    end
+      4.times do
+        next_page = "#{url}&pageToken=#{response["nextPageToken"]}"
+        response = JSON.parse(RestClient.get(next_page).body)
+        documents.concat response["documents"]
+      end
 
-    @users.delete_if do |k,v|
-      v[:sessions].empty?
-    end
+      documents.each do |session|
+        ref = session["fields"]["userRef"]["referenceValue"]
+        start_time = DateTime.parse(session["fields"]["startTime"]["timestampValue"])
+        end_time = DateTime.parse(session["fields"]["endTime"]["timestampValue"])
+        location = session["fields"]["locationName"]["stringValue"]
+        @users[ref][:sessions] << {
+          id: session["name"].split('/').last,
+          url: "#{api_url}#{session["name"]}",
+          start: start_time,
+          end: end_time,
+          duration: TimeDifference.between(start_time, end_time).humanize,
+          location: location
+        }
+      end
 
-    @users.each do |key, user|
-      user[:sessions].each do |session|
-        user[:sessions].each do |other_session|
-          if
-            (other_session[:start] > session[:start] and other_session[:end] < session[:end]) ||
-            (other_session[:start] < session[:start] and other_session[:end] > session[:end]) ||
-            (other_session[:start] > session[:start] and other_session[:start] < session[:end] and other_session[:end] > session[:end]) ||
-            (other_session[:start] < session[:start] and other_session[:end] < session[:end] and other_session[:end] > session[:start])
-            session[:within] = {
-              id: other_session[:id],
-              url: other_session[:url],
-              start: other_session[:start],
-              end: other_session[:end]
-            }
-            user[:illegal] = true
+      @users = @users.values
+
+      @users.delete_if do |user|
+        user[:sessions].empty?
+      end
+
+      @users.each do |user|
+        user[:sessions].each do |session|
+          user[:sessions].each do |other_session|
+            if
+              (other_session[:start] > session[:start] and other_session[:end] < session[:end]) ||
+              (other_session[:start] < session[:start] and other_session[:end] > session[:end]) ||
+              (other_session[:start] > session[:start] and other_session[:start] < session[:end] and other_session[:end] > session[:end]) ||
+              (other_session[:start] < session[:start] and other_session[:end] < session[:end] and other_session[:end] > session[:start])
+              session[:within] = Marshal.load(Marshal.dump(other_session))
+              session[:within][:longer] = (other_session[:end] - other_session[:start]) > (session[:end] - session[:start])
+              user[:illegal] = true
+            end
           end
         end
-      end
-      user[:sessions].delete_if do |session|
-        session[:within].nil?
-      end
-    end
 
-    @users.delete_if do |k,v|
-      v[:illegal].nil?
+        user[:sessions].delete_if do |session|
+          session[:within].nil?
+        end
+      end
+
+      @users.delete_if do |user|
+        user[:illegal].nil?
+      end
+
+      begin
+        File.open(FILENAME, "w") do |f|
+          f.write(@users.to_json)
+        end
+        File.open("#{FILENAME}.#{DateTime.now.iso8601}", "w") do |f|
+          f.write(@users.to_json)
+        end
+      rescue SystemStackError => e
+        puts e.inspect
+      end
     end
 
     @worst_offenders = []
-    @users.each do |key, user|
+    @users.each do |user|
       hours = user[:sessions].map { |session| session[:end].to_i - session[:start].to_i }.sum.to_f / 60 / 60
       @worst_offenders << { user: user.except(:sessions), number: user[:sessions].length, hours: hours.round(2)  }
     end
@@ -87,8 +103,30 @@ class PubThursdayAuditController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @users, callback: params[:callback] }
-      format.xml { render xml: @users }
+      format.json { render json: @worst_offenders, callback: params[:callback] }
+      format.xml { render xml: @worst_offenders }
     end
   end
+
+
+
+
+
+  def load_users
+    users = JSON.load(FILENAME, nil, { symbolize_names: true, create_additions: nil })
+    # Fix timestamps
+    users.each do |user|
+      user[:sessions].each do |session|
+        session[:start] = DateTime.parse(session[:start])
+        session[:end] = DateTime.parse(session[:end])
+        if session[:within]
+          session[:within][:start] = DateTime.parse(session[:within][:start])
+          session[:within][:end] = DateTime.parse(session[:within][:end])
+        end
+      end
+    end
+
+    return users
+  end
+
 end

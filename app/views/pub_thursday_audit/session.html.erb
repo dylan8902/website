@@ -1,0 +1,41 @@
+
+<h1>Pub Thursday Audit</h1>
+
+<p class="well">
+	Due to a severe security vulnerability on the Pub Tursday backed, clients have been able to trigger multiple check-in @sessions inflating their time spent in pub.
+	Here is an audit of sessions where they overlap another.
+</p>
+
+<h2><%= @session[:id] %></h2>
+
+<h4>
+  <a href="<%= @session[:url] %>" target="_blank">
+    <%= @session[:start].strftime('%d/%m/%Y') %>
+    <%= @session[:start].strftime('%H:%M:%S') %> - <%= @session[:end].strftime('%H:%M:%S') %>
+  </a>
+  </h4>
+  <h6><%= @session[:duration] %></h6>
+  <h5><%= @session[:location] %></h5>
+  <dl style="font-family:monospace">
+    <dt><%= @session[:start].strftime('T%Y') %></dt>
+    <dd><%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds * 1000).ceil %></dd>
+    <dt><%= @session[:start].strftime('T%YM%m') %></dt>
+    <dd><%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds * 1000).ceil %></dd>
+    <dt><%= @session[:start].strftime('T%YW%V') %></dt>
+    <dd><%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds * 1000).ceil %></dd>
+    <dt>Ttotal</dt>
+    <dd><%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds * 1000).ceil %></dd>
+    <dt>totalTime</dt>
+    <dd><%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds).ceil %></dd>
+    <dt>yearTime</dt>
+    <dd><%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds).ceil %></dd>
+  </dl>
+<p>
+  Overlaps with <a href="<%= @session[:within][:url] %>" target="_blank">another @session</a>
+  <%= @session[:within][:start].strftime('%H:%M:%S') %> -
+  <%= @session[:within][:end].strftime('%H:%M:%S') %>
+  (<%= @session[:within][:duration] %>)
+  <% if @session[:within][:longer] %>
+    <b>Longer</b>
+  <% end %>
+</p>
