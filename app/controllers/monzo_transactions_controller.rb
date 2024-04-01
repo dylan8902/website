@@ -91,7 +91,7 @@ class MonzoTransactionsController < ApplicationController
     @webhook = params
     logger.info "Webhook recieved, data: #{@webhook}"
 
-    sweepstake = "grand-national-2023"
+    sweepstake = "grand-national-2024"
     emojis = ["🐎", "🐴", "🏇", "horse"]
 
     begin
