@@ -31,36 +31,30 @@
 		<% user[:sessions].each do |session| %>
 		<div style="margin-bottom:24px">
 			<h4>
-				<a href="/pub-thursday-audit/<%= session[:id] %>" target="_blank">
+				<a href="<%= pub_thursday_audit_path %>/<%= session[:id] %>">
 					<%= session[:start].strftime('%d/%m/%Y') %>
 					<%= session[:start].strftime('%H:%M:%S') %> - <%= session[:end].strftime('%H:%M:%S') %>
 				</a>
 				</h4>
 				<h6><%= session[:duration] %></h6>
 				<h5><%= session[:location] %></h5>
-				<dl style="font-family:monospace">
-					<dt><%= session[:start].strftime('T%Y') %></dt>
-					<dd><%= (TimeDifference.between(session[:end], session[:start]).in_seconds * 1000).ceil %></dd>
-					<dt><%= session[:start].strftime('T%YM%m') %></dt>
-					<dd><%= (TimeDifference.between(session[:end], session[:start]).in_seconds * 1000).ceil %></dd>
-					<dt><%= session[:start].strftime('T%YW%V') %></dt>
-					<dd><%= (TimeDifference.between(session[:end], session[:start]).in_seconds * 1000).ceil %></dd>
-					<dt>Ttotal</dt>
-					<dd><%= (TimeDifference.between(session[:end], session[:start]).in_seconds * 1000).ceil %></dd>
-					<dt>totalTime</dt>
-					<dd><%= (TimeDifference.between(session[:end], session[:start]).in_seconds).ceil %></dd>
-					<dt>yearTime</dt>
-					<dd><%= (TimeDifference.between(session[:end], session[:start]).in_seconds).ceil %></dd>
-				</dl>
 			<p>
-				Overlaps with <a href="<%= session[:within][:url] %>" target="_blank">another session</a>
+			Overlaps within
+			<a href="<%= pub_thursday_audit_path %>/<%= session[:within][:id] %>">
+				<% if session[:within][:longer] %>
+					<b>a longer</b>
+					<% else %>
+					another
+				<% end %>
+				session
+			</a>
 				<%= session[:within][:start].strftime('%H:%M:%S') %> -
 				<%= session[:within][:end].strftime('%H:%M:%S') %>
 				(<%= session[:within][:duration] %>)
-				<% if session[:within][:longer] %>
-					<b>Longer</b>
-				<% end %>
 			</p>
+			<% if session[:within][:longer] %>
+				<span class="label label-danger">Delete me</span>
+			<% end %>
 		</div>
 		<% end %>
 	</article>

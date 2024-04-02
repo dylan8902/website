@@ -109,7 +109,32 @@ class PubThursdayAuditController < ApplicationController
   end
 
 
+  # GET /pub-thursday-audit/session-id
+  # GET /pub-thursday-audit/session-id.json
+  # GET /pub-thursday-audit/session-id.xml
+  def show
+    @session = find_session params[:id]
 
+    respond_to do |format|
+      format.html # session.html.erb
+      format.json { render json: @session, callback: params[:callback] }
+      format.xml { render xml: @session }
+    end
+  end
+
+
+  # POST /pub-thursday-audit/session-id
+  # POST /pub-thursday-audit/session-id.json
+  # POST /pub-thursday-audit/session-id.xml
+  def delete
+    @session = find_session params[:id]
+
+    respond_to do |format|
+      format.html # delete.html.erb
+      format.json { render json: @session, callback: params[:callback] }
+      format.xml { render xml: @session }
+    end
+  end
 
 
   def load_users
@@ -127,6 +152,18 @@ class PubThursdayAuditController < ApplicationController
     end
 
     return users
+  end
+
+  def find_session id
+    load_users.each do |user|
+      user[:sessions].each do |session|
+        if session[:id] == id
+          return session
+        end
+      end
+    end
+
+    render_404
   end
 
 end
