@@ -340,7 +340,11 @@ Rails.application.routes.draw do
     get  "pringles"       => "pringles_prices#index"
     get  "pubthursday"    => "pub_thursday#challenge"
     post "pubthursday"    => "pub_thursday#webhook"
-    get  "pub-thursday-audit"    => "pub_thursday_audit#index"
+
+    get  "pub-thursday-audit"     => "pub_thursday_audit#index"
+    get  "pub-thursday-audit/:id" => "pub_thursday_audit#show"
+    post "pub-thursday-audit/:id" => "pub_thursday_audit#delete"
+
     get  "qr"             => "qr#index"
     get  "reading"        => "reading#index"
     get  "realtime"       => "realtime#index"

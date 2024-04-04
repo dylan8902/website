@@ -3,6 +3,7 @@
 - Set up database
 ``` bash
 brew install mysql
+brew services start mysql
 ```
 
 - Setup Ruby and Rails

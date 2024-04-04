@@ -1,0 +1,40 @@
+
+<h1>Pub Thursday Audit</h1>
+
+<ol class="breadcrumb">
+	<li><%= link_to 'Pub Thursday Audit', pub_thursday_audit_path %></li>
+	<li class="active"><%= @session[:id] %></li>
+</ol>
+
+<h2>
+  <%= @session[:start].strftime('%d/%m/%Y') %>
+  <%= @session[:start].strftime('%H:%M:%S') %> - <%= @session[:end].strftime('%H:%M:%S') %>
+</h2>
+<h3><%= @session[:duration] %></h3>
+<h4><%= @session[:location] %></h4>
+<dl style="font-family:monospace">
+<% @timestamps.each do |k, v| %>
+  <dt><%= k %></dt>
+  <dd><%= v %></dd>
+<% end %>
+</dl>
+<p>
+Overlaps within
+<a href="<%= pub_thursday_audit_path %>/<%= @session[:within][:id] %>">
+  <% if @session[:within][:longer] %>
+    <b>a longer</b>
+    <% else %>
+    another
+  <% end %>
+  session
+</a>
+<%= @session[:within][:start].strftime('%H:%M:%S') %> -
+<%= @session[:within][:end].strftime('%H:%M:%S') %>
+(<%= @session[:within][:duration] %>)
+</p>
+
+<% if @session[:within][:longer] %>
+  <%= form_with do |form| %>
+    <button class="btn btn-danger">Delete</button>
+  <% end %>
+<% end %>

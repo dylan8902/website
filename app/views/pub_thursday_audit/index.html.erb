@@ -13,7 +13,7 @@
 	<% @worst_offenders.each do |offender| %>
 	<tr>
 		<td><img width="25" height="25" class="img-circle" src="<%= offender[:user][:photo] %>"></td>
-		<td><%= offender[:user][:name] %></td>
+		<td><a href="#user-<%= offender[:user][:id] %>"><%= offender[:user][:name] %></a></td>
 		<td><%= offender[:number] %> dodgy sessions</td>
 		<td><%= offender[:hours] %> dodgy hours</td>
 	</tr>
@@ -22,26 +22,41 @@
 
 <h3>Raw Data</h3>
 <section class="row">
-  <% @users.each do |key, user| %>
+  <% @users.each do |user| %>
 	<article class="col-md-4">
-		<h2>
+		<h2 id="user-<%= user[:id] %>">
 			<img width="50" height="50" class="img-circle" src="<%= user[:photo] %>">
 			<%= user[:name] %>
 		</h2>
 		<% user[:sessions].each do |session| %>
 		<div style="margin-bottom:24px">
 			<h4>
-				<a href="<%= session[:url] %>" target="_blank">
+				<a href="<%= pub_thursday_audit_path %>/<%= session[:id] %>">
 					<%= session[:start].strftime('%d/%m/%Y') %>
 					<%= session[:start].strftime('%H:%M:%S') %> - <%= session[:end].strftime('%H:%M:%S') %>
 				</a>
-			</h4>
-			<h5><%= session[:location] %></h6>
+				</h4>
+				<h6><%= session[:duration] %></h6>
+				<h5><%= session[:location] %></h5>
 			<p>
-				Overlaps with <a href="<%= session[:within][:url] %>" target="_blank">another session</a>
+			Overlaps within
+			<a href="<%= pub_thursday_audit_path %>/<%= session[:within][:id] %>">
+				<% if session[:within][:longer] %>
+					<b>a longer</b>
+					<% else %>
+					another
+				<% end %>
+				session
+			</a>
 				<%= session[:within][:start].strftime('%H:%M:%S') %> -
 				<%= session[:within][:end].strftime('%H:%M:%S') %>
+				(<%= session[:within][:duration] %>)
 			</p>
+			<% if session[:fixed] %>
+				<span class="label label-success">Fixed</span>
+			<% elsif session[:within][:longer] %>
+				<span class="label label-danger">Delete me</span>
+			<% end %>
 		</div>
 		<% end %>
 	</article>
