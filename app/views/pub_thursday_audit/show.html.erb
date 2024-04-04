@@ -13,18 +13,10 @@
 <h3><%= @session[:duration] %></h3>
 <h4><%= @session[:location] %></h4>
 <dl style="font-family:monospace">
-  <dt><%= @session[:start].strftime('T%Y') %></dt>
-  <dd>-<%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds * 1000).ceil %></dd>
-  <dt><%= @session[:start].strftime('T%YM%m') %></dt>
-  <dd>-<%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds * 1000).ceil %></dd>
-  <dt><%= @session[:start].strftime('T%YW%V') %></dt>
-  <dd>-<%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds * 1000).ceil %></dd>
-  <dt>Ttotal</dt>
-  <dd>-<%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds * 1000).ceil %></dd>
-  <dt>totalTime</dt>
-  <dd>-<%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds).ceil %></dd>
-  <dt>yearTime</dt>
-  <dd>-<%= (TimeDifference.between(@session[:end], @session[:start]).in_seconds).ceil %></dd>
+<% @timestamps.each do |k, v| %>
+  <dt><%= k %></dt>
+  <dd><%= v %></dd>
+<% end %>
 </dl>
 <p>
 Overlaps within

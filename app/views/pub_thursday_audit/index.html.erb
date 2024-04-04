@@ -13,7 +13,7 @@
 	<% @worst_offenders.each do |offender| %>
 	<tr>
 		<td><img width="25" height="25" class="img-circle" src="<%= offender[:user][:photo] %>"></td>
-		<td><%= offender[:user][:name] %></td>
+		<td><a href="#user-<%= offender[:user][:id] %>"><%= offender[:user][:name] %></a></td>
 		<td><%= offender[:number] %> dodgy sessions</td>
 		<td><%= offender[:hours] %> dodgy hours</td>
 	</tr>
@@ -24,7 +24,7 @@
 <section class="row">
   <% @users.each do |user| %>
 	<article class="col-md-4">
-		<h2>
+		<h2 id="user-<%= user[:id] %>">
 			<img width="50" height="50" class="img-circle" src="<%= user[:photo] %>">
 			<%= user[:name] %>
 		</h2>
@@ -52,7 +52,9 @@
 				<%= session[:within][:end].strftime('%H:%M:%S') %>
 				(<%= session[:within][:duration] %>)
 			</p>
-			<% if session[:within][:longer] %>
+			<% if session[:fixed] %>
+				<span class="label label-success">Fixed</span>
+			<% elsif session[:within][:longer] %>
 				<span class="label label-danger">Delete me</span>
 			<% end %>
 		</div>
