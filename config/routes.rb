@@ -427,7 +427,7 @@ Rails.application.routes.draw do
     get  "tweets/stats"   => "tweets#stats",          as: "tweets_stats"
     resources :tweets,                                             only: [:index, :show]
 
-    devise_for :users, path: "users", path_names: { sign_in: "login", sign_out: "logout", sign_up: "register" }
+    devise_for :users, path: "users", path_names: { sign_in: "login", sign_out: "logout", sign_up: "register", edit: "settings" }
     as :user do
       get "login"         => "devise/sessions#new",     as: "new_session"
       get "logout"        => "devise/sessions#destroy", as: "logout"
