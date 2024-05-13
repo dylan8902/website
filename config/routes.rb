@@ -178,6 +178,10 @@ Rails.application.routes.draw do
     get "listens/:id",   to: redirect("/music/listens/%{id}")
     get "playorslay",    to: redirect("/slayorplay")
 
+    #303s
+    get ".well-known/change-password", to: redirect("/users/settings", status: 303)
+    get ".well-known/security.txt", to: redirect("/security.txt", status: 303)
+
     get ""                => "static_pages#index",    as: "root"
 
     get  "accounts/all"   => "accounts#all",          as: "all_accounts"
