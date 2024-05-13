@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   include ErrorHelper
-  before_action :authenticate_user!, except [:show]
+  before_action :authenticate_user!, except: [:show]
   before_action :authenticate_admin!, only: [:index]
 
   # GET /users
