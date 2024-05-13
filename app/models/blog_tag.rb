@@ -9,7 +9,7 @@ class BlogTag < ApplicationRecord
 
 
   def to_param
-    URI::escape(tag.tag)
+    CGI::escape(tag.tag)
   end
 
 

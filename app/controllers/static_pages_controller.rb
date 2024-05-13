@@ -117,6 +117,38 @@ class StaticPagesController < ApplicationController
     end
   end
 
+  # GET /.well-known/webfinger
+  def webfinger
+    if params[:resource] == 'acct:dylan8902@dyl.anjon.es'
+      @webfinger = {
+        subject: "acct:dylan8902@infosec.exchange",
+        aliases: [
+          "https://infosec.exchange/@dylan8902",
+          "https://infosec.exchange/users/dylan8902"
+        ],
+        links: [
+          {
+            rel: "http://webfinger.net/rel/profile-page",
+            type: "text/html",
+            href: "https://infosec.exchange/@dylan8902"
+          },
+          {
+            rel: "self",
+            type: "application/activity+json",
+            href: "https://infosec.exchange/users/dylan8902"
+          },
+          {
+            rel: "http://ostatus.org/schema/1.0/subscribe",
+            template: "https://infosec.exchange/authorize_interaction?uri={uri}"
+          }
+        ]
+      }
+      render json: @webfinger
+    else
+      render json: "Who is #{params[:resource]}", status: :not_found
+    end
+  end
+
 
   # GET /cron
   # GET /cron.json
@@ -126,7 +158,7 @@ class StaticPagesController < ApplicationController
     BbcTwitter.update
     PringlesPrice.update
     Gig.update
-    RunningEvent.update
+    StravaEvent.update
     MonzoTransaction.update
     TextMessage.update
     Photo.update

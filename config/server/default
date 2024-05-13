@@ -76,4 +76,9 @@ server {
     proxy_pass http://app_server;
   }
 
+  error_page 502 /502.html;
+  location = /502.html {
+      root /home/rails/public;
+  }
+
 }

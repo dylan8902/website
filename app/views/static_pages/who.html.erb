@@ -1,6 +1,6 @@
 <% provide(:title, "About Me") %>
-<% provide(:description, "Hello! I am Dylan Jones from Llandrindod Wells who works at BT as a software engineer.") %>
-<% provide(:image, "http://farm8.staticflickr.com/7195/6869666753_a80f8d3f24_z.jpg") %>
+<% provide(:description, "Hello! I am Dylan Jones from Llandrindod Wells who works at BJSS as a Software Engineer.") %>
+<% provide(:image, "/images/head.jpg") %>
 
 <h1>About Me</h1>
 
@@ -30,8 +30,12 @@
 		<section class="row">
 			<article class="col-md-6">
 				<h4>Work</h4>
+				<p>I work as a consultant Software Engineer at <a href="https://bjss.com" target="_blank">BJSS</a>.</p>
 				<p>I joined the BT software engineering graduate scheme after my <abbr title="Bachelor of Engineering">BEng</abbr> degree in 2012.</p>
-				<p>I am currently working in Cardiff in BT Security, working on <a href="https://newsroom.bt.com/bt-launches-transformational-new-security-platform">a new security platform called 'Eagle-i'</a>.</p>
+				<p>
+					I worked in BT Security, working on <a href="https://newsroom.bt.com/bt-launches-transformational-new-security-platform">a new security platform called 'Eagle-i'</a>.
+					I built and ran BT's internal Cyber Defence platform, processing over a million security related events per second.
+				</p>
 			</article>
 			<article class="col-md-6">
 				<h4>Skills</h4>
@@ -49,7 +53,7 @@
 	</article>
 
 	<article class="col-md-4">
-		<img src="https://farm8.staticflickr.com/7195/6869666753_a80f8d3f24_z.jpg" alt="Me outside a pretty building" class="thumbnail">
+		<img src="/images/head.jpg" alt="My head" class="thumbnail">
 	</article>
 
 </section>
@@ -75,5 +79,6 @@
 		<%= link_to brand_icon("lastfm"), "http://www.last.fm/user/dylan8902" %>
 		<%= link_to brand_icon("strava"), "https://www.strava.com/athletes/23826417" %>
 		<%= link_to brand_icon("instagram"), "https://www.instagram.com/dylan8902/" %>
+		<%= link_to brand_icon("mastodon"), "https://infosec.exchange/@dylan8902" %>
 	</h3>
 </footer>

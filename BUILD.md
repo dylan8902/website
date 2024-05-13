@@ -1,11 +1,46 @@
 ## Develop
 
+- Set up database
 ``` bash
-brew install yarn certbot
-certbot --text --agree-tos --email dyl@anjon.es -d dev.dyl.anjon.es --manual --preferred-challenges dns --expand --renew-by-default --manual-public-ip-logging-ok certonly
-rails s -b 'ssl://dev.dyl.anjon.es:3000?key=/etc/letsencrypt/live/dev.dyl.anjon.es/privkey.pem&cert=/etc/letsencrypt/live/dev.dyl.anjon.es/fullchain.pem'
+brew install mysql
+brew services start mysql
 ```
 
+- Setup Ruby and Rails
+
+``` bash
+rvm install ruby-3.3.0 --reconfigure --enable-yjit --with-openssl-dir=$(brew --prefix openssl@1.1)
+rvm use 3.3.0 --default
+bundle install
+```
+
+- Set up SSL
+
+``` bash
+sudo certbot --text --agree-tos --email dyl@anjon.es -d dev.dyl.anjon.es --manual --preferred-challenges dns --expand --renew-by-default --manual-public-ip-logging-ok certonly
+sudo chown dylan8902 /etc/letsencrypt/live/dev.dyl.anjon.es/../../archive/dev.dyl.anjon.es/*
+```
+
+- Set the secrets in config/secrets.yml:
+
+``` bash
+cp config/secrets.yml.example config/secrets.yml
+vi config/secrets.yml
+```
+
+- Set up yarn
+
+``` bash
+brew install nvm yarn
+nvm use
+export NODE_OPTIONS=--openssl-legacy-provider
+yarn install
+```
+
+- Run in development mode
+``` bash
+rails s -b 'ssl://dev.dyl.anjon.es:3000?key=/etc/letsencrypt/live/dev.dyl.anjon.es/privkey.pem&cert=/etc/letsencrypt/live/dev.dyl.anjon.es/fullchain.pem'
+```
 
 ## Deploy
 
@@ -25,8 +60,8 @@ ssh-keygen -t rsa -C "your_email@example.com"
 rm -rf /home/rails
 git clone git@github.com:dylan8902/website.git /home/rails
 cd /home/rails
-rvm install 2.7.4
-rvm use 2.7.4 --default
+rvm install 3.3.0
+rvm use 3.3.0 --default
 bundle install
 ```
 
@@ -59,9 +94,10 @@ cp config/server/unicorn /etc/default/unicorn
 rake db:create RAILS_ENV=production
 rake db:migrate RAILS_ENV=production
 rake assets:precompile RAILS_ENV=production
-cd ..
-chown -R rails rails/
-chgrp -R www-data rails/
+export NODE_OPTIONS=--openssl-legacy-provider
+bin/webpack
+chown -R rails /home/rails
+chgrp -R www-data /home/rails
 service unicorn restart
 ```
 
@@ -79,14 +115,7 @@ service nginx restart
 ## Update Application
 
 ``` bash
-cd /home/rails
-git pull
-rake db:migrate RAILS_ENV=production
-rake assets:precompile RAILS_ENV=production
-cd ..
-chown -R rails rails/
-chgrp -R www-data rails/
-service unicorn restart
+/home/rails/bin/deploy
 ```
 
 
@@ -128,11 +157,12 @@ ALTER TABLE monzo_transactions CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_
 ```
 
 
-## Upgrade to Rails 7.0
+## Backup Database
 ``` bash
-bundle update
-yarn install
-rake db:migrate
+# Create backup on web server
+mysqldump dylan8902_production --ignore-table=dylan8902_production.analytics > /tmp/dylan8902_production.sql
+# Download backup from local machine
+scp root@dyl.anjon.es:/tmp/dylan8902_production.sql ~/Downloads/dylan8902_production.sql
 ```
 
 

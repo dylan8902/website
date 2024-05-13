@@ -10,12 +10,16 @@ class Music::ArtistsController < ApplicationController
     @artists = Array.new
 
     unless params[:q].nil? or params[:q].empty?
-      response = RestClient.get "http://musicbrainz.org/ws/2/artist/?fmt=json&limit=7&query=#{URI::escape(params[:q])}"
-      if response.code == 200
-        json = JSON.parse response.body
-        if json['artists']
-          @artists = json['artists']
+      begin
+        response = RestClient.get "http://musicbrainz.org/ws/2/artist/?fmt=json&limit=7&query=#{CGI::escape(params[:q])}"
+        if response.code == 200
+          json = JSON.parse response.body
+          if json['artists']
+            @artists = json['artists']
+          end
         end
+      rescue => e
+        logger.error e.message
       end
     end
 
@@ -39,12 +43,12 @@ class Music::ArtistsController < ApplicationController
     @artist = Hash.new
 
     filename = Rails.root.join("json", "#{params[:id]}.json")
-    if File.exists?(filename) and File.mtime(filename) > Time.now - 2.weeks
+    if File.exist?(filename) and File.mtime(filename) > Time.now - 2.weeks
       @artist = JSON.load filename
     else
 
       begin
-        response = RestClient.get "http://musicbrainz.org/ws/2/artist/#{URI::escape(params[:id])}?fmt=json&inc=aliases+tags"
+        response = RestClient.get "http://musicbrainz.org/ws/2/artist/#{CGI::escape(params[:id])}?fmt=json&inc=aliases+tags"
         if response.code == 200
           @artist = JSON.parse response.body
         end
@@ -54,7 +58,7 @@ class Music::ArtistsController < ApplicationController
 
       # The echonest API has gone
       #begin
-      #  response = RestClient.get "http://developer.echonest.com/api/v4/artist/profile?api_key=XACSR313AVJ9RJHE1&id=musicbrainz:artist:#{URI::escape(params[:id])}&format=json&bucket=id:7digital-UK&bucket=images&bucket=songs"
+      #  response = RestClient.get "http://developer.echonest.com/api/v4/artist/profile?api_key=XACSR313AVJ9RJHE1&id=musicbrainz:artist:#{CGI::escape(params[:id])}&format=json&bucket=id:7digital-UK&bucket=images&bucket=songs"
       #  if response.code == 200
       #    json = JSON.parse response.body
       #    @artist['echonest'] = json
@@ -70,19 +74,27 @@ class Music::ArtistsController < ApplicationController
       end
 
       unless seven.nil?
-        response = RestClient.get "http://api.7digital.com/1.2/artist/releases?artistid=#{seven}&oauth_consumer_key=7dtahps5452k&country=GB", accept: "application/json"
-        if response.code == 200
-          json = JSON.parse response.body
-          @artist['7digital'] = json
+        begin
+          response = RestClient.get "http://api.7digital.com/1.2/artist/releases?artistid=#{seven}&oauth_consumer_key=7dtahps5452k&country=GB", accept: "application/json"
+          if response.code == 200
+            json = JSON.parse response.body
+            @artist['7digital'] = json
+          end
+        rescue => e
+          logger.error e.message
         end
       end
 
-      response = RestClient.get "http://api.songkick.com/api/3.0/artists/mbid:#{URI::escape(params[:id])}/calendar.json?apikey=qF6dIhCO7OeobhpC"
-      if response.code == 200
-        json = JSON.parse response.body
-        if json['resultsPage']
-          @artist['songkick'] = json
+      begin
+        response = RestClient.get "http://api.songkick.com/api/3.0/artists/mbid:#{CGI::escape(params[:id])}/calendar.json?apikey=qF6dIhCO7OeobhpC"
+        if response.code == 200
+          json = JSON.parse response.body
+          if json['resultsPage']
+            @artist['songkick'] = json
+          end
         end
+      rescue => e
+        logger.error e.message
       end
 
       File.open(filename, "w") do |f|

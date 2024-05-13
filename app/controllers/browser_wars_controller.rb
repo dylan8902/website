@@ -8,7 +8,7 @@ class BrowserWarsController < ApplicationController
     Project.hit 27
 
     filename = Rails.root.join("json", "browser_wars.json")
-    if File.exists?(filename) and File.mtime(filename) > Time.now - 1.day
+    if File.exist?(filename) and File.mtime(filename) > Time.now - 1.day
       @browsers = JSON.load filename
     else
 
@@ -18,7 +18,7 @@ class BrowserWarsController < ApplicationController
         config.access_token        = Rails.application.secrets.twitter_oauth_token
         config.access_token_secret = Rails.application.secrets.twitter_oauth_token_secret
       end
-      browsers = client.users('opera', 'firefox', 'ie_uk', 'googlechrome', 'AppleSafari', 'MicrosoftEdge')
+      browsers = client.users('opera', 'firefox', 'ie_uk', 'googlechrome', 'MicrosoftEdge')
       File.open(filename, "w") do |f|
         f.write(browsers.to_json)
       end

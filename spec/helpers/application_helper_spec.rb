@@ -56,7 +56,7 @@ RSpec.describe ApplicationHelper do
   describe "icon" do
 
     it "prints the icon markup" do
-      expect(icon("test")).to eq("<i class=\"icon-test\"></i>".html_safe)
+      expect(icon("test")).to eq("<i class=\"far fa-test\"></i>".html_safe)
     end
 
   end
@@ -84,8 +84,12 @@ RSpec.describe ApplicationHelper do
 
   describe "get_age" do
 
+    before do
+      allow(Time).to receive(:now).and_return Time.new(2001,2,3)
+    end
+
     it "returns my age today" do
-      expect(get_age).to eq(30)
+      expect(get_age).to eq(11)
     end
 
   end

@@ -110,6 +110,7 @@ Rails.application.routes.draw do
     get "arrivals" => "is_my_train_delayed#arrivals"
     get "service"  => "is_my_train_delayed#service"
     get "stations" => "is_my_train_delayed#stations"
+    get "privacy"  => "is_my_train_delayed#privacy"
     match '*url'   => 'application#error_404', via: [:get, :post, :patch, :delete]
   end
 
@@ -215,6 +216,12 @@ Rails.application.routes.draw do
     get  "cleversounds"   => "cleversounds#index"
     get  "clock"          => "clock#index"
     get  "cron"           => "static_pages#cron"
+
+    get  "cycling/all"    => "cycling_events#all",     as: "all_cycling_events"
+    get  "cycling/map"    => "cycling_events#map",     as: "cycling_events_map"
+    get  "cycling/stats"  => "cycling_events#stats",   as: "cycling_events_stats"
+    resources :cycling_events,  path: "cycling"
+
     get  "deepdive"       => "deep_dive#index"
 
     get  "drop/:uri" => "drops#show", as: "drop"
@@ -278,9 +285,10 @@ Rails.application.routes.draw do
     end
     get  "molly"          => "molly#index"
 
-    get  "monzo/all"   => "monzo_transactions#all",   as: "all_monzo_transactions"
-    get  "monzo/map"   => "monzo_transactions#map",   as: "monzo_transactions_map"
-    get  "monzo/stats" => "monzo_transactions#stats", as: "monzo_transactions_stats"
+    get  "monzo/all"     => "monzo_transactions#all",   as: "all_monzo_transactions"
+    get  "monzo/map"     => "monzo_transactions#map",   as: "monzo_transactions_map"
+    get  "monzo/stats"   => "monzo_transactions#stats", as: "monzo_transactions_stats"
+    post "monzo/webhook" => "monzo_transactions#webhook", as: "monzo_transactions_webhook"
     resources :monzo_transactions, path: "monzo",     only: [:index, :show]
 
     get  "musicwall"      => "musicwall#index"
@@ -332,6 +340,11 @@ Rails.application.routes.draw do
     get  "pringles"       => "pringles_prices#index"
     get  "pubthursday"    => "pub_thursday#challenge"
     post "pubthursday"    => "pub_thursday#webhook"
+
+    get  "pub-thursday-audit"     => "pub_thursday_audit#index"
+    get  "pub-thursday-audit/:id" => "pub_thursday_audit#show"
+    post "pub-thursday-audit/:id" => "pub_thursday_audit#delete"
+
     get  "qr"             => "qr#index"
     get  "reading"        => "reading#index"
     get  "realtime"       => "realtime#index"
@@ -419,9 +432,9 @@ Rails.application.routes.draw do
       get "login"         => "devise/sessions#new",     as: "new_session"
       get "logout"        => "devise/sessions#destroy", as: "logout"
     end
-    resources :users,                                              only: [:show]
     get   "users/webauthn/setup" => "users#webauthn_create", as: "webauthn_create"
     post  "users/webauthn/setup" => "users#webauthn_verify", as: "webauthn_verify"
+    resources :users,                                              only: [:index, :show]
 
     get  "video"          => "video#index"
     get  "wall"           => "wall#index"
@@ -449,6 +462,8 @@ Rails.application.routes.draw do
     get  "xss-workshop"   => "xss_workshop#index"
     get  "xss-workshop/1" => "xss_workshop#example1"
     get  "xss-workshop/2" => "xss_workshop#example2"
+
+    get  ".well-known/webfinger" => "static_pages#webfinger"
 
     match '*url'          => 'application#error_404', via: [:get, :post, :patch, :delete]
   end

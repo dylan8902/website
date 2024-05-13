@@ -1,22 +1,18 @@
 <% provide(:title, "Hello") %>
-<% provide(:description, "Hi, I'm Dylan Jones, software engineer/web developer at BT from Llandrindod Wells.") %>
+<% provide(:description, "Hi, I'm Dylan Jones, Software Engineer at BJSS in Cardiff from Llandrindod Wells.") %>
 <% provide(:extrahead, open_id_delegate) %>
 
 <h1>Hello!</h1>
 
 <section id="introduction" class="row">
 	<article class="col-md-8 vcard">
-		<p>Hi! I am <a href="https://dyl.anjon.es" class="url fn">Dylan Jones</a>, a <%= get_age %> year old <span class="title">Software Engineer</span> working at <span class="org">BT</span> in Cardiff, with a passion for technology and the web.</p>
+		<p>Hi! I am <a href="https://dyl.anjon.es/" class="url fn">Dylan Jones</a>, a <%= get_age %> year old <span class="title">Software Engineer</span> working at <a href="https://bjss.com/" target="_blank" class="org">BJSS</a> in Cardiff, with a passion for technology and the web.</p>
 		<p>I like things such as:- <a href="/music" title="Music Pages">Chart &amp; Cheese</a>, <a href="https://dyl.anjon.es/pringles" title="Pringles are great">Salt &amp; Vinegar Pringles</a> and <a href="/running" title="Runs I have done">running</a>.</p>
 		<p class="adr">
 			I am from <a href="http://maps.google.co.uk/maps?q=llandrindod+Wells" title="Map" class="locality">Llandrindod Wells</a>.
-			I studied <a href="http://www.engineering.leeds.ac.uk/electronic/undergraduate/degree-electronic-communications-engineering/index.shtml" title="Course Page">Electronic and Communications Engineering</a> at the University of Leeds.
+			I studied <a href="http://web.archive.org/web/20120905181759/http://www.engineering.leeds.ac.uk/electronic/undergraduate/degree-electronic-communications-engineering/index.shtml" title="Course Page">Electronic and Communications Engineering</a> at the University of Leeds.
 			<%= link_to "&#187;".html_safe, who_path, title: "More" %>
 		</p>
-	</article>
-	<article class="col-md-3 col-sm-12 col-xs-12 pull-right panel text-center">
-		<h5>Available for web development work</h5>
-		<p><a href="/contact" class="btn btn-primary btn-large">Get In Touch</a></p>
 	</article>
 </section>
 
