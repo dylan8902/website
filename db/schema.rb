@@ -391,22 +391,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_18_205818) do
     t.datetime "updated_at", precision: nil, null: false
   end
 
-  create_table "running_events", id: :integer, charset: "utf8mb3", force: :cascade do |t|
-    t.string "name"
-    t.string "location"
-    t.decimal "lat", precision: 10, scale: 7
-    t.decimal "lng", precision: 10, scale: 7
-    t.integer "finish_time"
-    t.boolean "training"
-    t.datetime "created_at", precision: nil
-    t.datetime "updated_at", precision: nil
-    t.integer "position"
-    t.string "link"
-    t.integer "distance"
-    t.text "kml", size: :medium
-    t.string "strava_id"
-  end
-
   create_table "security_vulnerabilities", id: :integer, charset: "utf8mb3", collation: "utf8mb3_unicode_ci", force: :cascade do |t|
     t.string "domain"
     t.string "url"
