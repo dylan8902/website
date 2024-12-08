@@ -2,15 +2,15 @@
 
 - Set up database
 ``` bash
-brew install mysql
-brew services start mysql
+brew install mysql@8.4
+brew services start mysql@8.4
 ```
 
 - Setup Ruby and Rails
 
 ``` bash
-rvm install ruby-3.3.0 --reconfigure --enable-yjit --with-openssl-dir=$(brew --prefix openssl@1.1)
-rvm use 3.3.0 --default
+rvm install ruby-3.3.6 --reconfigure --enable-yjit --with-openssl-dir=$(brew --prefix openssl)
+rvm use 3.3.6 --default
 bundle install
 ```
 
@@ -60,8 +60,8 @@ ssh-keygen -t rsa -C "your_email@example.com"
 rm -rf /home/rails
 git clone git@github.com:dylan8902/website.git /home/rails
 cd /home/rails
-rvm install 3.3.0
-rvm use 3.3.0 --default
+rvm install 3.3.6
+rvm use 3.3.6 --default
 bundle install
 ```
 
@@ -122,9 +122,9 @@ service nginx restart
 ## Update Let's Encrypt SSL
 
 ``` bash
+certbot certonly --text --agree-tos --email dyl@anjon.es -d dyl.anjon.es -d ismytraindelayed.com -d isitaproxyproblem.com -d dylanjones.info --manual --preferred-challenges dns --expand --renew-by-default --manual-public-ip-logging-ok
 rm dyl.anjon.es.key.old
 rm dyl.anjon.es.crt.old
-certbot --text --agree-tos --email dyl@anjon.es -d dyl.anjon.es -d ismytraindelayed.com -d isitaproxyproblem.com --manual --preferred-challenges dns --expand --renew-by-default  --manual-public-ip-logging-ok certonly
 cp dyl.anjon.es.crt dyl.anjon.es.crt.old
 cp dyl.anjon.es.key dyl.anjon.es.key.old
 cp /etc/letsencrypt/live/dyl.anjon.es/fullchain.pem dyl.anjon.es.crt
