@@ -1,8 +1,9 @@
-class ChristmasJumperDonation
+class ChristmasJumperDonation < ApplicationRecord
 
   PROJECT = "pub-tracker-live"
   BASE_URL = "https://firestore.googleapis.com/v1/projects/#{PROJECT}/databases/(default)/documents"
   DONATIONS_URL = "https://api.justgiving.com/904af047/v1/fundraising/pages/cjd240033091/donations"
+
 
   def self.get_donations
     begin
@@ -16,7 +17,19 @@ class ChristmasJumperDonation
 
 
   def self.set_christmas_jumper_hat user_id
-    puts "Give hat to #{user_id}"
+    data = {
+      "fields": {
+        "equipped": {
+          "mapValue": {
+            "fields": {
+              "hat": { "stringValue": "https://dyl.anjon.es/images/jumper.png" }
+            }
+          }
+        }
+      }
+    }
+    url = "#{BASE_URL}/profiles/#{user_id}?mask.fieldPaths=equipped.hat&updateMask.fieldPaths=equipped.hat"
+    response = RestClient.patch(url, data.to_json, content_type: :json)
   end
 
 
@@ -34,8 +47,20 @@ class ChristmasJumperDonation
 
   def self.update
     self.get_donations().each do |donation|
+      justgiving_id = donation["id"].to_s
       justgiving_name = donation["donorDisplayName"]
-      self.update_pub_thursday_user(justgiving_name)
+      next if ChristmasJumperDonation.exists?(donation_id: justgiving_id)
+
+      begin
+        self.update_pub_thursday_user(justgiving_name)
+      rescue => e
+        logger.info "Failed to update pub thursday_user #{justgiving_name}: " + e.message
+      end
+
+      ChristmasJumperDonation.create({
+        donation_id: justgiving_id,
+        name: justgiving_name
+      })
     end
     return
   end
