@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_07_225945) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_11_230936) do
   create_table "accounts", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "number"
     t.string "name"
@@ -154,6 +154,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_225945) do
     t.index ["naptan_code"], name: "index_bus_stops_on_naptan_code"
   end
 
+  create_table "christmas_jumper_donations", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "donation_id"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "credentials", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.integer "user_id"
     t.string "external_id"
@@ -189,6 +196,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_07_225945) do
     t.integer "hits"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+  end
+
+  create_table "duo_leaderboards", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["url"], name: "index_duo_leaderboards_on_url", unique: true
+  end
+
+  create_table "duo_leaderboards_participants", id: false, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.bigint "duo_participant_id", null: false
+    t.bigint "duo_leaderboard_id", null: false
+    t.index ["duo_participant_id", "duo_leaderboard_id"], name: "index_duo"
+  end
+
+  create_table "duo_participants", charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "photo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "episodes", id: :integer, charset: "utf8mb3", force: :cascade do |t|
