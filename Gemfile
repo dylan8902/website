@@ -49,6 +49,9 @@ gem 'unicorn'
 gem 'rake'
 gem 'redis'
 gem 'acme-client'
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'drb'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
