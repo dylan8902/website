@@ -9,8 +9,8 @@ brew services start mysql@8.4
 - Setup Ruby and Rails
 
 ``` bash
-rvm install ruby-3.3.6 --reconfigure --enable-yjit --with-openssl-dir=$(brew --prefix openssl)
-rvm use 3.3.6 --default
+rvm install ruby-3.4.1 --reconfigure --enable-yjit --with-openssl-dir=$(brew --prefix openssl)
+rvm use 3.4.1 --default
 bundle install
 ```
 
@@ -60,8 +60,8 @@ ssh-keygen -t rsa -C "your_email@example.com"
 rm -rf /home/rails
 git clone git@github.com:dylan8902/website.git /home/rails
 cd /home/rails
-rvm install 3.3.6
-rvm use 3.3.6 --default
+rvm install 3.4.1
+rvm use 3.4.1 --default
 bundle install
 ```
 
