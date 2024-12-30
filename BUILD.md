@@ -9,8 +9,8 @@ brew services start mysql@8.4
 - Setup Ruby and Rails
 
 ``` bash
-rvm install ruby-3.3.6 --reconfigure --enable-yjit --with-openssl-dir=$(brew --prefix openssl)
-rvm use 3.3.6 --default
+rvm install ruby-3.4.1 --reconfigure --enable-yjit --with-openssl-dir=$(brew --prefix openssl)
+rvm use 3.4.1 --default
 bundle install
 ```
 
@@ -56,15 +56,6 @@ ssh-keygen -t rsa -C "your_email@example.com"
 
 - Add the public key generated to your Github Profile
 
-``` bash
-rm -rf /home/rails
-git clone git@github.com:dylan8902/website.git /home/rails
-cd /home/rails
-rvm install 3.3.6
-rvm use 3.3.6 --default
-bundle install
-```
-
 - Create the database user:
 
 ``` sql
@@ -72,9 +63,15 @@ mysql
 CREATE USER ''@'localhost' IDENTIFIED BY '';
 GRANT ALL PRIVILEGES ON *.* TO ''@'localhost' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
-ALTER DATABASE dylan8902_website CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
 exit
 ```
+
+``` bash
+rm -rf /home/rails
+git clone git@github.com:dylan8902/website.git /home/rails
+cd /home/rails
+```
+
 - Set the secrets in config/secrets.yml.example and rename:
 
 ``` bash
@@ -82,23 +79,16 @@ vi config/secrets.yml.example
 mv config/secrets.yml.example config/secrets.yml
 ```
 
-- Setup the web server configuration:
-
-``` bash
-cp config/server/unicorn /etc/default/unicorn
-```
-
-- Set up the database and asset pipeline and restart
+- Set up the database:
 
 ``` bash
 rake db:create RAILS_ENV=production
-rake db:migrate RAILS_ENV=production
-rake assets:precompile RAILS_ENV=production
-export NODE_OPTIONS=--openssl-legacy-provider
-bin/webpack
-chown -R rails /home/rails
-chgrp -R www-data /home/rails
-service unicorn restart
+```
+
+``` sql
+mysql
+ALTER DATABASE dylan8902_website CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;
+exit
 ```
 
 - Set up SSL
@@ -106,11 +96,15 @@ service unicorn restart
 ``` bash
 cp config/server/default /etc/nginx/sites-enabled/default
 openssl dhparam -out /root/dhparams.pem 2048
-vi dyl.anjon.es.crt
-vi dyl.anjon.es.key
-service nginx restart
 ```
 
+- Follow Let's Encrypt SSL instructions below
+
+- Build and run:
+
+``` bash
+bin/deploy
+```
 
 ## Update Application
 
