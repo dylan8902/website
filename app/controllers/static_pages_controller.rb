@@ -154,17 +154,13 @@ class StaticPagesController < ApplicationController
   # GET /cron.json
   # GET /cron.xml
   def cron
-    ChristmasJumperDonation.update
     Track.update
-    BbcTwitter.update
     PringlesPrice.update
     Gig.update
     StravaEvent.update
     MonzoTransaction.update
-    TextMessage.update
     Photo.update
     Location.update
-    Tweet.update
 
     respond_to do |format|
       format.html # cron.html.erb
