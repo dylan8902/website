@@ -9,6 +9,16 @@ end
 
 Rails.application.routes.draw do
 
+  #alice.cymru
+  constraints Domain.new("alice.cymru") do
+    match "/(*path)" => redirect {|params, req| "http://alice-jones.co.uk#{req.fullpath}"}, via: [:get, :post, :patch, :delete]
+  end
+
+  #alice-jones.co.uk
+  constraints Domain.new("alice-jones.co.uk") do
+    get ""         => "alice#index"
+  end
+
   #isitaproxyproblem.com
   constraints Domain.new("www.isitaproxyproblem.com") do
     match "/(*path)" => redirect {|params, req| "http://isitaproxyproblem.com#{req.fullpath}"}, via: [:get, :post, :patch, :delete]

@@ -116,7 +116,20 @@ bin/deploy
 ## Update Let's Encrypt SSL
 
 ``` bash
-certbot certonly --text --agree-tos --email dyl@anjon.es -d dyl.anjon.es -d ismytraindelayed.com -d isitaproxyproblem.com -d dylanjones.info --manual --preferred-challenges dns --expand --renew-by-default --manual-public-ip-logging-ok
+certbot certonly \
+  --text \
+  --agree-tos \
+  --email dyl@anjon.es \
+  --manual \
+  --preferred-challenges dns \
+  --expand \
+  --renew-by-default \
+  --manual-public-ip-logging-ok \
+  -d dyl.anjon.es \
+  -d ismytraindelayed.com \
+  -d isitaproxyproblem.com \
+  -d dylanjones.info \
+  -d alice-jones.co.uk
 rm dyl.anjon.es.key.old
 rm dyl.anjon.es.crt.old
 cp dyl.anjon.es.crt dyl.anjon.es.crt.old
