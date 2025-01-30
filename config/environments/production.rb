@@ -92,6 +92,8 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.hosts << "alice-jones.co.uk"
+  config.hosts << "alice.cymru"
   config.hosts << "isitaproxyproblem.com"
   config.hosts << "www.isitaproxyproblem.com"
   config.hosts << "unexpectedgems.com"
