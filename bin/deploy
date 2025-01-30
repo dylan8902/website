@@ -5,6 +5,7 @@ source ~/.bash_profile
 cd /home/rails
 git pull
 rvm install 3.4.1
+rvm use --default 3.4.1
 bundle install
 rake db:migrate RAILS_ENV=production
 export NODE_OPTIONS=--openssl-legacy-provider
