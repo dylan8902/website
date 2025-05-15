@@ -91,11 +91,11 @@ class MonzoTransactionsController < ApplicationController
     @webhook = params
     logger.info "Webhook recieved, data: #{@webhook}"
 
-    sweepstake = "euros-2024"
-    emojis = ["⚽", "football"]
+    sweepstake = "eurovision-2025"
+    emojis = ["🎤", "eurovision"]
 
     begin
-      if @webhook["type"] == "transaction.created" and emojis.include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == 200
+      if @webhook["type"] == "transaction.created" and emojis.include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == 100
         logger.info "This is a #{sweepstake} payment"
         payee = @webhook["data"]["counterparty"]["name"]
         logger.info "from #{payee}"
@@ -127,7 +127,7 @@ class MonzoTransactionsController < ApplicationController
           data = {
             "fields": {
               "user": { "stringValue": payee },
-              "userPhotoURL": { "stringValue": "/flags/Monzo.png" }
+              "userPhotoURL": { "stringValue": "https://lh6.googleusercontent.com/-WmhDZAA7HZQ/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rfJF7SDmPukaLdY7gj2i9GtCxh34Q/photo.jpg" }
             }
           }
         end
@@ -142,7 +142,7 @@ class MonzoTransactionsController < ApplicationController
           logger.info response.body
           data = {
             "fields": {
-              "pot": { "doubleValue": current_pot + 2 },
+              "pot": { "doubleValue": current_pot + 1 },
             }
           }
           response = RestClient.patch("#{base_url}/sweepstakes/#{sweepstake}?updateMask.fieldPaths=pot", data.to_json, content_type: :json)
@@ -154,7 +154,7 @@ class MonzoTransactionsController < ApplicationController
         logger.info "This is not a #{sweepstake} payment"
         logger.info "#{@webhook["type"]} (#{@webhook["type"] == "transaction.created"})"
         logger.info "#{@webhook["data"]["notes"].strip.downcase} (#{emojis.include? @webhook["data"]["notes"].strip.downcase})"
-        logger.info "#{@webhook["data"]["amount"]} (#{@webhook["data"]["amount"] == 200})"
+        logger.info "#{@webhook["data"]["amount"]} (#{@webhook["data"]["amount"] == 100})"
       end
     rescue => e
       logger.info "Error: #{e.message}"
