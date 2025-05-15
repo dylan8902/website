@@ -134,10 +134,10 @@ class MonzoTransactionsController < ApplicationController
         available_teams = []
         response = JSON.parse(RestClient.get("#{base_url}/sweepstakes/#{sweepstake}/teams?pageSize=100").body)
         response["documents"].each do |team|
-          available_teams << team["name"] if team["fields"]["user"]["stringValue"] == "TBC"
+          available_teams << team["fields"]["name"]["stringValue"] if team["fields"]["user"]["stringValue"] == "TBC"
         end
         if available_teams.length > 0
-          url = "https://firestore.googleapis.com/v1/#{available_teams.sample.gsub(" ", "%20")}?updateMask.fieldPaths=user&updateMask.fieldPaths=userPhotoURL"
+          url = "#{base_url}/sweepstakes/#{sweepstake}/teams/#{CGI.escape(available_teams.sample)}?updateMask.fieldPaths=user&updateMask.fieldPaths=userPhotoURL"
           response = RestClient.patch(url, data.to_json, content_type: :json)
           logger.info response.body
           data = {
