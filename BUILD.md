@@ -124,7 +124,6 @@ certbot certonly \
   --preferred-challenges dns \
   --expand \
   --renew-by-default \
-  --manual-public-ip-logging-ok \
   -d dyl.anjon.es \
   -d ismytraindelayed.com \
   -d isitaproxyproblem.com \
