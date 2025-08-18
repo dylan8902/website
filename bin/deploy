@@ -13,6 +13,8 @@ yarn install
 rake assets:precompile RAILS_ENV=production
 bin/webpack
 cp config/server/unicorn /etc/default/unicorn
+cp config/server/nginx /etc/nginx/sites-enabled/default
 chown -R rails /home/rails
 chgrp -R www-data /home/rails
 service unicorn restart
+systemctl reload nginx

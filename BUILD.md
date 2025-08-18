@@ -121,7 +121,7 @@ certbot certonly \
   --agree-tos \
   --email dyl@anjon.es \
   --manual \
-  --preferred-challenges dns \
+  --preferred-challenges http \
   --expand \
   --renew-by-default \
   -d dyl.anjon.es \
@@ -129,6 +129,10 @@ certbot certonly \
   -d isitaproxyproblem.com \
   -d dylanjones.info \
   -d alice-jones.co.uk
+
+# Copy each verification to the public dir
+echo "" > /home/rails/public/.well-known/acme-challenge/
+
 rm dyl.anjon.es.key.old
 rm dyl.anjon.es.crt.old
 cp dyl.anjon.es.crt dyl.anjon.es.crt.old
