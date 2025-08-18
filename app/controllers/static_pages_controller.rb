@@ -154,6 +154,7 @@ class StaticPagesController < ApplicationController
   # GET /cron.json
   # GET /cron.xml
   def cron
+    Certificate.renew
     Track.update
     PringlesPrice.update
     Gig.update
