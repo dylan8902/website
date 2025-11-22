@@ -15,10 +15,11 @@ bundle install
 ```
 
 - Set up SSL
-
 ``` bash
-sudo certbot --text --agree-tos --email dyl@anjon.es -d dev.dyl.anjon.es --manual --preferred-challenges dns --expand --renew-by-default --manual-public-ip-logging-ok certonly
-sudo chown dylan8902 /etc/letsencrypt/live/dev.dyl.anjon.es/../../archive/dev.dyl.anjon.es/*
+certbot certonly --non-interactive --keep-until-expiring --cert-name dyl.anjon.es --webroot --webroot-path "/home/rails/public" -d dyl.anjon.es,ismytraindelayed.com,isitaproxyproblem.com,dylanjones.info,alice-jones.co.uk
+
+ln -s /etc/letsencrypt/live/dyl.anjon.es/fullchain.pem /etc/website.crt
+ln -s /etc/letsencrypt/live/dyl.anjon.es/privkey.pem /etc/website.key
 ```
 
 - Set the secrets in config/secrets.yml:
