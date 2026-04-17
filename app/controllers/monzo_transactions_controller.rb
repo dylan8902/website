@@ -142,7 +142,7 @@ class MonzoTransactionsController < ApplicationController
           logger.info response.body
           data = {
             "fields": {
-              "pot": { "doubleValue": current_pot + 1 },
+              "pot": { "doubleValue": current_pot + 2 },
             }
           }
           response = RestClient.patch("#{base_url}/sweepstakes/#{sweepstake}?updateMask.fieldPaths=pot", data.to_json, content_type: :json)
