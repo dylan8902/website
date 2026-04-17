@@ -91,11 +91,11 @@ class MonzoTransactionsController < ApplicationController
     @webhook = params
     logger.info "Webhook recieved, data: #{@webhook}"
 
-    sweepstake = "eurovision-2025"
-    emojis = ["🎤", "eurovision"]
+    sweepstake = "world-cup-2026"
+    emojis = ["⚽️", "football"]
 
     begin
-      if @webhook["type"] == "transaction.created" and emojis.include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == 100
+      if @webhook["type"] == "transaction.created" and emojis.include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == 200
         logger.info "This is a #{sweepstake} payment"
         payee = @webhook["data"]["counterparty"]["name"]
         logger.info "from #{payee}"
