@@ -93,9 +93,10 @@ class MonzoTransactionsController < ApplicationController
 
     sweepstake = "world-cup-2026"
     emojis = ["⚽️".downcase, "⚽".downcase, "football"]
+    amount = 200
 
     begin
-      if @webhook["type"] == "transaction.created" and emojis.include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == 200
+      if @webhook["type"] == "transaction.created" and emojis.include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == amount
         logger.info "This is a #{sweepstake} payment"
         payee = @webhook["data"]["counterparty"]["name"]
         logger.info "from #{payee}"
@@ -142,7 +143,7 @@ class MonzoTransactionsController < ApplicationController
           logger.info response.body
           data = {
             "fields": {
-              "pot": { "doubleValue": current_pot + 2 },
+              "pot": { "doubleValue": current_pot + (amount / 100) },
             }
           }
           response = RestClient.patch("#{base_url}/sweepstakes/#{sweepstake}?updateMask.fieldPaths=pot", data.to_json, content_type: :json)
@@ -154,7 +155,7 @@ class MonzoTransactionsController < ApplicationController
         logger.info "This is not a #{sweepstake} payment"
         logger.info "#{@webhook["type"]} (#{@webhook["type"] == "transaction.created"})"
         logger.info "#{@webhook["data"]["notes"].strip.downcase} (#{emojis.include? @webhook["data"]["notes"].strip.downcase})"
-        logger.info "#{@webhook["data"]["amount"]} (#{@webhook["data"]["amount"] == 100})"
+        logger.info "#{@webhook["data"]["amount"]} (#{@webhook["data"]["amount"] == amount})"
       end
     rescue => e
       logger.info "Error: #{e.message}"
