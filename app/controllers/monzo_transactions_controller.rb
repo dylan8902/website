@@ -92,7 +92,7 @@ class MonzoTransactionsController < ApplicationController
     logger.info "Webhook recieved, data: #{@webhook}"
 
     sweepstake = "world-cup-2026"
-    emojis = ["⚽️", "football"]
+    emojis = ["⚽️".downcase, "⚽".downcase, "football"]
 
     begin
       if @webhook["type"] == "transaction.created" and emojis.include? @webhook["data"]["notes"].strip.downcase and @webhook["data"]["amount"] == 200
